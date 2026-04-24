@@ -45,15 +45,118 @@ export const sellingPoints = [
       "加埋每匹馬嘅 profile、形態、晨操、傷患、轉廄全紀錄。",
   },
   {
-    id: "no-odds-weighting",
-    icon: "🚫",
-    title: "賠率不加權",
-    subtitle: "避開大眾偏見",
+    id: "pure-physics",
+    icon: "⚖️",
+    title: "賠率不加權 · 純物理向量",
+    subtitle: "別人分析「錢點投」· 天喜分析「馬點跑」",
     body:
-      "賠率反映嘅係市場情緒，唔係事實。我哋只用 HKJC 原始觀察事實" +
-      "（名次、時間、走位、分段、檔位）計算，拒絕跟風，拒絕幻覺源。",
+      "賠率反映嘅係人嘅情緒同資金流向，唔係馬嘅實力。" +
+      "我哋勝率模型完全唔用賠率做因子（β=0 硬編碼），" +
+      "因子只用原始物理事實：名次、時間、走位、分段、檔位、負磅、場地、途程、班次。" +
+      "計出嚟嘅理論機率再同市場賠率對比 —— 理論 70% 入三甲、賠率卻去到 15 倍？" +
+      "市場低估咗，呢匹就係「值博馬」。",
+    // 內部 tag
+    conceptKey: "pure-physics",
   },
 ] as const;
+
+/**
+ * 3 Pillars · 支撐「賠率不加權」嘅學術 + 市場事實
+ * 用於 /why-beta-zero 頁、主頁 "Why β=0" section、predictor 解釋彈窗
+ */
+export const pillars = [
+  {
+    id: "odds-not-probability",
+    num: "01",
+    title: "賠率 ≠ 真實機率",
+    body:
+      "HKJC 獨贏池官方抽水 17.5%，其他彩池高達 20%。" +
+      "即係話每 100 蚊落注，長期得返 80-82.5 蚊。" +
+      "賠率由「公眾投注金額」反推，先天就係負 EV — 跟賠率買，數學上必敗。",
+    citation: "HKJC 官方 Take-out rate (17.5%-20%)",
+  },
+  {
+    id: "human-bias",
+    num: "02",
+    title: "人為干擾太多",
+    body:
+      "熱門－冷馬偏誤 (Favorite-Longshot Bias) 係賽馬市場最穩定嘅異象：" +
+      "熱門被低估、冷馬被高估。公眾情緒、明星騎師、媒體 tier 榜、" +
+      "甚至賽前 tipster 文章，全部會扭曲賠率，但同馬嘅真實實力無關。",
+    citation: "Snowberg & Wolfers 2010 (NBER / JPE) · Figlewski 1979 (JPE)",
+  },
+  {
+    id: "pure-physics-β0",
+    num: "03",
+    title: "純歷史數據 + 統計機率",
+    body:
+      "Benter (1994) 經典論文示範：用多因子 logistic regression + β=0 " +
+      "（即完全排除賠率作為 regressor）建立嘅模型，長線可以穩定打敗市場。" +
+      "天喜沿用呢條思路 —— 只用物理觀察量，機率由數據自己講。",
+    citation: "Benter 1994 · 多因子 logistic · β=0 硬編碼",
+  },
+] as const;
+
+/**
+ * 學術 / 市場事實引用 · 三端共用
+ * - `key`: 用於主頁 + 賣點解釋卡（用戶級可讀）
+ * - `architecture`: 用於 /docs 或 whitepaper（技術深入）
+ */
+export const citations = {
+  thesis:
+    "別人嘅系統分析嘅係「錢點投」；天喜分析嘅係「馬點跑」。",
+  key: [
+    {
+      source: "HKJC Take-out",
+      journal: "HKJC 官方",
+      year: "ongoing",
+      note: "獨贏 17.5% · 其他彩池最高 20% · 市場長期負 EV",
+      tag: "market-structure",
+    },
+    {
+      source: "Snowberg & Wolfers",
+      journal: "NBER Working Paper / Journal of Political Economy",
+      year: "2010",
+      note: "Favorite-Longshot Bias · 橫跨多市場實證 · 公眾情緒扭曲賠率",
+      tag: "behavioral",
+    },
+    {
+      source: "Figlewski",
+      journal: "Journal of Political Economy",
+      year: "1979",
+      note: "賽馬市場效率性測試 · 開創性 · 賠率遠離真實機率",
+      tag: "efficiency",
+    },
+    {
+      source: "Benter",
+      journal: "Computer Based Horse Race Handicapping",
+      year: "1994",
+      note: "多因子 logistic regression · β=0 純物理因子可長線跑贏市場",
+      tag: "model-architecture",
+    },
+  ],
+  architecture: [
+    { source: "Ji", year: "2023", topic: "Horse racing ML survey" },
+    { source: "Lewis", year: "2020", topic: "Sports analytics deep learning" },
+    { source: "Guo", year: "2017", topic: "Elo system extensions" },
+    { source: "Kaufman", year: "2011", topic: "Pairwise rating systems" },
+    { source: "López de Prado", year: "2018", topic: "Financial ML · backtest bias" },
+    { source: "Ali", year: "1977", topic: "Probability judgments at racetrack" },
+    { source: "Snyder", year: "1978", topic: "Horse racing market efficiency" },
+  ],
+  /** 關鍵字 · 用於 SEO meta + keyword chips */
+  keywords: [
+    "賠率 ≠ 真實機率",
+    "Favorite-Longshot Bias",
+    "β=0 硬編碼",
+    "純物理向量",
+    "錢點投 vs 馬點跑",
+    "HKJC 17.5% Take-out",
+    "Snowberg & Wolfers",
+    "Figlewski",
+    "Benter",
+  ] as const,
+} as const;
 
 export const hero = {
   eyebrow: "香港賽馬 · AI 預測平台",
@@ -112,6 +215,8 @@ export const hub = {
     "886 賽馬日 · 11 年數據",
     "賠率不加權 · 避開跟風",
     "HKJC 原始事實 · 可追溯",
+    "別人分析「錢點投」· 天喜分析「馬點跑」",
+    "β=0 硬編碼 · Benter 1994 傳承",
   ] as const,
 
   /** 焦點新聞區域（由 NewsScraper 產出 · 每日刷新） */
@@ -148,11 +253,14 @@ export const features = {
   predictor: {
     icon: "🔮",
     title: "選馬助手",
-    subtitle: "你揀因子，AI 幫你計",
+    subtitle: "你揀因子，AI 幫你計 · 仲會標記「值博馬」",
     body:
       "揀你信嘅因子（Elo / 形態 / 檔位 / 負磅 / 分段 / 騎練合拍度 …），" +
       "天喜即刻用你嘅 profile 幫你排順序。" +
+      "系統會自動比對理論機率 vs 市場賠率，標記值博機會（Value Gap）。" +
       "仲可以同 AI 對話追問 —「點解 #5 排第一？」、「近 3 場走位有冇伏？」。",
+    valueHorseNote:
+      "值博馬 = 理論勝率 × 賠率 > 1 · 由純物理因子模型 + 即時賠率交叉計算",
   },
   calendar: {
     icon: "📅",
@@ -179,6 +287,194 @@ export const features = {
   },
 } as const;
 
+/**
+ * Elo 解釋器 · 會員教育內容
+ * 用於：predictor 解釋彈窗、/why-elo 專題頁、onboarding 第 2 屏、FAQ 深入版
+ *
+ * 用戶指令 2026-04-24：
+ *   「我哋ELO嘅獨有算法、ELO係啲咩？同馬會評分有咩分別？點解我哋更準確？
+ *    呢啲都係我哋要話俾會員聽嘅。」
+ */
+export const eloExplainer = {
+  /** 主標題 + 一句 elevator pitch */
+  headline: "獨門 Elo v1.1 · 同馬會評分完全係兩件事",
+  elevator:
+    "Elo 唔係主觀打分、係由每場對戰自動計出嚟嘅客觀實力數字。" +
+    "我哋仲將同一套邏輯拆成馬、騎師、練馬師三條獨立曲線 —— 全行只此一家。",
+
+  /** 「咩係 Elo」· 基礎概念（俾新會員睇） */
+  whatIsElo: {
+    title: "Elo 係啲咩？",
+    body:
+      "Elo 呢套評分系統 1960 年代由 Arpad Elo 為國際象棋發明，" +
+      "之後擴展到足球、網球、圍棋、電競。核心邏輯：" +
+      "兩個對手交手，贏嘅一方加分、輸嘅減分；" +
+      "分數差距愈大、冷門爆出嘅加減幅度愈勁。" +
+      "經過幾十場對戰之後，每個選手嘅分數會自然收斂到真實實力水平。",
+    whyItWorks: [
+      "完全由結果驅動 · 冇主觀裁判",
+      "對戰愈多、收斂愈準",
+      "可以直接比較 A vs B 嘅預期勝率",
+      "新選手加入唔會影響舊分數（相對公平）",
+    ],
+  },
+
+  /** 核心比較：Elo vs HKJC 評分 */
+  vsHkjcRating: {
+    title: "同馬會評分有咩分別？",
+    subtitle: "一個係人打分、一個係數據自己計",
+    table: [
+      {
+        dimension: "計算方式",
+        hkjc: "HKJC 評磅員人手調整",
+        tianxi: "每場結果自動計算（Logistic probability）",
+      },
+      {
+        dimension: "主觀 vs 客觀",
+        hkjc: "包含評磅員主觀判斷",
+        tianxi: "100% 數據驅動 · 冇人為干預",
+      },
+      {
+        dimension: "調整頻率",
+        hkjc: "賽後幾日先出新評分 · 有時滯",
+        tianxi: "每場完賽立即更新",
+      },
+      {
+        dimension: "覆蓋維度",
+        hkjc: "只有馬嘅評分 · 騎師練馬師冇",
+        tianxi: "馬 / 騎師 / 練馬師 三條獨立曲線",
+      },
+      {
+        dimension: "對手強弱",
+        hkjc: "冇直接反映當日對手 field",
+        tianxi: "每場計算 field 平均 Elo · 贏強敵加更多",
+      },
+      {
+        dimension: "跨屆比較",
+        hkjc: "負磅制度導致評分被壓縮",
+        tianxi: "絕對數值 · 可跨年份比較金鎗六十 vs 活力先鋒",
+      },
+      {
+        dimension: "可驗證性",
+        hkjc: "評磅員理由冇公開",
+        tianxi: "開源公式 · 每場 delta 可追溯到原始賽果",
+      },
+    ] as const,
+  },
+
+  /** 我哋嘅 v1.1 算法特點 */
+  ourAlgorithm: {
+    title: "天喜 Elo v1.1 · 獨有之處",
+    bullets: [
+      {
+        key: "three-curves",
+        icon: "🐎🏇👔",
+        title: "三條獨立曲線",
+        body:
+          "馬有馬嘅 Elo、騎師有騎師嘅、練馬師有練馬師嘅。" +
+          "一場賽果同時更新 3 條曲線，各自演化。" +
+          "市面 99% 系統只計馬匹 Elo —— 我哋係全港唯一計齊三者。",
+      },
+      {
+        key: "field-aware",
+        icon: "⚔️",
+        title: "Field-aware 對手加權",
+        body:
+          "贏一場全 G1 高磅對手，同贏一場 Class 5 新馬賽，加分幅度完全唔同。" +
+          "我哋按當日 field 平均 Elo 動態調節 K-factor，" +
+          "確保強弱對手嘅分差得到合理反映。",
+      },
+      {
+        key: "multi-axis",
+        icon: "📐",
+        title: "5 個 Elo 軸",
+        body:
+          "唔係只有一個「總 Elo」。" +
+          "每匹馬同時有 overall、turf_sprint (< 1200m)、turf_mile (1400-1600m)、" +
+          "turf_middle (1800-2000m)、turf_staying (> 2000m) 五條獨立曲線。" +
+          "一匹短途機器落長途可能跌一大截 —— 呢個訊號其他系統收唔到。",
+      },
+      {
+        key: "11y-training",
+        icon: "📚",
+        title: "11 年 · 39,617 場訓練",
+        body:
+          "由 2016 年第一場賽事餵起、每一場結果逐步校準。" +
+          "K-factor、field weight、起步 rating 全部經過 backtest grid search，" +
+          "Brier score 持續優化。",
+      },
+      {
+        key: "decay",
+        icon: "⏳",
+        title: "Time-decay · 新鮮度加權",
+        body:
+          "隔咗 6 個月冇出賽嘅馬，Elo 自動加入 uncertainty band。" +
+          "半退役或者復出馬嘅分數會標記為「stale」，避免誤導。",
+      },
+    ] as const,
+  },
+
+  /** 為乜我哋更準 */
+  whyMoreAccurate: {
+    title: "點解天喜 Elo 比馬會評分更貼近真實？",
+    reasons: [
+      {
+        num: "1",
+        title: "冇人為壓縮",
+        body:
+          "馬會評分受負磅制度牽制 —— 強馬贏太多會被加磅壓低評分，" +
+          "目的係為咗平衡賽事、令賠率更吸引投注。" +
+          "但呢個係「政策目標」，唔係「實力量度」。" +
+          "Elo 冇呢個包袱，純粹反映「邊匹馬實際更強」。",
+      },
+      {
+        num: "2",
+        title: "對手強度內建",
+        body:
+          "馬會評分睇絕對名次、唔睇當日對手陣容。" +
+          "Elo 每場都問：「呢班對手嘅平均分幾多？」" +
+          "打贏強 field +20，打贏弱 field 可能只 +3。",
+      },
+      {
+        num: "3",
+        title: "騎師練馬師獨立追蹤",
+        body:
+          "一匹馬換騎師、轉練馬師之後表現大變係常態。" +
+          "我哋可以拆解：「係馬狀態改變、定係騎師 Elo 突破、定係練馬師策略調整？」" +
+          "馬會評分混埋一齊 · 成件事變黑箱。",
+      },
+      {
+        num: "4",
+        title: "即時、可審計、開源公式",
+        body:
+          "賽後 1 小時內自動更新；每場 delta 可追溯到單場數據；" +
+          "公式公開（基於 Elo + Benter 1994 multi-factor 框架）。" +
+          "你可以自己抽一場賽果、手計我哋嘅 rating、結果一樣。",
+      },
+    ] as const,
+  },
+
+  /** 實測 benchmark（用內部資料 · 唔暴露命中率） */
+  benchmark: {
+    title: "Elo v1.1 經過點樣測試？",
+    body:
+      "11 年 · 8,361 場 · 106,004 行 出賽紀錄做 backtest。" +
+      "Brier score、calibration curve、field-rank correlation " +
+      "全部 track 緊，每個版本升級都要打得贏舊版。",
+    note:
+      "具體命中率數字屬於內部監察指標 · 係為咗持續改良系統。" +
+      "我哋唔會將未經充分驗證嘅數字擺出嚟賣，呢個係我哋對會員嘅承諾。",
+  },
+
+  /** CTA · 跳去 predictor 試用 */
+  cta: {
+    primary: "試用選馬助手 · 親身體驗 Elo",
+    primaryRoute: "/predictor",
+    secondary: "睇 Elo 榜",
+    secondaryRoute: "/dashboard?tab=elo-leaderboard",
+  },
+} as const;
+
 export const faq = [
   {
     q: "你哋點解唔公佈命中率？",
@@ -187,10 +483,20 @@ export const faq = [
       "我哋選擇唔做呢件事 — 你應該信你自己嘅判斷，唔係信一個由我哋加工嘅數字。",
   },
   {
-    q: "賠率點解唔加權？",
+    q: "賠率點解唔加權？咁即係完全唔用賠率？",
     a:
-      "賠率係市場情緒嘅總和，而市場長期對冷門馬估價過低、對熱門馬估價過高。" +
-      "如果我哋跟賠率加權，就同其他 AI 一樣跟風，冇 edge。",
+      "「不加權」係專指勝率模型入面嘅因子 — 我哋計勝率嗰陣唔會將賠率當一個 factor，" +
+      "因為賠率反映嘅係人嘅情緒同資金流向，唔係馬嘅實力。" +
+      "但我哋一樣會抓齊獨贏、位置、各彩池嘅最終賠率做分析。" +
+      "即時賠率最大用途係 —— 同我哋嘅理論機率交叉對比搵出「值博馬」：" +
+      "例如理論 70% 入三甲、但市場俾咗 15 倍賠率，即係市場低估，呢啲就係機會。",
+  },
+  {
+    q: "咩叫「純物理向量 (Pure Physics)」？",
+    a:
+      "意思係我哋所有因子都源自原始物理事實 —— 名次、時間、走位、分段、檔位、" +
+      "負磅、場地、途程、班次。冇任何由「別人計好嘅結論」（賠率、HKJC 評分、" +
+      "媒體 tier 榜、其他 AI 嘅預測）滲入 model。只有咁樣先唔會跟風，先有真 edge。",
   },
   {
     q: "Elo 同 HKJC 評分有咩分別？",
