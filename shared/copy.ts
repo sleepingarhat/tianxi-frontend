@@ -66,6 +66,75 @@ export const hero = {
   trustLine: "超過 886 場賽馬日嘅真實數據 · 不含任何「命中率」宣傳",
 } as const;
 
+/**
+ * 主版面 (Hub / Home) · 獨立於 5 個 feature 版面
+ * 導航中心 + 介紹 + 定價 + 王牌展示 + 新聞
+ */
+export const hub = {
+  eyebrow: "天喜 · 主頁",
+  welcomeTitle: "歡迎返嚟 · 今日馬場有料到",
+
+  /** 5 個版面嘅導航卡（順序決定主頁顯示次序） */
+  navCards: [
+    { featureKey: "dashboard",   accent: "blue",  route: "/dashboard" },
+    { featureKey: "predictor",   accent: "red",   route: "/predictor", featured: true },
+    { featureKey: "calendar",    accent: "green", route: "/calendar" },
+    { featureKey: "encyclopedia", accent: "gold", route: "/encyclopedia" },
+    { featureKey: "chatroom",    accent: "blue",  route: "/chat" },
+  ] as const,
+
+  /** 王牌功能 spotlight（主頁 hero-band 下一個 section） */
+  flagship: {
+    title: "王牌功能：靈活因子 × 獨門 Elo",
+    sub: "行業唯一俾用戶自選因子，配合 3 條獨立 Elo 曲線即時計算",
+    bullets: [
+      "12 個因子隨意開關 · 可保存多個個人策略",
+      "馬 / 騎師 / 練馬師三條 Elo，獨立演化",
+      "即時 AI 對話追問：「點解 #5 排第一？」",
+    ],
+    cta: "試用選馬助手",
+    ctaRoute: "/predictor",
+  },
+
+  /** 系統介紹（condensed，用 shared.sellingPoints 做詳細版） */
+  intro: {
+    title: "唔止係一個 AI · 係一套完整嘅賽馬數據生態",
+    body:
+      "11 年、886 場賽馬日、8,361 場賽事、106,004 行出賽紀錄。" +
+      "每一個數字都有 HKJC 原始 source 可追溯。" +
+      "我哋唔賣預測結論，只賣決策工具 — 最後嘅 judgement 仲係你。",
+  },
+
+  /** 系統優勢標語（scroller / marquee 用） */
+  tagline: [
+    "靈活因子 · 你揀你信",
+    "獨門 Elo · 3 條曲線",
+    "886 賽馬日 · 11 年數據",
+    "賠率不加權 · 避開跟風",
+    "HKJC 原始事實 · 可追溯",
+  ] as const,
+
+  /** 焦點新聞區域（由 NewsScraper 產出 · 每日刷新） */
+  news: {
+    sectionTitle: "今日焦點",
+    sectionSub: "賽馬日頭條 · 每日自動更新",
+    emptyState: "今日暫無新聞，請查閱其他版面",
+    // 數據源：tianxi-database/data/news/YYYY-MM/news_items.csv
+    // 圖片源：tianxi-database/data/news/images/<slug>.jpg
+    scraperTodo: true, // NewsScraper.py 未部署 · 見 tianxi-database plan.md
+  },
+
+  /** 主頁 CTA 區（底部、推 waitlist / signup） */
+  bottomCta: {
+    title: "準備好親身感受？",
+    sub: "首 3 個月半價 · 創始會員名額有限",
+    primary: "加入候補",
+    primaryRoute: "/waitlist",
+    secondary: "睇定價",
+    secondaryRoute: "/pricing",
+  },
+} as const;
+
 export const features = {
   dashboard: {
     icon: "📊",

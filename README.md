@@ -38,15 +38,56 @@ tianxi-frontend/
 
 ---
 
-## 🚀 5 個主要版面
+## 🚀 主版面（Hub）+ 5 個功能版面
 
-| 版面 | 圖示 | 內容 |
-|---|---|---|
-| 儀表板 | 📊 | Elo 排行、今日賽事、數據庫統計（**無命中率**） |
-| 選馬助手 | 🔮 | 即時賠率 + 靈活因子選擇 + AI 對話 |
-| 賽馬日曆 | 📅 | 未來排位表、過往賽果快速跳轉 |
-| 馬匹百科 | 📖 | 每匹馬嘅 profile、形態、Elo 曲線 |
-| 馬迷聊天室 | 🌐 | Telegram 風格社群、話題室、實時討論 |
+**1 主 + 5 功能** 結構。主版面係用戶入口，承擔介紹、導航、推廣角色。
+
+### 🏠 主版面（Hub / Home · `/`）
+
+導航中心 + 系統介紹 + 收費計劃 + 王牌功能展示 + 優勢標語 + **焦點新聞**。
+用戶打開 app / web 第一眼見到嘅就係呢度。
+
+内容 sections：
+1. Hero + 4 大賣點
+2. **王牌功能 spotlight**（靈活因子 × 獨門 Elo）
+3. 5 個版面嘅導航卡
+4. 焦點新聞卡（每日自動更新 · 見下文「新聞爬取」）
+5. 系統優勢標語（marquee）
+6. 收費計劃摘要
+7. 底部 CTA（加入候補 / 睇定價）
+
+### 5 個功能版面
+
+| 版面 | 圖示 | Route | 內容 |
+|---|---|---|---|
+| 儀表板 | 📊 | `/dashboard` | Elo 排行、今日賽事、數據庫統計（**用戶端唔 render 命中率**） |
+| 選馬助手 | 🔮 | `/predictor` | 即時賠率 + 靈活因子選擇 + AI 對話（王牌） |
+| 賽馬日曆 | 📅 | `/calendar` | 未來排位表、過往賽果快速跳轉 |
+| 馬匹百科 | 📖 | `/encyclopedia` | 每匹馬嘅 profile、形態、Elo 曲線 |
+| 馬迷聊天室 | 🌐 | `/chat` | Telegram 風格社群、話題室、實時討論 |
+
+---
+
+## 📰 焦點新聞爬取
+
+主版面嘅「今日焦點」section 需要**新聞爬取器**，計劃部署去 `tianxi-database`：
+
+- **目標 scraper**：`NewsScraper.py`（新增）
+- **來源**（優先次序）：HKJC News、South China Morning Post Racing、Oriental Daily 馬經版、Apple Daily 馬經、Google News RSS `site:racing.hkjc.com`
+- **輸出**：
+  - `data/news/YYYY-MM/news_items.csv`（title, url, source, published_at, summary, image_filename, tags）
+  - `data/news/images/<slug>.jpg`（壓縮縮圖）
+- **觸發**：每 6 小時 cron + 賽馬日前後 1 小時加頻
+- **status**: 🚧 未部署（P2 feature · 主版面 MVP 可先留 empty state）
+
+---
+
+## 📊 命中率政策（重要）
+
+**用戶端**：一切位置**唔顯示命中率**。避免令用戶猶豫 / 同其他 AI 比較。
+**內部端**：命中率係必須追蹤嘅系統健康指標（用於升級改良）。代碼隔離 — 見 `shared/internal.ts`。
+**揭示門檻**：整體 top-1 命中率 > 80% + 通過 checklist + user 親自拍板 → 先考慮對外展示。
+目前 2026-04-22 實測 top-1 = 11.1%，遠低於門檻。
 
 ---
 
