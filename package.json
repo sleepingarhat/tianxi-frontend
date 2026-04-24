@@ -1,0 +1,20 @@
+{
+  "name": "tianxi-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "天喜前端 · iOS / Android / Web 三端",
+  "workspaces": [
+    "app",
+    "web",
+    "shared"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev --workspace=web",
+    "dev:app": "npm run start --workspace=app",
+    "build:web": "npm run build --workspace=web",
+    "build:app": "npm run build --workspace=app"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
