@@ -5,7 +5,34 @@
  *   - 禁止以「命中率」做賣點
  *   - 4 大賣點：靈活因子 · 獨門 Elo · 龐大數據庫 · 賠率不加權
  *   - 語氣：粵語為主、略帶港風、專業而唔離地
+ *
+ * ⚠️ LAUNCH 策略（user directive 2026-04-25）：
+ *   - 上線時 NO PRICING · 標榜「限時免費試用 · 全功能開放」
+ *   - 禁用「升級」「付費解鎖」「睇計劃」「睇定價」字眼
+ *   - 任何原本導向 `/pricing` 嘅 CTA 要改去 `/beta` 或 `/signup`
+ *   - 見 shared/pricing.ts 嘅 PRICING_ENABLED flag + betaProgram export
  */
+
+/** Launch 階段免費試用 slogan 集合 · 散落各 hero / banner / CTA 用 */
+export const betaLaunch = {
+  primary: "限時免費試用 · 全功能開放",
+  secondary: "Beta 用戶優先 · 幫我哋一齊改進天喜",
+  short: "全功能免費試用",
+  chip: "Beta 免費",
+  banner: "天喜 Beta 版全功能免費試用中 · 立即加入",
+  thanks: "多謝你成為早期用戶，你嘅每一個 click 都係我哋改進嘅養份。",
+  vague: "限時", // intentionally no end date — user directive
+  ctaJoin: "免費開始用",
+  ctaJoinSub: "唔使填信用卡 · 電郵註冊即用",
+  featureListTitle: "Beta 期間全部免費",
+  featureList: [
+    "AI 選馬建議 · 全日全部場次",
+    "自選因子 + 自訂權重比例",
+    "Elo 深度回溯 + 進階聊天頻道",
+    "心水追蹤無上限",
+    "賽後對賬通知 · 完全無廣告",
+  ] as const,
+} as const;
 
 export const brand = {
   name: "天喜",
@@ -164,8 +191,12 @@ export const hero = {
   sub:
     "11 年數據、獨門 Elo、靈活因子。天喜幫你分析，最後仲係你話事。" +
     "市場呢個人人跟風嘅地方，清醒先係贏嘅開始。",
-  ctaPrimary: "立即試用",
+  // Launch 階段 CTA · 2026-04-25 user directive
+  ctaPrimary: "免費開始用",
+  ctaPrimarySub: "唔使信用卡 · 電郵註冊即用",
   ctaSecondary: "睇 Demo",
+  // Beta 告示 chip · 掛喺 hero headline 上面
+  betaRibbon: betaLaunch.primary,
   trustLine: "超過 886 場賽馬日嘅真實數據 · 不含任何「命中率」宣傳",
 } as const;
 
@@ -229,14 +260,41 @@ export const hub = {
     scraperTodo: true, // NewsScraper.py 未部署 · 見 tianxi-database plan.md
   },
 
-  /** 主頁 CTA 區（底部、推 waitlist / signup） */
+  /**
+   * 主頁 CTA 區（底部）
+   * 2026-04-25 user directive: launch 階段 NO PRICING.
+   * 舊 copy「首 3 個月半價 · 創始會員名額有限」+「睇定價」已移除。
+   */
   bottomCta: {
     title: "準備好親身感受？",
-    sub: "首 3 個月半價 · 創始會員名額有限",
-    primary: "加入候補",
-    primaryRoute: "/waitlist",
-    secondary: "睇定價",
-    secondaryRoute: "/pricing",
+    sub: "Beta 版全功能免費試用 · 唔使信用卡",
+    primary: "免費開始用",
+    primaryRoute: "/signup",
+    secondary: "了解 Beta 計劃",
+    secondaryRoute: "/beta",
+  },
+
+  /**
+   * Beta 專區卡（取代舊 v0.3 設計嘅「收費計劃」section）
+   * Hub 頁第 3 個 section = betaSection instead of pricing tiers.
+   */
+  betaSection: {
+    eyebrow: "Beta 免費期",
+    title: "全功能開放 · 唔使俾錢",
+    sub:
+      "我哋仲喺 beta 階段，想收集真實使用數據令系統做得更好。" +
+      "呢段時間全部功能免費解鎖，唔設訂閱、冇廣告。",
+    bullets: [
+      "AI 建議 · 每日每場全部解鎖",
+      "自選因子 + 自訂權重比例",
+      "Elo 深度回溯 + 進階聊天室",
+      "心水追蹤無上限 + 賽後對賬通知",
+    ] as const,
+    fineprint:
+      "日後我哋會根據使用情況考慮轉化方案。" +
+      "早期用戶會收到通知，並會獲得優先過渡條件。",
+    cta: "立即免費註冊",
+    ctaRoute: "/signup",
   },
 } as const;
 

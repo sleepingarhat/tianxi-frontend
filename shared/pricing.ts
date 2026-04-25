@@ -1,7 +1,40 @@
 /**
- * 天喜定價 · 繼承舊 tianxi-web 設計（2026-04-20）
- * 用戶批准：月費 HK$388 主推、季票 8.5 折
+ * 天喜定價
+ *
+ * LAUNCH POLICY (CONSTITUTIONAL · 2026-04-25):
+ * User directive: 上線時不要定收費，先累積用戶，標榜「限時免費試用」全功能。
+ * 條件成熟（註冊量 / DAU 到達內部 threshold）先考慮轉化賺錢。
+ *
+ * 所以 launch 階段:
+ *   - PRICING_ENABLED = false  → 前端必須唔 render 任何金額
+ *   - tiers / foundingMember 凍結保留（code reference only）
+ *   - Phase 2 開波時由 user 拍板 flip flag + revise 數字
+ *
+ * 凡係顯示價錢／升級 CTA／付費解鎖 UI 嘅地方，
+ * 都要檢查 PRICING_ENABLED，false 嘅情況下改 render Beta 文案。
  */
+
+export const PRICING_ENABLED = false as const;
+
+/**
+ * 當 PRICING_ENABLED = false 時，前端應該 render 嘅 Beta 訊息。
+ * 永遠唔提具體價錢、唔提具體結束日期（"一段時間" = intentionally vague）。
+ */
+export const betaProgram = {
+  headline: "限時免費試用 · 全功能開放",
+  subhead: "Beta 用戶優先 · 幫我哋一齊改進天喜",
+  bullets: [
+    "AI 選馬建議 — 全日全部場次解鎖",
+    "自選因子 + 自訂權重比例",
+    "Elo 深度回溯 + 進階聊天頻道",
+    "心水追蹤無上限 + 賽後對賬通知",
+    "完全無廣告",
+  ],
+  cta: "免費開始用",
+  note: "收集真實使用數據，持續改進系統。多謝你成為早期用戶。",
+} as const;
+
+// ---- 以下為 Phase 2 再 revive（現時唔 render）----
 
 export type PricingTier = {
   id: "weekly" | "monthly" | "quarterly";
