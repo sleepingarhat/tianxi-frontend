@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="375" height="1800" viewBox="0 0 375 1800" font-family="'Noto Sans TC', system-ui">
+
+  <defs>
+    <linearGradient id="brandGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1B5E3F"/>
+      <stop offset="50%" stop-color="#D4B78A"/>
+      <stop offset="100%" stop-color="#E6435A"/>
+    </linearGradient>
+    <linearGradient id="greenGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1B5E3F"/>
+      <stop offset="100%" stop-color="#3BBF7A"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="375" height="1800" fill="#0B1612"/>
+
+  <!-- Status bar -->
+  <rect x="0" y="0" width="375" height="44" fill="#0B1612"/>
+  <text x="20" y="28" font-family="'Noto Sans TC'" font-size="15" font-weight="600" fill="#F0EBDD">9:41</text>
+  <circle cx="310" cy="22" r="2" fill="#F0EBDD"/>
+  <circle cx="320" cy="22" r="2" fill="#F0EBDD"/>
+  <circle cx="330" cy="22" r="2" fill="#F0EBDD"/>
+  <circle cx="340" cy="22" r="2" fill="#F0EBDD"/>
+
+  <!-- Brandbar -->
+  <rect x="0" y="44" width="375" height="64" fill="#0B1612"/>
+  <g transform="translate(20,56)">
+    <rect x="0" y="0" width="40" height="40" rx="10" fill="url(#brandGradient)"/>
+    <text x="20" y="27" font-family="'Noto Sans TC'" font-size="20" font-weight="800" fill="#F0EBDD" text-anchor="middle">天</text>
+  </g>
+  <text x="72" y="76" font-family="'Noto Sans TC'" font-size="15" font-weight="700" fill="#F0EBDD">天喜娛樂</text>
+  <text x="72" y="94" font-family="'JetBrains Mono'" font-size="10" font-weight="600" fill="#B8B0A0" letter-spacing="1.5">TIANXI ENTERTAINMENT</text>
+  <circle cx="340" cy="76" r="14" fill="none" stroke="#2A3A32" stroke-width="1.5"/>
+  <circle cx="340" cy="72" r="5" fill="#3BBF7A"/>
+
+  <!-- Beta pill -->
+  <rect x="20" y="120" width="180" height="28" rx="14" fill="#1B5E3F"/>
+  <circle cx="34" cy="134" r="4" fill="#3BBF7A"/>
+  <text x="44" y="138" font-family="'Noto Sans TC'" font-size="12" font-weight="700" fill="#3BBF7A">Beta 免費 · 全功能開放</text>
+
+  <text x="20" y="186" font-family="'Noto Sans TC'" font-size="24" font-weight="800" fill="#F0EBDD">選馬神器</text>
+  <rect x="120" y="168" width="40" height="22" rx="4" fill="#E6435A"/>
+  <text x="140" y="183" font-family="'Noto Sans TC'" font-size="11" font-weight="800" fill="#F0EBDD" text-anchor="middle">王牌</text>
+  <text x="20" y="208" font-family="'Noto Sans TC'" font-size="13" fill="#B8B0A0">AI 計勝率 · 揀因子 · 搵值博</text>
+
+  <rect x="20" y="234" width="335" height="48" rx="12" fill="#13201C" stroke="#3BBF7A" stroke-width="1.5"/>
+  <text x="36" y="254" font-family="'Noto Sans TC'" font-size="11" fill="#7A7368">分析中</text>
+  <text x="36" y="272" font-family="'Noto Sans TC'" font-size="15" font-weight="700" fill="#F0EBDD">第 3 場 · 沙田 1200M 第四班</text>
+  <text x="340" y="264" font-family="'Noto Sans TC'" font-size="18" fill="#3BBF7A" text-anchor="end">▾</text>
+
+  <text x="20" y="320" font-family="'Noto Sans TC'" font-size="13" font-weight="700" fill="#F0EBDD">分析因子 (12 個全開)</text>
+  <text x="340" y="320" font-family="'Noto Sans TC'" font-size="11" fill="#3BBF7A" text-anchor="end">自訂 ›</text>
+
+  <rect x="20" y="334" width="116" height="28" rx="14" fill="#1B5E3F" stroke="#3BBF7A" stroke-width="1"/>
+  <text x="78.0" y="353" font-family="'Noto Sans TC'" font-size="11" font-weight="600" fill="#F0EBDD" text-anchor="middle">Elo v1.1</text>
+
+  <rect x="144" y="334" width="68" height="28" rx="14" fill="#1B5E3F" stroke="#3BBF7A" stroke-width="1"/>
+  <text x="178.0" y="353" font-family="'Noto Sans TC'" font-size="11" font-weight="600" fill="#F0EBDD" text-anchor="middle">場地偏差</text>
+
+  <rect x="220" y="334" width="44" height="28" rx="14" fill="#1B5E3F" stroke="#3BBF7A" stroke-width="1"/>
+  <text x="242.0" y="353" font-family="'Noto Sans TC'" font-size="11" font-weight="600" fill="#F0EBDD" text-anchor="middle">檔位</text>
+
+  <rect x="272" y="334" width="44" height="28" rx="14" fill="#1B5E3F" stroke="#3BBF7A" stroke-width="1"/>
+  <text x="294.0" y="353" font-family="'Noto Sans TC'" font-size="11" font-weight="600" fill="#F0EBDD" text-anchor="middle">負磅</text>
+
+  <rect x="20" y="370" width="44" height="28" rx="14" fill="#1B5E3F" stroke="#3BBF7A" stroke-width="1"/>
+  <text x="42.0" y="389" font-family="'Noto Sans TC'" font-size="11" font-weight="600" fill="#F0EBDD" text-anchor="middle">往績</text>
+
+  <rect x="72" y="370" width="44" height="28" rx="14" fill="#1B5E3F" stroke="#3BBF7A" stroke-width="1"/>
+  <text x="94.0" y="389" font-family="'Noto Sans TC'" font-size="11" font-weight="600" fill="#F0EBDD" text-anchor="middle">騎師</text>
+
+  <rect x="20" y="420" width="335" height="40" rx="8" fill="#1B2A24" stroke="#2A3A32" stroke-width="1"/>
+  <circle cx="36" cy="440" r="7" fill="none" stroke="#D4B78A" stroke-width="1.5"/>
+  <text x="36" y="445" font-family="'Noto Sans TC'" font-size="11" font-weight="800" fill="#D4B78A" text-anchor="middle">i</text>
+  <text x="52" y="437" font-family="'Noto Sans TC'" font-size="10" fill="#B8B0A0">賠率 = 0 權重 · 純物理向量計勝率</text>
+  <text x="52" y="451" font-family="'Noto Sans TC'" font-size="10" fill="#7A7368">(市場情緒唔入 model · 決定權交返俾你)</text>
+
+  <text x="20" y="498" font-family="'Noto Sans TC'" font-size="15" font-weight="700" fill="#F0EBDD">AI Top 3 推介</text>
+  <text x="340" y="498" font-family="'Noto Sans TC'" font-size="11" fill="#7A7368" text-anchor="end">依勝率排序</text>
+
+  <rect x="20" y="512" width="335" height="86" rx="14" fill="#E8B838" stroke="#2A3A32" stroke-width="1"/>
+  <circle cx="48" cy="555" r="20" fill="#3BBF7A" opacity="0.25"/>
+  <text x="48" y="562" font-family="'Noto Sans TC'" font-size="22" font-weight="800" fill="#3BBF7A" text-anchor="middle">1</text>
+  <text x="84" y="540" font-family="'Noto Sans TC'" font-size="17" font-weight="700" fill="#F0EBDD">時時精綵</text>
+  <text x="84" y="562" font-family="'JetBrains Mono'" font-size="11" fill="#7A7368">#3 · 騎師何澤堯 · 練馬師蔡約翰</text>
+  <text x="84" y="584" font-family="'Noto Sans TC'" font-size="10" fill="#B8B0A0">Elo 1768 · 最近 3 仗 1-2-1</text>
+  <text x="340" y="544" font-family="'Noto Sans TC'" font-size="10" fill="#7A7368" text-anchor="end">勝率</text>
+  <text x="340" y="566" font-family="'JetBrains Mono'" font-size="20" font-weight="800" fill="#3BBF7A" text-anchor="end">28.4%</text>
+  <rect x="280" y="574" width="55" height="18" rx="9" fill="#1B5E3F"/>
+  <text x="307" y="587" font-family="'Noto Sans TC'" font-size="9" font-weight="700" fill="#3BBF7A" text-anchor="middle">值博</text>
+
+  <rect x="20" y="608" width="335" height="86" rx="14" fill="#223329" stroke="#2A3A32" stroke-width="1"/>
+  <circle cx="48" cy="651" r="20" fill="#D4B78A" opacity="0.25"/>
+  <text x="48" y="658" font-family="'Noto Sans TC'" font-size="22" font-weight="800" fill="#D4B78A" text-anchor="middle">2</text>
+  <text x="84" y="636" font-family="'Noto Sans TC'" font-size="17" font-weight="700" fill="#F0EBDD">福逸</text>
+  <text x="84" y="658" font-family="'JetBrains Mono'" font-size="11" fill="#7A7368">#7 · 騎師何澤堯 · 練馬師蔡約翰</text>
+  <text x="84" y="680" font-family="'Noto Sans TC'" font-size="10" fill="#B8B0A0">Elo 1768 · 最近 3 仗 1-2-1</text>
+  <text x="340" y="640" font-family="'Noto Sans TC'" font-size="10" fill="#7A7368" text-anchor="end">勝率</text>
+  <text x="340" y="662" font-family="'JetBrains Mono'" font-size="20" font-weight="800" fill="#D4B78A" text-anchor="end">19.1%</text>
+  <rect x="280" y="670" width="55" height="18" rx="9" fill="#13201C"/>
+  <text x="307" y="683" font-family="'Noto Sans TC'" font-size="9" font-weight="700" fill="#D4B78A" text-anchor="middle">熱門</text>
+
+  <rect x="20" y="704" width="335" height="86" rx="14" fill="#223329" stroke="#2A3A32" stroke-width="1"/>
+  <circle cx="48" cy="747" r="20" fill="#B8B0A0" opacity="0.25"/>
+  <text x="48" y="754" font-family="'Noto Sans TC'" font-size="22" font-weight="800" fill="#B8B0A0" text-anchor="middle">3</text>
+  <text x="84" y="732" font-family="'Noto Sans TC'" font-size="17" font-weight="700" fill="#F0EBDD">北極光</text>
+  <text x="84" y="754" font-family="'JetBrains Mono'" font-size="11" fill="#7A7368">#2 · 騎師何澤堯 · 練馬師蔡約翰</text>
+  <text x="84" y="776" font-family="'Noto Sans TC'" font-size="10" fill="#B8B0A0">Elo 1768 · 最近 3 仗 1-2-1</text>
+  <text x="340" y="736" font-family="'Noto Sans TC'" font-size="10" fill="#7A7368" text-anchor="end">勝率</text>
+  <text x="340" y="758" font-family="'JetBrains Mono'" font-size="20" font-weight="800" fill="#B8B0A0" text-anchor="end">14.6%</text>
+  <rect x="280" y="766" width="55" height="18" rx="9" fill="#13201C"/>
+  <text x="307" y="779" font-family="'Noto Sans TC'" font-size="9" font-weight="700" fill="#B8B0A0" text-anchor="middle">均勢</text>
+
+  <rect x="20" y="806" width="335" height="140" rx="14" fill="#13201C" stroke="#1B5E3F" stroke-width="1"/>
+  <text x="36" y="830" font-family="'Noto Sans TC'" font-size="11" font-weight="700" fill="#3BBF7A" letter-spacing="1.2">AI 分析報告</text>
+  <text x="36" y="854" font-family="'Noto Sans TC'" font-size="13" font-weight="700" fill="#F0EBDD">點解揀「時時精綵」？</text>
+  <text x="36" y="876" font-family="'Noto Sans TC'" font-size="11" fill="#B8B0A0">• Elo 1768 · 同場第一 (平均 1631)</text>
+  <text x="36" y="894" font-family="'Noto Sans TC'" font-size="11" fill="#B8B0A0">• 沙田短途往績 4-1-2-0 (勝率 28%)</text>
+  <text x="36" y="912" font-family="'Noto Sans TC'" font-size="11" fill="#B8B0A0">• 3 號檔 · 近 6 仗 3 號檔頭馬率 35%</text>
+  <text x="36" y="930" font-family="'Noto Sans TC'" font-size="11" fill="#E8B838">• 市場賠率 8.5 倍 vs AI 勝率 28% · 值博</text>
+
+  <rect x="20" y="966" width="335" height="56" rx="28" fill="#1B2A24" stroke="#D4B78A" stroke-width="1.5"/>
+  <text x="40" y="1000" font-family="'Noto Sans TC'" font-size="13" fill="#7A7368">問 AI：點解呢場唔值博？</text>
+  <circle cx="325" cy="994" r="18" fill="#3BBF7A"/>
+  <path d="M 319 994 L 325 988 L 331 994 M 325 988 L 325 1000" stroke="#0B1612" stroke-width="2" fill="none"/>
+<rect x="0" y="1708" width="375" height="72" fill="#13201C" stroke="#2A3A32" stroke-width="1"/>
+  <circle cx="37" cy="1728" r="14" fill="none" stroke="#7A7368" stroke-width="1.5"/>
+  <text x="37" y="1733" font-family="'Noto Sans TC'" font-size="12" font-weight="700" fill="#7A7368" text-anchor="middle">儀</text>
+  <text x="37" y="1758" font-family="'Noto Sans TC'" font-size="9" font-weight="600" fill="#7A7368" text-anchor="middle">儀表板</text>
+  <circle cx="112" cy="1728" r="14" fill="#1B2A24" stroke="#3BBF7A" stroke-width="1.5"/>
+  <text x="112" y="1733" font-family="'Noto Sans TC'" font-size="12" font-weight="700" fill="#3BBF7A" text-anchor="middle">神</text>
+  <text x="112" y="1758" font-family="'Noto Sans TC'" font-size="9" font-weight="600" fill="#3BBF7A" text-anchor="middle">選馬神器</text>
+  <circle cx="187" cy="1728" r="14" fill="none" stroke="#7A7368" stroke-width="1.5"/>
+  <text x="187" y="1733" font-family="'Noto Sans TC'" font-size="12" font-weight="700" fill="#7A7368" text-anchor="middle">日</text>
+  <text x="187" y="1758" font-family="'Noto Sans TC'" font-size="9" font-weight="600" fill="#7A7368" text-anchor="middle">賽馬日程</text>
+  <circle cx="262" cy="1728" r="14" fill="none" stroke="#7A7368" stroke-width="1.5"/>
+  <text x="262" y="1733" font-family="'Noto Sans TC'" font-size="12" font-weight="700" fill="#7A7368" text-anchor="middle">科</text>
+  <text x="262" y="1758" font-family="'Noto Sans TC'" font-size="9" font-weight="600" fill="#7A7368" text-anchor="middle">馬匹百科</text>
+  <circle cx="337" cy="1728" r="14" fill="none" stroke="#7A7368" stroke-width="1.5"/>
+  <text x="337" y="1733" font-family="'Noto Sans TC'" font-size="12" font-weight="700" fill="#7A7368" text-anchor="middle">聊</text>
+  <text x="337" y="1758" font-family="'Noto Sans TC'" font-size="9" font-weight="600" fill="#7A7368" text-anchor="middle">馬圈聊天室</text>
+
+</svg>

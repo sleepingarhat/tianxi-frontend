@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="375" height="1500" viewBox="0 0 375 1500" font-family="'Noto Sans TC', system-ui">
+
+  <defs>
+    <linearGradient id="brandGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1B5E3F"/>
+      <stop offset="50%" stop-color="#D4B78A"/>
+      <stop offset="100%" stop-color="#E6435A"/>
+    </linearGradient>
+    <linearGradient id="greenGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1B5E3F"/>
+      <stop offset="100%" stop-color="#3BBF7A"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="375" height="1500" fill="#0B1612"/>
+
+  <!-- Status bar -->
+  <rect x="0" y="0" width="375" height="44" fill="#0B1612"/>
+  <text x="20" y="28" font-family="'Noto Sans TC'" font-size="15" font-weight="600" fill="#F0EBDD">9:41</text>
+  <circle cx="310" cy="22" r="2" fill="#F0EBDD"/>
+  <circle cx="320" cy="22" r="2" fill="#F0EBDD"/>
+  <circle cx="330" cy="22" r="2" fill="#F0EBDD"/>
+  <circle cx="340" cy="22" r="2" fill="#F0EBDD"/>
+
+  <!-- Brandbar -->
+  <rect x="0" y="44" width="375" height="64" fill="#0B1612"/>
+  <g transform="translate(20,56)">
+    <rect x="0" y="0" width="40" height="40" rx="10" fill="url(#brandGradient)"/>
+    <text x="20" y="27" font-family="'Noto Sans TC'" font-size="20" font-weight="800" fill="#F0EBDD" text-anchor="middle">天</text>
+  </g>
+  <text x="72" y="76" font-family="'Noto Sans TC'" font-size="15" font-weight="700" fill="#F0EBDD">天喜娛樂</text>
+  <text x="72" y="94" font-family="'JetBrains Mono'" font-size="10" font-weight="600" fill="#B8B0A0" letter-spacing="1.5">TIANXI ENTERTAINMENT</text>
+  <circle cx="340" cy="76" r="14" fill="none" stroke="#2A3A32" stroke-width="1.5"/>
+  <circle cx="340" cy="72" r="5" fill="#3BBF7A"/>
+
+  <!-- Beta pill -->
+  <rect x="20" y="120" width="180" height="28" rx="14" fill="#1B5E3F"/>
+  <circle cx="34" cy="134" r="4" fill="#3BBF7A"/>
+  <text x="44" y="138" font-family="'Noto Sans TC'" font-size="12" font-weight="700" fill="#3BBF7A">Beta 免費 · 全功能開放</text>
+
+  <text x="20" y="186" font-family="'Noto Sans TC'" font-size="24" font-weight="800" fill="#F0EBDD">賽馬日程</text>
+  <text x="20" y="208" font-family="'Noto Sans TC'" font-size="13" fill="#B8B0A0">2025-2026 賽季 · 152 個賽馬日</text>
+
+  <rect x="20" y="234" width="70" height="32" rx="16" fill="#13201C" stroke="#2A3A32" stroke-width="1"/>
+  <text x="55.0" y="255" font-family="'Noto Sans TC'" font-size="12" font-weight="700" fill="#B8B0A0" text-anchor="middle">4月</text>
+
+  <rect x="100" y="234" width="70" height="32" rx="16" fill="#3BBF7A" stroke="#3BBF7A" stroke-width="1"/>
+  <text x="135.0" y="255" font-family="'Noto Sans TC'" font-size="12" font-weight="700" fill="#0B1612" text-anchor="middle">5月</text>
+
+  <rect x="180" y="234" width="70" height="32" rx="16" fill="#13201C" stroke="#2A3A32" stroke-width="1"/>
+  <text x="215.0" y="255" font-family="'Noto Sans TC'" font-size="12" font-weight="700" fill="#B8B0A0" text-anchor="middle">6月</text>
+
+  <rect x="260" y="234" width="70" height="32" rx="16" fill="#13201C" stroke="#2A3A32" stroke-width="1"/>
+  <text x="295.0" y="255" font-family="'Noto Sans TC'" font-size="12" font-weight="700" fill="#B8B0A0" text-anchor="middle">7月</text>
+
+  <rect x="20" y="286" width="335" height="64" rx="12" fill="#1B2A24" stroke="#2A3A32" stroke-width="1"/>
+  <text x="36" y="310" font-family="'Noto Sans TC'" font-size="10" fill="#7A7368">5 月總場次</text>
+  <text x="36" y="336" font-family="'JetBrains Mono'" font-size="22" font-weight="800" fill="#3BBF7A">9 日</text>
+  <line x1="120" y1="298" x2="120" y2="338" stroke="#2A3A32" stroke-width="1"/>
+  <text x="140" y="310" font-family="'Noto Sans TC'" font-size="10" fill="#7A7368">沙田</text>
+  <text x="140" y="336" font-family="'JetBrains Mono'" font-size="22" font-weight="800" fill="#D4B78A">6</text>
+  <line x1="220" y1="298" x2="220" y2="338" stroke="#2A3A32" stroke-width="1"/>
+  <text x="240" y="310" font-family="'Noto Sans TC'" font-size="10" fill="#7A7368">跑馬地</text>
+  <text x="240" y="336" font-family="'JetBrains Mono'" font-size="22" font-weight="800" fill="#E6435A">3</text>
+
+  <rect x="20" y="370" width="335" height="72" rx="12" fill="#13201C" stroke="#E8B838" stroke-width="1.5"/>
+  <rect x="20" y="370" width="4" height="72" rx="2" fill="#E8B838"/>
+  <text x="36" y="394" font-family="'Noto Sans TC'" font-size="15" font-weight="700" fill="#F0EBDD">5 月 3 日</text>
+  <text x="150" y="394" font-family="'Noto Sans TC'" font-size="11" fill="#B8B0A0">星期六</text>
+  <text x="36" y="416" font-family="'Noto Sans TC'" font-size="12" fill="#B8B0A0">沙田 · 日賽</text>
+  <text x="36" y="432" font-family="'JetBrains Mono'" font-size="10" fill="#7A7368">10 場</text>
+  <text x="340" y="402" font-family="'Noto Sans TC'" font-size="10" fill="#E8B838" text-anchor="end">即將舉行</text>
+  <text x="340" y="425" font-family="'Noto Sans TC'" font-size="12" fill="#3BBF7A" text-anchor="end">查看 ›</text>
+
+  <rect x="20" y="452" width="335" height="72" rx="12" fill="#13201C" stroke="#2A3A32" stroke-width="1"/>
+  <rect x="20" y="452" width="4" height="72" rx="2" fill="#D4B78A"/>
+  <text x="36" y="476" font-family="'Noto Sans TC'" font-size="15" font-weight="700" fill="#F0EBDD">5 月 7 日</text>
+  <text x="150" y="476" font-family="'Noto Sans TC'" font-size="11" fill="#B8B0A0">星期三</text>
+  <text x="36" y="498" font-family="'Noto Sans TC'" font-size="12" fill="#B8B0A0">跑馬地 · 夜賽</text>
+  <text x="36" y="514" font-family="'JetBrains Mono'" font-size="10" fill="#7A7368">8 場</text>
+  <text x="340" y="484" font-family="'Noto Sans TC'" font-size="10" fill="#D4B78A" text-anchor="end">5 天後</text>
+  <text x="340" y="507" font-family="'Noto Sans TC'" font-size="12" fill="#3BBF7A" text-anchor="end">查看 ›</text>
+
+  <rect x="20" y="534" width="335" height="72" rx="12" fill="#13201C" stroke="#2A3A32" stroke-width="1"/>
+  <rect x="20" y="534" width="4" height="72" rx="2" fill="#D4B78A"/>
+  <text x="36" y="558" font-family="'Noto Sans TC'" font-size="15" font-weight="700" fill="#F0EBDD">5 月 10 日</text>
+  <text x="150" y="558" font-family="'Noto Sans TC'" font-size="11" fill="#B8B0A0">星期六</text>
+  <text x="36" y="580" font-family="'Noto Sans TC'" font-size="12" fill="#B8B0A0">沙田 · 日賽</text>
+  <text x="36" y="596" font-family="'JetBrains Mono'" font-size="10" fill="#7A7368">10 場</text>
+  <text x="340" y="566" font-family="'Noto Sans TC'" font-size="10" fill="#D4B78A" text-anchor="end">8 天後</text>
+  <text x="340" y="589" font-family="'Noto Sans TC'" font-size="12" fill="#3BBF7A" text-anchor="end">查看 ›</text>
+
+  <rect x="20" y="616" width="335" height="72" rx="12" fill="#13201C" stroke="#2A3A32" stroke-width="1"/>
+  <rect x="20" y="616" width="4" height="72" rx="2" fill="#7A7368"/>
+  <text x="36" y="640" font-family="'Noto Sans TC'" font-size="15" font-weight="700" fill="#F0EBDD">5 月 14 日</text>
+  <text x="150" y="640" font-family="'Noto Sans TC'" font-size="11" fill="#B8B0A0">星期三</text>
+  <text x="36" y="662" font-family="'Noto Sans TC'" font-size="12" fill="#B8B0A0">跑馬地 · 夜賽</text>
+  <text x="36" y="678" font-family="'JetBrains Mono'" font-size="10" fill="#7A7368">8 場</text>
+  <text x="340" y="648" font-family="'Noto Sans TC'" font-size="10" fill="#7A7368" text-anchor="end">12 天後</text>
+  <text x="340" y="671" font-family="'Noto Sans TC'" font-size="12" fill="#3BBF7A" text-anchor="end">查看 ›</text>
+
+  <rect x="20" y="698" width="335" height="72" rx="12" fill="#13201C" stroke="#2A3A32" stroke-width="1"/>
+  <rect x="20" y="698" width="4" height="72" rx="2" fill="#7A7368"/>
+  <text x="36" y="722" font-family="'Noto Sans TC'" font-size="15" font-weight="700" fill="#F0EBDD">5 月 17 日</text>
+  <text x="150" y="722" font-family="'Noto Sans TC'" font-size="11" fill="#B8B0A0">星期六</text>
+  <text x="36" y="744" font-family="'Noto Sans TC'" font-size="12" fill="#B8B0A0">沙田 · 日賽</text>
+  <text x="36" y="760" font-family="'JetBrains Mono'" font-size="10" fill="#7A7368">11 場</text>
+  <text x="340" y="730" font-family="'Noto Sans TC'" font-size="10" fill="#7A7368" text-anchor="end">15 天後</text>
+  <text x="340" y="753" font-family="'Noto Sans TC'" font-size="12" fill="#3BBF7A" text-anchor="end">查看 ›</text>
+
+  <rect x="20" y="780" width="335" height="72" rx="12" fill="#13201C" stroke="#2A3A32" stroke-width="1"/>
+  <rect x="20" y="780" width="4" height="72" rx="2" fill="#7A7368"/>
+  <text x="36" y="804" font-family="'Noto Sans TC'" font-size="15" font-weight="700" fill="#F0EBDD">5 月 21 日</text>
+  <text x="150" y="804" font-family="'Noto Sans TC'" font-size="11" fill="#B8B0A0">星期三</text>
+  <text x="36" y="826" font-family="'Noto Sans TC'" font-size="12" fill="#B8B0A0">跑馬地 · 夜賽</text>
+  <text x="36" y="842" font-family="'JetBrains Mono'" font-size="10" fill="#7A7368">8 場</text>
+  <text x="340" y="812" font-family="'Noto Sans TC'" font-size="10" fill="#7A7368" text-anchor="end">19 天後</text>
+  <text x="340" y="835" font-family="'Noto Sans TC'" font-size="12" fill="#3BBF7A" text-anchor="end">查看 ›</text>
+<rect x="0" y="1408" width="375" height="72" fill="#13201C" stroke="#2A3A32" stroke-width="1"/>
+  <circle cx="37" cy="1428" r="14" fill="none" stroke="#7A7368" stroke-width="1.5"/>
+  <text x="37" y="1433" font-family="'Noto Sans TC'" font-size="12" font-weight="700" fill="#7A7368" text-anchor="middle">儀</text>
+  <text x="37" y="1458" font-family="'Noto Sans TC'" font-size="9" font-weight="600" fill="#7A7368" text-anchor="middle">儀表板</text>
+  <circle cx="112" cy="1428" r="14" fill="none" stroke="#7A7368" stroke-width="1.5"/>
+  <text x="112" y="1433" font-family="'Noto Sans TC'" font-size="12" font-weight="700" fill="#7A7368" text-anchor="middle">神</text>
+  <text x="112" y="1458" font-family="'Noto Sans TC'" font-size="9" font-weight="600" fill="#7A7368" text-anchor="middle">選馬神器</text>
+  <circle cx="187" cy="1428" r="14" fill="#1B2A24" stroke="#3BBF7A" stroke-width="1.5"/>
+  <text x="187" y="1433" font-family="'Noto Sans TC'" font-size="12" font-weight="700" fill="#3BBF7A" text-anchor="middle">日</text>
+  <text x="187" y="1458" font-family="'Noto Sans TC'" font-size="9" font-weight="600" fill="#3BBF7A" text-anchor="middle">賽馬日程</text>
+  <circle cx="262" cy="1428" r="14" fill="none" stroke="#7A7368" stroke-width="1.5"/>
+  <text x="262" y="1433" font-family="'Noto Sans TC'" font-size="12" font-weight="700" fill="#7A7368" text-anchor="middle">科</text>
+  <text x="262" y="1458" font-family="'Noto Sans TC'" font-size="9" font-weight="600" fill="#7A7368" text-anchor="middle">馬匹百科</text>
+  <circle cx="337" cy="1428" r="14" fill="none" stroke="#7A7368" stroke-width="1.5"/>
+  <text x="337" y="1433" font-family="'Noto Sans TC'" font-size="12" font-weight="700" fill="#7A7368" text-anchor="middle">聊</text>
+  <text x="337" y="1458" font-family="'Noto Sans TC'" font-size="9" font-weight="600" fill="#7A7368" text-anchor="middle">馬圈聊天室</text>
+
+</svg>

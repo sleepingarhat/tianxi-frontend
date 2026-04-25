@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="375" height="1500" viewBox="0 0 375 1500" font-family="'Noto Sans TC', system-ui">
+
+  <defs>
+    <linearGradient id="brandGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1B5E3F"/>
+      <stop offset="50%" stop-color="#D4B78A"/>
+      <stop offset="100%" stop-color="#E6435A"/>
+    </linearGradient>
+    <linearGradient id="greenGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1B5E3F"/>
+      <stop offset="100%" stop-color="#3BBF7A"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="375" height="1500" fill="#0B1612"/>
+
+  <!-- Status bar -->
+  <rect x="0" y="0" width="375" height="44" fill="#0B1612"/>
+  <text x="20" y="28" font-family="'Noto Sans TC'" font-size="15" font-weight="600" fill="#F0EBDD">9:41</text>
+  <circle cx="310" cy="22" r="2" fill="#F0EBDD"/>
+  <circle cx="320" cy="22" r="2" fill="#F0EBDD"/>
+  <circle cx="330" cy="22" r="2" fill="#F0EBDD"/>
+  <circle cx="340" cy="22" r="2" fill="#F0EBDD"/>
+
+  <!-- Brandbar -->
+  <rect x="0" y="44" width="375" height="64" fill="#0B1612"/>
+  <g transform="translate(20,56)">
+    <rect x="0" y="0" width="40" height="40" rx="10" fill="url(#brandGradient)"/>
+    <text x="20" y="27" font-family="'Noto Sans TC'" font-size="20" font-weight="800" fill="#F0EBDD" text-anchor="middle">天</text>
+  </g>
+  <text x="72" y="76" font-family="'Noto Sans TC'" font-size="15" font-weight="700" fill="#F0EBDD">天喜娛樂</text>
+  <text x="72" y="94" font-family="'JetBrains Mono'" font-size="10" font-weight="600" fill="#B8B0A0" letter-spacing="1.5">TIANXI ENTERTAINMENT</text>
+  <circle cx="340" cy="76" r="14" fill="none" stroke="#2A3A32" stroke-width="1.5"/>
+  <circle cx="340" cy="72" r="5" fill="#3BBF7A"/>
+
+  <!-- Beta pill -->
+  <rect x="20" y="120" width="180" height="28" rx="14" fill="#1B5E3F"/>
+  <circle cx="34" cy="134" r="4" fill="#3BBF7A"/>
+  <text x="44" y="138" font-family="'Noto Sans TC'" font-size="12" font-weight="700" fill="#3BBF7A">Beta 免費 · 全功能開放</text>
+
+  <text x="20" y="186" font-family="'Noto Sans TC'" font-size="24" font-weight="800" fill="#F0EBDD">馬匹百科</text>
+  <text x="20" y="208" font-family="'Noto Sans TC'" font-size="13" fill="#B8B0A0">8,361 隻馬 · 11 年歷史</text>
+
+  <rect x="20" y="234" width="335" height="48" rx="24" fill="#1B2A24" stroke="#2A3A32" stroke-width="1"/>
+  <circle cx="40" cy="258" r="7" fill="none" stroke="#7A7368" stroke-width="1.5"/>
+  <line x1="45" y1="263" x2="50" y2="268" stroke="#7A7368" stroke-width="1.5"/>
+  <text x="58" y="263" font-family="'Noto Sans TC'" font-size="13" fill="#7A7368">搜尋馬名 / 馬主 / 騎師 / 練馬師</text>
+
+  <rect x="20" y="298" width="48" height="28" rx="14" fill="#3BBF7A" stroke="#3BBF7A" stroke-width="1"/>
+  <text x="44.0" y="317" font-family="'Noto Sans TC'" font-size="11" font-weight="700" fill="#0B1612" text-anchor="middle">全部</text>
+
+  <rect x="76" y="298" width="48" height="28" rx="14" fill="#13201C" stroke="#2A3A32" stroke-width="1"/>
+  <text x="100.0" y="317" font-family="'Noto Sans TC'" font-size="11" font-weight="700" fill="#B8B0A0" text-anchor="middle">現役</text>
+
+  <rect x="132" y="298" width="48" height="28" rx="14" fill="#13201C" stroke="#2A3A32" stroke-width="1"/>
+  <text x="156.0" y="317" font-family="'Noto Sans TC'" font-size="11" font-weight="700" fill="#B8B0A0" text-anchor="middle">熱門</text>
+
+  <rect x="188" y="298" width="48" height="28" rx="14" fill="#13201C" stroke="#2A3A32" stroke-width="1"/>
+  <text x="212.0" y="317" font-family="'Noto Sans TC'" font-size="11" font-weight="700" fill="#B8B0A0" text-anchor="middle">新星</text>
+
+  <rect x="244" y="298" width="48" height="28" rx="14" fill="#13201C" stroke="#2A3A32" stroke-width="1"/>
+  <text x="268.0" y="317" font-family="'Noto Sans TC'" font-size="11" font-weight="700" fill="#B8B0A0" text-anchor="middle">老將</text>
+
+  <text x="20" y="366" font-family="'Noto Sans TC'" font-size="15" font-weight="700" fill="#F0EBDD">本週熱搜</text>
+
+  <rect x="20" y="380" width="160" height="118" rx="14" fill="#13201C" stroke="#2A3A32" stroke-width="1"/>
+  <rect x="20" y="380" width="160" height="36" rx="14" fill="#3BBF7A" opacity="0.18"/>
+  <text x="36" y="404" font-family="'Noto Sans TC'" font-size="14" font-weight="700" fill="#F0EBDD">時時精綵</text>
+  <text x="36" y="436" font-family="'JetBrains Mono'" font-size="10" fill="#7A7368">#E234</text>
+  <text x="36" y="456" font-family="'Noto Sans TC'" font-size="10" fill="#B8B0A0">現役 · F 班</text>
+  <text x="36" y="472" font-family="'Noto Sans TC'" font-size="10" fill="#B8B0A0">4 歲</text>
+  <text x="164" y="436" font-family="'Noto Sans TC'" font-size="9" fill="#7A7368" text-anchor="end">Elo</text>
+  <text x="164" y="458" font-family="'JetBrains Mono'" font-size="16" font-weight="800" fill="#3BBF7A" text-anchor="end">1768</text>
+  <text x="164" y="484" font-family="'Noto Sans TC'" font-size="10" fill="#3BBF7A" text-anchor="end">查看 ›</text>
+
+  <rect x="195" y="380" width="160" height="118" rx="14" fill="#13201C" stroke="#2A3A32" stroke-width="1"/>
+  <rect x="195" y="380" width="160" height="36" rx="14" fill="#E8B838" opacity="0.18"/>
+  <text x="211" y="404" font-family="'Noto Sans TC'" font-size="14" font-weight="700" fill="#F0EBDD">金鎗六十</text>
+  <text x="211" y="436" font-family="'JetBrains Mono'" font-size="10" fill="#7A7368">#D001</text>
+  <text x="211" y="456" font-family="'Noto Sans TC'" font-size="10" fill="#B8B0A0">已退役</text>
+  <text x="211" y="472" font-family="'Noto Sans TC'" font-size="10" fill="#B8B0A0">8 歲</text>
+  <text x="339" y="436" font-family="'Noto Sans TC'" font-size="9" fill="#7A7368" text-anchor="end">Elo</text>
+  <text x="339" y="458" font-family="'JetBrains Mono'" font-size="16" font-weight="800" fill="#E8B838" text-anchor="end">1816</text>
+  <text x="339" y="484" font-family="'Noto Sans TC'" font-size="10" fill="#3BBF7A" text-anchor="end">查看 ›</text>
+
+  <rect x="20" y="510" width="160" height="118" rx="14" fill="#13201C" stroke="#2A3A32" stroke-width="1"/>
+  <rect x="20" y="510" width="160" height="36" rx="14" fill="#D4B78A" opacity="0.18"/>
+  <text x="36" y="534" font-family="'Noto Sans TC'" font-size="14" font-weight="700" fill="#F0EBDD">福逸</text>
+  <text x="36" y="566" font-family="'JetBrains Mono'" font-size="10" fill="#7A7368">#F102</text>
+  <text x="36" y="586" font-family="'Noto Sans TC'" font-size="10" fill="#B8B0A0">現役 · 三班</text>
+  <text x="36" y="602" font-family="'Noto Sans TC'" font-size="10" fill="#B8B0A0">5 歲</text>
+  <text x="164" y="566" font-family="'Noto Sans TC'" font-size="9" fill="#7A7368" text-anchor="end">Elo</text>
+  <text x="164" y="588" font-family="'JetBrains Mono'" font-size="16" font-weight="800" fill="#D4B78A" text-anchor="end">1742</text>
+  <text x="164" y="614" font-family="'Noto Sans TC'" font-size="10" fill="#3BBF7A" text-anchor="end">查看 ›</text>
+
+  <rect x="195" y="510" width="160" height="118" rx="14" fill="#13201C" stroke="#2A3A32" stroke-width="1"/>
+  <rect x="195" y="510" width="160" height="36" rx="14" fill="#E6435A" opacity="0.18"/>
+  <text x="211" y="534" font-family="'Noto Sans TC'" font-size="14" font-weight="700" fill="#F0EBDD">北極光</text>
+  <text x="211" y="566" font-family="'JetBrains Mono'" font-size="10" fill="#7A7368">#G015</text>
+  <text x="211" y="586" font-family="'Noto Sans TC'" font-size="10" fill="#B8B0A0">現役 · 二班</text>
+  <text x="211" y="602" font-family="'Noto Sans TC'" font-size="10" fill="#B8B0A0">4 歲</text>
+  <text x="339" y="566" font-family="'Noto Sans TC'" font-size="9" fill="#7A7368" text-anchor="end">Elo</text>
+  <text x="339" y="588" font-family="'JetBrains Mono'" font-size="16" font-weight="800" fill="#E6435A" text-anchor="end">1715</text>
+  <text x="339" y="614" font-family="'Noto Sans TC'" font-size="10" fill="#3BBF7A" text-anchor="end">查看 ›</text>
+
+  <text x="20" y="668" font-family="'Noto Sans TC'" font-size="15" font-weight="700" fill="#F0EBDD">瀏覽分類</text>
+
+  <rect x="20" y="682" width="160" height="80" rx="12" fill="#13201C" stroke="#2A3A32" stroke-width="1"/>
+  <text x="36" y="710" font-family="'Noto Sans TC'" font-size="14" font-weight="700" fill="#F0EBDD">練馬師</text>
+  <text x="36" y="732" font-family="'Noto Sans TC'" font-size="11" fill="#B8B0A0">67 位</text>
+  <text x="164" y="732" font-family="'Noto Sans TC'" font-size="14" fill="#3BBF7A" text-anchor="end">›</text>
+
+  <rect x="195" y="682" width="160" height="80" rx="12" fill="#13201C" stroke="#2A3A32" stroke-width="1"/>
+  <text x="211" y="710" font-family="'Noto Sans TC'" font-size="14" font-weight="700" fill="#F0EBDD">騎師</text>
+  <text x="211" y="732" font-family="'Noto Sans TC'" font-size="11" fill="#B8B0A0">約 100 位</text>
+  <text x="339" y="732" font-family="'Noto Sans TC'" font-size="14" fill="#3BBF7A" text-anchor="end">›</text>
+
+  <rect x="20" y="772" width="160" height="80" rx="12" fill="#13201C" stroke="#2A3A32" stroke-width="1"/>
+  <text x="36" y="800" font-family="'Noto Sans TC'" font-size="14" font-weight="700" fill="#F0EBDD">馬主</text>
+  <text x="36" y="822" font-family="'Noto Sans TC'" font-size="11" fill="#B8B0A0">數百位</text>
+  <text x="164" y="822" font-family="'Noto Sans TC'" font-size="14" fill="#3BBF7A" text-anchor="end">›</text>
+
+  <rect x="195" y="772" width="160" height="80" rx="12" fill="#13201C" stroke="#2A3A32" stroke-width="1"/>
+  <text x="211" y="800" font-family="'Noto Sans TC'" font-size="14" font-weight="700" fill="#F0EBDD">配種系列</text>
+  <text x="211" y="822" font-family="'Noto Sans TC'" font-size="11" fill="#B8B0A0">族譜</text>
+  <text x="339" y="822" font-family="'Noto Sans TC'" font-size="14" fill="#3BBF7A" text-anchor="end">›</text>
+<rect x="0" y="1408" width="375" height="72" fill="#13201C" stroke="#2A3A32" stroke-width="1"/>
+  <circle cx="37" cy="1428" r="14" fill="none" stroke="#7A7368" stroke-width="1.5"/>
+  <text x="37" y="1433" font-family="'Noto Sans TC'" font-size="12" font-weight="700" fill="#7A7368" text-anchor="middle">儀</text>
+  <text x="37" y="1458" font-family="'Noto Sans TC'" font-size="9" font-weight="600" fill="#7A7368" text-anchor="middle">儀表板</text>
+  <circle cx="112" cy="1428" r="14" fill="none" stroke="#7A7368" stroke-width="1.5"/>
+  <text x="112" y="1433" font-family="'Noto Sans TC'" font-size="12" font-weight="700" fill="#7A7368" text-anchor="middle">神</text>
+  <text x="112" y="1458" font-family="'Noto Sans TC'" font-size="9" font-weight="600" fill="#7A7368" text-anchor="middle">選馬神器</text>
+  <circle cx="187" cy="1428" r="14" fill="none" stroke="#7A7368" stroke-width="1.5"/>
+  <text x="187" y="1433" font-family="'Noto Sans TC'" font-size="12" font-weight="700" fill="#7A7368" text-anchor="middle">日</text>
+  <text x="187" y="1458" font-family="'Noto Sans TC'" font-size="9" font-weight="600" fill="#7A7368" text-anchor="middle">賽馬日程</text>
+  <circle cx="262" cy="1428" r="14" fill="#1B2A24" stroke="#3BBF7A" stroke-width="1.5"/>
+  <text x="262" y="1433" font-family="'Noto Sans TC'" font-size="12" font-weight="700" fill="#3BBF7A" text-anchor="middle">科</text>
+  <text x="262" y="1458" font-family="'Noto Sans TC'" font-size="9" font-weight="600" fill="#3BBF7A" text-anchor="middle">馬匹百科</text>
+  <circle cx="337" cy="1428" r="14" fill="none" stroke="#7A7368" stroke-width="1.5"/>
+  <text x="337" y="1433" font-family="'Noto Sans TC'" font-size="12" font-weight="700" fill="#7A7368" text-anchor="middle">聊</text>
+  <text x="337" y="1458" font-family="'Noto Sans TC'" font-size="9" font-weight="600" fill="#7A7368" text-anchor="middle">馬圈聊天室</text>
+
+</svg>
