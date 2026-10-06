@@ -1,0 +1,25 @@
+<!-- ================================================================
+     天喜 TIANXI · Shared partials reference
+     ----------------------------------------------------------------
+     As of 2026-05-22 brandbar + botnav are injected at runtime by
+     /assets/shell.js. Each page only needs:
+
+       <body data-page="<key>">          (key: dashboard | predictor |
+                                          schedule | encyclopedia |
+                                          marksix | home | race | horse |
+                                          results | pool-odds | engine |
+                                          login | 404)
+
+       <script src="/assets/theme.js"></script>           (in <head>, sync)
+       <script src="/assets/shell.js" defer></script>     (in <head>)
+
+       <header class="brandbar" data-tx-shell="brandbar"></header>
+       <!-- page content -->
+       <footer class="disclaimer">…</footer>   ← per-page, NOT injected
+       <nav class="botnav" data-tx-shell="botnav"></nav>
+
+     Disclaimer is intentionally per-page because:
+       - marksix: 過往攪珠結果免責提示
+       - predictor/schedule: minor variants
+       - index / horse / race: omitted by design
+     ================================================================ -->

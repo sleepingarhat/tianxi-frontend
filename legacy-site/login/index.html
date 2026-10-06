@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="utf-8">
+<script src="/assets/theme.js"></script>
+  <script src="/assets/shell.js" defer></script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#FDFBF5">
+<title>登入 · 天喜 TIANXI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/tokens.css">
+<link rel="stylesheet" href="/assets/shell.css"><style>
+
+.login-wrap{padding:32px 24px;max-width:380px;margin:0 auto}
+.login-hero{text-align:center;margin-bottom:32px}
+.login-hero__glyph{width:64px;height:64px;margin:0 auto 16px;background:linear-gradient(135deg,var(--green),var(--brown) 50%,var(--red));border-radius:14px;border:1.5px solid var(--gold-2);display:grid;place-items:center;color:var(--gold-3);font-family:var(--font-display);font-size:36px;font-weight:900;box-shadow:var(--sh-md)}
+.login-hero h2{font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--ink);margin-bottom:6px}
+.login-hero p{font-size:12px;color:var(--ink-mute);letter-spacing:0.08em}
+.login-input{width:100%;padding:14px 16px;border:1px solid var(--rule);border-radius:10px;background:var(--paper-2);font-family:var(--font-body);font-size:14px;color:var(--ink);margin-bottom:10px}
+.login-input:focus{outline:0;border-color:var(--gold-2)}
+.btn-login{width:100%;padding:14px;background:var(--ink);color:var(--gold-3);border-radius:10px;font-family:var(--font-display);font-weight:700;font-size:14px;letter-spacing:0.1em}
+.login-divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:var(--ink-faint);font-size:10px;letter-spacing:0.12em}
+.login-divider::before,.login-divider::after{content:"";flex:1;height:1px;background:var(--rule)}
+.btn-oauth{width:100%;padding:12px;border:1px solid var(--rule);background:var(--paper);border-radius:10px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:8px}
+.btn-oauth svg{width:18px;height:18px}
+.login-note{margin-top:24px;padding:12px;background:var(--gold-tint);border-radius:8px;font-size:11px;color:var(--brown);line-height:1.5}
+
+</style>
+</head>
+<body data-page="login">
+<div class="shell">
+
+<header class="brandbar" data-tx-shell="brandbar"></header>
+
+<div class="ticker">
+  <strong>HK 04:26 Sun</strong> · R1 T-07:54:00 · <span class="down">#5 ↓ 4.1</span> · <span class="down">#11 ↓ 4.2</span> · <span class="up">#1 ↑ 9.0</span> · 沙田 好地
+</div>
+
+
+<div class="login-wrap">
+  <div class="login-hero">
+    <div class="login-hero__glyph">喜</div>
+    <h1>歡迎返嚟天喜</h1>
+    <p>TIANXI · BETA · FREE TRIAL</p>
+  </div>
+
+  <form>
+    <input class="login-input" type="email" placeholder="電郵 / 手機號碼">
+    <input class="login-input" type="password" placeholder="密碼">
+    <button type="button" class="btn-login">登入</button>
+  </form>
+
+  <div style="text-align:right;margin-top:10px"><a href="#" style="font-size:12px;color:var(--ink-mute)">忘記密碼？</a></div>
+
+  <div class="login-divider">或用以下方式登入</div>
+
+  <button class="btn-oauth">
+    <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+    Google 繼續
+  </button>
+
+  <button class="btn-oauth">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+    以 Apple ID 繼續
+  </button>
+
+  <div class="login-note">
+    <strong>Beta 限時免費試用</strong><br>
+    所有功能解鎖 · 唔收費 · 幫我哋一齊改進天喜
+  </div>
+
+  <div style="text-align:center;margin-top:20px;font-size:12px;color:var(--ink-mute)">
+    未有帳號？ <a href="#" style="color:var(--brown);font-weight:600">立即註冊</a>
+  </div>
+</div>
+
+
+<footer class="disclaimer">
+  <strong>天喜為分析平台，不提供投注服務。</strong><br>
+  投注請透過合法渠道（HKJC）進行。本頁數據僅供研究分析。<br>
+  Analysis platform · NO betting services · Data for research only
+</footer>
+
+
+<nav class="botnav" data-tx-shell="botnav"></nav>
+
+</div>
+
+</body>
+</html>
