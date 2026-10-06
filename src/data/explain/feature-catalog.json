@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 1,
+  "features": [
+    {
+      "id": "h_elo",
+      "group": "實力",
+      "labelZh": "馬匹 Elo",
+      "lovableLabel": "馬匹實力"
+    },
+    {
+      "id": "j_elo",
+      "group": "實力",
+      "labelZh": "騎師 Elo",
+      "lovableLabel": "騎師"
+    },
+    {
+      "id": "t_elo",
+      "group": "實力",
+      "labelZh": "練馬師 Elo",
+      "lovableLabel": "練馬師"
+    },
+    {
+      "id": "draw",
+      "group": "場次",
+      "labelZh": "檔位",
+      "lovableLabel": "檔位"
+    },
+    {
+      "id": "draw_pct",
+      "group": "場次",
+      "labelZh": "檔位百分位",
+      "lovableLabel": "檔位相對位置"
+    },
+    {
+      "id": "draw_x_dist",
+      "group": "交互",
+      "labelZh": "檔位×途程",
+      "lovableLabel": "檔位與途程配合"
+    },
+    {
+      "id": "draw_x_sprint",
+      "group": "交互",
+      "labelZh": "檔位×短途",
+      "lovableLabel": "短途檔位"
+    },
+    {
+      "id": "distance",
+      "group": "場次",
+      "labelZh": "途程",
+      "lovableLabel": "途程"
+    },
+    {
+      "id": "is_sprint",
+      "group": "場次",
+      "labelZh": "短途旗",
+      "lovableLabel": "短途"
+    },
+    {
+      "id": "actual_weight",
+      "group": "場次",
+      "labelZh": "負磅",
+      "lovableLabel": "負磅"
+    },
+    {
+      "id": "going_code",
+      "group": "場次",
+      "labelZh": "场地",
+      "lovableLabel": "场地狀況"
+    },
+    {
+      "id": "days_since_last",
+      "group": "狀態",
+      "labelZh": "距上仗日數",
+      "lovableLabel": "休息日數"
+    },
+    {
+      "id": "is_layoff55",
+      "group": "狀態",
+      "labelZh": "久休",
+      "lovableLabel": "久休復出"
+    },
+    {
+      "id": "form_avgpos_w",
+      "group": "近績",
+      "labelZh": "加權平均名次",
+      "lovableLabel": "近績"
+    },
+    {
+      "id": "form_top3rate_w",
+      "group": "近績",
+      "labelZh": "近績入位率",
+      "lovableLabel": "近期入位"
+    },
+    {
+      "id": "sect_late_kick",
+      "group": "步速",
+      "labelZh": "後段加速",
+      "lovableLabel": "後上"
+    },
+    {
+      "id": "sect_early_avg",
+      "group": "步速",
+      "labelZh": "前段平均",
+      "lovableLabel": "前領"
+    },
+    {
+      "id": "horse_pace_style",
+      "group": "步速",
+      "labelZh": "步速風格",
+      "lovableLabel": "跑法"
+    },
+    {
+      "id": "horse_pace_clash",
+      "group": "步速",
+      "labelZh": "步速衝突",
+      "lovableLabel": "步速是否撞車"
+    },
+    {
+      "id": "combo_top3",
+      "group": "騎練",
+      "labelZh": "騎練組合入位",
+      "lovableLabel": "騎練配搭"
+    },
+    {
+      "id": "sire_dist_top3_sm",
+      "group": "血統",
+      "labelZh": "父系同程入位",
+      "lovableLabel": "血統途程"
+    },
+    {
+      "id": "factor_bonus",
+      "group": "規則",
+      "labelZh": "因子加分",
+      "lovableLabel": "規則因子"
+    },
+    {
+      "id": "class_delta",
+      "group": "班次",
+      "labelZh": "升班降班",
+      "lovableLabel": "班次變動"
+    }
+  ],
+  "model": "LGBMRanker / LambdaRank truncation=4",
+  "importanceMethodPlanned": "booster.feature_importance(gain) then TreeSHAP on frozen booster only"
+}

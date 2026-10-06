@@ -1,0 +1,3269 @@
+{
+  "schemaVersion": 1,
+  "meetings": [
+    {
+      "date": "2026-09-16",
+      "venue": "HV",
+      "races": [
+        {
+          "date": "2026-09-16",
+          "venue": "HV",
+          "raceNumber": 1,
+          "distance": 1000,
+          "going": "好地",
+          "band": "短途≤1200",
+          "overlap4": 2,
+          "src": "tx-oracle-v3 (frozen, lgb=12, α=0.88)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 1,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 7,
+              "nameCh": "銀亮濠俠",
+              "horseId": "horse_J532",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 11,
+              "nameCh": "辣得金",
+              "horseId": "horse_J087",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 2,
+              "nameCh": "喆喆友福",
+              "horseId": "horse_J345",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 6,
+              "nameCh": "飈誌",
+              "horseId": "horse_J504",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 11,
+              "nameCh": "辣得金",
+              "horseId": "horse_J087",
+              "winOdds": 4.5,
+              "inPicks": true
+            },
+            {
+              "position": 2,
+              "horseNumber": 12,
+              "nameCh": "洛河",
+              "horseId": "horse_J308",
+              "winOdds": 18,
+              "inPicks": false
+            },
+            {
+              "position": 3,
+              "horseNumber": 6,
+              "nameCh": "飈誌",
+              "horseId": "horse_J504",
+              "winOdds": 16,
+              "inPicks": true
+            },
+            {
+              "position": 4,
+              "horseNumber": 3,
+              "nameCh": "雙子美麗",
+              "horseId": "horse_L129",
+              "winOdds": 11,
+              "inPicks": false
+            }
+          ]
+        },
+        {
+          "date": "2026-09-16",
+          "venue": "HV",
+          "raceNumber": 2,
+          "distance": 1200,
+          "going": "好地",
+          "band": "短途≤1200",
+          "overlap4": 3,
+          "src": "tx-oracle-v3 (frozen, lgb=12, α=0.88)",
+          "sixup_leg": true,
+          "qin3": true,
+          "qpl3": true,
+          "place3_hits": 2,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 8,
+              "nameCh": "花好月盈",
+              "horseId": "horse_H317",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 11,
+              "nameCh": "天下寵兒",
+              "horseId": "horse_J359",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 3,
+              "nameCh": "朗日自強",
+              "horseId": "horse_J530",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 5,
+              "nameCh": "風火猴王",
+              "horseId": "horse_J511",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 3,
+              "nameCh": "朗日自強",
+              "horseId": "horse_J530",
+              "winOdds": 4.7,
+              "inPicks": true
+            },
+            {
+              "position": 2,
+              "horseNumber": 8,
+              "nameCh": "花好月盈",
+              "horseId": "horse_H317",
+              "winOdds": 5.3,
+              "inPicks": true
+            },
+            {
+              "position": 3,
+              "horseNumber": 4,
+              "nameCh": "龍虎精神",
+              "horseId": "horse_L116",
+              "winOdds": 90,
+              "inPicks": false
+            },
+            {
+              "position": 4,
+              "horseNumber": 11,
+              "nameCh": "天下寵兒",
+              "horseId": "horse_J359",
+              "winOdds": 3.7,
+              "inPicks": true
+            }
+          ]
+        },
+        {
+          "date": "2026-09-16",
+          "venue": "HV",
+          "raceNumber": 3,
+          "distance": 1800,
+          "going": "好地",
+          "band": "中長1651-2000",
+          "overlap4": 3,
+          "src": "tx-oracle-v3 (frozen, lgb=12, α=0.88)",
+          "sixup_leg": true,
+          "qin3": true,
+          "qpl3": true,
+          "place3_hits": 3,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 6,
+              "nameCh": "捷足奔馳",
+              "horseId": "horse_J524",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 10,
+              "nameCh": "禾道威",
+              "horseId": "horse_J463",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 7,
+              "nameCh": "夢照發",
+              "horseId": "horse_H168",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 8,
+              "nameCh": "富裕君子",
+              "horseId": "horse_H447",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 7,
+              "nameCh": "夢照發",
+              "horseId": "horse_H168",
+              "winOdds": 12,
+              "inPicks": true
+            },
+            {
+              "position": 2,
+              "horseNumber": 6,
+              "nameCh": "捷足奔馳",
+              "horseId": "horse_J524",
+              "winOdds": 2.9,
+              "inPicks": true
+            },
+            {
+              "position": 3,
+              "horseNumber": 10,
+              "nameCh": "禾道威",
+              "horseId": "horse_J463",
+              "winOdds": 7,
+              "inPicks": true
+            },
+            {
+              "position": 4,
+              "horseNumber": 5,
+              "nameCh": "浪漫老撾",
+              "horseId": "horse_G476",
+              "winOdds": 9.4,
+              "inPicks": false
+            }
+          ]
+        },
+        {
+          "date": "2026-09-16",
+          "venue": "HV",
+          "raceNumber": 4,
+          "distance": 1200,
+          "going": "好地",
+          "band": "短途≤1200",
+          "overlap4": 3,
+          "src": "tx-oracle-v3 (frozen, lgb=12, α=0.88)",
+          "sixup_leg": true,
+          "qin3": true,
+          "qpl3": true,
+          "place3_hits": 2,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 3,
+              "nameCh": "烈焰光芒",
+              "horseId": "horse_L142",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 5,
+              "nameCh": "星威心得",
+              "horseId": "horse_L074",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 11,
+              "nameCh": "頑童",
+              "horseId": "horse_L144",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 4,
+              "nameCh": "日馳千里",
+              "horseId": "horse_J143",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 3,
+              "nameCh": "烈焰光芒",
+              "horseId": "horse_L142",
+              "winOdds": 3.1,
+              "inPicks": true
+            },
+            {
+              "position": 2,
+              "horseNumber": 11,
+              "nameCh": "頑童",
+              "horseId": "horse_L144",
+              "winOdds": 6,
+              "inPicks": true
+            },
+            {
+              "position": 3,
+              "horseNumber": 12,
+              "nameCh": "有你有我",
+              "horseId": "horse_H057",
+              "winOdds": 10,
+              "inPicks": false
+            },
+            {
+              "position": 4,
+              "horseNumber": 4,
+              "nameCh": "日馳千里",
+              "horseId": "horse_J143",
+              "winOdds": 4.8,
+              "inPicks": true
+            }
+          ]
+        },
+        {
+          "date": "2026-09-16",
+          "venue": "HV",
+          "raceNumber": 5,
+          "distance": 1200,
+          "going": "好地",
+          "band": "短途≤1200",
+          "overlap4": 2,
+          "src": "tx-oracle-v3 (frozen, lgb=12, α=0.88)",
+          "sixup_leg": true,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 1,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 10,
+              "nameCh": "團結戰靈",
+              "horseId": "horse_K132",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 8,
+              "nameCh": "老鼠斑",
+              "horseId": "horse_L233",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 4,
+              "nameCh": "幸運愉快",
+              "horseId": "horse_K064",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 6,
+              "nameCh": "競駿非凡",
+              "horseId": "horse_J401",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 6,
+              "nameCh": "競駿非凡",
+              "horseId": "horse_J401",
+              "winOdds": 3.1,
+              "inPicks": true
+            },
+            {
+              "position": 2,
+              "horseNumber": 4,
+              "nameCh": "幸運愉快",
+              "horseId": "horse_K064",
+              "winOdds": 9.5,
+              "inPicks": true
+            },
+            {
+              "position": 3,
+              "horseNumber": 7,
+              "nameCh": "紅錢到",
+              "horseId": "horse_J116",
+              "winOdds": 5.4,
+              "inPicks": false
+            },
+            {
+              "position": 4,
+              "horseNumber": 11,
+              "nameCh": "領袖勁力",
+              "horseId": "horse_L034",
+              "winOdds": 7.7,
+              "inPicks": false
+            }
+          ]
+        },
+        {
+          "date": "2026-09-16",
+          "venue": "HV",
+          "raceNumber": 6,
+          "distance": 1650,
+          "going": "好地",
+          "band": "一哩1201-1650",
+          "overlap4": 2,
+          "src": "tx-oracle-v3 (frozen, lgb=12, α=0.88)",
+          "sixup_leg": true,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 1,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 3,
+              "nameCh": "浪漫鬥士",
+              "horseId": "horse_L240",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 2,
+              "nameCh": "幸運派彩",
+              "horseId": "horse_K313",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 8,
+              "nameCh": "勁好運",
+              "horseId": "horse_H481",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 1,
+              "nameCh": "一定超",
+              "horseId": "horse_K298",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 2,
+              "nameCh": "幸運派彩",
+              "horseId": "horse_K313",
+              "winOdds": 4.2,
+              "inPicks": true
+            },
+            {
+              "position": 2,
+              "horseNumber": 1,
+              "nameCh": "一定超",
+              "horseId": "horse_K298",
+              "winOdds": 4.9,
+              "inPicks": true
+            },
+            {
+              "position": 3,
+              "horseNumber": 10,
+              "nameCh": "北斗福星",
+              "horseId": "horse_L238",
+              "winOdds": 5,
+              "inPicks": false
+            },
+            {
+              "position": 4,
+              "horseNumber": 5,
+              "nameCh": "智勇名駒",
+              "horseId": "horse_J298",
+              "winOdds": 12,
+              "inPicks": false
+            }
+          ]
+        },
+        {
+          "date": "2026-09-16",
+          "venue": "HV",
+          "raceNumber": 7,
+          "distance": 1000,
+          "going": "好地",
+          "band": "短途≤1200",
+          "overlap4": 2,
+          "src": "tx-oracle-v3 (frozen, lgb=12, α=0.88)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 0,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 5,
+              "nameCh": "品德寶寶",
+              "horseId": "horse_J465",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 10,
+              "nameCh": "勝萬金",
+              "horseId": "horse_H405",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 3,
+              "nameCh": "馬力",
+              "horseId": "horse_J431",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 1,
+              "nameCh": "好好戀愛",
+              "horseId": "horse_L052",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 4,
+              "nameCh": "舞林寶典",
+              "horseId": "horse_J060",
+              "winOdds": 10,
+              "inPicks": false
+            },
+            {
+              "position": 2,
+              "horseNumber": 11,
+              "nameCh": "紅逸舍",
+              "horseId": "horse_H241",
+              "winOdds": 17,
+              "inPicks": false
+            },
+            {
+              "position": 3,
+              "horseNumber": 1,
+              "nameCh": "好好戀愛",
+              "horseId": "horse_L052",
+              "winOdds": 3.4,
+              "inPicks": true
+            },
+            {
+              "position": 4,
+              "horseNumber": 3,
+              "nameCh": "馬力",
+              "horseId": "horse_J431",
+              "winOdds": 8.8,
+              "inPicks": true
+            }
+          ]
+        },
+        {
+          "date": "2026-09-16",
+          "venue": "HV",
+          "raceNumber": 8,
+          "distance": 1650,
+          "going": "好地",
+          "band": "一哩1201-1650",
+          "overlap4": 1,
+          "src": "tx-oracle-v3 (frozen, lgb=12, α=0.88)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 1,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 12,
+              "nameCh": "極光之子",
+              "horseId": "horse_L110",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 1,
+              "nameCh": "勁速威龍",
+              "horseId": "horse_H380",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 8,
+              "nameCh": "勁沙塵",
+              "horseId": "horse_J514",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 5,
+              "nameCh": "大浪圖田",
+              "horseId": "horse_J197",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 12,
+              "nameCh": "極光之子",
+              "horseId": "horse_L110",
+              "winOdds": 3,
+              "inPicks": true
+            },
+            {
+              "position": 2,
+              "horseNumber": 3,
+              "nameCh": "睿盛人生",
+              "horseId": "horse_K507",
+              "winOdds": 11,
+              "inPicks": false
+            },
+            {
+              "position": 3,
+              "horseNumber": 4,
+              "nameCh": "喜蓮勇感",
+              "horseId": "horse_H215",
+              "winOdds": 35,
+              "inPicks": false
+            },
+            {
+              "position": 4,
+              "horseNumber": 9,
+              "nameCh": "加州動員",
+              "horseId": "horse_H418",
+              "winOdds": 10,
+              "inPicks": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-13",
+      "venue": "ST",
+      "races": [
+        {
+          "date": "2026-09-13",
+          "venue": "ST",
+          "raceNumber": 1,
+          "distance": 1400,
+          "going": "好地至快地",
+          "band": "一哩1201-1650",
+          "overlap4": 2,
+          "src": "tx-oracle-v3 (frozen, lgb=14, α=0.88)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 1,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 10,
+              "nameCh": "籐王駒",
+              "horseId": "horse_K143",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 1,
+              "nameCh": "暴風一族",
+              "horseId": "horse_K104",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 14,
+              "nameCh": "星之願",
+              "horseId": "horse_J480",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 11,
+              "nameCh": "巴閉佬",
+              "horseId": "horse_K323",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 10,
+              "nameCh": "籐王駒",
+              "horseId": "horse_K143",
+              "winOdds": 4.3,
+              "inPicks": true
+            },
+            {
+              "position": 2,
+              "horseNumber": 9,
+              "nameCh": "文武全能",
+              "horseId": "horse_K402",
+              "winOdds": 12,
+              "inPicks": false
+            },
+            {
+              "position": 3,
+              "horseNumber": 11,
+              "nameCh": "巴閉佬",
+              "horseId": "horse_K323",
+              "winOdds": 7.1,
+              "inPicks": true
+            },
+            {
+              "position": 4,
+              "horseNumber": 7,
+              "nameCh": "增旺",
+              "horseId": "horse_K148",
+              "winOdds": 15,
+              "inPicks": false
+            }
+          ]
+        },
+        {
+          "date": "2026-09-13",
+          "venue": "ST",
+          "raceNumber": 2,
+          "distance": 1000,
+          "going": "好地至快地",
+          "band": "短途≤1200",
+          "overlap4": 1,
+          "src": "tx-oracle-v3 (frozen, lgb=13, α=0.88)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 1,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 8,
+              "nameCh": "紅海旺",
+              "horseId": "horse_L098",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 2,
+              "nameCh": "路路勁",
+              "horseId": "horse_K315",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 5,
+              "nameCh": "盈俊天下",
+              "horseId": "horse_L346",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 13,
+              "nameCh": "杭至尊",
+              "horseId": "horse_L043",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 8,
+              "nameCh": "紅海旺",
+              "horseId": "horse_L098",
+              "winOdds": 3.5,
+              "inPicks": true
+            },
+            {
+              "position": 2,
+              "horseNumber": 12,
+              "nameCh": "天寶威威",
+              "horseId": "horse_L296",
+              "winOdds": 94,
+              "inPicks": false
+            },
+            {
+              "position": 3,
+              "horseNumber": 11,
+              "nameCh": "雷神太保",
+              "horseId": "horse_K017",
+              "winOdds": 11,
+              "inPicks": false
+            },
+            {
+              "position": 4,
+              "horseNumber": 3,
+              "nameCh": "輕功猛男",
+              "horseId": "horse_J513",
+              "winOdds": 16,
+              "inPicks": false
+            }
+          ]
+        },
+        {
+          "date": "2026-09-13",
+          "venue": "ST",
+          "raceNumber": 3,
+          "distance": 1400,
+          "going": "好地至快地",
+          "band": "一哩1201-1650",
+          "overlap4": 1,
+          "src": "tx-oracle-v3 (frozen, lgb=14, α=0.88)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 1,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 3,
+              "nameCh": "東方寶寶",
+              "horseId": "horse_J309",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 8,
+              "nameCh": "劍無情",
+              "horseId": "horse_J535",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 14,
+              "nameCh": "海洋帝君",
+              "horseId": "horse_K230",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 12,
+              "nameCh": "輕鬆大少",
+              "horseId": "horse_J319",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 13,
+              "nameCh": "快樂老撾",
+              "horseId": "horse_J115",
+              "winOdds": 4.6,
+              "inPicks": false
+            },
+            {
+              "position": 2,
+              "horseNumber": 10,
+              "nameCh": "發財金戈",
+              "horseId": "horse_K457",
+              "winOdds": 7.5,
+              "inPicks": false
+            },
+            {
+              "position": 3,
+              "horseNumber": 8,
+              "nameCh": "劍無情",
+              "horseId": "horse_J535",
+              "winOdds": 10,
+              "inPicks": true
+            },
+            {
+              "position": 4,
+              "horseNumber": 9,
+              "nameCh": "多彩多姿",
+              "horseId": "horse_J312",
+              "winOdds": 9.4,
+              "inPicks": false
+            }
+          ]
+        },
+        {
+          "date": "2026-09-13",
+          "venue": "ST",
+          "raceNumber": 4,
+          "distance": 1200,
+          "going": "好地至快地",
+          "band": "短途≤1200",
+          "overlap4": 2,
+          "src": "tx-oracle-v3 (frozen, lgb=14, α=0.88)",
+          "sixup_leg": true,
+          "qin3": true,
+          "qpl3": true,
+          "place3_hits": 2,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 12,
+              "nameCh": "快樂高球",
+              "horseId": "horse_J222",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 2,
+              "nameCh": "逍遙人生",
+              "horseId": "horse_J427",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 3,
+              "nameCh": "砂漿麒星",
+              "horseId": "horse_K333",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 11,
+              "nameCh": "你知我寶",
+              "horseId": "horse_L132",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 2,
+              "nameCh": "逍遙人生",
+              "horseId": "horse_J427",
+              "winOdds": 11,
+              "inPicks": true
+            },
+            {
+              "position": 2,
+              "horseNumber": 3,
+              "nameCh": "砂漿麒星",
+              "horseId": "horse_K333",
+              "winOdds": 14,
+              "inPicks": true
+            },
+            {
+              "position": 3,
+              "horseNumber": 4,
+              "nameCh": "八玲瓏",
+              "horseId": "horse_L443",
+              "winOdds": 20,
+              "inPicks": false
+            },
+            {
+              "position": 4,
+              "horseNumber": 13,
+              "nameCh": "鋁主角",
+              "horseId": "horse_L319",
+              "winOdds": 10,
+              "inPicks": false
+            }
+          ]
+        },
+        {
+          "date": "2026-09-13",
+          "venue": "ST",
+          "raceNumber": 5,
+          "distance": 1200,
+          "going": "好地至快地",
+          "band": "短途≤1200",
+          "overlap4": 1,
+          "src": "tx-oracle-v3 (frozen, lgb=14, α=0.88)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 0,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 9,
+              "nameCh": "龍文正道",
+              "horseId": "horse_L415",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 5,
+              "nameCh": "鋁神",
+              "horseId": "horse_K105",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 11,
+              "nameCh": "天天更好",
+              "horseId": "horse_K277",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 10,
+              "nameCh": "烈進駒",
+              "horseId": "horse_L278",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 2,
+              "nameCh": "肯佩斯",
+              "horseId": "horse_J265",
+              "winOdds": 6.2,
+              "inPicks": false
+            },
+            {
+              "position": 2,
+              "horseNumber": 12,
+              "nameCh": "浩然",
+              "horseId": "horse_L392",
+              "winOdds": 36,
+              "inPicks": false
+            },
+            {
+              "position": 3,
+              "horseNumber": 10,
+              "nameCh": "烈進駒",
+              "horseId": "horse_L278",
+              "winOdds": 4.1,
+              "inPicks": true
+            },
+            {
+              "position": 4,
+              "horseNumber": 13,
+              "nameCh": "領駿輝煌",
+              "horseId": "horse_L265",
+              "winOdds": 7.9,
+              "inPicks": false
+            }
+          ]
+        },
+        {
+          "date": "2026-09-13",
+          "venue": "ST",
+          "raceNumber": 6,
+          "distance": 1600,
+          "going": "好地至快地",
+          "band": "一哩1201-1650",
+          "overlap4": 1,
+          "src": "tx-oracle-v3 (frozen, lgb=14, α=0.88)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 1,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 1,
+              "nameCh": "捷威",
+              "horseId": "horse_K547",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 3,
+              "nameCh": "幸運威龍",
+              "horseId": "horse_L125",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 5,
+              "nameCh": "好運年",
+              "horseId": "horse_K443",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 7,
+              "nameCh": "特別美麗",
+              "horseId": "horse_H123",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 13,
+              "nameCh": "金駒永騰",
+              "horseId": "horse_J398",
+              "winOdds": 32,
+              "inPicks": false
+            },
+            {
+              "position": 2,
+              "horseNumber": 5,
+              "nameCh": "好運年",
+              "horseId": "horse_K443",
+              "winOdds": 5.7,
+              "inPicks": true
+            },
+            {
+              "position": 3,
+              "horseNumber": 4,
+              "nameCh": "勤德天下",
+              "horseId": "horse_K327",
+              "winOdds": 22,
+              "inPicks": false
+            },
+            {
+              "position": 4,
+              "horseNumber": 9,
+              "nameCh": "華麗再贏",
+              "horseId": "horse_L087",
+              "winOdds": 4.8,
+              "inPicks": false
+            }
+          ]
+        },
+        {
+          "date": "2026-09-13",
+          "venue": "ST",
+          "raceNumber": 7,
+          "distance": 1400,
+          "going": "好地至快地",
+          "band": "一哩1201-1650",
+          "overlap4": 1,
+          "src": "tx-oracle-v3 (frozen, lgb=14, α=0.88)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 1,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 5,
+              "nameCh": "步風影",
+              "horseId": "horse_L179",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 13,
+              "nameCh": "天比高",
+              "horseId": "horse_K339",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 1,
+              "nameCh": "準輝煌",
+              "horseId": "horse_J273",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 3,
+              "nameCh": "部族高手",
+              "horseId": "horse_K307",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 12,
+              "nameCh": "活力精神",
+              "horseId": "horse_K039",
+              "winOdds": 24,
+              "inPicks": false
+            },
+            {
+              "position": 2,
+              "horseNumber": 1,
+              "nameCh": "準輝煌",
+              "horseId": "horse_J273",
+              "winOdds": 9.4,
+              "inPicks": true
+            },
+            {
+              "position": 3,
+              "horseNumber": 6,
+              "nameCh": "愛馬心",
+              "horseId": "horse_L220",
+              "winOdds": 59,
+              "inPicks": false
+            },
+            {
+              "position": 4,
+              "horseNumber": 10,
+              "nameCh": "喜駿昇星 (L294)",
+              "horseId": "horse_L294",
+              "winOdds": 38,
+              "inPicks": false
+            }
+          ]
+        },
+        {
+          "date": "2026-09-13",
+          "venue": "ST",
+          "raceNumber": 8,
+          "distance": 1000,
+          "going": "好地至快地",
+          "band": "短途≤1200",
+          "overlap4": 1,
+          "src": "tx-oracle-v3 (frozen, lgb=14, α=0.88)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 1,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 1,
+              "nameCh": "實力股",
+              "horseId": "horse_L411",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 13,
+              "nameCh": "幸運糖",
+              "horseId": "horse_L041",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 12,
+              "nameCh": "無敵好瑪",
+              "horseId": "horse_L312",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 2,
+              "nameCh": "會長之寶",
+              "horseId": "horse_J295",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 10,
+              "nameCh": "星運傳奇",
+              "horseId": "horse_L019",
+              "winOdds": 11,
+              "inPicks": false
+            },
+            {
+              "position": 2,
+              "horseNumber": 1,
+              "nameCh": "實力股",
+              "horseId": "horse_L411",
+              "winOdds": 1.5,
+              "inPicks": true
+            },
+            {
+              "position": 3,
+              "horseNumber": 11,
+              "nameCh": "從化之星",
+              "horseId": "horse_L337",
+              "winOdds": 29,
+              "inPicks": false
+            },
+            {
+              "position": 4,
+              "horseNumber": 6,
+              "nameCh": "精彩福星",
+              "horseId": "horse_K408",
+              "winOdds": 13,
+              "inPicks": false
+            }
+          ]
+        },
+        {
+          "date": "2026-09-13",
+          "venue": "ST",
+          "raceNumber": 9,
+          "distance": 1200,
+          "going": "好地至快地",
+          "band": "短途≤1200",
+          "overlap4": 2,
+          "src": "tx-oracle-v3 (frozen, lgb=14, α=0.88)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 1,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 8,
+              "nameCh": "傑出雷霆",
+              "horseId": "horse_L121",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 1,
+              "nameCh": "超寫意",
+              "horseId": "horse_K469",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 4,
+              "nameCh": "一世美麗",
+              "horseId": "horse_K489",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 13,
+              "nameCh": "正極",
+              "horseId": "horse_K367",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 5,
+              "nameCh": "鑽石星空",
+              "horseId": "horse_J275",
+              "winOdds": 2.1,
+              "inPicks": false
+            },
+            {
+              "position": 2,
+              "horseNumber": 1,
+              "nameCh": "超寫意",
+              "horseId": "horse_K469",
+              "winOdds": 6,
+              "inPicks": true
+            },
+            {
+              "position": 3,
+              "horseNumber": 2,
+              "nameCh": "錶之極光",
+              "horseId": "horse_K097",
+              "winOdds": 9.6,
+              "inPicks": false
+            },
+            {
+              "position": 4,
+              "horseNumber": 4,
+              "nameCh": "一世美麗",
+              "horseId": "horse_K489",
+              "winOdds": 26,
+              "inPicks": true
+            }
+          ]
+        },
+        {
+          "date": "2026-09-13",
+          "venue": "ST",
+          "raceNumber": 10,
+          "distance": 1400,
+          "going": "好地至快地",
+          "band": "一哩1201-1650",
+          "overlap4": 2,
+          "src": "tx-oracle-v3 (frozen, lgb=14, α=0.88)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 1,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 12,
+              "nameCh": "嵐臣",
+              "horseId": "horse_K438",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 4,
+              "nameCh": "細水長流",
+              "horseId": "horse_K562",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 11,
+              "nameCh": "大回報",
+              "horseId": "horse_K192",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 14,
+              "nameCh": "逍遙騎士",
+              "horseId": "horse_K370",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 12,
+              "nameCh": "嵐臣",
+              "horseId": "horse_K438",
+              "winOdds": 2.1,
+              "inPicks": true
+            },
+            {
+              "position": 2,
+              "horseNumber": 2,
+              "nameCh": "友瑩亮",
+              "horseId": "horse_K400",
+              "winOdds": 11,
+              "inPicks": false
+            },
+            {
+              "position": 3,
+              "horseNumber": 5,
+              "nameCh": "潮州精神",
+              "horseId": "horse_H175",
+              "winOdds": 20,
+              "inPicks": false
+            },
+            {
+              "position": 4,
+              "horseNumber": 4,
+              "nameCh": "細水長流",
+              "horseId": "horse_K562",
+              "winOdds": 9.9,
+              "inPicks": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-09",
+      "venue": "HV",
+      "races": [
+        {
+          "date": "2026-09-09",
+          "venue": "HV",
+          "raceNumber": 1,
+          "distance": 1200,
+          "going": "好地",
+          "band": "短途≤1200",
+          "overlap4": 1,
+          "src": "tx-oracle-v3 (frozen, lgb=12, α=0.88)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 0,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 6,
+              "nameCh": "果然僥倖",
+              "horseId": "horse_H252",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 10,
+              "nameCh": "電訊驕陽",
+              "horseId": "horse_J332",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 7,
+              "nameCh": "魅力知福",
+              "horseId": "horse_K038",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 8,
+              "nameCh": "洛河",
+              "horseId": "horse_J308",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 12,
+              "nameCh": "添喜運",
+              "horseId": "horse_J218",
+              "winOdds": 8.2,
+              "inPicks": false
+            },
+            {
+              "position": 2,
+              "horseNumber": 11,
+              "nameCh": "建測精英",
+              "horseId": "horse_K198",
+              "winOdds": 11,
+              "inPicks": false
+            },
+            {
+              "position": 3,
+              "horseNumber": 5,
+              "nameCh": "金風萬里",
+              "horseId": "horse_K150",
+              "winOdds": 5.4,
+              "inPicks": false
+            },
+            {
+              "position": 4,
+              "horseNumber": 10,
+              "nameCh": "電訊驕陽",
+              "horseId": "horse_J332",
+              "winOdds": 3.2,
+              "inPicks": true
+            }
+          ]
+        },
+        {
+          "date": "2026-09-09",
+          "venue": "HV",
+          "raceNumber": 2,
+          "distance": 1650,
+          "going": "好地",
+          "band": "一哩1201-1650",
+          "overlap4": 3,
+          "src": "tx-oracle-v3 (frozen, lgb=10, α=0.88)",
+          "sixup_leg": true,
+          "qin3": true,
+          "qpl3": true,
+          "place3_hits": 2,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 7,
+              "nameCh": "風起雲湧",
+              "horseId": "horse_J183",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 9,
+              "nameCh": "準希望",
+              "horseId": "horse_L047",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 1,
+              "nameCh": "勁進駒",
+              "horseId": "horse_J384",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 4,
+              "nameCh": "領航天子",
+              "horseId": "horse_J494",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 1,
+              "nameCh": "勁進駒",
+              "horseId": "horse_J384",
+              "winOdds": 4.9,
+              "inPicks": true
+            },
+            {
+              "position": 2,
+              "horseNumber": 7,
+              "nameCh": "風起雲湧",
+              "horseId": "horse_J183",
+              "winOdds": 6.8,
+              "inPicks": true
+            },
+            {
+              "position": 3,
+              "horseNumber": 10,
+              "nameCh": "電路一百",
+              "horseId": "horse_K308",
+              "winOdds": 61,
+              "inPicks": false
+            },
+            {
+              "position": 4,
+              "horseNumber": 9,
+              "nameCh": "準希望",
+              "horseId": "horse_L047",
+              "winOdds": 2.3,
+              "inPicks": true
+            }
+          ]
+        },
+        {
+          "date": "2026-09-09",
+          "venue": "HV",
+          "raceNumber": 3,
+          "distance": 1200,
+          "going": "好地",
+          "band": "短途≤1200",
+          "overlap4": 3,
+          "src": "tx-oracle-v3 (frozen, lgb=12, α=0.88)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": true,
+          "place3_hits": 2,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 11,
+              "nameCh": "東方魅影",
+              "horseId": "horse_K028",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 4,
+              "nameCh": "銀亮濠俠",
+              "horseId": "horse_J532",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 1,
+              "nameCh": "翠湖烈風",
+              "horseId": "horse_J288",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 3,
+              "nameCh": "猛將兄",
+              "horseId": "horse_K089",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 6,
+              "nameCh": "後無來者",
+              "horseId": "horse_K049",
+              "winOdds": 49,
+              "inPicks": false
+            },
+            {
+              "position": 2,
+              "horseNumber": 1,
+              "nameCh": "翠湖烈風",
+              "horseId": "horse_J288",
+              "winOdds": 4.8,
+              "inPicks": true
+            },
+            {
+              "position": 3,
+              "horseNumber": 11,
+              "nameCh": "東方魅影",
+              "horseId": "horse_K028",
+              "winOdds": 5.3,
+              "inPicks": true
+            },
+            {
+              "position": 4,
+              "horseNumber": 4,
+              "nameCh": "銀亮濠俠",
+              "horseId": "horse_J532",
+              "winOdds": 13,
+              "inPicks": true
+            }
+          ]
+        },
+        {
+          "date": "2026-09-09",
+          "venue": "HV",
+          "raceNumber": 4,
+          "distance": 1650,
+          "going": "好地",
+          "band": "一哩1201-1650",
+          "overlap4": 3,
+          "src": "tx-oracle-v3 (frozen, lgb=11, α=0.88)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": true,
+          "place3_hits": 2,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 2,
+              "nameCh": "深心星",
+              "horseId": "horse_K041",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 4,
+              "nameCh": "卓越蒨鋒",
+              "horseId": "horse_J231",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 6,
+              "nameCh": "創科群英",
+              "horseId": "horse_K319",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 3,
+              "nameCh": "贏玥",
+              "horseId": "horse_L039",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 10,
+              "nameCh": "凝妙星",
+              "horseId": "horse_K444",
+              "winOdds": 2.9,
+              "inPicks": false
+            },
+            {
+              "position": 2,
+              "horseNumber": 4,
+              "nameCh": "卓越蒨鋒",
+              "horseId": "horse_J231",
+              "winOdds": 6.4,
+              "inPicks": true
+            },
+            {
+              "position": 3,
+              "horseNumber": 6,
+              "nameCh": "創科群英",
+              "horseId": "horse_K319",
+              "winOdds": 15,
+              "inPicks": true
+            },
+            {
+              "position": 4,
+              "horseNumber": 2,
+              "nameCh": "深心星",
+              "horseId": "horse_K041",
+              "winOdds": 4.7,
+              "inPicks": true
+            }
+          ]
+        },
+        {
+          "date": "2026-09-09",
+          "venue": "HV",
+          "raceNumber": 5,
+          "distance": 1650,
+          "going": "好地",
+          "band": "一哩1201-1650",
+          "overlap4": 2,
+          "src": "tx-oracle-v3 (frozen, lgb=12, α=0.88)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 1,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 4,
+              "nameCh": "做好自己",
+              "horseId": "horse_J444",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 5,
+              "nameCh": "紫辰之星",
+              "horseId": "horse_L149",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 3,
+              "nameCh": "中國心",
+              "horseId": "horse_K395",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 6,
+              "nameCh": "暴風之子",
+              "horseId": "horse_K176",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 10,
+              "nameCh": "將義",
+              "horseId": "horse_J446",
+              "winOdds": 9.4,
+              "inPicks": false
+            },
+            {
+              "position": 2,
+              "horseNumber": 9,
+              "nameCh": "風將",
+              "horseId": "horse_L184",
+              "winOdds": 12,
+              "inPicks": false
+            },
+            {
+              "position": 3,
+              "horseNumber": 3,
+              "nameCh": "中國心",
+              "horseId": "horse_K395",
+              "winOdds": 8.7,
+              "inPicks": true
+            },
+            {
+              "position": 4,
+              "horseNumber": 5,
+              "nameCh": "紫辰之星",
+              "horseId": "horse_L149",
+              "winOdds": 4.8,
+              "inPicks": true
+            }
+          ]
+        },
+        {
+          "date": "2026-09-09",
+          "venue": "HV",
+          "raceNumber": 6,
+          "distance": 1000,
+          "going": "好地",
+          "band": "短途≤1200",
+          "overlap4": 3,
+          "src": "tx-oracle-v3 (frozen, lgb=12, α=0.88)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 1,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 2,
+              "nameCh": "美麗登場",
+              "horseId": "horse_L260",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 6,
+              "nameCh": "福進",
+              "horseId": "horse_K529",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 8,
+              "nameCh": "天火同人",
+              "horseId": "horse_E175",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 5,
+              "nameCh": "佐治傳奇",
+              "horseId": "horse_L007",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 6,
+              "nameCh": "福進",
+              "horseId": "horse_K529",
+              "winOdds": 5.4,
+              "inPicks": true
+            },
+            {
+              "position": 2,
+              "horseNumber": 3,
+              "nameCh": "巴閉王",
+              "horseId": "horse_K479",
+              "winOdds": 4.5,
+              "inPicks": false
+            },
+            {
+              "position": 3,
+              "horseNumber": 5,
+              "nameCh": "佐治傳奇",
+              "horseId": "horse_L007",
+              "winOdds": 5,
+              "inPicks": true
+            },
+            {
+              "position": 4,
+              "horseNumber": 8,
+              "nameCh": "天火同人",
+              "horseId": "horse_E175",
+              "winOdds": 19,
+              "inPicks": true
+            }
+          ]
+        },
+        {
+          "date": "2026-09-09",
+          "venue": "HV",
+          "raceNumber": 7,
+          "distance": 1200,
+          "going": "好地",
+          "band": "短途≤1200",
+          "overlap4": 4,
+          "src": "tx-oracle-v3 (frozen, lgb=12, α=0.88)",
+          "sixup_leg": true,
+          "qin3": false,
+          "qpl3": true,
+          "place3_hits": 2,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 4,
+              "nameCh": "應龍飛影",
+              "horseId": "horse_L083",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 12,
+              "nameCh": "領袖勁力",
+              "horseId": "horse_L034",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 2,
+              "nameCh": "博愛先鋒",
+              "horseId": "horse_G465",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 1,
+              "nameCh": "官金騏",
+              "horseId": "horse_K485",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 1,
+              "nameCh": "官金騏",
+              "horseId": "horse_K485",
+              "winOdds": 2,
+              "inPicks": true
+            },
+            {
+              "position": 2,
+              "horseNumber": 2,
+              "nameCh": "博愛先鋒",
+              "horseId": "horse_G465",
+              "winOdds": 20,
+              "inPicks": true
+            },
+            {
+              "position": 3,
+              "horseNumber": 12,
+              "nameCh": "領袖勁力",
+              "horseId": "horse_L034",
+              "winOdds": 9.4,
+              "inPicks": true
+            },
+            {
+              "position": 4,
+              "horseNumber": 4,
+              "nameCh": "應龍飛影",
+              "horseId": "horse_L083",
+              "winOdds": 8.6,
+              "inPicks": true
+            }
+          ]
+        },
+        {
+          "date": "2026-09-09",
+          "venue": "HV",
+          "raceNumber": 8,
+          "distance": 1200,
+          "going": "好地",
+          "band": "短途≤1200",
+          "overlap4": 0,
+          "src": "tx-oracle-v3 (frozen, lgb=12, α=0.88)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 0,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 10,
+              "nameCh": "正本唐心",
+              "horseId": "horse_L373",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 3,
+              "nameCh": "馬達",
+              "horseId": "horse_K165",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 6,
+              "nameCh": "電源之駒",
+              "horseId": "horse_E301",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 12,
+              "nameCh": "十二神將",
+              "horseId": "horse_H435",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 11,
+              "nameCh": "長勝隊長",
+              "horseId": "horse_K379",
+              "winOdds": 4.4,
+              "inPicks": false
+            },
+            {
+              "position": 2,
+              "horseNumber": 4,
+              "nameCh": "財將",
+              "horseId": "horse_L234",
+              "winOdds": 3.9,
+              "inPicks": false
+            },
+            {
+              "position": 3,
+              "horseNumber": 1,
+              "nameCh": "志滿同行",
+              "horseId": "horse_K056",
+              "winOdds": 8,
+              "inPicks": false
+            },
+            {
+              "position": 4,
+              "horseNumber": 8,
+              "nameCh": "關鍵所在",
+              "horseId": "horse_K154",
+              "winOdds": 16,
+              "inPicks": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-06",
+      "venue": "ST",
+      "races": [
+        {
+          "date": "2026-09-06",
+          "venue": "ST",
+          "raceNumber": 1,
+          "distance": 1200,
+          "going": "好地",
+          "band": "短途≤1200",
+          "overlap4": 1,
+          "src": "tx-oracle-v3 (frozen, lgb=14)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 1,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 4,
+              "nameCh": "新力驕",
+              "horseId": "horse_J223",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 6,
+              "nameCh": "朗日雪峰",
+              "horseId": "horse_J187",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 7,
+              "nameCh": "嘉嘉友福",
+              "horseId": "horse_K456",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 11,
+              "nameCh": "怡昌奇兵",
+              "horseId": "horse_J176",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 13,
+              "nameCh": "同有運",
+              "horseId": "horse_H349",
+              "winOdds": 5.7,
+              "inPicks": false
+            },
+            {
+              "position": 2,
+              "horseNumber": 7,
+              "nameCh": "嘉嘉友福",
+              "horseId": "horse_K456",
+              "winOdds": 15,
+              "inPicks": true
+            },
+            {
+              "position": 3,
+              "horseNumber": 2,
+              "nameCh": "一路精彩",
+              "horseId": "horse_K354",
+              "winOdds": 9.3,
+              "inPicks": false
+            },
+            {
+              "position": 4,
+              "horseNumber": 10,
+              "nameCh": "花香月明",
+              "horseId": "horse_K276",
+              "winOdds": 74,
+              "inPicks": false
+            }
+          ]
+        },
+        {
+          "date": "2026-09-06",
+          "venue": "ST",
+          "raceNumber": 2,
+          "distance": 1000,
+          "going": "好地",
+          "band": "短途≤1200",
+          "overlap4": 3,
+          "src": "tx-oracle-v3 (frozen, lgb=11)",
+          "sixup_leg": true,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 1,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 2,
+              "nameCh": "極速神影",
+              "horseId": "horse_L204",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 1,
+              "nameCh": "駿馬之曲",
+              "horseId": "horse_K436",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 7,
+              "nameCh": "銀刺勇士",
+              "horseId": "horse_J043",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 8,
+              "nameCh": "紅海旺",
+              "horseId": "horse_L098",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 1,
+              "nameCh": "駿馬之曲",
+              "horseId": "horse_K436",
+              "winOdds": 2.3,
+              "inPicks": true
+            },
+            {
+              "position": 2,
+              "horseNumber": 8,
+              "nameCh": "紅海旺",
+              "horseId": "horse_L098",
+              "winOdds": 13,
+              "inPicks": true
+            },
+            {
+              "position": 3,
+              "horseNumber": 11,
+              "nameCh": "共創歡欣",
+              "horseId": "horse_L118",
+              "winOdds": 11,
+              "inPicks": false
+            },
+            {
+              "position": 4,
+              "horseNumber": 2,
+              "nameCh": "極速神影",
+              "horseId": "horse_L204",
+              "winOdds": 6,
+              "inPicks": true
+            }
+          ]
+        },
+        {
+          "date": "2026-09-06",
+          "venue": "ST",
+          "raceNumber": 3,
+          "distance": null,
+          "going": "好地至快地",
+          "band": "unknown",
+          "overlap4": 2,
+          "src": "tx-oracle-v3 (frozen, lgb=6)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 1,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 1,
+              "nameCh": "嘉應高昇",
+              "horseId": "horse_J062",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 3,
+              "nameCh": "錶之星河",
+              "horseId": "horse_J343",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 5,
+              "nameCh": "幸運有您",
+              "horseId": "horse_E356",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 6,
+              "nameCh": "魔術控制",
+              "horseId": "horse_J333",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 1,
+              "nameCh": "嘉應高昇",
+              "horseId": "horse_J062",
+              "winOdds": 1,
+              "inPicks": true
+            },
+            {
+              "position": 2,
+              "horseNumber": 2,
+              "nameCh": "合夥奔馳",
+              "horseId": "horse_H408",
+              "winOdds": 107,
+              "inPicks": false
+            },
+            {
+              "position": 3,
+              "horseNumber": 6,
+              "nameCh": "魔術控制",
+              "horseId": "horse_J333",
+              "winOdds": 355,
+              "inPicks": true
+            },
+            {
+              "position": 4,
+              "horseNumber": 4,
+              "nameCh": "好友心得",
+              "horseId": "horse_H303",
+              "winOdds": 220,
+              "inPicks": false
+            }
+          ]
+        },
+        {
+          "date": "2026-09-06",
+          "venue": "ST",
+          "raceNumber": 4,
+          "distance": 1600,
+          "going": "好地至快地",
+          "band": "一哩1201-1650",
+          "overlap4": 1,
+          "src": "tx-oracle-v3 (frozen, lgb=14)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 1,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 12,
+              "nameCh": "上市魅力",
+              "horseId": "horse_H196",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 7,
+              "nameCh": "開心三多",
+              "horseId": "horse_H293",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 14,
+              "nameCh": "幸運同行",
+              "horseId": "horse_J331",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 8,
+              "nameCh": "連連好運",
+              "horseId": "horse_K500",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 10,
+              "nameCh": "志醒大將",
+              "horseId": "horse_K138",
+              "winOdds": 4,
+              "inPicks": false
+            },
+            {
+              "position": 2,
+              "horseNumber": 1,
+              "nameCh": "君達得",
+              "horseId": "horse_H392",
+              "winOdds": 5.5,
+              "inPicks": false
+            },
+            {
+              "position": 3,
+              "horseNumber": 7,
+              "nameCh": "開心三多",
+              "horseId": "horse_H293",
+              "winOdds": 11,
+              "inPicks": true
+            },
+            {
+              "position": 4,
+              "horseNumber": 9,
+              "nameCh": "駟跑得",
+              "horseId": "horse_G095",
+              "winOdds": 23,
+              "inPicks": false
+            }
+          ]
+        },
+        {
+          "date": "2026-09-06",
+          "venue": "ST",
+          "raceNumber": 5,
+          "distance": 1200,
+          "going": "好地至快地",
+          "band": "短途≤1200",
+          "overlap4": 1,
+          "src": "tx-oracle-v3 (frozen, lgb=14)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 0,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 4,
+              "nameCh": "震撼人心",
+              "horseId": "horse_L420",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 11,
+              "nameCh": "焦點",
+              "horseId": "horse_H173",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 1,
+              "nameCh": "鼓浪好友",
+              "horseId": "horse_J217",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 5,
+              "nameCh": "明德輝煌",
+              "horseId": "horse_L298",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 7,
+              "nameCh": "光年程祥",
+              "horseId": "horse_K204",
+              "winOdds": 2.7,
+              "inPicks": false
+            },
+            {
+              "position": 2,
+              "horseNumber": 5,
+              "nameCh": "明德輝煌",
+              "horseId": "horse_L298",
+              "winOdds": 6.3,
+              "inPicks": true
+            },
+            {
+              "position": 3,
+              "horseNumber": 12,
+              "nameCh": "花果猴王",
+              "horseId": "horse_H455",
+              "winOdds": 12,
+              "inPicks": false
+            },
+            {
+              "position": 4,
+              "horseNumber": 13,
+              "nameCh": "戀愛狂",
+              "horseId": "horse_K118",
+              "winOdds": 56,
+              "inPicks": false
+            }
+          ]
+        },
+        {
+          "date": "2026-09-06",
+          "venue": "ST",
+          "raceNumber": 6,
+          "distance": 1200,
+          "going": "好地至快地",
+          "band": "短途≤1200",
+          "overlap4": 1,
+          "src": "tx-oracle-v3 (frozen, lgb=14)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 1,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 2,
+              "nameCh": "哈羅威",
+              "horseId": "horse_J280",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 7,
+              "nameCh": "老鼠斑",
+              "horseId": "horse_L233",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 3,
+              "nameCh": "馬馳登",
+              "horseId": "horse_L133",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 4,
+              "nameCh": "嘉應駿馬",
+              "horseId": "horse_J439",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 1,
+              "nameCh": "辣得準",
+              "horseId": "horse_J520",
+              "winOdds": 6.2,
+              "inPicks": false
+            },
+            {
+              "position": 2,
+              "horseNumber": 3,
+              "nameCh": "馬馳登",
+              "horseId": "horse_L133",
+              "winOdds": 4.6,
+              "inPicks": true
+            },
+            {
+              "position": 3,
+              "horseNumber": 8,
+              "nameCh": "開心五月",
+              "horseId": "horse_K016",
+              "winOdds": 20,
+              "inPicks": false
+            },
+            {
+              "position": 4,
+              "horseNumber": 14,
+              "nameCh": "金多囍",
+              "horseId": "horse_K272",
+              "winOdds": 19,
+              "inPicks": false
+            }
+          ]
+        },
+        {
+          "date": "2026-09-06",
+          "venue": "ST",
+          "raceNumber": 7,
+          "distance": 1400,
+          "going": "好地至快地",
+          "band": "一哩1201-1650",
+          "overlap4": 1,
+          "src": "tx-oracle-v3 (frozen, lgb=9)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 0,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 5,
+              "nameCh": "勁沙塵",
+              "horseId": "horse_J514",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 4,
+              "nameCh": "韋金主",
+              "horseId": "horse_K061",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 1,
+              "nameCh": "太陽勇士",
+              "horseId": "horse_J127",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 2,
+              "nameCh": "笑傲江湖",
+              "horseId": "horse_K168",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 6,
+              "nameCh": "昇瀧駒",
+              "horseId": "horse_J141",
+              "winOdds": 105,
+              "inPicks": false
+            },
+            {
+              "position": 2,
+              "horseNumber": 7,
+              "nameCh": "樂勝天下",
+              "horseId": "horse_J540",
+              "winOdds": 22,
+              "inPicks": false
+            },
+            {
+              "position": 3,
+              "horseNumber": 9,
+              "nameCh": "晒冷",
+              "horseId": "horse_K369",
+              "winOdds": 6.5,
+              "inPicks": false
+            },
+            {
+              "position": 4,
+              "horseNumber": 5,
+              "nameCh": "勁沙塵",
+              "horseId": "horse_J514",
+              "winOdds": 7.6,
+              "inPicks": true
+            }
+          ]
+        },
+        {
+          "date": "2026-09-06",
+          "venue": "ST",
+          "raceNumber": 8,
+          "distance": 1400,
+          "going": "好地至快地",
+          "band": "一哩1201-1650",
+          "overlap4": 3,
+          "src": "tx-oracle-v3 (frozen, lgb=14)",
+          "sixup_leg": true,
+          "qin3": true,
+          "qpl3": true,
+          "place3_hits": 2,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 1,
+              "nameCh": "喜悅歡欣",
+              "horseId": "horse_L322",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 6,
+              "nameCh": "手機錶能",
+              "horseId": "horse_L293",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 2,
+              "nameCh": "八仟好運",
+              "horseId": "horse_K582",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 10,
+              "nameCh": "金創福威",
+              "horseId": "horse_K002",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 1,
+              "nameCh": "喜悅歡欣",
+              "horseId": "horse_L322",
+              "winOdds": 3.4,
+              "inPicks": true
+            },
+            {
+              "position": 2,
+              "horseNumber": 2,
+              "nameCh": "八仟好運",
+              "horseId": "horse_K582",
+              "winOdds": 8.7,
+              "inPicks": true
+            },
+            {
+              "position": 3,
+              "horseNumber": 8,
+              "nameCh": "實力加",
+              "horseId": "horse_K058",
+              "winOdds": 8.8,
+              "inPicks": false
+            },
+            {
+              "position": 4,
+              "horseNumber": 6,
+              "nameCh": "手機錶能",
+              "horseId": "horse_L293",
+              "winOdds": 8.3,
+              "inPicks": true
+            }
+          ]
+        },
+        {
+          "date": "2026-09-06",
+          "venue": "ST",
+          "raceNumber": 9,
+          "distance": 1400,
+          "going": "好地至快地",
+          "band": "一哩1201-1650",
+          "overlap4": 2,
+          "src": "tx-oracle-v3 (frozen, lgb=11)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 1,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 4,
+              "nameCh": "友瑩仁",
+              "horseId": "horse_J180",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 5,
+              "nameCh": "櫻花酒杯",
+              "horseId": "horse_L230",
+              "hitTop4": true,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 6,
+              "nameCh": "綫路英雄",
+              "horseId": "horse_J428",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 1,
+              "nameCh": "一生好彩",
+              "horseId": "horse_K114",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 5,
+              "nameCh": "櫻花酒杯",
+              "horseId": "horse_L230",
+              "winOdds": 3.1,
+              "inPicks": true
+            },
+            {
+              "position": 2,
+              "horseNumber": 8,
+              "nameCh": "非凡豪傑",
+              "horseId": "horse_J445",
+              "winOdds": 7.4,
+              "inPicks": false
+            },
+            {
+              "position": 3,
+              "horseNumber": 7,
+              "nameCh": "同樣美麗",
+              "horseId": "horse_H334",
+              "winOdds": 79,
+              "inPicks": false
+            },
+            {
+              "position": 4,
+              "horseNumber": 4,
+              "nameCh": "友瑩仁",
+              "horseId": "horse_J180",
+              "winOdds": 6.2,
+              "inPicks": true
+            }
+          ]
+        },
+        {
+          "date": "2026-09-06",
+          "venue": "ST",
+          "raceNumber": 10,
+          "distance": 1200,
+          "going": "好地至快地",
+          "band": "短途≤1200",
+          "overlap4": 0,
+          "src": "tx-oracle-v3 (frozen, lgb=13)",
+          "sixup_leg": false,
+          "qin3": false,
+          "qpl3": false,
+          "place3_hits": 0,
+          "picks": [
+            {
+              "rank": 1,
+              "horseNumber": 12,
+              "nameCh": "支付之父",
+              "horseId": "horse_L159",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 2,
+              "horseNumber": 6,
+              "nameCh": "手機錶勁",
+              "horseId": "horse_L099",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 3,
+              "horseNumber": 8,
+              "nameCh": "金金小子",
+              "horseId": "horse_K180",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            },
+            {
+              "rank": 4,
+              "horseNumber": 4,
+              "nameCh": "得道猴王",
+              "horseId": "horse_J303",
+              "hitTop4": false,
+              "pWin": null,
+              "reason": null,
+              "scoreSource": "tx-oracle-v3 (ensemble α=0.88)"
+            }
+          ],
+          "actualTop4": [
+            {
+              "position": 1,
+              "horseNumber": 2,
+              "nameCh": "寶進",
+              "horseId": "horse_K249",
+              "winOdds": 26,
+              "inPicks": false
+            },
+            {
+              "position": 2,
+              "horseNumber": 1,
+              "nameCh": "威利金箭",
+              "horseId": "horse_L035",
+              "winOdds": 4.6,
+              "inPicks": false
+            },
+            {
+              "position": 3,
+              "horseNumber": 10,
+              "nameCh": "星運少爵",
+              "horseId": "horse_H459",
+              "winOdds": 25,
+              "inPicks": false
+            },
+            {
+              "position": 4,
+              "horseNumber": 7,
+              "nameCh": "鑽石星空",
+              "horseId": "horse_J275",
+              "winOdds": 6.1,
+              "inPicks": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

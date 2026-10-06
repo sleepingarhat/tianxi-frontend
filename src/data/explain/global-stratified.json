@@ -1,0 +1,603 @@
+{
+  "schemaVersion": 1,
+  "kind": "frozen_stratified_attribution_proxy",
+  "disclaimer": "呢組數解釋「凍結四揀同實際頭4重疊」，唔係馬匹勝出因果，亦唔係 TreeSHAP。SHAP 要喺引擎倉用同一版 booster 先計。",
+  "engine": "TX-Oracle v3.2",
+  "source": "GET /api/analyze/hit-rate + hit-rate-rollup",
+  "window": {
+    "from": "2026-03-27",
+    "to": "2026-09-16",
+    "meetings": 36,
+    "races": 349
+  },
+  "generatedAt": "2026-09-23T12:21:47.835968+00:00",
+  "headlineOverlap": {
+    "n": 349,
+    "avgOverlap": 2.037,
+    "exactly": {
+      "0": {
+        "count": 12,
+        "rate": 0.0344
+      },
+      "1": {
+        "count": 78,
+        "rate": 0.2235
+      },
+      "2": {
+        "count": 155,
+        "rate": 0.4441
+      },
+      "3": {
+        "count": 93,
+        "rate": 0.2665
+      },
+      "4": {
+        "count": 11,
+        "rate": 0.0315
+      }
+    }
+  },
+  "layers": [
+    {
+      "id": "all",
+      "label": "全窗凍結",
+      "filter": "2026-03-25..2026-09-16",
+      "stats": {
+        "n": 349,
+        "overlap": {
+          "n": 349,
+          "avgOverlap": 2.037,
+          "exactly": {
+            "0": {
+              "count": 12,
+              "rate": 0.0344
+            },
+            "1": {
+              "count": 78,
+              "rate": 0.2235
+            },
+            "2": {
+              "count": 155,
+              "rate": 0.4441
+            },
+            "3": {
+              "count": 93,
+              "rate": 0.2665
+            },
+            "4": {
+              "count": 11,
+              "rate": 0.0315
+            }
+          }
+        },
+        "sixupLegRate": 0.2665,
+        "qinBox3Rate": 0.1633,
+        "qplBox3Rate": 0.3926,
+        "placeHitsPerTop3": 0.4346
+      }
+    },
+    {
+      "id": "season_2627",
+      "label": "2026/27開季後",
+      "filter": "date>=2026-09-06",
+      "stats": {
+        "n": 36,
+        "overlap": {
+          "n": 36,
+          "avgOverlap": 1.833,
+          "exactly": {
+            "0": {
+              "count": 2,
+              "rate": 0.0556
+            },
+            "1": {
+              "count": 13,
+              "rate": 0.3611
+            },
+            "2": {
+              "count": 11,
+              "rate": 0.3056
+            },
+            "3": {
+              "count": 9,
+              "rate": 0.25
+            },
+            "4": {
+              "count": 1,
+              "rate": 0.0278
+            }
+          }
+        },
+        "sixupLegRate": 0.2778,
+        "qinBox3Rate": 0.1667,
+        "qplBox3Rate": 0.25,
+        "placeHitsPerTop3": 0.3611
+      }
+    },
+    {
+      "id": "ST",
+      "label": "沙田",
+      "filter": "venue=ST",
+      "stats": {
+        "n": 225,
+        "overlap": {
+          "n": 225,
+          "avgOverlap": 1.96,
+          "exactly": {
+            "0": {
+              "count": 8,
+              "rate": 0.0356
+            },
+            "1": {
+              "count": 54,
+              "rate": 0.24
+            },
+            "2": {
+              "count": 105,
+              "rate": 0.4667
+            },
+            "3": {
+              "count": 55,
+              "rate": 0.2444
+            },
+            "4": {
+              "count": 3,
+              "rate": 0.0133
+            }
+          }
+        },
+        "sixupLegRate": 0.2311,
+        "qinBox3Rate": 0.1422,
+        "qplBox3Rate": 0.3778,
+        "placeHitsPerTop3": 0.4267
+      }
+    },
+    {
+      "id": "HV",
+      "label": "跑馬地",
+      "filter": "venue=HV",
+      "stats": {
+        "n": 124,
+        "overlap": {
+          "n": 124,
+          "avgOverlap": 2.177,
+          "exactly": {
+            "0": {
+              "count": 4,
+              "rate": 0.0323
+            },
+            "1": {
+              "count": 24,
+              "rate": 0.1935
+            },
+            "2": {
+              "count": 50,
+              "rate": 0.4032
+            },
+            "3": {
+              "count": 38,
+              "rate": 0.3065
+            },
+            "4": {
+              "count": 8,
+              "rate": 0.0645
+            }
+          }
+        },
+        "sixupLegRate": 0.3306,
+        "qinBox3Rate": 0.2016,
+        "qplBox3Rate": 0.4194,
+        "placeHitsPerTop3": 0.4489
+      }
+    },
+    {
+      "id": "短途≤1200",
+      "label": "短途≤1200",
+      "filter": "band=短途≤1200",
+      "stats": {
+        "n": 166,
+        "overlap": {
+          "n": 166,
+          "avgOverlap": 2.024,
+          "exactly": {
+            "0": {
+              "count": 7,
+              "rate": 0.0422
+            },
+            "1": {
+              "count": 41,
+              "rate": 0.247
+            },
+            "2": {
+              "count": 65,
+              "rate": 0.3916
+            },
+            "3": {
+              "count": 47,
+              "rate": 0.2831
+            },
+            "4": {
+              "count": 6,
+              "rate": 0.0361
+            }
+          }
+        },
+        "sixupLegRate": 0.2651,
+        "qinBox3Rate": 0.1687,
+        "qplBox3Rate": 0.3916,
+        "placeHitsPerTop3": 0.4357
+      }
+    },
+    {
+      "id": "一哩1201-1650",
+      "label": "一哩1201-1650",
+      "filter": "band=一哩1201-1650",
+      "stats": {
+        "n": 133,
+        "overlap": {
+          "n": 133,
+          "avgOverlap": 2.113,
+          "exactly": {
+            "0": {
+              "count": 3,
+              "rate": 0.0226
+            },
+            "1": {
+              "count": 23,
+              "rate": 0.1729
+            },
+            "2": {
+              "count": 68,
+              "rate": 0.5113
+            },
+            "3": {
+              "count": 34,
+              "rate": 0.2556
+            },
+            "4": {
+              "count": 5,
+              "rate": 0.0376
+            }
+          }
+        },
+        "sixupLegRate": 0.2932,
+        "qinBox3Rate": 0.188,
+        "qplBox3Rate": 0.4436,
+        "placeHitsPerTop3": 0.4561
+      }
+    },
+    {
+      "id": "中長1651-2000",
+      "label": "中長1651-2000",
+      "filter": "band=中長1651-2000",
+      "stats": {
+        "n": 29,
+        "overlap": {
+          "n": 29,
+          "avgOverlap": 1.793,
+          "exactly": {
+            "0": {
+              "count": 2,
+              "rate": 0.069
+            },
+            "1": {
+              "count": 7,
+              "rate": 0.2414
+            },
+            "2": {
+              "count": 15,
+              "rate": 0.5172
+            },
+            "3": {
+              "count": 5,
+              "rate": 0.1724
+            },
+            "4": {
+              "count": 0,
+              "rate": 0.0
+            }
+          }
+        },
+        "sixupLegRate": 0.1379,
+        "qinBox3Rate": 0.0345,
+        "qplBox3Rate": 0.2414,
+        "placeHitsPerTop3": 0.3563
+      }
+    },
+    {
+      "id": "長途>2000",
+      "label": "長途>2000",
+      "filter": "band=長途>2000",
+      "stats": {
+        "n": 3,
+        "overlap": {
+          "n": 3,
+          "avgOverlap": 1.333,
+          "exactly": {
+            "0": {
+              "count": 0,
+              "rate": 0.0
+            },
+            "1": {
+              "count": 2,
+              "rate": 0.6667
+            },
+            "2": {
+              "count": 1,
+              "rate": 0.3333
+            },
+            "3": {
+              "count": 0,
+              "rate": 0.0
+            },
+            "4": {
+              "count": 0,
+              "rate": 0.0
+            }
+          }
+        },
+        "sixupLegRate": 0.0,
+        "qinBox3Rate": 0.0,
+        "qplBox3Rate": 0.0,
+        "placeHitsPerTop3": 0.2222
+      }
+    },
+    {
+      "id": "ST_短途≤1200",
+      "label": "ST 短途≤1200",
+      "filter": "venue=ST&band=短途≤1200",
+      "stats": {
+        "n": 95,
+        "overlap": {
+          "n": 95,
+          "avgOverlap": 1.916,
+          "exactly": {
+            "0": {
+              "count": 4,
+              "rate": 0.0421
+            },
+            "1": {
+              "count": 27,
+              "rate": 0.2842
+            },
+            "2": {
+              "count": 38,
+              "rate": 0.4
+            },
+            "3": {
+              "count": 25,
+              "rate": 0.2632
+            },
+            "4": {
+              "count": 1,
+              "rate": 0.0105
+            }
+          }
+        },
+        "sixupLegRate": 0.2211,
+        "qinBox3Rate": 0.1579,
+        "qplBox3Rate": 0.3684,
+        "placeHitsPerTop3": 0.4281
+      }
+    },
+    {
+      "id": "ST_一哩1201-1650",
+      "label": "ST 一哩1201-1650",
+      "filter": "venue=ST&band=一哩1201-1650",
+      "stats": {
+        "n": 93,
+        "overlap": {
+          "n": 93,
+          "avgOverlap": 1.989,
+          "exactly": {
+            "0": {
+              "count": 3,
+              "rate": 0.0323
+            },
+            "1": {
+              "count": 19,
+              "rate": 0.2043
+            },
+            "2": {
+              "count": 49,
+              "rate": 0.5269
+            },
+            "3": {
+              "count": 20,
+              "rate": 0.2151
+            },
+            "4": {
+              "count": 2,
+              "rate": 0.0215
+            }
+          }
+        },
+        "sixupLegRate": 0.2366,
+        "qinBox3Rate": 0.1505,
+        "qplBox3Rate": 0.4194,
+        "placeHitsPerTop3": 0.4373
+      }
+    },
+    {
+      "id": "HV_短途≤1200",
+      "label": "HV 短途≤1200",
+      "filter": "venue=HV&band=短途≤1200",
+      "stats": {
+        "n": 71,
+        "overlap": {
+          "n": 71,
+          "avgOverlap": 2.169,
+          "exactly": {
+            "0": {
+              "count": 3,
+              "rate": 0.0423
+            },
+            "1": {
+              "count": 14,
+              "rate": 0.1972
+            },
+            "2": {
+              "count": 27,
+              "rate": 0.3803
+            },
+            "3": {
+              "count": 22,
+              "rate": 0.3099
+            },
+            "4": {
+              "count": 5,
+              "rate": 0.0704
+            }
+          }
+        },
+        "sixupLegRate": 0.3239,
+        "qinBox3Rate": 0.1831,
+        "qplBox3Rate": 0.4225,
+        "placeHitsPerTop3": 0.446
+      }
+    },
+    {
+      "id": "HV_一哩1201-1650",
+      "label": "HV 一哩1201-1650",
+      "filter": "venue=HV&band=一哩1201-1650",
+      "stats": {
+        "n": 40,
+        "overlap": {
+          "n": 40,
+          "avgOverlap": 2.4,
+          "exactly": {
+            "0": {
+              "count": 0,
+              "rate": 0.0
+            },
+            "1": {
+              "count": 4,
+              "rate": 0.1
+            },
+            "2": {
+              "count": 19,
+              "rate": 0.475
+            },
+            "3": {
+              "count": 14,
+              "rate": 0.35
+            },
+            "4": {
+              "count": 3,
+              "rate": 0.075
+            }
+          }
+        },
+        "sixupLegRate": 0.425,
+        "qinBox3Rate": 0.275,
+        "qplBox3Rate": 0.5,
+        "placeHitsPerTop3": 0.5
+      }
+    },
+    {
+      "id": "oracle",
+      "label": "僅 TX-Oracle / LGB 凍結",
+      "filter": "scoreSource contains oracle|lgb|ensemble",
+      "stats": {
+        "n": 255,
+        "overlap": {
+          "n": 255,
+          "avgOverlap": 2.047,
+          "exactly": {
+            "0": {
+              "count": 10,
+              "rate": 0.0392
+            },
+            "1": {
+              "count": 58,
+              "rate": 0.2275
+            },
+            "2": {
+              "count": 106,
+              "rate": 0.4157
+            },
+            "3": {
+              "count": 72,
+              "rate": 0.2824
+            },
+            "4": {
+              "count": 9,
+              "rate": 0.0353
+            }
+          }
+        },
+        "sixupLegRate": 0.2706,
+        "qinBox3Rate": 0.1686,
+        "qplBox3Rate": 0.4118,
+        "placeHitsPerTop3": 0.4418
+      }
+    },
+    {
+      "id": "elo_fallback",
+      "label": "僅 Elo 後備",
+      "filter": "scoreSource starts elo",
+      "stats": {
+        "n": 94,
+        "overlap": {
+          "n": 94,
+          "avgOverlap": 2.011,
+          "exactly": {
+            "0": {
+              "count": 2,
+              "rate": 0.0213
+            },
+            "1": {
+              "count": 20,
+              "rate": 0.2128
+            },
+            "2": {
+              "count": 49,
+              "rate": 0.5213
+            },
+            "3": {
+              "count": 21,
+              "rate": 0.2234
+            },
+            "4": {
+              "count": 2,
+              "rate": 0.0213
+            }
+          }
+        },
+        "sixupLegRate": 0.2553,
+        "qinBox3Rate": 0.1489,
+        "qplBox3Rate": 0.3404,
+        "placeHitsPerTop3": 0.4149
+      }
+    }
+  ],
+  "residual": {
+    "overlap_le_1": {
+      "n": 90,
+      "byVenue": {
+        "HV": 28,
+        "ST": 62
+      },
+      "byBand": {
+        "一哩1201-1650": 26,
+        "短途≤1200": 48,
+        "中長1651-2000": 9,
+        "unknown": 5,
+        "長途>2000": 2
+      }
+    },
+    "overlap_ge_3": {
+      "n": 104,
+      "byVenue": {
+        "HV": 46,
+        "ST": 58
+      },
+      "byBand": {
+        "短途≤1200": 53,
+        "中長1651-2000": 5,
+        "一哩1201-1650": 39,
+        "unknown": 7
+      }
+    }
+  }
+}

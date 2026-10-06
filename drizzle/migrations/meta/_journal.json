@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1791283462409,
+      "tag": "0000_model_versions_and_ledger_stake",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791284123236,
+      "tag": "0001_model_versions_ledger_stake_race_dividends",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791291943963,
+      "tag": "0002_telegram_alert_state",
+      "breakpoints": true
+    }
+  ]
+}
