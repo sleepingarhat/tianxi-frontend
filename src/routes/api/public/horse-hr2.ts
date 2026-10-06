@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 // H-R2 研究報告公開代理：tianxi-backend 倉 reports/research/h-r2/latest.json。
 // 純轉發唯讀研究報告（凍結 p vs 扣水 q、closeGap 分位樣本），唔改任何預測。
-const REPORT = "https://raw.githubusercontent.com/sleepingarhat/tianxi-backend/main/reports/research/h-r2/latest.json";
+const REPORT = "https://raw.githubusercontent.com/sleepingarhat/tianxi-racing/main/backend/reports/research/h-r2/latest.json";
 
 export const Route = createFileRoute("/api/public/horse-hr2")({
   server: {

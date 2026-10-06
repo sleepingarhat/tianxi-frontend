@@ -2,7 +2,7 @@
 
 ## 進行中
 - [ ] 2026-10-06 五倉制已拍板：Tianxi Football（資料＋引擎＋後端）、Tianxi Horse racing（tianxi-database＋tianxi-backend 合併）、Tianxi Mark Six（hk-mark-six＋tianxi-marksix 合併）、Tianxi 前端（新建，放本專案源碼）、Tianxi 研究（tianxi-football-research 擴至賽馬＋足球＋六合彩）；舊倉封存轉址、全站引用更新
-- [ ] 2026-10-06 Telegram 告警：Bot @tianxienginebot 已連接（connector）；告警模組涵蓋數據庫健康、賽果同步（收料 workflow 失敗）、雙引擎狀態（T−6h 未鎖／快照失敗）；待用戶同 Bot 講一句嘢以取得接收對話
+- [x] 2026-10-06 Telegram 告警：Bot @tianxienginebot 已連接（connector）；告警模組涵蓋數據庫健康、賽果同步（收料 workflow 失敗）、雙引擎狀態（T−6h 未鎖／快照失敗）；已接通，測試訊息發送成功
 - [ ] 2026-10-06 倉庫真合併（用戶拍板：唔係淨係說明）：足球後端程式真正放入 `tianxi-football`；六合彩倉（hk-mark-six／tianxi-marksix）合併並放入真代碼；賽馬倉（tianxi-database／tianxi-backend）合併並放入真代碼；舊倉封存轉址、全站引用更新
 - [x] 2026-09-30 足球賽程卡排版修正：時間同隊徽重疊，改為頂行聯賽＋時間、隊名隊徽置中、底線機率條＋預測章；手機 420px 核對無溢出。純展示，不改預測及凍結。
 - [x] 2026-09-30 賽馬首選欄位整理：綵衣靠左，馬號馬名齊線；勝算獨立排列，騎師獨立一行防止突出。足球近期賽程補聯賽及雙隊徽，對改 vs；對帳隊名補中文。純展示，不改預測及凍結。
@@ -673,7 +673,7 @@
 - [ ] 改良7：賽馬各彩池 $10 官方派彩表（先開表＋介面位，後端接通再轉源）
 - [ ] ECharts 動態圖表（策略盈虧曲線、足球趨勢）＋監控端一屏展示
 - [ ] 設計規範：參考 break-ui skill（最壞真實數據壓測 UI：長隊名、空態、千條規模、320px、深色、RTL；先報告再修）同 motionin.design 動效畫廊
-- [ ] Telegram 告警：待用戶提供 bot token
+- [x] Telegram 告警：待用戶提供 bot token
 
 ## 2026-10-06 藍圖第一批進度
 - [x] T−6h 鎖定 + $100 注碼 + model_versions + 帳本 stake 欄（migration 已套用）
@@ -683,7 +683,7 @@
 - [x] admin 監控端頂部加「一屏總覽」（引擎健康／數據完整性／同步狀態／最新賽果日期）
 - [x] 足球公開對帳頁加逐季 RPS 趨勢圖（ECharts，S5 vs S4＋命中率柱）
 - [x] break-ui 最壞真實數據逐頁驗收（足球總覽／賽程／對帳／戰績，320px＋200% 縮放＝210 CSS px 實測）：修 4 項——窄位頂欄「升級 Pro」縮星形圖示、品牌字收起；鎖定帳新舊版淨盈虧統一一位小數；超長隊名右緣加淡出提示（OverflowTicker mask）；篩選零結果改明顯空白卡＋「清除全部篩選」掣。扛得住：320px 無溢出、無 NaN、無賠率場正確標示、香港時間一致
-- [ ] Telegram 告警（等用戶 Bot token）；未翻譯隊名每日檢查（自動化待排）
+- [x] Telegram 告警已接通；- [ ] 未翻譯隊名每日檢查（自動化待排）
 
 ## 2026-10-06 足球三倉合一
 - [x] tianxi-football-database 改名 tianxi-football 統一倉（舊網址 GitHub 自動轉址 301）
@@ -697,4 +697,5 @@
 - [x] 研究：tianxi-football-research → tianxi-research（涵蓋賽馬、足球、六合彩）
 - [x] 舊倉封存：tianxi-backend、hk-mark-six-2002-now（README 留轉址說明）
 - [x] 網站引用更新（weather-sync／meeting-cancellation／race-results-dispatch／telegramAlert／ProductDashboard）
-- [ ] 天喜前端倉：新建 tianxi-frontend 並推送 Lovable 源碼（下一輪）
+- [x] 天喜前端倉 tianxi-frontend 已建立並推送 604 個源碼檔；舊倉 tianxi-backend、hk-mark-six-2002-now、tianxi-football-backend、tianxi-football-engine 已核對內容後刪除
+- [x] 2026-10-06 tianxi-site 96 個檔併入 tianxi-frontend/legacy-site/ 後刪除；修正六合彩資料、H-R2 報告、首頁連結改指新倉

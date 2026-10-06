@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-const BASE = "https://raw.githubusercontent.com/sleepingarhat/hk-mark-six-2002-now/main/data/";
+const BASE = "https://raw.githubusercontent.com/sleepingarhat/tianxi-marksix/main/data-history/data/";
 
 const FILES: Record<string, string> = {
   latest: "latest.json",

@@ -58,7 +58,7 @@ const PRODUCTS: Product[] = [
       { title: "八字／奇門取數", detail: "按已定版規則分別輸出 15 碼，亦可加入個人命盤作合盤。", formula: "S(n) = Sᵇᵃᶻᶦ(n) + Sᑫⁱᵐᵉⁿ(n)" },
       { title: "逐期回測", detail: "同官方結果逐期核對命中數，展示原始結果，不改分數追答案。", formula: "hits = |預測 15 碼 ∩ 官方攪珠號碼|" },
     ],
-    sources: [{ label: "六合彩數據庫", href: "https://github.com/sleepingarhat/hk-mark-six-2002-now" }, { label: "六合彩引擎", href: "https://github.com/sleepingarhat/tianxi-marksix" }],
+    sources: [{ label: "六合彩數據庫", href: "https://github.com/sleepingarhat/tianxi-marksix/tree/main/data-history" }, { label: "六合彩引擎", href: "https://github.com/sleepingarhat/tianxi-marksix" }],
     actions: [{ to: "/marksix", hash: "marksix-engine", label: "天喜引擎回測" }, { to: "/marksix", hash: "marksix-next", label: "下一期預測" }],
     branches: [{ to: "/marksix", hash: "marksix-next", label: "下一期", icon: CircleDot }, { to: "/marksix", hash: "marksix-stats", label: "號碼統計", icon: Activity }, { to: "/marksix", hash: "marksix-engine", label: "排盤", icon: GitBranch }, { to: "/marksix", hash: "marksix-engine", label: "回測", icon: Gauge }],
   },
