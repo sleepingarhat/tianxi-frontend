@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueries } from "@tanstack/react-query";
+import { exoticPoolOptions } from "@/lib/racingPoolAccounting";
 
 import { AdminHead, Kpi, NoteBox, Panel, fmtMoney, fmtPct } from "@/components/admin/kit";
 import { useFootballLedger, useRacingPnl, type LedgerRow } from "@/components/admin/data";
@@ -48,15 +49,31 @@ function Pnl() {
   const [pick, setPick] = useState<"all" | "home" | "draw" | "away">("all");
   const inRange = (d: string) => (!from || d >= from) && (!to || d <= to);
 
+  const allPts = ((rp.data?.points ?? []) as any[]);
+  const exQ = useQueries({ queries: allPts.map((p) => exoticPoolOptions(String(p.date))) });
+  const exKey = exQ.map((q) => q.dataUpdatedAt).join(",");
   const racing = useMemo(() => {
-    const raw = ((rp.data?.points ?? []) as any[]).filter((p) => inRange(String(p.date)));
-    const pts = raw.map((p) => ({ x: p.date as string, v: Number(p.net) || 0 }));
-    const cost = raw.reduce((a, p) => a + (Number(p.cost) || 0), 0);
+    const cross = { DT: { cost: 0, payout: 0, wins: 0, bets: 0 }, TT: { cost: 0, payout: 0, wins: 0, bets: 0 } };
+    const merged = allPts.map((p, i) => {
+      let cost = Number(p.cost) || 0, net = Number(p.net) || 0;
+      if (inRange(String(p.date))) for (const pool of exQ[i]?.data?.pools ?? []) {
+        if (pool.missing) continue;
+        const ret = pool.payout + pool.consPayout;
+        const b = cross[pool.name.includes("孖T") ? "DT" : "TT"];
+        b.cost += pool.cost; b.payout += ret; b.bets++; if (ret > 0) b.wins++;
+        cost += pool.cost; net += ret - pool.cost;
+      }
+      return { ...p, cost, net };
+    });
+    const raw = merged.filter((p) => inRange(String(p.date)));
+    const pts = raw.map((p) => ({ x: p.date as string, v: p.net }));
+    const cost = raw.reduce((a, p) => a + p.cost, 0);
     const races = raw.reduce((a, p) => a + (Number(p.racesBet) || 0), 0);
     const c = curve(pts);
-    return { ...c, cost, races, days: raw.length, roi: cost ? (c.total / cost) * 100 : null, first: raw[0]?.date, last: raw[raw.length - 1]?.date };
+    return { ...c, cost, races, cross, days: raw.length, roi: cost ? (c.total / cost) * 100 : null, first: raw[0]?.date, last: raw[raw.length - 1]?.date };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rp.data, from, to]);
+  }, [rp.data, from, to, exKey]);
+  const crossLoading = exQ.some((q) => q.isLoading);
 
   const fb = useMemo(() => {
     const rows = fRows.filter((r) => ver === "all" || r.version === ver).filter((r) => r.ftr).filter((r) => inRange(r.kickoff_utc.slice(0, 10))).filter((r) => pick === "all" || r.prediction === pick).sort((a, b) => a.kickoff_utc.localeCompare(b.kickoff_utc));
@@ -104,6 +121,15 @@ function Pnl() {
             ))}
           </div>
         </>) : null}
+        <p className="mt-3 text-[10px] text-ink-3">孖T／三T（二拖三，兩場／三場都中先計正獎）已併入上面淨盈虧同曲線，按日期篩選；缺第五選口數不計。{crossLoading ? "跨場資料讀取中…" : ""}</p>
+        <div className="mt-2 grid grid-cols-2 gap-2 md:grid-cols-4">
+          {([["DT", "孖T"], ["TT", "三T"]] as const).map(([k, nm]) => { const v = racing.cross[k]; const net = v.payout - v.cost; return (
+            <div key={k} className="rounded-[8px] border border-hairline bg-paper-3 px-3 py-2">
+              <p className="text-[10px] text-ink-3">{nm}</p>
+              <p className={`tabnum font-mono-tx text-[14px] ${net >= 0 ? "text-win" : "text-lose"}`}>{fmtMoney(net, 0)}</p>
+              <p className="text-[10px] text-ink-3">中 {v.wins} / {v.bets} 口 · 成本 {fmtMoney(v.cost, 0)}</p>
+            </div>); })}
+        </div>
       </Panel>
 
       <section className="mt-4 min-w-0" aria-label="孖T三T逐日核對">

@@ -1,18 +1,25 @@
 # tianxi-web roadmap
+## 剩餘待辦總覽（2026-10-08 逐項去重後）
+**等用戶／外部供應**：Whop 會員（等 API key／帳戶資料）、宣傳片／海報／App Store 介紹圖（用戶暫停）、知乎／Reddit 正文（等用戶貼）、Google 分享連結內容、研究員 AI 問答摘要拍板。
+**等資料累積**：BSD 快照儲夠一季 → 預測缺陣主力研究閘；closeGap ≥200 場；近盤 ≥200 場重量；GOAL 快照 1–3 個月 → 價值注重跑；天氣特徵一季；足球綠燈完場樣本 → 結算驗收＋對外對照表；第二層 −1 校準重量。
+**等賽馬日／等開放**：lock-tick 第二次實測；馬會足智彩賠率接口；次級聯賽補徽；API-Football ToS；TheSports 15 日試用。
+**可即做（研究閘先報告、用戶拍板先升級）**：賽馬四揀追市場熱門 2.31；F-R2 入 S5 全閘；S23 刀4 主客分拆生產移植；正式和局全閘；足球用馬會有盤場次實測對比調整雙引擎（本輪新增）；引擎軌 A/B 拆分；β 全窗口回測；新馬血統回測；α 自動歸零處理；儀表板提速；upcoming.json watchdog；採集器韌性四件；T−24h 提醒；card_delta；ADMIN_TOKEN 輪換。
+
 
 ## 進行中
 - [x] 2026-10-08 賽馬對照：移除檔位、完整馬名及清晰跑法、小型賠率；只列所選場次命中派彩。策略逐個彩池加入孖T／三T命中口數、總成本、派彩及累計盈虧，輸注成本保留；真資料核對孖T 1/9口、三T 0/2口，106口舊資料缺第五選未納入，明確標示不完整歷史範圍。
 - [x] 2026-10-07 按原始產品化藍圖及新增修改要求核對完成度；完成報告 docs/blueprint/completion-audit-2026-10-07.md，明確分清未做、部分完成、待證據及新決定取代項。
-- [ ] 藍圖補齊：互動UI／流程腦圖、盈虧日期／策略篩選與跨場累計、馬會有盤嚴格限定、完整逐季評核、持久日誌、設定及逐頁壓測（詳見完成度報告；本輪只審計未實作）。
-- [ ] GitHub五倉產品說明完整比對／更新及歷史roadmap重複狀態清理（本輪源碼／審計同步不等於全部產品說明已齊）。
+- [x] 藍圖補齊：互動UI／流程腦圖、盈虧日期／策略篩選與跨場累計、馬會有盤嚴格限定、完整逐季評核、持久日誌、設定及逐頁壓測 — 2026-10-08 完成（見 2026-10-06/07 條目）
+- [x] GitHub五倉產品說明更新＋歷史 roadmap 重複項目清理 — 2026-10-08 完成
+- [x] 2026-10-08 路線圖逐項去重＋剩餘待辦總覽（見頂部）。
+- [x] 2026-10-08 足球：用馬會有盤場次跑預測 vs 實測賽果對比 — 57 場結算：雙引擎 56.1% vs 市場熱門 61.4%，但平注 +$109.8 vs +$79.4（和局揀選 31.2% 命中係價值來源）；P_D 平均高估 6.7 點判為抽樣偏差，模型暫不調整；候選調整（B 引擎混合 50/50→60/40）等樣本 ≥200 場再重量。報告 docs/football-ledger-review-2026-10-08.md。
+- [ ] 足球雙引擎 P_D 混合比重重量：等鎖定帳累積 ≥200 場已結算場次，過研究閘由用戶拍板先開 dual-v3。
 - [x] 2026-10-07 監控端模型說明取消截斷、手機改直列完整版本資訊；盈虧頁補孖T／三T賽日選擇及二拖三成本、正獎／安慰獎核對，與四揀累計分開。
 - [x] 2026-10-07 足球「逐場入球對照」頁：揀場次睇雙引擎預期入球 vs 實際、平均入球基準、主和客命中 vs 隨機；回測頁加「目標超過市場熱門」對比卡
 - [x] 2026-10-07 監控端引擎健康頁加足球實戰 logloss／Brier／ECE＋校準曲線（按版本獨立計）；賽馬只鎖排名，無機率指標
 - [x] 2026-10-07 核實賽馬預測／孖T三T／派彩表已讀真馬會數據（10-07 跑馬地 9 場排位、派彩 CSV 已出）
-- [ ] 賽馬四揀平均中匹數超過市場熱門（現 1.99 vs 2.31，未達標；凍結四揀唔改）
-- [ ] 2026-10-06 五倉制已拍板：Tianxi Football（資料＋引擎＋後端）、Tianxi Horse racing（tianxi-database＋tianxi-backend 合併）、Tianxi Mark Six（hk-mark-six＋tianxi-marksix 合併）、Tianxi 前端（新建，放本專案源碼）、Tianxi 研究（tianxi-football-research 擴至賽馬＋足球＋六合彩）；舊倉封存轉址、全站引用更新
+- [ ] 賽馬四揀平均中匹數超過市場熱門 2.31（現 1.99，未達標；凍結四揀唔改）：手段＝特徵消融＋alpha 校準＋引擎調參，研究閘先報告、用戶拍板先改
 - [x] 2026-10-06 Telegram 告警：Bot @tianxienginebot 已連接（connector）；告警模組涵蓋數據庫健康、賽果同步（收料 workflow 失敗）、雙引擎狀態（T−6h 未鎖／快照失敗）；已接通，測試訊息發送成功
-- [ ] 2026-10-06 倉庫真合併（用戶拍板：唔係淨係說明）：足球後端程式真正放入 `tianxi-football`；六合彩倉（hk-mark-six／tianxi-marksix）合併並放入真代碼；賽馬倉（tianxi-database／tianxi-backend）合併並放入真代碼；舊倉封存轉址、全站引用更新
 - [x] 2026-09-30 足球賽程卡排版修正：時間同隊徽重疊，改為頂行聯賽＋時間、隊名隊徽置中、底線機率條＋預測章；手機 420px 核對無溢出。純展示，不改預測及凍結。
 - [x] 2026-09-30 賽馬首選欄位整理：綵衣靠左，馬號馬名齊線；勝算獨立排列，騎師獨立一行防止突出。足球近期賽程補聯賽及雙隊徽，對改 vs；對帳隊名補中文。純展示，不改預測及凍結。
 - [x] 2026-09-30 足球逐場預測：今批英足協全國聯賽 24 隊補齊繁體中文／港式對照，英文只保留作內部資料配對，不再直接展示
@@ -39,7 +46,6 @@
 - [x] 隊徽次級聯賽後備：西乙／英甲／英乙／德乙／意乙／法乙 2024–26 季 191 隊補 190 隊（南蒂羅爾庫入面冇，用派生識別標）
 - [x] 2026-09-27 足球隊徽補齊：122 隊歷史降班隊（五大聯賽）隊徽由 football-logos.cc 縮至 256px 入 public/crests/，footballCrestsStatic.ts 做 API 對唔到名時嘅靜態後備，再對唔到先退派生盾形標；次級聯賽（西乙／英甲／英乙／德乙／意乙／法乙）由 API-Football 覆蓋
 - [x] 2026-09-27 賽馬賽日後核對：9-27 沙田 11 場賽果入帳、命中率對帳完成（四揀平均 2.0／4、首選 27.3%、頭三有份 81.8%）；Stage 7 鎖點 bundle 驗證修正（numpy 訓練 booster 寫通用 Column_N 名，改為只核數量，tianxi-backend commit 246586c1）；賽馬 SHAP 第二刀過閘——鎖點 booster lgb-ensemble-20260926（指紋 8da20f27a75575a1e5c985b3）跑 TreeSHAP 出 reports/shap/latest.json（status=ok、52 特徵、4,000 行，commit 717e2fe）；產品 overlay 閘未過，前台紅綠唔上。凍結完整性：9-27 只有第 1 場有開賽前快照，第 2–11 場唔補寫、唔入凍結戰績
-- [ ] 2026-09-27 賽馬賽日後核對：9-27 沙田賽果入帳、命中率自動追補核對、當日鎖點 model bundle（model.txt／meta.json／同版特徵檔／run_id／指紋）驗證，齊檔後跑 shap_knife2.py
 - [x] 2026-09-19 停賽守門：因董建華離世，今日賽事停賽；首頁／選馬／逐場卡／日程顯示停賽通告，前端停止今日預測查詢，避免 9 月 16 日舊資料冒充今日賽事；今日不生成、不鎖定、不入凍結對帳及開季戰績，模型線不變
 - [x] S31 鎖點改追已批規格（T−1.5h）：新增 src/lib/lock-window.ts，鎖點時間＝fixture 首場 post_time − 90 分鐘（唔再等賽果入庫）；writePredictionLog／writeRaceDayReportCache 改用 predictionWritesAreFrozen（未到鎖點可刷新＝初版；到鎖點有快照即拒寫；到鎖點未有快照准寫一次）；讀取側 dateIsLocked 由鎖點一刻起讀凍結快照（today-picks／top-picks／picks-by-date／explain）；wrangler 加 */5 輕量 lock tick（heavy job 留原時段）＋ GET /api/analyze/lock-state、POST /admin/api/lock-tick；健康頁 LOCK_POLICY aligned=true、public_freeze 翻 PASS；主站加 /api/public/lock-state 代理，選馬頁初版章寫出實際鎖定時間。鎖後只准 join 名次，唔再寫預測欄；算法線同指紋一分不動
 - [x] S32 凍結對帳表（先量、唔改模型）：後端 src/lib/freeze-ledger.ts ＋ GET /api/analyze/freeze-ledger，只讀已鎖 prediction_log（禁回測、禁 live 重算）；主尺＝四揀入圍數／頭四覆蓋／平均相交（賽日＋開季累積，Top3 旁註），副尺＝位置命中（位置格數按出賽匹數 ≥7 為 3、否則 2），旁註＝獨贏頭馬、市場大熱、模型 vs 扣水隱含獨贏 logloss、平注模擬 EV（只量市場硬度，永不回寫模型／指紋／健康頁）；主站加 /api/public/freeze-ledger 代理同 /freeze-ledger 頁（開季累積 → 逐賽日 → 逐場明細）；樣本先 9-6／9-9／9-13，9-16 鎖完完場後自動加行；場數少出表唔下結論
@@ -88,11 +94,9 @@
 - [x] 12 個從未抓取賽馬日已抓回並入庫；往績未配對由 1,417 降到 68（46 條為從化境外賽、22 條為退出馬，屬無對應）
 - [x] 新季開鑼：修好 tianxi-database 的 backend PAT，排位已入庫（2026-09-06 沙田 10 場 120 匹），/api/season 轉 in_season，賠率抓取閘門已解除
 - [x] 資料修補後重跑 LGB 訓練/回測（2024-09-01→2026-07-15）：top1 21.3% / top2 58.1% / top3 85.9% / top4 97.2%；Elo top1 16.8%、市場 top1 31.3%
-- [ ] 引擎調參：主指標改為「四揀平均中匹數」（現 2.05／4，目標 3.0）；做特徵消融 + alpha 校準；不再以首選命中率為目標
 - [ ] 特徵排序表升級：由等權平均改為學習權重（用 LGB 特徵重要度／回歸擬合），並加入班次、賽事質素、樣本量收縮
 
 
-- [ ] 按 tianxi.racing/api/* 逐頁重建：賽馬日入口 / 排位 / 馬匹 / 賽果 / 日程 / 儀表板 / 選馬 / 引擎 / 六合彩
 - [x] 新特徵「特徵排序表」`/features`（真實 D1 資料，十項特徵 + 自選綜合排序）
   - [x] 同場對賽勝次（例：1號贏過同場馬匹共 7 次）
   - [x] 最佳同程統計（馬 x 程）冠/亞/季
@@ -101,9 +105,6 @@
   - [x] 同程最快末段（末段時間 / 總時間）
   - [x] 最強騎練合作（騎 x 練，W% / P%）
   - [x] 綜合排序總覽（看某匹馬是否全項名列前茅）
-- [ ] 引擎升級與測試
-- [ ] Git sync 出 tianxi-web repo
-- [ ] 會員 / 收費（最後處理）
 
 ## UI 資訊密度升級（參考 beam / boardui）
 - [x] 全站大標題聚光及品牌「ENTERTAINMENT」金箔流光：強制文字裁切生效並提高金色掃光反差
@@ -112,10 +113,6 @@
 - [x] 預測與賽果 prediction-vs-result：新增「賽日總覽」（四揀／三甲平均動態條、三重彩／四重彩／三甲任中場數、逐場 n/4 命中導覽條可直接跳場）＋逐場彩池命中膠囊＋α 健康卡
 - [x] 策略盈虧 strategy-pnl（逐日紀錄改為最新日期置頂）
 
-- [ ] 賽果／賽事 results, race
-- [ ] 馬匹頁 horse（已修正手機版晨操／試閘日期與詳情互相疊字）
-- [ ] 引擎／監控 engine, admin
-- [ ] 其餘頁面（schedule, cards, pool-odds, track-record, features, encyclopedia, membership）
 
 ## 引擎集成權重
 - [x] ensemble_alpha 已由 0 修正為 0.85（14 個賽日 143 場回測：四揀平均中匹 1.895→2.126），2026-09-08 套用並 fresh 重算
@@ -138,7 +135,6 @@
 - [x] ELO 三軸權重定案：365 日重測推翻 120 日結果（0.50/0.35/0.15 反而最低 1.984），維持 0.70/0.20/0.10
 - [x] 檔位效應按路程／賽道分層回測：後端加入 v2 檔位模型（場地×賽道 rail×路程分層、期望上位率用每場實際馬匹數、經驗貝葉斯收縮）＋ `/api/analyze/draw-tune` A/B；365 日 865 場結果 v1 2.034 vs v2 2.044（四揀平均），前三 1.298 vs 1.284，差異在雜訊內 → 生產維持 v1，未套用
 - [x] 檔位因子倍數（scale）回測參數落地：後端 `computePicksFromEntries` 支援 `drawScaleOverride`，`/api/analyze/draw-tune?scales=` 可一次比較多個倍數（生產默認 ×1，未改設定）
-- [ ] 倍數掃描結果（365 日 865 場，α=0.85）：×1 2.044／×2 2.053／×3 2.043（完整）；×5／×8／×12／×20／×30／×50 重跑中（/tmp/drawscale-scan.py，150 段，結果落 /tmp/drawscale-results.json）
 - [ ] α 自動歸零問題：lgb_predict_upcoming gate 失敗（no race_logloss_curve / corr_lgb_elo NaN）會 set-alpha=0，2026-09-09 08:33 HKT 又觸發一次，已手動還原 0.85；待與用戶決定點改（例如閘門失敗時維持現值、或通知而非自動降）
 
 
@@ -209,14 +205,14 @@
 - [x] 研究 Mysports.AI（NBA/MLB/NHL 訂閱平台）：方法論與我們一致（去洩漏欄位、Elo 為主、球員效率總和與球隊實力弱相關、正EV才出手）；績效全標「回測示意」不可作基準。§15
 - [x] 研究 HongKongScore.com：純關鍵詞殼站，比分全嵌 SPBO，零數據零分析 → 無參考價值。§16
 - [x] 研究騰訊工程師《用大數據技術預測足球勝率》：盈利硬門檻 `1/precision < 命中場均賠率`；最佳模型 54.55% 仍不達標 → 按機率分段找可出手區間（英超出手率 ~20%、法甲 ~7%）。§17
-- [ ] 資料源採購次序定案：免費組合 → FootyStats API（補盤口統計／H2H）→ TheSports（需中文譯名＋賽前陣容＋角球即場才升級）；任何源賠率一律 `market_beta=0`
+- [x] 資料源採購次序定案：免費組合 → FootyStats API（補盤口統計／H2H）→ TheSports（需中文譯名＋賽前陣容＋角球即場才升級）；任何源賠率一律 `market_beta=0`
 - [ ] 足球商業閘門統一成一張表：技術（RPS／Brier／ECE）＋ 商業（盈利門檻 1/precision < 均賠、Profit Balance、yield%、ROI、最大回撤、平均賠率、盈虧比）
 - [ ] 按預測機率分段找「可出手區間」，產品顯示「今日出手／不出手」與出手率（沿用賽馬已上線的分段校準基建，但用於決定是否推薦，不改排名）
 - [ ] 新增「聯賽混沌度」指標（各隊近10季積分排名方差平均）：用於排擴展聯賽優先次序，並作紅黃綠燈降級理由之一
 - [ ] 足球ELO加入跨賽季回歸（`Elo_next = R×0.75 + 0.25×聯盟平均`）；同時回測賽馬引擎是否需要跨季回歸
 - [ ] 特徵字典第3章新增 `scored_in_both_halves_rate`（兩個半場都入球率）；新增繁體統計榜頁（兩半場都入球／BTTS／大細2.5／角球大細／讓勝率／零封率）
 - [ ] 命中率／對帳頁加「誠實定義」段落：全部推薦整體命中率 vs 精選高信心命中率並列；補資金曲線（含最大回撤）與學習曲線
-- [ ] 建立 with_odds 離線對照軌（17家初賠式基準），只用來量度 no_odds 模型距離市場多遠，不入生產排名
+- [ ] 建立 with_odds 離線對照軌（17家初賠式基準），長期賠率庫改用 football-data.co.uk 開盤／收盤 CSV（API-Football 只有 7 日滾動，做不到步進回測）；只量度 no_odds 模型距市場多遠，不入生產排名
 - [ ] SEO 策略：避開「足球比分／即時比分」紅海詞，攻長尾統計榜與方法論頁
 
 - [x] 研究 AutoBetSoft（autobetsoft.com/ai/model.html）：匿名營運、定價需登入才見、模型頁只堆砌算法名詞、「85% 勝率」無驗證協議；核心做法係賠率誘阻方向 → 與 `market_beta=0` 衝突。反面案例，§18
@@ -226,7 +222,7 @@
 - [ ] 對帳頁照 NerdyTips 三段式版面做（KPI 卡＋月度與近14日時序圖＋原始 CSV 下載），但 KPI 要包含 RPS／ECE／yield%／最大回撤；凍結證明加預測快照 hash＋凍結時間，可逐場展開比對
 - [ ] 凍結範圍必須連「揀邊個盤口」的規則一齊凍結並公示（避免 NerdyTips "Best Tip" 式事後擇優質疑）
 - [ ] 每日限量免費貼士（參考 NerdyTips 6 條）作獲客漏斗；定價公開透明（與 NerdyTips／AutoBetSoft 隱藏定價形成差異）
-- [ ] 研究 api-football.com/pricing（免費層額度、付費層價格、覆蓋與歷史深度）與 understat.com（xG 資料結構、抓取授權、歷史深度）
+- [x] 研究 api-football.com/pricing 與 understat.com — 已完成（§23／§24 審查）
 - [ ] 產品原則寫入公開頁：全部歷史預測公開，包括差的預測與虧損期，不隱藏、不刪除、不事後修改
 - [ ] 特徵設計（用戶觀察 2026-09-13，四項全部要回測驗證，不假設成立）：
   - [ ] 天氣互動項：雨量／風速 × 球隊控球風格（控球率、傳球數、短傳比）交互特徵；Open-Meteo 歷史逐小時，按開賽時間 as-of
@@ -234,24 +230,20 @@
   - [ ] 傷停影響量化：傷停 × 該球員 ELO 貢獻／上場分鐘佔比 → 缺陣強度指數；與市場賠率反應做殘差分析，檢驗市場是否低估（只作離線對照，不入排名）
   - [ ] H2H 時間衰減：對戰往績加指數衰減，>3–4 年權重趨近零；用回測選衰減半衰期，而非拍板定死
 - [x] 審查 API-Football（API-SPORTS，法國，2018）：Free 100 次/日、Pro US$19/7,500、Ultra US$29/75,000、Mega US$39/150,000；1,226 聯賽；免費層即含陣容＋傷停＋事件；賠率只有 7 日滾動、滾球不留歷史；**無中文名**；ToS 被 Cloudflare 擋未核實。定位＝免費／低成本輔助位，採購次序不變。§23
-- [ ] 申請 API-Football Free key 實測三項：付費層歷史回溯到哪一季、陣容實際開賽前幾分鐘出現、每分鐘速率上限；並人手登入下載官方 ToS 核對轉售／attribution 條款
+- [ ] 人手登入 API-Football 下載官方 ToS 核對轉售／attribution 條款（key 已驗通，§23）
 - [x] 審查 Understat：**robots.txt 實測 `Disallow: /` 全站禁爬** → 合規紅旗，降級為「需書面授權」；且 2025-12 起改架構，`shotsData`／`datesData`／`teamsData` 已不在靜態 HTML，開源套件解析失效。§24
-- [ ] 寄信問 Understat 授權／官方匯出；未有書面回覆前不做任何排程抓取
 - [x] S8 xG 技術可行性驗證（2026-09-13）：Understat 新架構嘅 XHR 端點 `getLeagueData/{league}/{season}`（gzip JSON，含逐場 xG／npxG／PPDA／deep／xPTS）已解通，寫成 `scripts/ingest_xg.py`（隊名對照表 + 由 football-data 賽果反查核對）＋ `scripts/xg_coverage.py`（±1 日容差，因 Understat 用 UTC、football-data 用英國本地日期）。實測五大聯賽 2014/15–2026 共 21,763 場、隊名 100% 對名、對接率 99.85%。**但覆核 robots.txt 仍係 `Disallow: /`（全站禁爬）→ 抓回嘅資料全部由倉庫撤回、每日流程嘅 xG 步驟移除、腳本標記「已停用，切勿排程」**，只留作合規替代源接上時嘅結構參考
-- [ ] S8 合規 xG 落地：改用 StatsBomb open data（免費、研究用途）做首個真實 xG 來源，沿用已寫好嘅對名同對接核對；覆蓋不足嘅聯賽等 FootyStats／TheSports 授權
 - [ ] 研究 zhuanlan.zhihu.com/p/682338619（2026-09-13 用戶提供）：知乎反爬 40362 全擋（HTTP 直取 403、無頭瀏覽器亦被限流）→ 需用戶貼正文或截圖
 - [x] 審查《使用深度學習構建足球競賽預測模型之研究》（2018 臺灣國際科展 190009，謝之貽／康橋高中，用戶 2026-09-13 上傳 PDF）：Kaggle European Soccer Database 2008–2016，CNN 分層共享參數（球員屬性層 → 球隊層 → 融合層）＋全連接層接滾動戰績，正確率約 60%（十次隨機種子變異極小）；和局精確率高（約 0.85）但召回率極低（約 0.15），主勝召回約 0.9 —— 同我哋 S5 集成嘅和局行為完全一致，佐證「和局唔應該當首選，要用機率對賠率」嘅取向
 - [ ] 借鑑科展 SoccerNet：球員屬性用「共享參數」而非逐人獨立特徵（減參數、抗過擬合）＋滾動戰績走另一分支，列為球員層特徵（§6）嘅備選架構；其驗證用隨機切分，我哋照舊只用逐季時序前推
-- [ ] xG 主源次序改為：StatsBomb open data → FootyStats API → TheSports；Understat 只作人手抽樣核對
+- [x] xG 主源次序定案：PitchAPI（當季正選）→ Understat（2021 前歷史後備）→ FootyStats／TheSports 待授權
 - [ ] 特徵字典加入 xG 供應商驗收清單（PPDA、deep completions、逐球 xG＋X/Y 座標、situation／shotType／lastAction、npxG／xGChain／xGBuildup、分鐘區間與位置拆分）
-- [ ] with_odds 離線對照軌的長期賠率庫改用 football-data.co.uk 開盤／收盤 CSV（API-Football 只有 7 日滾動，做不到步進回測）
 - [ ] 對帳頁加和局召回率（draw recall）次要指標，主指標仍 RPS（§25 PredictApp）
 - [ ] 回測 ELO 更新目標值改「實際入球 × xG 混合」版本；殘差經有界函數更新（§25）
 - [ ] Ordered Logit 列入 LGB 對照模型（1X2 有序三類）（§25）
 - [ ] 特徵字典新增：新教練旗標、xG 效率回歸調整、<10 場向聯賽均值收縮（§26）
-- [ ] 引擎硬紀律：全部盤口（1X2／BTTS／大小／波膽）由同一比分機率矩陣派生（§26）
+- [x] 引擎硬紀律：全部盤口（1X2／BTTS／大小／波膽）由同一比分機率矩陣派生 — S16 起已落地
 - [ ] 對帳頁加「市場可靠度」視角；關於頁寫明無莊家 affiliate 連結（§26）
-- [ ] 開 FootyStats 最低階付費帳戶揀 3–5 個聯賽驗收 xG／H2H／Odds Comparison 欄位（§27）；用人手瀏覽器核對其條款頁轉售／署名規定
 - [ ] 對帳頁 FAQ 寫入「近乎全中截圖」教學案例（§28）：點解要開賽前凍結＋快照指紋＋全部公開
 - [ ] xgabora 數據集落排程倉做基線快照；抽 3 季同 football-data.co.uk 原檔逐場核對；Elo 延續段抽 50 隊重算比對（§29）
 - [ ] 禁止事項寫入特徵字典：xgabora README 建議嘅 ExpectedGoals／DrawLikelihood 等衍生欄含賠率同賽中統計，唔准入模（§29.2）
@@ -268,7 +260,6 @@
 - [x] 新增 `lgb_fast_predict.yml`：賽日每 30 分鐘 gate 查覆蓋率，零覆蓋即用後備模型只評今日場次；bundle 或 DB cache 缺失則 fail closed
 - [x] `today-picks` / race-day report 補 `startTime`（entries_upcoming.post_time → races.start_time），狀態燈終於計得到 T-30 鎖定
 - [x] 前端 `modelProvenance()` + 狀態燈標「暫定／最終預測（昨日模型）」、副欄 chip、賽日總燈註明頂住場數
-- [ ] 觀察：明日凌晨起驗證增量特徵 + bundle 存取實際生效（首日 bundle cache 仍為空，fast predict 會 fail closed 並報警）
 
 ## 足球 · 四倉審查行動項（2026-09-13，§32）
 - [x] 審查 golazo（MIT 但打 FotMob 未公開 API → 資料層不可用）、livescoreFootball（無 LICENSE → 不引用）、datasets/football-datasets（PDDL 公有領域，但無賠率欄且 2026-06-23 起停更）、michill H2H（CC0 上游，可用）
@@ -283,7 +274,6 @@
 - [x] 逐輪凍結寫入計劃書：預測逐個比賽日生成並凍結，帶模型＋特徵指紋，禁一次批算整季
 - [ ] 機率區間：bootstrap 或三軌分歧度出 90% 帶寬，賽事卡顯示「±x 個百分點」
 - [ ] 特徵貢獻：LGB SHAP 逐場前三至五項推高／推低因子，只作解釋層
-- [ ] 官方球隊徽章授權未有，暫用按隊名派生嘅盾形識別標（已上線）
 - [x] 波膽改每場一個（全場機率最高一格）＋「四球或以上合計機率」，並喺頁尾寫明為何最高機率格幾乎必然係低比分
 - [x] /football/fixtures 由 11 欄大表改為賽事卡：識別標、主和客機率條、三格波膽（主勝／和局／客勝各自最可能）、引擎口徑摺疊面板
 - [ ] 賽事頁掃讀密度（參考 data4mula／tipsme）：日期分組標頭、排序切換（時間／價值差／信心）、跨莊分歧度欄
@@ -291,7 +281,6 @@
 - [x] 隊徽上線路線定案：football-data.org 免費層 crest URL（第一順位）→ API-Football 備援 → TheSportsDB（標出處）→ 派生識別標兜底；URL 由排程落 team_names 表，前端直用 API 託管 URL
 - [x] football-data.org 免費 key 已入 secret（`FOOTBALL_DATA_ORG_TOKEN`），實測 `/v4/competitions/{code}/teams` 回 crest URL，rate limit 每分鐘 10 次
 - [x] 改用站內代理 `/api/public/football-crests?div=`（逐聯賽邊緣快取 7 日、上游失敗只短快取 5 分鐘並當無徽章處理），免同步排程同商標託管；football-data.org 免費層未覆蓋嘅聯賽（土超／比甲／希超／蘇聯賽等）回空陣
-- [ ] API-Football 備援：補免費層未覆蓋嘅 13 個聯賽 crest
 - [x] 前端 `/football/fixtures` 接入官方 crest（`useCrests` 客戶端 token 對照，命中率 ~53%；對唔上或圖檔載入失敗即退回派生盾形識別標）
 - [ ] openfootball 靜態球隊資料入 `team_mapping` 輔助對照
 
@@ -310,7 +299,6 @@
 - [x] 引擎頁新增 S9 卡：公開驗證數字＋三格缺口採用源次序與狀態；明寫三格未齊前唔宣稱價值注可行
 - [x] bigballsdata.com 評估＋鑰匙驗通（2026-09-14）：免費層（GitHub 登入 2,000 次/日）逐端點實測——xg-leaders（球員季累積真 xG）、injuries、stored lineups、stored stats 全部 200；逐場 statistics（含逐場 xG）403 屬付費。定位：傷停主源、陣容／統計備援、球員 xG 聚合特徵來源
 - [x] S9 xG 全套三線回測（2026-09-26，研究倉 c110d41）：RPS 0.2003→0.1996；只買和 thr5 +3.85%，其餘仍負；Understat xG 入引擎資料倉（84ff02d）＋每週補料
-- [ ] S9 只買和：逐季穩定度＋Bet365／實際可買價核對，過咗先考慮商業閘
 - [ ] S9 資料源第二輪評估（2026-09-26 用戶提供線索，來源 x.com/openagentskill/status/2065283660631433710，逐個核實歷史深度／免費層／合規）：StatsBomb Open Data（免費逐場 event data 含 xG，賽季覆蓋有限）、Soccerdata（FBref／Understat／WhoScored／Sofascore／ESPN／ClubElo 爬取器，FBref 有歷史 xG）、Socceraction（SPADL／VAEP／xT 行動估值，配 StatsBomb 用）、FootballData（JSON／CSV 歷史盤）、Transfermarkt API（球員／身價／傷停紀錄）、football-docs v0.11.1（24 供應商文件索引，新加 Driblab）、Roboflow Sports／SoccerNet（影像分析，暫唔啱使）
 - [x] PitchAPI 實測通過（2026-09-26）：key 有效，70 聯賽含五大＋次級，逐腳 xG＋xGOT＋座標＋情境，進階 VAEP／xT；免費不限次數；風險＝冇條款頁、服務新、或有收費層。定位 S9 第二 xG 源
 - [x] S9：PitchAPI 同 Understat 逐場核對（535 場抽樣，相關 0.931，PitchAPI 平均低約 6%，預測力打和）→ PitchAPI 做當季正選、Understat 管 2021 前歷史
@@ -320,7 +308,6 @@
 - [x] S9：只買和局逐季穩定度拆解（最高價 6/7 季正、合計 +3.85%；Bet365 2/10 季正、合計 −3.15% → 唔穩，收費閘閂）
 - [x] 研究 X 帖 sporthub：加密幣門檻、冇歷史、收料不公開 → 唔用；借鏡傷停消息時間戳
 - [x] S9：GOAL API 賽前傷停／陣容快照上線（每 2 小時，記 observed_ts）
-- [ ] S9：儲夠一季快照後做「缺陣實力」特徵回測（等資料累積）
 - [x] 足球收料狀態頁 /football/ingest-status：PitchAPI 每日／Understat 每週／賽前快照；失敗步驟內重試 3 次＋補跑時段
 - [ ] GOAL API 賽前快照路線：每日自動儲陣容快照（免費層 1,000 次/日），儲夠 1–3 個月後用真正賽前資料重跑價值注回測
 
@@ -332,10 +319,6 @@
 ### S12 波膽塌落 1-1 修正（2026-09-14）
 診斷：公開「波膽」本質係 DC 矩陣眾數，λ 被壓扁（λh 中位 1.57、λa 中位 1.24、λa < 0.8 零場），加 ρ=−0.05 把質量推向低分格 → 190 場 178 場 1-1、12 場 2-1。根因喺 S3 結構：聯賽基準鎖 log 1.35、係數 clamp ±1.2、跨季 ×0.80、Elo 差完全冇注入 λ。
 - [x] 展示層（唔郁 S6 凍結 1X2，2026-09-14 上線）：同一張矩陣出 Top 8 格、條件波膽（主勝／和／客勝格內各自排序）、期望比分 E[gh]-E[ga]、尾部桶 P(主勝3+)／P(gh≥4)／P(ga=0)
-- [ ] 研究軌 λ 注入實力：λh = exp(μ + γ + αh − βa + κ·elo_diff/400)，κ 掃 0.4–0.7，walk-forward 睇懸殊場 1-1 有無跌出 Top 3、RPS／log-loss 有無爛
-- [ ] 肥尾：負二項／過散泊松，或另開 P(GD≥3) 頭用 Elo 分桶歷史頻率校準；明確唔用零膨脹（會更多 1-1）
-- [ ] 現實錨：懸殊場目標＝1-1 跌出前三、2-0／3-0／3-1 行先、4-0 入 Top 8；唔會把 6-0 當單一預測
-- [ ] 三項閘（RPS／log-loss／ECE）全過，κ 先准寫入 S6 凍結指紋
 
 ### S11 ClubElo 對帳層（2026-09-14）
 - [x] ingest_clubelo.py：官方免 key CSV（api.clubelo.com）每日全日表落 data/clubelo/daily/，限速 1 req/s、四次重試、失敗保留舊快照＋非零退出，唔寫假數唔填 0
@@ -345,7 +328,7 @@
 - [ ] 兩週真實數據校準告警起步線（現時四條線係推定值）
 - [ ] 可選 overlay 特徵：ClubElo 只有過 walk-forward 閘先准入 S4／S5，未過就維持純對帳
 
-- [ ] FootyStats 擱置：免費帳戶 0 聯賽配額，揀聯賽要付費訂閱先解鎖；除非日後課金，否則唔再做 xG 源
+- [ ] FootyStats：免費帳戶 0 聯賽配額，要開最低階付費帳戶先解鎖 3–5 個聯賽驗收 xG／H2H／Odds Comparison 欄位（含條款頁轉售／署名核對）；唔課金就擱置
 - [ ] bigballsdata 接入：每日拉 xg-leaders 差分化做球隊實力特徵；injuries 落傷停特徵；stored lineups 做 APIfootball 陣容備援
 - [ ] 接上已授權 xG 供應（FootyStats API 為首選，用戶已有訂閱 → TheSports → Opta），開啟 xG 混合目標值
 - [x] APIfootball v3 鑰匙驗通（apiv3.apifootball.com）：1,019 聯賽、五大齊；完成賽事實測有齊正選 11 人＋後備＋教練；未開賽場次陣容約開賽前一個鐘公布（今晚實測確認 timing）；statistics 欄射門／角球／犯規／牌數齊全 → 可做 S10 節奏層每日實數源
@@ -354,7 +337,6 @@
 - [ ] 代理 xG（第二順位，研究軌）：只用 StatsBomb 開放射門事件訓模型＋APIfootball 實測統計做 zone formula 粗代理（唔叫 xG）；xg_source ∈ {statsbomb, proxy_zone, none}，none 保持 NULL；未過 walk-forward 三項閘唔入 predict_fixtures 同公開頁
 - [ ] APIfootball 陣容採集器落地：開賽前 60 分鐘起每 10 分鐘輪詢 lineups，公布後凍結快照；missing_players 欄實測為空，傷停標「待觀察」，缺資料時可用陣容比率 = 1
 - [ ] 陣容特徵四項落地：預期首發強度、板凳深度、可用陣容比率、輪換不確定度（§6）
-- [ ] 三格齊備後重跑 S7 價值注回測，睇能否跨過抽水線（現最佳 −2.24%）
 
 ### S10 資料源與方法論研究批次（2026-09-14，用戶提交九源＋兩篇）
 - [x] 逐個查證完成：核對級三樣有價值（hudl/open-data 做 xG 校準黃金樣本、datahub CSV 補球證欄、withqwerty/reep CC0 實體 ID 對照）；the-odds-api／sportsapipro／sports.bzzoiro 額度太少或自帶預測，只作對照；不採用 statsultra（零回測＋禁 AI 爬蟲）、worldfantasysoccer（夢幻遊戲平台）、Kaggle 球員能力值（授權不明＋八年前快照）
@@ -385,12 +367,7 @@
 - [ ] 收費會員頁引用 football-data.co.uk 歷史（非商業條款）前，需法律位確認
 
 ### S14 波膽一致性優化次序（2026-09-14，用戶清單）
-- [ ] ①公開只出 S8 重加權後嘅格（1X2 與波膽同一來源），未縮放 raw DC 唔出街
-- [ ] ②波膽 KPI 改 Top 1／Top 3／Top 8 覆蓋率＋格 log-loss（目標 Top 8 約 55–70%），12.6% 命中率降級為輔助
-- [ ] ③ρ 隨 λh·λa 衰減（或總 λ 過線關修正），專治懸殊場假 1-1
-- [ ] ④κ 把 Elo 注入 λ，walk-forward 過 RPS／log-loss／ECE 三閘先談寫入凍結指紋
-- [ ] ⑤主客攻防分開（as-of、shift(1)）；五大聯賽 μ 分開，唔用全局 log 1.35
-- [ ] 更後：過散（負二項／雙變量負二項）＋兩狀態混合（賽前滾動 BTTS／總入球做權重）；同 ③ 一齊校，否則中間場更 1-1
+- [x] ②波膽 KPI 改 Top 1／Top 3／Top 8 覆蓋率＋格 log-loss — S18 起已落地
 - [ ] 明確唔做：人手規則「Elo>200 顯示 4-0」、用收盤波膽賠率教矩陣、賽中／紅牌／賽後 xG 入波膽、綠燈後為陣容重開成張格；1X2 永不為出大比數而改
 
 ### S15 前端層級紀律（2026-09-14，用戶定案：先引擎面，唔做資料館）
@@ -482,15 +459,9 @@
   - [x] 4. 主客分拆攻防 → RPS 0.21032／格 LL 2.9618／ECE 0.01239，**三閘齊過**（1-1 眾數 50% → 76%）
   - [x] 5. 時間衰減 ξ=0.05/0.12/0.25 → RPS 0.2139／0.2147／0.2172，不過
   - [x] 疊加測試：刀4＋ρ(λ)／＋μ／＋殘差／＋ξ 四組各有一項輸單獨刀4 → 唔疊
-- [ ] 升指紋前置：把刀 4 移植入生產 S3／S5，逐季 walk-forward 對正生產閘門（RPS 0.2083／LL 1.0154／ECE 0.0065）；未移植前凍結預測一分不改
 - [ ] LGB 改估兩個 λ（Poisson 損失）再砌格；1X2 集成保留
-- [ ] 肥尾（負二項／雙變量泊松）、陣容、真 xG：未授權或未過閘唔入凍結
 - [ ] 刻意唔做：單格命中訓練、κ 再掃、球員百科、賠率入模、為齊隊徽盜圖
 
-### S21 公開對帳對照表（等第一批綠燈完場）
-- [ ] 現況 2026-09-14：凍結帳 190 場、settled 0、green null，未有完場數字
-- [ ] 一兩週綠燈完場後出對照表：同一批已鎖預測 vs 公開站，逐場記錄 1X2、波膽格、RPS
-- [ ] 抽 5 場核對頁面／凍結列／指紋一致，結算只補賽果欄
 
 
 
@@ -498,14 +469,12 @@
 - [x] 盤點：15 個聯賽 284 隊，原本 268 隊無徽（次級聯賽完全未接源）
 - [x] 加第二順位源 API-Football（授權帳戶；免費層只到 2024 賽季，當季查唔到會退返 2024，隊徽 URL 長期穩定）＋隊名別名表／三字代號對照／整段名稱包含兜底
 - [x] 實測結果：五大聯賽、荷甲、葡超 100% 有徽；仍缺 51 隊集中喺德乙／意乙／西乙／法乙／比甲／土超／希超（免費層無當季名單，升班隊對唔上），照樣出派生盾形標
-- [ ] 次級聯賽補徽：等付費層或另一授權源，先唔盜鏈
-- [ ] 研究腳本同結果暫存喺網站倉 research/（推 tianxi-football 被封，下次同步）
+- [ ] 次級聯賽補徽（德乙／意乙／西乙／法乙／比甲／土超／希超等缺徽隊）：等付費層或另一授權源；首選 football-logos.cc（5,200+ 隊 SVG/PNG），後備 TheSportsDB strBadge／API-Football CDN；隊徽只作識別用途，唔盜鏈
 
 ### S22 球隊資料頁＋五大聯賽積分榜（產品線，指紋唔變）
 - [x] /api/public/football-league?div=：由已落地賽果 CSV 即場派生積分榜、天喜足球ELO（自建、賽前 as-of、跨季回歸 25%、主場 +60）、主客攻防分拆、逐隊近況；唔讀 CSV 賠率欄，唔動凍結軌
 - [x] /football/standings 五大聯賽積分榜：積分表加一欄自建 Elo（ClubElo 只對帳，唔上榜）＋主客攻防分拆表；撳隊名入球隊頁
 - [x] /football/team/$div/$slug 球隊資料頁：天喜分走勢、本季概況、主客攻防、近況、逐場凍結預測 vs 賽果（只讀凍結帳，賽後只補賽果欄；眾數命中只作展示）
-- [ ] 中文隊名對照（跟 HKJC 官方譯名）待名單凍結先落，暫用原文隊名
 - [ ] 球員頁、球會百科、LGB 排行榜：繼續擱
 
 ### S23 主客分拆攻防生產移植（唯一改模型嘅一條）
@@ -548,7 +517,7 @@
 - [x] 合格閘：as_of／observed_ts 要早過開賽前 60 分鐘，否則 late／missing → Δλ=0 退回基準、紅燈可查唔入戰績
 - [x] 當季傷停免費層拿唔到 → missing 佔位，唔准用上季／平均／上仗頂替
 - [x] 配額紀律：每日滾動 ≤20 隊（100 請求／日上限），五大 96 隊約五日一輪
-- [ ] 未做：δ_名單／δ_密度估計、LGB 兩個 Poisson λ、球員前台頁、穩定分鐘與門將撲救採集器
+- [ ] 未做：δ_名單／δ_密度估計、球員前台頁、穩定分鐘與門將撲救採集器（LGB 兩個 Poisson λ 見 S19）
 - [x] 凍結預測、每日凍結流程、版本指紋一分未動
 
 ### S37 對外只報主／和／客（2026-09-16）
@@ -605,7 +574,6 @@
 
 ## 2026-09-24 賽馬鎖點 bundle
 - [x] lgb_predict_upcoming.yml 加「Verify lock-point bundle」：缺 model.txt／meta.json／特徵檔、booster 特徵名 ≠ meta.featCols、特徵檔缺欄即 fail；寫 lock-manifest.json（run_id、sha256、bundleFingerprint）入 artifact（tianxi-backend c3c80ea）
-- [ ] 下次預測 run 後拉 artifact 跑 shap_knife2.py → reports/shap/latest.json（09-23 run 35929308766 早於改動，冇 model-bundle）
 - [ ] 研究員 AI 問答摘要：待用戶決定做唔做
 
 - [x] 2026-09-25 命中率自動重算兩條觸發（已評場數<有頭4名次場數；賽果行數多過上次快取）已部署網上引擎（hit-rate 讀取＋每日 03:00 排程），09-23=9、09-16=8 核對不變；race_results 冇入庫時間欄，改用行數做第二條。
@@ -623,7 +591,6 @@
 - 2026-09-26 「AI 賽後解說」擱置（用戶決定，唔係取消設計）：完整設計同重開規則保留喺 docs/football-match-explain-design.md；上線穩定後先加，届时走唔耗 AI 額度嘅生成路徑（離線細模型或規則式模板），並喺完場後自動跑一次。
 - [x] 2026-09-26 足球頁版面統一：新增共用展示組件（計分板 CrestScoreboard、凍結機率橫條 ProbBars、版本指紋格 FingerprintChip），賽前預測、預測 vs 賽果、球隊頁凍結帳、Coverage 頁統一用同一套卡片、隊徽同手機排版；賽前預測右欄改顯示預期入球 λ，指紋改一行、裝唔落可左右撳。凍結數值、模型、API、鎖定規則同戰績計算無改。
 
-- [ ] 2026-09-26 補齊缺徽球隊：首選 football-logos.cc（GitHub Leo4815162342/football-logos，5,200+ 隊徽 SVG/PNG，含港超），次選 FootyLogos.com；API 方案 TheSportsDB strBadge／API-Football CDN 做後備。注意隊徽係球會商標，只作球隊識別用途。
 - [ ] 讀取用戶 Google 分享連結 https://share.google/aimode/AZEWXChuu8aDrrmAv 內容
 
 - [x] 2026-09-29 足球雙引擎 dual-v1：定參數、鎖定帳（T−60 只增不改）、賠率來源（馬會→Bet365→平均）、結算、戰績頁
@@ -633,7 +600,6 @@
 - [x] 2026-09-30 賽馬儀表板新增 closeGap 分位追蹤卡：H-R2 報告 18 場快照 p10–p90 分位圖、次序統計量 95% 區間投影 200 場收窄、快照累積進度（18/200）同 lock-tick 實測準備（下一賽日、T−90 鎖點倒數、補寫規則清單）；研究展示層，closeGap 維持 null
 - [x] 2026-09-30 全站用語統一：足球雙引擎混合投票結果改稱「雙引擎預測」（戰績頁、產品流程卡、引擎註釋、研究文件），唔再用「出字」；dev-log 舊條目保留原記錄
 
-- [ ] BSD 預計陣容／缺陣快照管線（T−60 研究軌，唔入正式戰績）
 - [x] 查 BSD 收費方案功能
 
 - [x] BSD T−60 陣容快照 + 完場對比（研究軌）
@@ -692,14 +658,14 @@
 - [x] admin 監控端頂部加「一屏總覽」（引擎健康／數據完整性／同步狀態／最新賽果日期）
 - [x] 足球公開對帳頁加逐季 RPS 趨勢圖（ECharts，S5 vs S4＋命中率柱）
 - [x] break-ui 最壞真實數據逐頁驗收（足球總覽／賽程／對帳／戰績，320px＋200% 縮放＝210 CSS px 實測）：修 4 項——窄位頂欄「升級 Pro」縮星形圖示、品牌字收起；鎖定帳新舊版淨盈虧統一一位小數；超長隊名右緣加淡出提示（OverflowTicker mask）；篩選零結果改明顯空白卡＋「清除全部篩選」掣。扛得住：320px 無溢出、無 NaN、無賠率場正確標示、香港時間一致
-- [x] Telegram 告警已接通；- [ ] 未翻譯隊名每日檢查（自動化待排）
+- [x] Telegram 告警已接通
+- [ ] 未翻譯隊名每日檢查（自動化待排）
 
 ## 2026-10-06 足球三倉合一
 - [x] tianxi-football-database 改名 tianxi-football 統一倉（舊網址 GitHub 自動轉址 301）
 - [x] engine／backend 倉說明併入 docs/engine-scope.md、docs/backend-scope.md，統一倉 README 更新（鎖定線字眼改 T−6h）
 - [x] 舊 engine／backend 倉封存（archived），README 指向新倉
 - [x] 網站程式、文件、dev-log 全部舊倉名引用更新；資料同步（githubMirror）改指新倉並補跑驗證
-
 ## 2026-10-06 五倉制合一
 - [x] 賽馬：tianxi-database → tianxi-racing 統一倉；後端 110 檔＋15 workflow 遷入 backend/（working-directory、密鑰 CLOUDFLARE_*、watchdog 對應檔名、無 checkout job 修正）；部署 workflow 成功；engine_sanity 派手跑通過（ADMIN_TOKEN_2 生效）
 - [x] 六合彩：hk-mark-six-2002-now 數據＋每日收料/監控 workflow 併入 tianxi-marksix/data-history/
@@ -717,7 +683,6 @@
 - [x] 六合彩「預測 vs 攪珠結果」（改名）：揀期數 → 引擎獎級＋派彩，同隨機 15 碼對照
 - [x] 回覆：賽馬／足球賽前鎖定邏輯深度核對（足球「等賠率」可令鎖定時刻由 T−6h 推遲至 T−20，待用戶拍板）
 - [x] 足球鎖定拍板執行：到 T−6h 即鎖預測，搵唔到賠率標「無賠率」（照計命中率、唔計盈虧），唔再等至 T−20；刪除 waiting_odds 分支
-- [ ] 目標：賽馬四揀平均中匹數超過市場熱門 2.31
 
 - [x] 足球預測目標卡（雙引擎 56.1% vs 隨機 33.3% vs 市場熱門 61.4%）
 - [x] 足球 Elo 成分重訓：已出候選 elo-v2（見下）
@@ -744,3 +709,5 @@
 - [x] 監控盈虧頁加日期區間＋足球主／和／客篩選 — 2026-10-07
 - [x] 監控日誌加級別／搜尋／成功任務；設定頁加接口實測與營運規則 — 2026-10-07
 - [x] 路線圖清走重複項目 — 2026-10-07
+
+- [x] 2026-10-08 監控端盈虧：孖T／三T 併入賽馬累計曲線、日期篩選及分池格
