@@ -1,10 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueries } from "@tanstack/react-query";
 import { useState } from "react";
 
 import { AppShell } from "@/components/tx/AppShell";
 import { EChart } from "@/components/tx/EChart";
-import { ExoticTrioPools } from "@/components/tx/ExoticTrioPools";
+import { exoticPoolOptions } from "@/lib/racingPoolAccounting";
 import { Card, Disclaimer, Empty, ErrorNote, Loading, PageHead, Scroller, Seg, Table, Td } from "@/components/tx/ui";
 import { fmtMeetingDate, txApi } from "@/lib/tx-api";
 
@@ -33,17 +33,19 @@ const POOLS: { key: string; nm: string; en: string; unit: string }[] = [
   { key: "TRIO", nm: "單T", en: "TRIO · 任序首3", unit: "$40" },
   { key: "TIERCE", nm: "三重彩", en: "TIERCE · 依序首3", unit: "$240" },
   { key: "QUARTET", nm: "四重彩", en: "QUARTET · 依序首4", unit: "$240" },
+  { key: "DT", nm: "孖T", en: "二拖三 · 跨兩場", unit: "$90" },
+  { key: "TT", nm: "三T", en: "二拖三 · 跨三場", unit: "$270" },
 ];
 
 function money(v?: number | null) {
   const n = Number(v);
   if (!Number.isFinite(n)) return "—";
-  return `${n < 0 ? "-" : ""}$${Math.abs(Math.round(n)).toLocaleString("en-US")}`;
+  return `${n < 0 ? "-" : ""}$${Math.abs(n).toLocaleString("en-US", { maximumFractionDigits: 1 })}`;
 }
 function signed(v?: number | null) {
   const n = Number(v);
   if (!Number.isFinite(n)) return "—";
-  return `${n > 0 ? "+" : n < 0 ? "-" : ""}$${Math.abs(Math.round(n)).toLocaleString("en-US")}`;
+  return `${n > 0 ? "+" : n < 0 ? "-" : ""}$${Math.abs(n).toLocaleString("en-US", { maximumFractionDigits: 1 })}`;
 }
 const tone = (v?: number | null) => ((Number(v) || 0) >= 0 ? "text-win" : "text-lose");
 
@@ -130,16 +132,33 @@ function StrategyPnlPage() {
     queryFn: () => txApi.strategyPnl(`?days=${days}`),
   });
 
-  const meets = useQuery({ queryKey: ["meetings", 12], queryFn: () => txApi.meetings("?limit=12") });
-  const meetDates: string[] = (meets.data?.meetings ?? [])
-    .map((m: any) => String(m?.date ?? "")).filter((x: string) => x && x <= new Date().toISOString().slice(0, 10)).slice(0, 8);
-  const [trioDate, setTrioDate] = useState("");
-  const td = trioDate || meetDates[0] || "";
-  const d: any = pnl.data || {};
-  const points: any[] = Array.isArray(d.points) ? d.points : [];
-  const breakdown: Record<string, any> = d.poolBreakdown || {};
-  const sortedDesc = [...points].sort((a: any, b: any) => String(b.date).localeCompare(String(a.date)));
-
+  const base: any = pnl.data || {};
+  const rawPoints: any[] = Array.isArray(base.points) ? base.points : [];
+  const exoticQueries = useQueries({ queries: rawPoints.map((p) => exoticPoolOptions(p.date)) });
+  const crossLoading = exoticQueries.some((q) => q.isLoading);
+  const crossError = exoticQueries.some((q) => q.isError);
+  let supplemented = 0, missing = 0;
+  const cross: Record<string, any> = { DT: { cost: 0, payout: 0, net: 0, wins: 0, bets: 0 }, TT: { cost: 0, payout: 0, net: 0, wins: 0, bets: 0 } };
+  let cumulative = 0;
+  const points = rawPoints.map((p, i) => {
+    let cost = Number(p.cost), payout = Number(p.payout);
+    const data = exoticQueries[i]?.data;
+    for (const pool of data?.pools ?? []) {
+      if (pool.missing) { missing++; continue; }
+      const b = cross[pool.name.includes("孖T") ? "DT" : "TT"];
+      const ret = pool.payout + pool.consPayout;
+      b.cost += pool.cost; b.payout += ret; b.net += ret - pool.cost; b.bets++; if (ret > 0) b.wins++;
+      if (pool.races.some((r) => data?.legs[r]?.fifthFromLive)) supplemented++;
+      cost += pool.cost; payout += ret;
+    }
+    cumulative += payout - cost;
+    return { ...p, cost, payout, net: payout - cost, cum: cumulative };
+  });
+  const totalCost = points.reduce((a, p) => a + p.cost, 0);
+  const totalPayout = points.reduce((a, p) => a + p.payout, 0);
+  const d = { ...base, totalCost, totalPayout, totalNet: totalPayout - totalCost, roiPct: totalCost ? (totalPayout / totalCost - 1) * 100 : null };
+  const breakdown: Record<string, any> = { ...base.poolBreakdown, ...cross };
+  const sortedDesc = [...points].sort((a, b) => String(b.date).localeCompare(String(a.date)));
 
   return (
     <AppShell page="engine" ticker="天喜策略累計盈虧 · 蝕都照列">
@@ -148,7 +167,7 @@ function StrategyPnlPage() {
         title="天喜策略累計盈虧紀錄"
         desc={
           <>
-            由 2026 年 6 月賽事起記錄至今，假設每場以 $10／注，將模型首 4 隻馬複式箱形落齊四個彩池，逐日彙總成本、派彩與累計盈虧。
+            由 2026 年 6 月賽事起記錄至今，假設每場以 $10／注，四連環、單T、三重彩及四重彩用模型四揀複式；孖T、三T用頭兩匹做膽拖第 3–5 選，逐日彙總成本、派彩與累計盈虧。
             <span className="mt-1 block font-mono-tx text-[11px] text-ink-3">純分析紀錄 · 非投注建議 · 賽果來源 HKJC</span>
           </>
         }
@@ -172,16 +191,16 @@ function StrategyPnlPage() {
         />
       </div>
 
-      {pnl.isLoading ? (
+      {pnl.isLoading || crossLoading ? (
         <div className="px-4 py-6">
           <Loading size="lg" label="彙總策略盈虧中…" />
           <p className="mx-auto mt-3 max-w-[460px] text-center text-[11.5px] leading-[1.7] text-ink-3">
             首次載入需向 HKJC 逐日彙總多個賽事日嘅箱形派彩，需時較長（約 10–40 秒）；數字準備好會即時顯示走勢圖與逐日紀錄。
           </p>
         </div>
-      ) : pnl.error ? (
+      ) : pnl.error || crossError ? (
         <div className="mx-4 mt-3">
-          <ErrorNote error={pnl.error} />
+          <ErrorNote error={pnl.error || new Error("跨場彩池未能讀齊，暫不顯示不完整累計，請稍後重試。")} />
         </div>
       ) : (
         <>
@@ -194,7 +213,7 @@ function StrategyPnlPage() {
 
           <div className="grid grid-cols-2 gap-2.5 px-4 pb-1 pt-3.5">
             <div className="col-span-2 rounded-[14px] border border-gold-strong bg-gradient-to-b from-gold-bg to-paper-2 px-3 py-4 text-center">
-              <p className="font-mono-tx text-[10px] font-bold tracking-[0.13em] text-ink-3">累計盈虧 CUMULATIVE NET</p>
+              <p className="font-mono-tx text-[10px] font-bold tracking-[0.13em] text-ink-3">{missing ? "已可核對累計盈虧" : "累計盈虧"} CUMULATIVE NET</p>
               <p className={`mt-1.5 font-serif-tc text-[40px] font-black leading-none ${tone(d.totalNet)}`}>
                 {signed(d.totalNet)}
               </p>
@@ -204,7 +223,7 @@ function StrategyPnlPage() {
             </div>
             {[
               { l: "回報率 ROI", v: d.roiPct != null ? `${Number(d.roiPct).toFixed(1)}%` : "—", s: "派彩 ÷ 成本 − 1", t: d.roiPct },
-              { l: "總成本 COST", v: money(d.totalCost), s: `每場 ${money(d.perRaceCost)}`, t: null },
+              { l: "總成本 COST", v: money(d.totalCost), s: "四個單場彩池＋孖T／三T", t: null },
               { l: "總派彩 PAYOUT", v: money(d.totalPayout), s: "只計中獎彩池", t: null },
               { l: "投注場數 RACES", v: d.racesBet ?? "—", s: "模型有效四揀場次", t: null },
             ].map((k) => (
@@ -226,15 +245,7 @@ function StrategyPnlPage() {
             <CumChart points={points.map((p) => ({ date: p.date, cum: Number(p.cum) || 0 }))} />
           </Card>
 
-          {meetDates.length ? (
-            <div className="mx-4 mt-3 flex items-center gap-2 text-[11px]">
-              <span className="text-ink-3">孖T／三T 賽日</span>
-              <select value={td} onChange={(e) => setTrioDate(e.target.value)} className="rounded-[6px] border border-hairline bg-paper px-2 py-1 text-ink">
-                {meetDates.map((x) => <option key={x} value={x}>{x}</option>)}
-              </select>
-            </div>
-          ) : null}
-          <ExoticTrioPools date={td} />
+          {supplemented || missing ? <p className="mx-4 mt-3 text-[11px] leading-relaxed text-gold">跨場紀錄含 {supplemented} 口賽後補第五選試算；{missing} 口缺預測未計成本／派彩。並非全期賽前凍結實績。</p> : null}
 
           <Card title="逐個彩池" en="By Pool">
             <div className="grid grid-cols-2 gap-2">
@@ -245,7 +256,7 @@ function StrategyPnlPage() {
                     <p className="font-serif-tc text-[13px] font-extrabold text-ink">
                       {p.nm}
                       <small className="ml-1.5 font-mono-tx text-[9px] font-semibold tracking-[0.05em] text-ink-3">
-                        {p.unit}／場
+                        {p.unit}／{p.key === "DT" || p.key === "TT" ? "口" : "場"}
                       </small>
                     </p>
                     <p className={`mt-1.5 font-serif-tc text-[20px] font-black leading-none ${tone(b?.net)}`}>
@@ -254,7 +265,7 @@ function StrategyPnlPage() {
                     <p className="tabnum mt-1.5 font-mono-tx text-[9.5px] tracking-[0.02em] text-ink-3">
                       {p.en}
                       <br />
-                      中 {b?.wins ?? "—"}／{b?.bets ?? "—"} 場 · 成本 {money(b?.cost)}
+                      中 {b?.wins ?? "—"}／{b?.bets ?? "—"} {p.key === "DT" || p.key === "TT" ? "口" : "場"}<br />總成本 {money(b?.cost)}<br />總派彩 {money(b?.payout)}
                     </p>
                   </div>
                 );
@@ -295,7 +306,7 @@ function StrategyPnlPage() {
       <p className="mx-4 mt-3.5 text-[11px] leading-[1.6] text-ink-3">
         <strong className="text-ink">計算方法：</strong>
         每個已收回 HKJC 結果之賽事日，凡模型於賽前定出有效 4 隻馬之場次，即假設同時投注四連環（任序首 4，1 注 $10）、單T（任序首
-        3，4 注 $40）、三重彩（依序首 3，24 注 $240）、四重彩（依序首 4，24 注 $240），每場成本 $530。派彩沿用該場實際 HKJC
+        3，4 注 $40）、三重彩（依序首 3，24 注 $240）、四重彩（依序首 4，24 注 $240），每場成本 $530。孖T 每口 9 注 $90，三T 每口 27 注 $270（完整二拖三）；跨場投注按馬會實際開設口數另計，同日成本及派彩併入累計。舊賽日第五選為補選時標為試算。派彩沿用該場實際 HKJC
         箱形派彩（只記中獎彩池），輸注亦照計成本。起始本金 $0。
         <br />
         逐場預測與賽果可於{" "}

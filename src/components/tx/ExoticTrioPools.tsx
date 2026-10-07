@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { fetchRaceDividends, type DividendRow } from "@/lib/raceDividends";
-import { txApi } from "@/lib/tx-api";
+import { exoticPoolOptions } from "@/lib/racingPoolAccounting";
 
 import { Card, Pill } from "./ui";
 
@@ -11,115 +10,10 @@ import { Card, Pill } from "./ui";
  * 跨場分布直接由官方派彩檔推算：派彩行喺第 R 場、組合有 n 段 → 覆蓋第 R−n+1…R 場。
  * 第 1–5 選優先用凍結排序（predictedFifth.frozen）；舊資料缺欄先退回賽後排序（頁面註明）。
  */
-const UNIT = 10;
-
-type Leg = { race: number; bankers: number[]; legs: number[]; fifthFromLive: boolean } | null;
-type PoolCalc = {
-  name: string; races: number[]; units: number; cost: number;
-  mainHit: boolean; payout: number; consUnits: number; consPayout: number;
-  missing: boolean; detail: { race: number; hit: boolean | null }[];
-};
-
-const parseLeg = (s: string) => s.trim();
-const isAny = (s: string) => s === "任何組合" || s === "F";
-const setOf = (s: string) => new Set(s.split(",").map((x) => Number(x.trim())).filter(Number.isFinite));
-
-function legHit(leg: Leg | undefined, part: string | undefined): boolean | null {
-  if (!leg) return null;
-  if (!part) return null;
-  if (isAny(part)) return true;
-  const win = setOf(part);
-  if (win.size !== 3) return false;
-  if (!leg.bankers.every((b) => win.has(b))) return false;
-  return leg.legs.some((x) => win.has(x));
-}
-
-function calcPools(divs: DividendRow[], legsByRace: Record<number, Leg>): PoolCalc[] {
-  const groups = new Map<string, { main?: DividendRow; cons?: DividendRow }>();
-  for (const d of divs) {
-    if (!/孖T|三T/.test(d.pool)) continue;
-    const base = d.pool.replace(/\(安慰獎\)|（安慰獎）/, "").trim();
-    const g = groups.get(base) ?? {};
-    if (/安慰獎/.test(d.pool)) g.cons = d; else g.main = d;
-    groups.set(base, g);
-  }
-  const out: PoolCalc[] = [];
-  for (const [name, g] of groups) {
-    const ref = g.main ?? g.cons;
-    if (!ref) continue;
-    const n = ref.combo.split("/").length;
-    const races = Array.from({ length: n }, (_, i) => ref.race_no - n + 1 + i);
-    const legs: Leg[] = races.map((r) => legsByRace[r] ?? null);
-    const missing = legs.some((l) => !l);
-    const units = 3 ** n;
-    const mainParts = g.main ? g.main.combo.split("/").map(parseLeg) : [];
-    const detail = races.map((r, i) => ({ race: r, hit: g.main ? legHit(legs[i], mainParts[i]) : null }));
-    const mainHit = !missing && !!g.main && detail.every((d) => d.hit);
-    let consUnits = 0;
-    if (g.cons && !missing) {
-      const parts = g.cons.combo.split("/").map(parseLeg);
-      const fixedOk = parts.every((p, i) => isAny(p) || legHit(legs[i], p));
-      if (fixedOk) {
-        // 「任何組合」段：拖腳 3 組之中除咗正獎嗰組，其餘都屬安慰獎
-        consUnits = parts.reduce((acc, p, i) => {
-          if (!isAny(p)) return acc;
-          const hitThis = mainParts[i] ? legHit(legs[i], mainParts[i]) : false;
-          return acc * (hitThis ? 2 : 3);
-        }, 1);
-      }
-    }
-    out.push({
-      name, races, units, cost: units * UNIT,
-      mainHit, payout: mainHit && g.main ? g.main.dividend : 0,
-      consUnits, consPayout: g.cons ? consUnits * g.cons.dividend : 0,
-      missing, detail,
-    });
-  }
-  return out.sort((a, b) => (a.races[0] ?? 0) - (b.races[0] ?? 0));
-}
-
-async function loadLegs(date: string): Promise<Record<number, Leg>> {
-  const [hr, mt] = await Promise.all([txApi.hitRate(date).catch(() => null), txApi.meeting(date).catch(() => null)]);
-  const ids: Record<number, string> = {};
-  for (const r of mt?.races ?? []) ids[Number(r.raceNumber)] = String(r.id);
-  const out: Record<number, Leg> = {};
-  await Promise.all(
-    (hr?.races ?? []).map(async (r: any) => {
-      const rn = Number(r.raceNumber);
-      const top4 = (r.predictedTop4 ?? []).map((h: any) => Number(h.horseNumber)).filter(Number.isFinite);
-      if (top4.length < 4) { out[rn] = null; return; }
-      let fifth: number | null = null;
-      const frozen5 = Number(r.predictedFifth?.horseNumber);
-      if (r.predictedFifth?.frozen && Number.isFinite(frozen5) && !top4.includes(frozen5)) {
-        out[rn] = { race: rn, bankers: [top4[0], top4[1]], legs: [top4[2], top4[3], frozen5], fifthFromLive: false };
-        return;
-      }
-      if (ids[rn]) {
-        try {
-          const tp = await txApi.topPicks(ids[rn]);
-          const cand = (tp?.picks ?? []).map((p: any) => Number(p.horseNumber)).find((n: number) => !top4.includes(n));
-          if (Number.isFinite(cand)) fifth = cand;
-        } catch { /* 冇第五選就當三腳得兩腳 */ }
-      }
-      const legs = [top4[2], top4[3], ...(fifth != null ? [fifth] : [])];
-      out[rn] = { race: rn, bankers: [top4[0], top4[1]], legs, fifthFromLive: fifth != null };
-    }),
-  );
-  return out;
-}
-
 const money = (v: number) => `$${v.toLocaleString("en-US", { maximumFractionDigits: 1 })}`;
 
 export function ExoticTrioPools({ date }: { date: string }) {
-  const q = useQuery({
-    queryKey: ["exotic-trio", date],
-    enabled: !!date,
-    staleTime: 10 * 60_000,
-    queryFn: async () => {
-      const [divs, legs] = await Promise.all([fetchRaceDividends(date), loadLegs(date)]);
-      return { pools: calcPools(divs, legs), legs };
-    },
-  });
+  const q = useQuery(exoticPoolOptions(date));
   if (!date) return null;
   const pools = q.data?.pools ?? [];
   const cost = pools.filter((p) => !p.missing).reduce((a, p) => a + p.cost, 0);

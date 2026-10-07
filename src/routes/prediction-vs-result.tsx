@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { ExoticTrioPools } from "@/components/tx/ExoticTrioPools";
+import { exoticPoolOptions, winningSingleDividends } from "@/lib/racingPoolAccounting";
 import { useEffect, useState } from "react";
 
 import { AlphaGuard } from "@/components/tx/AlphaGuard";
@@ -65,12 +65,7 @@ function keyOf(h?: Horse | null) {
   return null;
 }
 
-function rankColor(rank: number) {
-  if (rank === 1) return "text-[#D4A93C]";
-  if (rank === 2) return "text-[#8F8268]";
-  if (rank === 3) return "text-[#A07A1F]";
-  return "text-ink-3";
-}
+function rankColor(rank: number) { return rank === 1 ? "text-gold" : "text-ink-3"; }
 
 function ComparePage() {
   const [date, setDate] = useState<string>("");
@@ -217,68 +212,30 @@ function ComparePage() {
     if (x?.horseNumber != null && Number.isFinite(o) && o > 0) finalOdds[String(x.horseNumber)] = o;
   }
 
+  const exotic = useQuery(exoticPoolOptions(date));
+  const wonDividends = winningSingleDividends(raceDividends, frozenTop4.map((h) => Number(h.horseNumber ?? h.no)));
+  const wonExotic = (exotic.data?.pools ?? []).filter((p) => p.races.at(-1) === Number(selectedRaceNumber) && (p.payout > 0 || p.consPayout > 0));
+
   const Cell = ({ h, rank, matched }: { h: Horse; rank: number; matched: boolean }) => {
     const no = h.horseNumber ?? h.no;
     const nm = h.nameCh || h.name || "";
     const hid = canonicalHorseId(h.horseId || h.horse_id || h.id);
     const sl = styleLabel(styleMap[hid]);
     return (
-      <div
-        className={`grid min-h-0 flex-1 grid-cols-[28px_1fr_auto] items-center gap-2 border-b border-hairline px-3 py-2.5 last:border-b-0 ${
-          matched ? "border-[#D4A93C] bg-gradient-to-b from-[#FFF4C2] to-[#F6E08C]" : ""
-        }`}
-      >
-        <div className={`text-center font-serif-tc text-[18px] font-black leading-none ${matched ? "text-[#5A4210]" : rankColor(rank)}`}>
-          {rank}
-        </div>
-        <div className="flex min-w-0 flex-col gap-[2px] leading-[1.15]">
-          {no != null && no !== "" ? (
-            <div className={`tabnum font-mono-tx text-[11px] font-extrabold ${matched ? "text-[#5A4210]" : "text-ink-3"}`}>
-              #{no}
-            </div>
-          ) : null}
-          <div className={`flex items-center gap-1 truncate font-serif-tc text-[13px] font-bold ${matched ? "text-[#2E2108]" : "text-ink"}`}>
-            {matched ? <span className="font-black text-[#7A5A20]">✓</span> : null}
-            {hid ? (
-              <Link to="/horse" search={{ id: hid }} className="truncate">
-                {nm}
-              </Link>
-            ) : (
-              <span className="truncate">{nm}</span>
-            )}
-            {sl ? (
-              <span
-                className={`shrink-0 rounded-[4px] border px-1 font-mono-tx text-[9px] font-bold ${
-                  matched ? "border-[#D4A93C] bg-white/60 text-[#5A4210]" : "border-hairline bg-paper text-ink-2"
-                }`}
-              >
-                {sl}
-              </span>
-            ) : null}
+      <div className={`grid min-h-[108px] flex-1 grid-cols-[20px_minmax(0,1fr)] items-start gap-2 border-b border-hairline px-2.5 py-3 last:border-b-0 ${matched ? "bg-gold-bg" : "bg-paper"}`}>
+        <span className={`pt-5 text-center font-mono-tx text-[17px] font-bold ${rankColor(rank)}`}>{rank}</span>
+        <div className="min-w-0">
+          <div className="flex items-center justify-between gap-1 text-[11px] text-ink-3">
+            <span className="tabnum font-mono-tx font-bold">#{no}</span>
+            {matched ? <span className="text-win" aria-label="同時入圍">✓</span> : null}
           </div>
-        </div>
-        <div className="flex shrink-0 flex-col items-end gap-1">
-        {no != null && finalOdds[String(no)] ? (
-          <div
-            title="開跑時最終獨贏賠率"
-            className={`tabnum rounded-[6px] border px-[7px] py-[3px] font-mono-tx text-[11px] font-bold ${
-              matched ? "border-[#D4A93C] bg-white/55 text-[#5A4210]" : "border-hairline bg-paper-2 text-ink"
-            }`}
-          >
-            <span className={`mr-[2px] font-medium ${matched ? "text-[#7A5A20]" : "text-ink-3"}`}>賠</span>
-            {finalOdds[String(no)]}
+          <div className="mt-1 break-words font-serif-tc text-[15px] font-bold leading-[1.5] text-ink">
+            {hid ? <Link to="/horse" search={{ id: hid }}>{nm}</Link> : <span>{nm}</span>}
           </div>
-        ) : null}
-        {h.draw != null && h.draw !== "" ? (
-          <div
-            className={`tabnum shrink-0 rounded-[6px] border px-[7px] py-[3px] font-mono-tx text-[11px] font-bold ${
-              matched ? "border-[#D4A93C] bg-white/55 text-[#5A4210]" : "border-hairline bg-paper-2 text-ink-2"
-            }`}
-          >
-            <span className={`mr-[2px] font-medium ${matched ? "text-[#7A5A20]" : "text-ink-3"}`}>檔</span>
-            {h.draw}
+          <div className="mt-2 flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
+            {sl ? <span className="text-[12px] font-semibold text-ink-2">{sl === "放" ? "放頭" : sl === "前" ? "前置" : sl === "中" ? "居中" : sl === "後" ? "後上" : sl}</span> : <span />}
+            {no != null && finalOdds[String(no)] ? <span title="開跑時最終獨贏賠率" className="tabnum whitespace-nowrap font-mono-tx text-[11px] text-ink-3">賠 <b className="text-ink-2">{finalOdds[String(no)]}</b></span> : null}
           </div>
-        ) : null}
         </div>
       </div>
     );
@@ -388,16 +345,6 @@ function ComparePage() {
             />
           </div>
 
-          <div className="mt-2.5 flex flex-wrap gap-1.5 border-t border-hairline pt-2">
-            <Pill tone={frozenSummary.trioHits ? "win" : "ink"}>
-              三重彩（頭三名複式） {frozenSummary.trioHits ?? 0} 場
-            </Pill>
-            <Pill tone={frozenSummary.first4Hits ? "win" : "ink"}>
-              四重彩（頭四名複式） {frozenSummary.first4Hits ?? 0} 場
-            </Pill>
-            <Pill tone={frozenSummary.top3AnyHits ? "gold" : "ink"}>三甲任中 {frozenSummary.top3AnyHits ?? 0} 場</Pill>
-          </div>
-
           {/* 逐場命中導覽：撳一下即跳到該場並列比對 */}
           <div className="no-scrollbar -mx-0.5 mt-2.5 flex gap-1 overflow-x-auto px-0.5">
             {frozenRaces.map((fr: any) => {
@@ -431,10 +378,10 @@ function ComparePage() {
       </div>
 
       <div className="px-4 pb-[22px] pt-4">
-        <div className="mx-auto grid aspect-square max-w-[560px] grid-cols-2 grid-rows-[auto_1fr] overflow-hidden rounded-[14px] border border-hairline bg-paper shadow-[inset_0_1px_0_rgba(255,255,255,.55),0_4px_10px_rgba(58,38,8,.08),0_18px_36px_-16px_rgba(90,66,16,.16)] max-[360px]:aspect-auto max-[360px]:min-h-[380px]">
-          <div className="border-b border-r border-hairline bg-paper-2 px-3 py-2.5 text-center font-serif-tc text-[12px] font-extrabold uppercase tracking-[0.12em] text-ink">
+        <div className="mx-auto grid max-w-[560px] grid-cols-2 grid-rows-[auto_1fr] overflow-hidden rounded-[8px] border border-hairline bg-paper shadow-sm">
+          <div className="border-b border-r border-hairline bg-paper-2 px-3 py-2.5 text-center font-serif-tc text-[16px] font-extrabold text-ink">
             預測
-            <small className="mt-0.5 block font-mono-tx text-[9px] font-semibold tracking-[0.18em] text-ink-3">
+            <small className="mt-0.5 block font-mono-tx text-[10px] font-semibold text-ink-3">
               {picksSourceLabel}
               {frozenAlpha != null ? ` · α=${frozenAlpha.toFixed(2)}` : ""} · TOP 4
               <span className="mt-0.5 block font-sans-tc text-[9px] font-bold tracking-normal text-ink-3">
@@ -443,9 +390,9 @@ function ComparePage() {
 
             </small>
           </div>
-          <div className="border-b border-hairline bg-paper-2 px-3 py-2.5 text-center font-serif-tc text-[12px] font-extrabold uppercase tracking-[0.12em] text-ink">
+          <div className="border-b border-hairline bg-paper-2 px-3 py-2.5 text-center font-serif-tc text-[16px] font-extrabold text-ink">
             賽果
-            <small className="mt-0.5 block font-mono-tx text-[9px] font-semibold tracking-[0.18em] text-ink-3">
+            <small className="mt-0.5 block font-mono-tx text-[10px] font-semibold text-ink-3">
               Result · 1st – 4th
             </small>
           </div>
@@ -475,55 +422,31 @@ function ComparePage() {
               預測首 4 名命中：
               <b className={`font-extrabold ${hits >= 2 ? "text-win" : "text-ink"}`}>{hits} / 4</b>
             </p>
-            {frozenRace ? (
-              <div className="mx-auto mt-2 flex max-w-[560px] flex-wrap justify-center gap-1.5">
-                <Pill tone={frozenRace.trioHit ? "win" : "ink"}>三重彩（頭三名複式）</Pill>
-                <Pill tone={frozenRace.first4Hit ? "win" : "ink"}>四重彩（頭四名複式）</Pill>
-                <Pill tone={frozenRace.top3AnyHit ? "gold" : "ink"}>三甲任中</Pill>
-                <Pill>
-                  三甲命中 {Number(frozenRace.top3IntersectCount ?? 0)} / 3
-                </Pill>
-              </div>
-            ) : null}
-            {raceDividends.length ? (
-              <div className="mx-auto mt-2.5 max-w-[560px] rounded-[10px] border border-hairline bg-paper-2 px-3 py-2.5">
-                <p className="mb-1.5 text-[10px] font-bold text-ink-3">
-                  官方派彩（每 ${raceDividends[0]?.unit ?? 10} 一注）
-                  <span className="ml-1 font-normal">· 金底＝引擎命中彩池</span>
-                </p>
-                <div className="grid grid-cols-2 gap-x-3 gap-y-1 sm:grid-cols-3">
-                  {raceDividends.map((d, i) => {
-                    const hitPool =
-                      (d.pool === "TRI" && !!frozenRace?.trioHit) ||
-                      (d.pool === "FCT" && !!frozenRace?.first4Hit) ||
-                      (d.pool === "PLA" && !!frozenRace?.top3AnyHit);
-                    return (
-                      <p
-                        key={i}
-                        className={`tabnum flex items-baseline justify-between gap-1 rounded-[4px] px-1 py-0.5 font-mono-tx text-[10px] ${
-                          hitPool ? "bg-gold-bg text-gold" : "text-ink-2"
-                        }`}
-                      >
-                        <span className="truncate">
-                          {POOL_ZH[d.pool] ?? d.pool} <span className="text-ink-3">{d.combo}</span>
-                        </span>
-                        <span className="shrink-0 font-bold text-ink">${Number(d.dividend).toLocaleString()}</span>
-                      </p>
-                    );
-                  })}
+            {wonDividends.length || wonExotic.length ? (
+              <section aria-label="本場命中派彩" className="mx-auto mt-3 max-w-[560px] border-t border-hairline pt-3">
+                <h2 className="mb-2 text-[14px] font-bold text-ink">本場命中彩池 <span className="text-[11px] font-normal text-ink-3">每 $10 一注</span></h2>
+                <div className="space-y-2">
+                  {wonDividends.map((d, i) => <div key={i} className="flex items-center justify-between gap-3 rounded-[6px] border border-win/25 bg-win/5 px-3 py-2">
+                    <div className="min-w-0"><b className="text-[13px] text-ink">{POOL_ZH[d.pool] ?? d.pool}</b><span className="ml-2 break-words font-mono-tx text-[11px] text-ink-3">{d.combo}</span></div>
+                    <b className="tabnum shrink-0 font-mono-tx text-[14px] text-win">${d.dividend.toLocaleString()}</b>
+                  </div>)}
+                  {wonExotic.map((p) => <div key={p.name} className="rounded-[6px] border border-win/25 bg-win/5 px-3 py-2">
+                    <div className="flex flex-wrap justify-between gap-2"><b className="text-[13px] text-ink">{p.name} · 第 {p.races.join("、")} 場</b><b className="tabnum font-mono-tx text-[14px] text-win">${(p.payout + p.consPayout).toLocaleString()}</b></div>
+                    <p className="mt-1 text-[11px] text-ink-3">{p.payout ? `正獎 $${p.payout.toLocaleString()}` : ""}{p.consPayout ? ` 安慰獎 ${p.consUnits} 注 $${p.consPayout.toLocaleString()}` : ""}</p>
+                    {p.races.some((r) => exotic.data?.legs[r]?.fifthFromLive) ? <p className="mt-1 text-[11px] text-gold">包含賽後補選，只作試算對照</p> : null}
+                  </div>)}
                 </div>
-              </div>
+              </section>
             ) : null}
           </>
         ) : null}
 
         <p className="mx-auto mt-3 max-w-[560px] px-2 text-center text-[11px] leading-[1.55] text-ink-3">
-          <span className="mr-1 inline-block h-[10px] w-[14px] rounded-[2px] border border-[#D4A93C] bg-gradient-to-b from-[#FFF4C2] to-[#F6E08C] align-[-1px]" />
+          <span className="mr-1 inline-block h-[10px] w-[14px] rounded-[2px] border border-gold-strong bg-gold-bg align-[-1px]" />
           同時出現於預測與賽果嘅馬匹
         </p>
       </div>
 
-      {date ? <ExoticTrioPools date={date} /> : null}
 
       <footer className="mx-5 mb-6 mt-[18px] border-t border-hairline pt-3.5 text-[11px] leading-[1.55] text-ink-3">
         <strong className="text-ink-2">天喜為分析平台，不提供投注服務。</strong>
