@@ -1,0 +1,2 @@
+update public.model_versions set status='archived' where engine='football' and version in ('dual-v1s100','elo-v2');
+insert into public.model_versions(version,engine,fingerprint,released_at,status,notes) values ('dual-v2','football','elo-v2:hfa80-k24-reg0.90','2026-10-07','active','雙引擎＋重訓 Elo（elo-v2）。換新原因：2021/22–2024/25 四季驗證 RPS 全部低過舊 Elo（平均 −0.0018），五大聯賽命中率每季升 0.3–1.1pt，新版全面勝出，舊版停止計分。戰績由 2026-10-07 起計。') on conflict do nothing;

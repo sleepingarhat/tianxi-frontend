@@ -31,13 +31,12 @@ export function ModelVersions({ engine }: { engine: "racing" | "football" | "mar
   const rows = q.data ?? [];
   if (q.isLoading || !rows.length) return null;
   const active = rows.filter((r) => r.status === "active");
-  const archived = rows.filter((r) => r.status !== "active");
-
+  
   const renderRow = (r: VersionRow) => (
     <li key={r.version} className="border-b border-hairline py-2 last:border-b-0">
       <p className="flex flex-wrap items-center gap-1.5">
         <span className="font-mono-tx text-[12px] font-bold text-ink">{r.version}</span>
-        <Pill tone={r.status === "active" ? "win" : "ink"}>{r.status === "active" ? "當前版本" : "歷史版本"}</Pill>
+        <Pill tone={r.status === "active" ? "win" : "ink"}>{r.status === "active" ? "當前版本" : r.status === "candidate" ? "候選（未啟用）" : "歷史版本"}</Pill>
         <span className="tabnum ml-auto font-mono-tx text-[9px] text-ink-3">{r.released_at}</span>
       </p>
       {r.notes ? <p className="mt-1 text-[10px] leading-relaxed text-ink-3">{r.notes}</p> : null}
@@ -54,14 +53,7 @@ export function ModelVersions({ engine }: { engine: "racing" | "football" | "mar
         <small className="ml-2 font-mono-tx text-[9px] font-bold uppercase tracking-[0.2em] text-ink-3">Model Versions</small>
       </h2>
       <ul>{active.map(renderRow)}</ul>
-      {archived.length ? (
-        <details className="mt-1 rounded-[6px] border border-hairline bg-paper px-2.5 py-2">
-          <summary className="cursor-pointer text-[10px] font-bold text-ink-2">
-            歷史版本（{archived.length}）— 成績由各自定版日起獨立計算，唔回填
-          </summary>
-          <ul className="mt-1">{archived.map(renderRow)}</ul>
-        </details>
-      ) : null}
+      
     </section>
   );
 }

@@ -115,10 +115,11 @@ function MarkSixPage() {
 
   return (
     <AppShell page="marksix" ticker="六合彩 · 八字 × 奇門遁甲取數系統">
-      <nav aria-label="六合彩功能分支" className="grid grid-cols-4 gap-1.5 border-b border-hairline bg-paper-2 px-3 py-2">
-        {[{ hash: "marksix-next", label: "下一期" }, { hash: "marksix-stats", label: "號碼統計" }, { hash: "marksix-engine", label: "排盤" }, { hash: "marksix-engine", label: "回測" }].map((item) => (
+      <nav aria-label="六合彩功能分支" className="grid grid-cols-5 gap-1.5 border-b border-hairline bg-paper-2 px-3 py-2">
+        {[{ hash: "marksix-next", label: "下一期" }, { hash: "marksix-stats", label: "號碼統計" }, { hash: "marksix-engine", label: "排盤" }, ].map((item) => (
           <Button key={item.label} asChild variant="outline" size="sm" className="h-8 border-hairline bg-paper px-1 text-[10px] text-ink"><Link to="/marksix" hash={item.hash}>{item.label}</Link></Button>
         ))}
+        <Button asChild variant="outline" size="sm" className="h-8 border-gold bg-paper px-1 text-[10px] text-ink"><Link to="/marksix-results">預測vs攪珠</Link></Button>
       </nav>
       <div className="relative">
         {status === "timeout" && (

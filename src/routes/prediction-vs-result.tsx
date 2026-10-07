@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
+import { ExoticTrioPools } from "@/components/tx/ExoticTrioPools";
 import { useEffect, useState } from "react";
 
 import { AlphaGuard } from "@/components/tx/AlphaGuard";
@@ -14,6 +15,15 @@ import {
   txApi,
   type RunningStyle,
 } from "@/lib/tx-api";
+import { supabase } from "@/integrations/supabase/client";
+
+/** 彩池代號 → 中文（馬會標準簡稱） */
+const POOL_ZH: Record<string, string> = {
+  WIN: "獨贏", PLA: "位置", QIN: "連贏", QPL: "位置Q", CWA: "連贏（組合）",
+  TRI: "三重彩", FCT: "四重彩", F_F: "四連環", TCE: "三T", DBL: "孖寶", TBL: "三寶", SIXUP: "六寶",
+};
+
+type DividendRow = { race_no: number; pool: string; combo: string; dividend: number; unit: number };
 
 export const Route = createFileRoute("/prediction-vs-result")({
   head: () => ({
@@ -116,6 +126,15 @@ function ComparePage() {
   const frozenRace = frozenRaces.find((r: any) => Number(r.raceNumber) === Number(selectedRaceNumber));
   const frozenTop4: Horse[] = (frozenRace?.predictedTop4 || []).slice(0, 4);
 
+  // 官方派彩（每 $10 一注）：由賽馬後端賽後寫入；未有數據嘅賽日唔顯示
+  const divQ = useQuery({
+    queryKey: ["race-dividends", date],
+    queryFn: async () => (await import("@/lib/raceDividends")).fetchRaceDividends(date) as Promise<DividendRow[]>,
+    enabled: !!date,
+    staleTime: 10 * 60_000,
+  });
+  const raceDividends = (divQ.data ?? []).filter((d) => Number(d.race_no) === Number(selectedRaceNumber));
+
   const left: Horse[] = frozenTop4.length
     ? frozenTop4
     : (picks.data?.picks || []).slice(0, 4);
@@ -191,6 +210,12 @@ function ComparePage() {
         .join(" · ");
 
   const loading = (picks.isLoading && frozen.isLoading) || raceDetail.isLoading;
+  // 開跑時最終獨贏賠率：以賽事詳情（賽後）為準，按馬號對應
+  const finalOdds: Record<string, number> = {};
+  for (const x of (raceDetail.data?.horses || []) as any[]) {
+    const o = Number(x?.winOdds);
+    if (x?.horseNumber != null && Number.isFinite(o) && o > 0) finalOdds[String(x.horseNumber)] = o;
+  }
 
   const Cell = ({ h, rank, matched }: { h: Horse; rank: number; matched: boolean }) => {
     const no = h.horseNumber ?? h.no;
@@ -232,6 +257,18 @@ function ComparePage() {
             ) : null}
           </div>
         </div>
+        <div className="flex shrink-0 flex-col items-end gap-1">
+        {no != null && finalOdds[String(no)] ? (
+          <div
+            title="開跑時最終獨贏賠率"
+            className={`tabnum rounded-[6px] border px-[7px] py-[3px] font-mono-tx text-[11px] font-bold ${
+              matched ? "border-[#D4A93C] bg-white/55 text-[#5A4210]" : "border-hairline bg-paper-2 text-ink"
+            }`}
+          >
+            <span className={`mr-[2px] font-medium ${matched ? "text-[#7A5A20]" : "text-ink-3"}`}>賠</span>
+            {finalOdds[String(no)]}
+          </div>
+        ) : null}
         {h.draw != null && h.draw !== "" ? (
           <div
             className={`tabnum shrink-0 rounded-[6px] border px-[7px] py-[3px] font-mono-tx text-[11px] font-bold ${
@@ -242,6 +279,7 @@ function ComparePage() {
             {h.draw}
           </div>
         ) : null}
+        </div>
       </div>
     );
   };
@@ -447,6 +485,35 @@ function ComparePage() {
                 </Pill>
               </div>
             ) : null}
+            {raceDividends.length ? (
+              <div className="mx-auto mt-2.5 max-w-[560px] rounded-[10px] border border-hairline bg-paper-2 px-3 py-2.5">
+                <p className="mb-1.5 text-[10px] font-bold text-ink-3">
+                  官方派彩（每 ${raceDividends[0]?.unit ?? 10} 一注）
+                  <span className="ml-1 font-normal">· 金底＝引擎命中彩池</span>
+                </p>
+                <div className="grid grid-cols-2 gap-x-3 gap-y-1 sm:grid-cols-3">
+                  {raceDividends.map((d, i) => {
+                    const hitPool =
+                      (d.pool === "TRI" && !!frozenRace?.trioHit) ||
+                      (d.pool === "FCT" && !!frozenRace?.first4Hit) ||
+                      (d.pool === "PLA" && !!frozenRace?.top3AnyHit);
+                    return (
+                      <p
+                        key={i}
+                        className={`tabnum flex items-baseline justify-between gap-1 rounded-[4px] px-1 py-0.5 font-mono-tx text-[10px] ${
+                          hitPool ? "bg-gold-bg text-gold" : "text-ink-2"
+                        }`}
+                      >
+                        <span className="truncate">
+                          {POOL_ZH[d.pool] ?? d.pool} <span className="text-ink-3">{d.combo}</span>
+                        </span>
+                        <span className="shrink-0 font-bold text-ink">${Number(d.dividend).toLocaleString()}</span>
+                      </p>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : null}
           </>
         ) : null}
 
@@ -455,6 +522,8 @@ function ComparePage() {
           同時出現於預測與賽果嘅馬匹
         </p>
       </div>
+
+      {date ? <ExoticTrioPools date={date} /> : null}
 
       <footer className="mx-5 mb-6 mt-[18px] border-t border-hairline pt-3.5 text-[11px] leading-[1.55] text-ink-3">
         <strong className="text-ink-2">天喜為分析平台，不提供投注服務。</strong>

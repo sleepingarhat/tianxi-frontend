@@ -148,53 +148,57 @@ export function CompactFixtures() {
       ) : !rows.length ? (
         <p className="py-4 text-center text-[11px] text-ink-3">暫時未有未來賽程</p>
       ) : (
-        <ul className="flex flex-col gap-1.5">
+        <div className="flex flex-col gap-1.5">
           {!upcoming.length ? (
-            <li className="text-[10px] text-ink-3">未有新一批賽程，先列最近一批凍結預測</li>
+            <p className="text-[10px] text-ink-3">未有新一批賽程，先列最近一批凍結預測</p>
           ) : null}
-          {rows.map((m) => {
+          {rows.map((m, idx) => {
             const { pf, pick } = dual(m.p, m.lambda);
+            const league = m.league_zh || m.div;
+            const showLeague = idx === 0 || (rows[idx - 1]?.league_zh || rows[idx - 1]?.div) !== league;
+            const hm = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Hong_Kong", hour: "2-digit", minute: "2-digit", hour12: false })
+              .format(new Date(toMs(m.kickoff_utc)))
+              .split(":");
+            const md = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Hong_Kong", day: "2-digit", month: "2-digit" }).format(new Date(toMs(m.kickoff_utc)));
+            const team = (side: "home" | "away", lam: number) => (
+              <span className="flex min-w-0 items-center gap-2">
+                <FootballCrest name={teamZh(m.div, m[side])} src={crestOf(m.div, m[side])} size={20} />
+                <span className="min-w-0 flex-1 truncate text-[12px] font-bold text-ink">{teamZh(m.div, m[side])}</span>
+                <span className="tabnum w-7 shrink-0 text-right font-mono-tx text-[12px] font-bold text-gold">{lam.toFixed(1)}</span>
+              </span>
+            );
             return (
-              <li key={m.match_key}>
-                <Button
+              <div key={m.match_key}>
+                {showLeague ? (
+                  <p className="mb-1 mt-1.5 border-b border-hairline pb-1 text-[11px] font-bold text-gold">{league}</p>
+                ) : null}
+                <button
                   type="button"
-                  variant="outline"
                   onClick={() => setOpen(m)}
-                  className="group flex h-auto w-full flex-col gap-2 rounded-[8px] border-hairline bg-paper px-3 py-2.5 text-left font-normal hover:border-gold-strong/50 hover:bg-paper hover:shadow-md"
+                  className="grid w-full grid-cols-[34px_1fr_40px_44px_10px] items-center gap-2 rounded-[8px] border border-hairline bg-paper px-2.5 py-2 text-left transition-colors hover:border-gold-strong/50"
                 >
-                  <span className="flex w-full items-center justify-between gap-2">
-                    <span className="min-w-0 truncate text-[9px] font-bold text-gold">{m.league_zh || m.div}</span>
-                    <span className="tabnum shrink-0 font-mono-tx text-[10px] leading-none text-ink-3">
-                      {hkDateTime(m.kickoff_utc)}
-                    </span>
+                  <span className="tabnum flex flex-col items-center font-mono-tx leading-[1.1] text-ink-3">
+                    <span className="text-[11px] font-bold text-ink-2">{hm[0]}</span>
+                    <span className="text-[11px] font-bold text-ink-2">{hm[1]}</span>
+                    <span className="mt-0.5 text-[8px]">{md}</span>
                   </span>
-                  <span className="flex w-full items-center justify-center gap-1.5 text-[11px] font-bold text-ink">
-                    <span className="flex min-w-0 items-center justify-end gap-1">
-                      <span className="min-w-0 truncate">{teamZh(m.div, m.home)}</span>
-                      <FootballCrest name={teamZh(m.div, m.home)} src={crestOf(m.div, m.home)} size={18} />
-                    </span>
-                    <span className="shrink-0 font-mono-tx text-[9px] font-normal text-ink-3">vs</span>
-                    <span className="flex min-w-0 items-center gap-1">
-                      <FootballCrest name={teamZh(m.div, m.away)} src={crestOf(m.div, m.away)} size={18} />
-                      <span className="min-w-0 truncate">{teamZh(m.div, m.away)}</span>
-                    </span>
+                  <span className="flex min-w-0 flex-col gap-1.5">
+                    {team("home", m.lambda?.[0] ?? 0)}
+                    {team("away", m.lambda?.[1] ?? 0)}
                   </span>
-                  <span className="flex w-full items-center gap-2">
-                    <span className="min-w-0 flex-1">
-                      <ProbBar p={pf} pick={pick} />
-                    </span>
-                    <span className="flex shrink-0 items-baseline gap-1">
-                      <span className="rounded-[4px] bg-deep px-1.5 py-[2px] text-[10px] font-bold text-deep-fg">
-                        {SIDE_ZH_3[pick]}
-                      </span>
-                      <span className="tabnum font-mono-tx text-[10px] text-ink-3">{pc(pf[pick])}</span>
-                    </span>
+                  <span className="tabnum flex flex-col items-end font-mono-tx text-[10px] leading-[1.25]">
+                    {pf.map((v, i) => (
+                      <span key={i} className={i === pick ? "font-bold text-ink" : "text-ink-3"}>{pc(v)}</span>
+                    ))}
                   </span>
-                </Button>
-              </li>
+                  <span className="rounded-[5px] bg-deep py-1 text-center text-[11px] font-bold text-deep-fg">{SIDE_ZH_3[pick]}</span>
+                  <span className="text-[12px] text-ink-3">›</span>
+                </button>
+              </div>
             );
           })}
-        </ul>
+          <p className="text-[9px] text-ink-3">金色數字＝預期入球；右欄由上至下＝主／和／客機率</p>
+        </div>
       )}
       <Dialog open={!!open} onOpenChange={(v) => !v && setOpen(null)}>
         <DialogContent className="max-w-md">

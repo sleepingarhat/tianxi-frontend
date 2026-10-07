@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { AppShell } from "@/components/tx/AppShell";
 import { EChart } from "@/components/tx/EChart";
+import { ExoticTrioPools } from "@/components/tx/ExoticTrioPools";
 import { Card, Disclaimer, Empty, ErrorNote, Loading, PageHead, Scroller, Seg, Table, Td } from "@/components/tx/ui";
 import { fmtMeetingDate, txApi } from "@/lib/tx-api";
 
@@ -129,6 +130,11 @@ function StrategyPnlPage() {
     queryFn: () => txApi.strategyPnl(`?days=${days}`),
   });
 
+  const meets = useQuery({ queryKey: ["meetings", 12], queryFn: () => txApi.meetings("?limit=12") });
+  const meetDates: string[] = (meets.data?.meetings ?? [])
+    .map((m: any) => String(m?.date ?? "")).filter((x: string) => x && x <= new Date().toISOString().slice(0, 10)).slice(0, 8);
+  const [trioDate, setTrioDate] = useState("");
+  const td = trioDate || meetDates[0] || "";
   const d: any = pnl.data || {};
   const points: any[] = Array.isArray(d.points) ? d.points : [];
   const breakdown: Record<string, any> = d.poolBreakdown || {};
@@ -219,6 +225,16 @@ function StrategyPnlPage() {
           <Card title="累計盈虧走勢" en="Cumulative Curve">
             <CumChart points={points.map((p) => ({ date: p.date, cum: Number(p.cum) || 0 }))} />
           </Card>
+
+          {meetDates.length ? (
+            <div className="mx-4 mt-3 flex items-center gap-2 text-[11px]">
+              <span className="text-ink-3">孖T／三T 賽日</span>
+              <select value={td} onChange={(e) => setTrioDate(e.target.value)} className="rounded-[6px] border border-hairline bg-paper px-2 py-1 text-ink">
+                {meetDates.map((x) => <option key={x} value={x}>{x}</option>)}
+              </select>
+            </div>
+          ) : null}
+          <ExoticTrioPools date={td} />
 
           <Card title="逐個彩池" en="By Pool">
             <div className="grid grid-cols-2 gap-2">

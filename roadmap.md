@@ -1,6 +1,8 @@
 # tianxi-web roadmap
 
 ## 進行中
+- [x] 2026-10-07 足球「逐場入球對照」頁：揀場次睇雙引擎預期入球 vs 實際、平均入球基準、主和客命中 vs 隨機；回測頁加「目標超過市場熱門」對比卡
+- [ ] 賽馬四揀平均中匹數超過市場熱門（現 1.99 vs 2.31，未達標；凍結四揀唔改）
 - [ ] 2026-10-06 五倉制已拍板：Tianxi Football（資料＋引擎＋後端）、Tianxi Horse racing（tianxi-database＋tianxi-backend 合併）、Tianxi Mark Six（hk-mark-six＋tianxi-marksix 合併）、Tianxi 前端（新建，放本專案源碼）、Tianxi 研究（tianxi-football-research 擴至賽馬＋足球＋六合彩）；舊倉封存轉址、全站引用更新
 - [x] 2026-10-06 Telegram 告警：Bot @tianxienginebot 已連接（connector）；告警模組涵蓋數據庫健康、賽果同步（收料 workflow 失敗）、雙引擎狀態（T−6h 未鎖／快照失敗）；已接通，測試訊息發送成功
 - [ ] 2026-10-06 倉庫真合併（用戶拍板：唔係淨係說明）：足球後端程式真正放入 `tianxi-football`；六合彩倉（hk-mark-six／tianxi-marksix）合併並放入真代碼；賽馬倉（tianxi-database／tianxi-backend）合併並放入真代碼；舊倉封存轉址、全站引用更新
@@ -667,12 +669,12 @@
 - [ ] 天氣：維持每晚同步（每 5 分鐘一筆，逐筆推送會過多）
 
 ### 2026-10-06 產品化藍圖第一批（用戶批：T−6h／$100／改良2+4+7+8／圖表監控）
-- [ ] 改良5：足球鎖定 T−60 → T−6h（只影響新場次；BSD 快照同步提前；狀態燈收斂綠／紅）
-- [ ] 改良6+8：足球平注 $10 → $100（定版日起新版本計）；model_versions 表＋版本化戰績展示
-- [ ] 改良2+4：足球前端只出馬會有盤賽事篩選＋gofootball.ai 式卡片
-- [ ] 改良7：賽馬各彩池 $10 官方派彩表（先開表＋介面位，後端接通再轉源）
-- [ ] ECharts 動態圖表（策略盈虧曲線、足球趨勢）＋監控端一屏展示
-- [ ] 設計規範：參考 break-ui skill（最壞真實數據壓測 UI：長隊名、空態、千條規模、320px、深色、RTL；先報告再修）同 motionin.design 動效畫廊
+- [x] 改良5：足球鎖定 T−60 → T−6h（只影響新場次；BSD 快照同步提前；狀態燈收斂綠／紅）
+- [x] 改良6+8：足球平注 $10 → $100（定版日起新版本計）；model_versions 表＋版本化戰績展示
+- [x] 改良2+4：足球前端只出馬會有盤賽事篩選＋gofootball.ai 式卡片
+- [x] 改良7：賽馬各彩池 $10 官方派彩表（2026-10-07 完成：兩頁直接讀 tianxi-racing 每日派彩檔，千位逗號漏讀已修，歷史賽日即出數）
+- [x] ECharts 動態圖表（策略盈虧曲線、足球趨勢）＋監控端一屏展示
+- [x] 設計規範：參考 break-ui skill（最壞真實數據壓測 UI：長隊名、空態、千條規模、320px、深色、RTL；先報告再修）同 motionin.design 動效畫廊
 - [x] Telegram 告警：待用戶提供 bot token
 
 ## 2026-10-06 藍圖第一批進度
@@ -699,3 +701,22 @@
 - [x] 網站引用更新（weather-sync／meeting-cancellation／race-results-dispatch／telegramAlert／ProductDashboard）
 - [x] 天喜前端倉 tianxi-frontend 已建立並推送 604 個源碼檔；舊倉 tianxi-backend、hk-mark-six-2002-now、tianxi-football-backend、tianxi-football-engine 已核對內容後刪除
 - [x] 2026-10-06 tianxi-site 96 個檔併入 tianxi-frontend/legacy-site/ 後刪除；修正六合彩資料、H-R2 報告、首頁連結改指新倉
+
+## 2026-10-07 六合彩派彩／賽馬健康／回測
+- [x] 六合彩每日派彩收料（tianxi-marksix dividends.mjs＋每晚 workflow），2002 起 3,435 期回補；新頁 /marksix-results 派彩＋15 碼預測 vs 賽果
+- [x] 賽馬後端健康頁 /racing-health：最後派彩收料、8 項定時任務、Telegram 通道（唔通即紅條）
+- [x] 賽馬訓練數據與回測頁 /engine/backtest：引擎 vs 隨機 vs 市場、4 揀複式回報
+- [x] 修 10 個仍指向已刪舊倉嘅賽馬定時任務（賠率、Elo、預測、D1 同步等）；賠率、Elo 重跑成功，下一賽日預測重跑已過出錯步驟
+- [x] 六合彩「預測 vs 攪珠結果」（改名）：揀期數 → 引擎獎級＋派彩，同隨機 15 碼對照
+- [x] 回覆：賽馬／足球賽前鎖定邏輯深度核對（足球「等賠率」可令鎖定時刻由 T−6h 推遲至 T−20，待用戶拍板）
+- [x] 足球鎖定拍板執行：到 T−6h 即鎖預測，搵唔到賠率標「無賠率」（照計命中率、唔計盈虧），唔再等至 T−20；刪除 waiting_odds 分支
+- [ ] 目標：賽馬四揀平均中匹數超過市場熱門 2.31
+
+- [x] 足球預測目標卡（雙引擎 56.1% vs 隨機 33.3% vs 市場熱門 61.4%）
+- [x] 足球 Elo 成分重訓：已出候選 elo-v2（見下）
+- [x] 足球基準快照任務修復（補 contents:write 權限，2026-10-07 重跑成功）
+- [x] 足球 Elo 重訓候選 elo-v2（研究閘過，回測頁展示；未併入凍結 S5）
+- [ ] elo-v2 併入 S5 重訓並開新指紋——等用戶拍板（新版本成績獨立計）
+
+- [x] 2026-10-07 足球升 dual-v2（Elo 換 elo-v2），戰績只計新版，舊版歸檔
+- [x] 2026-10-07 賽馬孖T／三T 二拖三計算卡、預測 vs 賽果最終賠率、足球近期賽程改 numbertwenty 式

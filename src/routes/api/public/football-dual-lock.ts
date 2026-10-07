@@ -4,6 +4,7 @@ import { DUAL_ENGINE, dualEngine, OUTCOMES } from "@/lib/footballDualEngine";
 /**
  * 雙引擎 T−6h 鎖定：讀凍結預測，開賽前 6 小時內（未開賽）嘅場次寫入鎖定帳。
  * 只插入（已存在就跳過），永不改寫。賠率：馬會 → Bet365 → 市場平均 → 無。
+ * 到 T−6h 即鎖預測；搵唔到賠率標「無賠率」（照計命中率、唔計盈虧），唔再等下一輪。
  * 2026-10-06 起鎖定線由 T−60 提前到 T−6h，新場次平注注碼 $100（舊帳保留 $10）。
  */
 type Fixture = {
@@ -119,9 +120,8 @@ async function lockCore(): Promise<Response> {
           const k = hk.find((x) => (x.home.includes(h) || h.includes(x.home)) && (x.away.includes(a) || a.includes(x.away)));
           return k ? { odds: k.odds, source: "hkjc" } : odds.get(`${m.div}|${m.home}|${m.away}`);
         };
-        // 冇賠率：距開賽仲有 >20 分鐘就留待下一輪（每 15 分鐘）再搵，唔即刻鎖「無賠率」
-        const ready = due.filter((m) => find(m) || Date.parse(m.kickoff_utc) - now <= 20 * 60_000);
-        if (!ready.length) return Response.json({ ok: true, due: due.length, locked: 0, waiting_odds: due.length });
+        // 到 T−6h 即鎖：有冇賠率都鎖預測，搵唔到就標「無賠率」，唔再等下一輪
+        const ready = due;
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
         const rows = ready.map((m) => {
           const r = dualEngine(m.p, m.lambda);

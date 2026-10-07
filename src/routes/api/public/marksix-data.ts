@@ -5,6 +5,7 @@ const BASE = "https://raw.githubusercontent.com/sleepingarhat/tianxi-marksix/mai
 const FILES: Record<string, string> = {
   latest: "latest.json",
   history: "mark-six.json",
+  dividends: "dividends.json",
 };
 
 export const Route = createFileRoute("/api/public/marksix-data")({

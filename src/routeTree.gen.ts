@@ -22,17 +22,20 @@ import { Route as HorseRouteImport } from './routes/horse'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ManualRouteImport } from './routes/manual'
 import { Route as MarksixRouteImport } from './routes/marksix'
+import { Route as MarksixResultsRouteImport } from './routes/marksix-results'
 import { Route as MembershipRouteImport } from './routes/membership'
 import { Route as PoolOddsRouteImport } from './routes/pool-odds'
 import { Route as PredictionVsResultRouteImport } from './routes/prediction-vs-result'
 import { Route as PredictorRouteImport } from './routes/predictor'
 import { Route as RaceRouteImport } from './routes/race'
+import { Route as RacingHealthRouteImport } from './routes/racing-health'
 import { Route as ResultsRouteImport } from './routes/results'
 import { Route as ScheduleRouteImport } from './routes/schedule'
 import { Route as StrategyPnlRouteImport } from './routes/strategy-pnl'
 import { Route as TrackRecordRouteImport } from './routes/track-record'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as EngineIndexRouteImport } from './routes/engine.index'
+import { Route as EngineBacktestRouteImport } from './routes/engine.backtest'
 import { Route as EngineFeaturesRouteImport } from './routes/engine.features'
 import { Route as EngineMonitorRouteImport } from './routes/engine.monitor'
 import { Route as EngineResidualsRouteImport } from './routes/engine.residuals'
@@ -45,6 +48,7 @@ import { Route as FootballExplainRouteImport } from './routes/football.explain'
 import { Route as FootballFeaturesRouteImport } from './routes/football.features'
 import { Route as FootballFixturesRouteImport } from './routes/football.fixtures'
 import { Route as FootballIngestStatusRouteImport } from './routes/football.ingest-status'
+import { Route as FootballMatchVsResultRouteImport } from './routes/football.match-vs-result'
 import { Route as FootballPredictionVsResultRouteImport } from './routes/football.prediction-vs-result'
 import { Route as FootballResultsRouteImport } from './routes/football.results'
 import { Route as FootballStandingsRouteImport } from './routes/football.standings'
@@ -144,6 +148,11 @@ const MarksixRoute = MarksixRouteImport.update({
   path: '/marksix',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MarksixResultsRoute = MarksixResultsRouteImport.update({
+  id: '/marksix-results',
+  path: '/marksix-results',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MembershipRoute = MembershipRouteImport.update({
   id: '/membership',
   path: '/membership',
@@ -167,6 +176,11 @@ const PredictorRoute = PredictorRouteImport.update({
 const RaceRoute = RaceRouteImport.update({
   id: '/race',
   path: '/race',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RacingHealthRoute = RacingHealthRouteImport.update({
+  id: '/racing-health',
+  path: '/racing-health',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResultsRoute = ResultsRouteImport.update({
@@ -197,6 +211,11 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
 const EngineIndexRoute = EngineIndexRouteImport.update({
   id: '/engine/',
   path: '/engine/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EngineBacktestRoute = EngineBacktestRouteImport.update({
+  id: '/engine/backtest',
+  path: '/engine/backtest',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EngineFeaturesRoute = EngineFeaturesRouteImport.update({
@@ -257,6 +276,11 @@ const FootballFixturesRoute = FootballFixturesRouteImport.update({
 const FootballIngestStatusRoute = FootballIngestStatusRouteImport.update({
   id: '/football/ingest-status',
   path: '/football/ingest-status',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FootballMatchVsResultRoute = FootballMatchVsResultRouteImport.update({
+  id: '/football/match-vs-result',
+  path: '/football/match-vs-result',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FootballPredictionVsResultRoute =
@@ -456,16 +480,19 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/manual': typeof ManualRoute
   '/marksix': typeof MarksixRoute
+  '/marksix-results': typeof MarksixResultsRoute
   '/membership': typeof MembershipRoute
   '/pool-odds': typeof PoolOddsRoute
   '/prediction-vs-result': typeof PredictionVsResultRoute
   '/predictor': typeof PredictorRoute
   '/race': typeof RaceRoute
+  '/racing-health': typeof RacingHealthRoute
   '/results': typeof ResultsRoute
   '/schedule': typeof ScheduleRoute
   '/strategy-pnl': typeof StrategyPnlRoute
   '/track-record': typeof TrackRecordRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/engine/backtest': typeof EngineBacktestRoute
   '/engine/features': typeof EngineFeaturesRoute
   '/engine/monitor': typeof EngineMonitorRoute
   '/engine/residuals': typeof EngineResidualsRoute
@@ -476,6 +503,7 @@ export interface FileRoutesByFullPath {
   '/football/features': typeof FootballFeaturesRoute
   '/football/fixtures': typeof FootballFixturesRoute
   '/football/ingest-status': typeof FootballIngestStatusRoute
+  '/football/match-vs-result': typeof FootballMatchVsResultRoute
   '/football/prediction-vs-result': typeof FootballPredictionVsResultRoute
   '/football/results': typeof FootballResultsRoute
   '/football/standings': typeof FootballStandingsRoute
@@ -527,16 +555,19 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/manual': typeof ManualRoute
   '/marksix': typeof MarksixRoute
+  '/marksix-results': typeof MarksixResultsRoute
   '/membership': typeof MembershipRoute
   '/pool-odds': typeof PoolOddsRoute
   '/prediction-vs-result': typeof PredictionVsResultRoute
   '/predictor': typeof PredictorRoute
   '/race': typeof RaceRoute
+  '/racing-health': typeof RacingHealthRoute
   '/results': typeof ResultsRoute
   '/schedule': typeof ScheduleRoute
   '/strategy-pnl': typeof StrategyPnlRoute
   '/track-record': typeof TrackRecordRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/engine/backtest': typeof EngineBacktestRoute
   '/engine/features': typeof EngineFeaturesRoute
   '/engine/monitor': typeof EngineMonitorRoute
   '/engine/residuals': typeof EngineResidualsRoute
@@ -547,6 +578,7 @@ export interface FileRoutesByTo {
   '/football/features': typeof FootballFeaturesRoute
   '/football/fixtures': typeof FootballFixturesRoute
   '/football/ingest-status': typeof FootballIngestStatusRoute
+  '/football/match-vs-result': typeof FootballMatchVsResultRoute
   '/football/prediction-vs-result': typeof FootballPredictionVsResultRoute
   '/football/results': typeof FootballResultsRoute
   '/football/standings': typeof FootballStandingsRoute
@@ -600,16 +632,19 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/manual': typeof ManualRoute
   '/marksix': typeof MarksixRoute
+  '/marksix-results': typeof MarksixResultsRoute
   '/membership': typeof MembershipRoute
   '/pool-odds': typeof PoolOddsRoute
   '/prediction-vs-result': typeof PredictionVsResultRoute
   '/predictor': typeof PredictorRoute
   '/race': typeof RaceRoute
+  '/racing-health': typeof RacingHealthRoute
   '/results': typeof ResultsRoute
   '/schedule': typeof ScheduleRoute
   '/strategy-pnl': typeof StrategyPnlRoute
   '/track-record': typeof TrackRecordRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/engine/backtest': typeof EngineBacktestRoute
   '/engine/features': typeof EngineFeaturesRoute
   '/engine/monitor': typeof EngineMonitorRoute
   '/engine/residuals': typeof EngineResidualsRoute
@@ -620,6 +655,7 @@ export interface FileRoutesById {
   '/football/features': typeof FootballFeaturesRoute
   '/football/fixtures': typeof FootballFixturesRoute
   '/football/ingest-status': typeof FootballIngestStatusRoute
+  '/football/match-vs-result': typeof FootballMatchVsResultRoute
   '/football/prediction-vs-result': typeof FootballPredictionVsResultRoute
   '/football/results': typeof FootballResultsRoute
   '/football/standings': typeof FootballStandingsRoute
@@ -673,16 +709,19 @@ export interface FileRouteTypes {
     | '/login'
     | '/manual'
     | '/marksix'
+    | '/marksix-results'
     | '/membership'
     | '/pool-odds'
     | '/prediction-vs-result'
     | '/predictor'
     | '/race'
+    | '/racing-health'
     | '/results'
     | '/schedule'
     | '/strategy-pnl'
     | '/track-record'
     | '/admin'
+    | '/engine/backtest'
     | '/engine/features'
     | '/engine/monitor'
     | '/engine/residuals'
@@ -693,6 +732,7 @@ export interface FileRouteTypes {
     | '/football/features'
     | '/football/fixtures'
     | '/football/ingest-status'
+    | '/football/match-vs-result'
     | '/football/prediction-vs-result'
     | '/football/results'
     | '/football/standings'
@@ -744,16 +784,19 @@ export interface FileRouteTypes {
     | '/login'
     | '/manual'
     | '/marksix'
+    | '/marksix-results'
     | '/membership'
     | '/pool-odds'
     | '/prediction-vs-result'
     | '/predictor'
     | '/race'
+    | '/racing-health'
     | '/results'
     | '/schedule'
     | '/strategy-pnl'
     | '/track-record'
     | '/admin'
+    | '/engine/backtest'
     | '/engine/features'
     | '/engine/monitor'
     | '/engine/residuals'
@@ -764,6 +807,7 @@ export interface FileRouteTypes {
     | '/football/features'
     | '/football/fixtures'
     | '/football/ingest-status'
+    | '/football/match-vs-result'
     | '/football/prediction-vs-result'
     | '/football/results'
     | '/football/standings'
@@ -816,16 +860,19 @@ export interface FileRouteTypes {
     | '/login'
     | '/manual'
     | '/marksix'
+    | '/marksix-results'
     | '/membership'
     | '/pool-odds'
     | '/prediction-vs-result'
     | '/predictor'
     | '/race'
+    | '/racing-health'
     | '/results'
     | '/schedule'
     | '/strategy-pnl'
     | '/track-record'
     | '/_authenticated/admin'
+    | '/engine/backtest'
     | '/engine/features'
     | '/engine/monitor'
     | '/engine/residuals'
@@ -836,6 +883,7 @@ export interface FileRouteTypes {
     | '/football/features'
     | '/football/fixtures'
     | '/football/ingest-status'
+    | '/football/match-vs-result'
     | '/football/prediction-vs-result'
     | '/football/results'
     | '/football/standings'
@@ -889,15 +937,18 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   ManualRoute: typeof ManualRoute
   MarksixRoute: typeof MarksixRoute
+  MarksixResultsRoute: typeof MarksixResultsRoute
   MembershipRoute: typeof MembershipRoute
   PoolOddsRoute: typeof PoolOddsRoute
   PredictionVsResultRoute: typeof PredictionVsResultRoute
   PredictorRoute: typeof PredictorRoute
   RaceRoute: typeof RaceRoute
+  RacingHealthRoute: typeof RacingHealthRoute
   ResultsRoute: typeof ResultsRoute
   ScheduleRoute: typeof ScheduleRoute
   StrategyPnlRoute: typeof StrategyPnlRoute
   TrackRecordRoute: typeof TrackRecordRoute
+  EngineBacktestRoute: typeof EngineBacktestRoute
   EngineFeaturesRoute: typeof EngineFeaturesRoute
   EngineMonitorRoute: typeof EngineMonitorRoute
   EngineResidualsRoute: typeof EngineResidualsRoute
@@ -908,6 +959,7 @@ export interface RootRouteChildren {
   FootballFeaturesRoute: typeof FootballFeaturesRoute
   FootballFixturesRoute: typeof FootballFixturesRoute
   FootballIngestStatusRoute: typeof FootballIngestStatusRoute
+  FootballMatchVsResultRoute: typeof FootballMatchVsResultRoute
   FootballPredictionVsResultRoute: typeof FootballPredictionVsResultRoute
   FootballResultsRoute: typeof FootballResultsRoute
   FootballStandingsRoute: typeof FootballStandingsRoute
@@ -1039,6 +1091,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MarksixRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/marksix-results': {
+      id: '/marksix-results'
+      path: '/marksix-results'
+      fullPath: '/marksix-results'
+      preLoaderRoute: typeof MarksixResultsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/membership': {
       id: '/membership'
       path: '/membership'
@@ -1072,6 +1131,13 @@ declare module '@tanstack/react-router' {
       path: '/race'
       fullPath: '/race'
       preLoaderRoute: typeof RaceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/racing-health': {
+      id: '/racing-health'
+      path: '/racing-health'
+      fullPath: '/racing-health'
+      preLoaderRoute: typeof RacingHealthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/results': {
@@ -1114,6 +1180,13 @@ declare module '@tanstack/react-router' {
       path: '/engine'
       fullPath: '/engine/'
       preLoaderRoute: typeof EngineIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/engine/backtest': {
+      id: '/engine/backtest'
+      path: '/engine/backtest'
+      fullPath: '/engine/backtest'
+      preLoaderRoute: typeof EngineBacktestRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/engine/features': {
@@ -1198,6 +1271,13 @@ declare module '@tanstack/react-router' {
       path: '/football/ingest-status'
       fullPath: '/football/ingest-status'
       preLoaderRoute: typeof FootballIngestStatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/football/match-vs-result': {
+      id: '/football/match-vs-result'
+      path: '/football/match-vs-result'
+      fullPath: '/football/match-vs-result'
+      preLoaderRoute: typeof FootballMatchVsResultRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/football/prediction-vs-result': {
@@ -1478,15 +1558,18 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   ManualRoute: ManualRoute,
   MarksixRoute: MarksixRoute,
+  MarksixResultsRoute: MarksixResultsRoute,
   MembershipRoute: MembershipRoute,
   PoolOddsRoute: PoolOddsRoute,
   PredictionVsResultRoute: PredictionVsResultRoute,
   PredictorRoute: PredictorRoute,
   RaceRoute: RaceRoute,
+  RacingHealthRoute: RacingHealthRoute,
   ResultsRoute: ResultsRoute,
   ScheduleRoute: ScheduleRoute,
   StrategyPnlRoute: StrategyPnlRoute,
   TrackRecordRoute: TrackRecordRoute,
+  EngineBacktestRoute: EngineBacktestRoute,
   EngineFeaturesRoute: EngineFeaturesRoute,
   EngineMonitorRoute: EngineMonitorRoute,
   EngineResidualsRoute: EngineResidualsRoute,
@@ -1497,6 +1580,7 @@ const rootRouteChildren: RootRouteChildren = {
   FootballFeaturesRoute: FootballFeaturesRoute,
   FootballFixturesRoute: FootballFixturesRoute,
   FootballIngestStatusRoute: FootballIngestStatusRoute,
+  FootballMatchVsResultRoute: FootballMatchVsResultRoute,
   FootballPredictionVsResultRoute: FootballPredictionVsResultRoute,
   FootballResultsRoute: FootballResultsRoute,
   FootballStandingsRoute: FootballStandingsRoute,

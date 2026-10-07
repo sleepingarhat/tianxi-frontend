@@ -63,16 +63,7 @@ function ResultsPage() {
   // 派彩表（由賽馬後端賽後寫入；未有數據嘅賽日唔顯示呢區）
   const divQ = useQuery({
     queryKey: ["race-dividends", activeDate],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("race_dividends")
-        .select("race_no,pool,combo,dividend,unit")
-        .eq("date", activeDate!)
-        .order("race_no")
-        .order("pool");
-      if (error) throw error;
-      return (data ?? []) as DividendRow[];
-    },
+    queryFn: async () => (await import("@/lib/raceDividends")).fetchRaceDividends(activeDate!) as Promise<DividendRow[]>,
     enabled: !!activeDate,
     staleTime: 10 * 60_000,
   });

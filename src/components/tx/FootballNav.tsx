@@ -5,6 +5,7 @@ const TABS = [
   { to: "/football", label: "總覽" },
   { to: "/football/fixtures", label: "賽前預測" },
   { to: "/football/prediction-vs-result", label: "預測 vs 賽果" },
+  { to: "/football/match-vs-result", label: "逐場入球對照" },
   { to: "/football/dual-ledger", label: "雙引擎戰績" },
   { to: "/football/results", label: "回測對帳" },
   { to: "/football/features", label: "因子特徵表" },

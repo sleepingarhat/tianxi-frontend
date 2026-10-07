@@ -22,6 +22,13 @@
       "when": 1791291943963,
       "tag": "0002_telegram_alert_state",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1791365829780,
+      "tag": "0003_football_dual_v2",
+      "breakpoints": true
     }
   ]
 }

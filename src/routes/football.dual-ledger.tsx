@@ -9,6 +9,7 @@ import { BsdMonitorCard } from "@/components/tx/BsdMonitorCard";
 import { ModelVersions } from "@/components/tx/ModelVersions";
 import { supabase } from "@/integrations/supabase/client";
 import validation from "@/data/football-dual-engine-v1.json";
+import eloV2 from "@/data/football-elo-v2.json";
 import {
   DUAL_ENGINE,
   ODDS_SOURCE_LABEL,
@@ -46,11 +47,12 @@ const months = (rows: Row[]) => [...new Set(rows.map((r) => r.kickoff_utc.slice(
 function DualLedger() {
   const [tab, setTab] = useState<"live" | "backtest">("live");
   const ledger = useQuery({
-    queryKey: ["football-dual-ledger"],
+    queryKey: ["football-dual-ledger", DUAL_ENGINE.version],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("football_dual_ledger")
         .select("match_key,div,home,away,kickoff_utc,locked_at,p_a,p_b_d,p_final,prediction,odds_source,pick_odds,stake")
+        .eq("version", DUAL_ENGINE.version)
         .order("kickoff_utc", { ascending: false });
       if (error) throw error;
       return (data ?? []) as Row[];
@@ -95,7 +97,7 @@ function DualLedger() {
   return (
     <AppShell page="football">
       <PageHead en="Dual Engine · Official Record" title="雙引擎戰績"
-        desc={`${DUAL_ENGINE.version} 由 ${DUAL_ENGINE.frozenAt} 定版。每場開賽前 ${DUAL_ENGINE.lockHours} 小時鎖定，只增不改；${DUAL_ENGINE.stakeV2From} 起每場平注 $${DUAL_ENGINE.stakeV2}（之前 $${DUAL_ENGINE.stake}，舊帳保留）。`} />
+        desc={`${DUAL_ENGINE.version} 由 ${DUAL_ENGINE.frozenAt} 定版（Elo 換成重訓版 elo-v2，四季回測全面勝出舊版）。每場開賽前 ${DUAL_ENGINE.lockHours} 小時鎖定，只增不改，每場平注 $${DUAL_ENGINE.stakeV2}；戰績只計本版。`} />
       <FootballNav />
       <div className="flex gap-1.5 px-4 pt-3">
         {(["live", "backtest"] as const).map((t) => (
@@ -174,6 +176,24 @@ function DualLedger() {
               <tr key={v.season} className="border-b border-hairline last:border-0">
                 <td className="py-2">20{v.season.slice(0, 2)}/{v.season.slice(2)}</td><td>{v.n}</td><td>{pc(v.acc)}</td>
                 <td>{v.picks.join("／")}</td><td>{(v.flat_roi * 100).toFixed(2)}%</td>
+              </tr>
+            ))}</tbody>
+          </table></div>
+        </Card>
+      )}
+      {tab !== "live" && (
+        <Card title="點解換新 Elo · elo-v2" en="Elo Retrain Backtest">
+          <p className="mb-2 text-[11px] leading-relaxed text-ink-3">
+            用 2020/21 季或之前資料重新搵參數（主場優勢 {eloV2.params_old.hfa}→{eloV2.params_new.hfa}、K {eloV2.params_old.k0}→{eloV2.params_new.k0}、跨季保留 {eloV2.params_old.reg}→{eloV2.params_new.reg}），再原封不動驗證四季。RPS 越低越準。
+            四季 RPS 全部低過舊版、命中率全部上升，所以直接換新，舊版停止計分。
+          </p>
+          <div className="overflow-x-auto"><table className="w-full min-w-[340px] text-left text-[11px]">
+            <thead><tr className="border-b border-hairline text-ink-3"><th className="py-2">季度</th><th>場數</th><th>RPS 舊→新</th><th>命中 舊→新</th><th>五大聯賽命中</th></tr></thead>
+            <tbody>{eloV2.validation.map((v) => (
+              <tr key={v.season} className="border-b border-hairline last:border-0">
+                <td className="py-2">20{v.season.slice(0, 2)}/{v.season.slice(2)}</td><td>{v.n.toLocaleString()}</td>
+                <td className="tabnum">{v.rps_old.toFixed(4)}→<b className="text-win">{v.rps_new.toFixed(4)}</b></td>
+                <td>{pc(v.acc_old)}→{pc(v.acc_new)}</td><td>{pc(v.acc5_old)}→{pc(v.acc5_new)}</td>
               </tr>
             ))}</tbody>
           </table></div>

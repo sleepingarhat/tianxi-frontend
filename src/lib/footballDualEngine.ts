@@ -7,8 +7,9 @@
  * 2021/22–2024/25 四季驗證（docs/research/football_dual_engine_v1.json）。一季最多改一次。
  */
 export const DUAL_ENGINE = {
-  version: "dual-v1",
-  frozenAt: "2026-09-29",
+  version: "dual-v2",
+  frozenAt: "2026-10-07",
+  /** dual-v2：Elo 換 elo-v2（hfa80/k24/reg0.90），四季 RPS 全勝舊版；戰績只計本版 */
   pi: 0.016,
   w: 0.5,
   base: [0.4458, 0.2501, 0.3041] as [number, number, number],
