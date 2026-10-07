@@ -1,14 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 import { AdminHead, Kpi, NoteBox, Panel, fmtMoney, fmtPct } from "@/components/admin/kit";
 import { useFootballLedger, useRacingPnl, type LedgerRow } from "@/components/admin/data";
 import { ledgerFixture, useFixture } from "@/components/admin/fixtures";
 import { EChart } from "@/components/tx/EChart";
 import { settlePnl } from "@/lib/footballDualEngine";
+import { ExoticTrioPools } from "@/components/tx/ExoticTrioPools";
+import { txApi } from "@/lib/tx-api";
+import { hkToday } from "@/lib/hkTime";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export const Route = createFileRoute("/_authenticated/admin/pnl")({
-  head: () => ({ meta: [{ title: "盈虧 · 天喜監控端" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "盈虧 · 天喜監控端" }, { name: "description", content: "天喜賽馬策略、孖T三T逐日成本派彩及足球盈虧。" }, { property: "og:title", content: "盈虧 · 天喜監控端" }, { property: "og:description", content: "核對賽馬跨場彩池及足球帳面表現。" }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
   component: Pnl,
 });
 
@@ -31,6 +36,10 @@ const chart = (data: { x: string; cum: number }[], name: string) => ({
 function Pnl() {
   const rp = useRacingPnl();
   const led = useFootballLedger();
+  const meets = useQuery({ queryKey: ["meetings", 12], queryFn: () => txApi.meetings("?limit=12") });
+  const [trioDate, setTrioDate] = useState("");
+  const dates: string[] = [...new Set<string>((meets.data?.meetings ?? []).map((m: { date?: string }) => String(m.date ?? "")).filter((d: string) => d && d <= hkToday()))].sort().reverse();
+  const selectedDate = trioDate || dates[0] || "";
   const fRows = useFixture<LedgerRow[]>(led.data ?? [], { demo: ledgerFixture("demo") as LedgerRow[], worst: ledgerFixture("worst") as LedgerRow[] });
   const versions = useMemo(() => [...new Set(fRows.map((r) => r.version))], [fRows]);
   const [ver, setVer] = useState<string>("all");
@@ -45,8 +54,9 @@ function Pnl() {
     let hit = 0, bets = 0, staked = 0;
     const pts: { x: string; v: number }[] = [];
     for (const r of rows) {
+      if (!r.ftr) continue;
       if (r.ftr === r.prediction) hit++;
-      const p = settlePnl(r.prediction, r.ftr!, r.pick_odds, r.stake);
+      const p = settlePnl(r.prediction, r.ftr, r.pick_odds, r.stake);
       if (p !== null) { bets++; staked += r.stake; pts.push({ x: r.kickoff_utc.slice(0, 10), v: p }); }
     }
     const c = curve(pts);
@@ -55,7 +65,7 @@ function Pnl() {
 
   return (
     <>
-      <AdminHead title="盈虧" en="P&L" desc="賽馬每注 $10（四揀複式策略）；足球按帳面注碼（現行 $100）。負數照實展示。" onRefresh={() => { rp.refetch(); led.refetch(); }} refreshing={rp.isFetching || led.isFetching} />
+      <AdminHead title="盈虧" en="P&L" desc="賽馬每注 $10；四揀複式累計與孖T／三T 逐日核對分開列。足球按帳面注碼（現行 $100）。負數照實展示。" onRefresh={() => { rp.refetch(); led.refetch(); meets.refetch(); }} refreshing={rp.isFetching || led.isFetching} />
       <Panel title="賽馬策略" en="Racing · $10/注">
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           <Kpi label="淨盈虧" value={fmtMoney(rp.data?.totalNet, 0)} tone={(rp.data?.totalNet ?? 0) >= 0 ? "win" : "lose"} sub={`${rp.data?.from ?? "—"} 至 ${rp.data?.to ?? "—"}`} />
@@ -76,6 +86,18 @@ function Pnl() {
           </div>
         ) : null}
       </Panel>
+
+      <section className="mt-4 min-w-0" aria-label="孖T三T逐日核對">
+        <div className="mb-3 flex flex-wrap items-center gap-2">
+          <label id="trio-date-label" className="text-[12px] font-bold text-ink">孖T／三T 賽馬日</label>
+          <Select value={selectedDate} onValueChange={setTrioDate}>
+            <SelectTrigger aria-labelledby="trio-date-label" className="w-[170px] border-hairline bg-paper-3 text-ink"><SelectValue placeholder="選擇賽馬日" /></SelectTrigger>
+            <SelectContent>{dates.map((d) => <SelectItem key={d} value={d}>{d}</SelectItem>)}</SelectContent>
+          </Select>
+        </div>
+        <p className="mb-3 text-[11px] leading-relaxed text-ink-3">二拖三複式：孖T 9 注 $90，三T 27 注 $270。正獎、安慰獎與成本逐日核對，未併入上方四揀累計。</p>
+        {selectedDate ? <ExoticTrioPools date={selectedDate} /> : <NoteBox>{meets.isError ? "賽馬日讀取失敗，請重新整理。" : meets.isLoading ? "讀取賽馬日中…" : "暫無賽馬日資料。"}</NoteBox>}
+      </section>
 
       <Panel
         title="足球雙引擎"

@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { AdminHead, DataTable, Kpi, NoteBox, Panel, StatusBadge, useMemoCols, type Status } from "@/components/admin/kit";
-import { useEngineHealth, useModelVersions, useRollup } from "@/components/admin/data";
+import { useEngineHealth, useFootballLedger, useModelVersions, useRollup, type LedgerRow } from "@/components/admin/data";
 import { EChart } from "@/components/tx/EChart";
 import eloV2 from "@/data/football-elo-v2.json";
 
@@ -9,6 +9,32 @@ export const Route = createFileRoute("/_authenticated/admin/engine-health")({
   head: () => ({ meta: [{ title: "引擎健康 · 天喜監控端" }, { name: "robots", content: "noindex" }] }),
   component: EngineHealth,
 });
+
+const IDX = { home: 0, draw: 1, away: 2 } as const;
+/** 由鎖定帳 p_final 對 90 分鐘賽果計 logloss／Brier／ECE（10 格，按最高格信心） */
+function calib(rows: LedgerRow[]) {
+  const done = rows.filter((r) => r.ftr && Array.isArray(r.p_final) && r.p_final.length === 3);
+  const n = done.length;
+  if (!n) return null;
+  let ll = 0, br = 0, hit = 0;
+  const bins = Array.from({ length: 10 }, () => ({ n: 0, conf: 0, acc: 0 }));
+  for (const r of done) {
+    const p = r.p_final.map((x) => Math.min(1 - 1e-6, Math.max(1e-6, Number(x))));
+    const y = IDX[r.ftr!];
+    ll += -Math.log(p[y]!);
+    br += p.reduce((a, v, i) => a + (v - (i === y ? 1 : 0)) ** 2, 0);
+    const top = p.indexOf(Math.max(...p));
+    const ok = top === y ? 1 : 0;
+    hit += ok;
+    const b = bins[Math.min(9, Math.floor(p[top]! * 10))]!;
+    b.n++; b.conf += p[top]!; b.acc += ok;
+  }
+  const ece = bins.reduce((a, b) => a + (b.n ? (b.n / n) * Math.abs(b.acc / b.n - b.conf / b.n) : 0), 0);
+  return {
+    n, logloss: ll / n, brier: br / n, ece, acc: hit / n,
+    bins: bins.map((b, i) => ({ mid: (i + 0.5) / 10, n: b.n, conf: b.n ? b.conf / b.n : null, acc: b.n ? b.acc / b.n : null })),
+  };
+}
 
 type Check = { key: string; label: string; status: Status; detail: string };
 
@@ -31,6 +57,10 @@ function EngineHealth() {
   ]);
   const fb = (mv.data ?? []).find((v) => v.engine === "football" && v.status === "active");
   const rc = (mv.data ?? []).find((v) => v.engine === "racing" && v.status === "active");
+  const led = useFootballLedger();
+  const versions = [...new Set((led.data ?? []).map((r) => r.version))].sort().reverse();
+  const cal = versions.map((v) => ({ v, c: calib((led.data ?? []).filter((r) => r.version === v)) }));
+  const cur = cal.find((x) => x.c) ?? null;
   const seasons: any[] = (eloV2 as any).seasons ?? (eloV2 as any).validation ?? [];
 
   return (
@@ -59,6 +89,49 @@ function EngineHealth() {
           <p className="font-mono-tx text-[10px] text-ink-3">LGB：{d.constraintsLive?.objective ?? "—"} · leaves {d.constraintsLive?.numLeaves ?? "—"} · lr {d.constraintsLive?.learningRate ?? "—"}</p>
         </Panel>
       </div>
+      <Panel title="足球實戰校準" en="Live logloss / ECE" className="mt-4">
+        {led.isLoading ? <p className="text-[12px] text-ink-3">讀取中…</p> : !cur ? <p className="text-[12px] text-ink-3">未有已完賽嘅鎖定場次</p> : (
+          <>
+            <div className="grid grid-cols-2 gap-3 lg:grid-cols-5">
+              <Kpi label="版本" value={cur.v} sub={`已完賽 ${cur.c!.n} 場`} />
+              <Kpi label="Logloss" value={cur.c!.logloss.toFixed(3)} tone={cur.c!.logloss < Math.log(3) ? "win" : "lose"} sub={`隨機 ${Math.log(3).toFixed(3)}`} />
+              <Kpi label="Brier" value={cur.c!.brier.toFixed(3)} tone={cur.c!.brier < 2 / 3 ? "win" : "lose"} sub="隨機 0.667" />
+              <Kpi label="ECE" value={(cur.c!.ece * 100).toFixed(1) + "%"} tone={cur.c!.ece < 0.05 ? "win" : "gold"} sub="< 5% 算校準良好" />
+              <Kpi label="命中率" value={(cur.c!.acc * 100).toFixed(1) + "%"} sub="隨機 33.3%" />
+            </div>
+            <div className="mt-3 grid gap-3 lg:grid-cols-2">
+              <EChart
+                height={220}
+                ariaLabel="校準曲線"
+                option={{
+                  backgroundColor: "transparent",
+                  textStyle: { color: "#D0D6D0" },
+                  tooltip: { trigger: "axis" },
+                  legend: { textStyle: { color: "#8A8F88" } },
+                  grid: { left: 40, right: 16, top: 32, bottom: 28 },
+                  xAxis: { type: "value", min: 0.3, max: 1, name: "信心", splitLine: { show: false } },
+                  yAxis: { type: "value", min: 0, max: 1, name: "實際命中", splitLine: { lineStyle: { color: "rgba(212,161,30,0.08)" } } },
+                  series: [
+                    { name: "完美校準", type: "line", data: [[0.3, 0.3], [1, 1]], symbol: "none", lineStyle: { color: "#8A8F88", type: "dashed" } },
+                    { name: "實戰", type: "line", data: cur.c!.bins.filter((b) => b.n).map((b) => [b.conf, b.acc, b.n]), lineStyle: { color: "#D4A11E" }, itemStyle: { color: "#D4A11E" }, symbolSize: (d: number[]) => 6 + Math.min(14, d[2] ?? 0) },
+                  ],
+                }}
+              />
+              <table className="w-full text-[12px]">
+                <thead><tr className="text-left text-ink-3"><th>版本</th><th>場數</th><th>Logloss</th><th>Brier</th><th>ECE</th><th>命中</th></tr></thead>
+                <tbody>
+                  {cal.map(({ v, c }) => (
+                    <tr key={v} className="font-mono-tx text-ink">
+                      <td>{v}</td><td>{c?.n ?? 0}</td><td>{c ? c.logloss.toFixed(3) : "—"}</td><td>{c ? c.brier.toFixed(3) : "—"}</td><td>{c ? (c.ece * 100).toFixed(1) + "%" : "—"}</td><td>{c ? (c.acc * 100).toFixed(1) + "%" : "—"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-2 text-[10px] text-ink-3">用鎖定帳賽前凍結機率對 90 分鐘賽果即時計，每個版本獨立計、唔回填。樣本少時 ECE 波動大。賽馬引擎只鎖排名唔鎖機率，所以冇 logloss／ECE。</p>
+          </>
+        )}
+      </Panel>
       {seasons.length ? (
         <Panel title="足球 Elo 逐季 RPS" en="Football RPS by Season" className="mt-4">
           <EChart
@@ -78,7 +151,7 @@ function EngineHealth() {
               ],
             }}
           />
-          <p className="text-[10px] text-ink-3">RPS 越低越準。logloss／ECE 後端未逐季輸出，暫未顯示。</p>
+          <p className="text-[10px] text-ink-3">RPS 越低越準。實戰 logloss／ECE 見上面「足球實戰校準」。</p>
         </Panel>
       ) : null}
     </>

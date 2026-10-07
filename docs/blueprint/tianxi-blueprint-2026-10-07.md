@@ -21,7 +21,7 @@
     ├── 資料新鮮度 /admin/data-freshness
     ├── 預測鎖定 /admin/prediction-lock
     ├── 模型版本 /admin/model-versions
-    ├── 盈虧 /admin/pnl
+    ├── 盈虧 /admin/pnl（四揀累計＋孖T／三T逐賽日獨立核對）
     ├── 會員 /admin/users-membership（待接 Whop）
     ├── 日誌 /admin/logs
     ├── 設定 /admin/settings
@@ -43,6 +43,8 @@
 
 - 架構參考 satnaing/shadcn-admin：側欄、頂欄、⌘K 全局搜尋、手機抽屜選單。
 - 表格：TanStack Table（排序、搜尋、分頁，窄畫面橫向捲動）。
+- 模型版本說明完整換行；手機以直列版本紀錄展示，毋須橫向捲動閱讀說明。
+- 盈虧頁以相同 ExoticTrioPools 讀官方派彩及凍結第五選；孖T／三T二拖三按賽馬日列成本、正獎、安慰獎，未併入四揀策略累計。後端鎖定、模型及帳本不變。
 - 圖表：ECharts。
 - 視覺：TianXi x Linear 深色精密風——畫布 #0B1612、面板 #0F1A16／#16231F、hairline 金邊 rgba(212,161,30,0.18)、金 #D4A11E、成功 #00843D、失敗 #C8102E；卡角 12px、按鈕 6px、膠囊 9999px。金色只用於重點、選中、重要數字；綠紅只表示成功失敗。
 - 動效：數字 count up、正常狀態 soft pulse、表格行 hover、更新掣轉圈；尊重 reduced-motion。
@@ -59,3 +61,4 @@
 
 - 會員頁接 Whop（等 API key）。
 - logloss／ECE 逐季輸出（後端未提供）。
+- 完整完成度核對見 [2026-10-07 審計](./completion-audit-2026-10-07.md)：互動腦圖、日期／策略篩選、馬會有盤嚴格限定、持久日誌、設定、完整壓測與產品文件仍未齊，不再以「九頁存在」代表功能全部完成。

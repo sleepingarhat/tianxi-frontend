@@ -5,7 +5,7 @@ import { useModelVersions, type VersionRow } from "@/components/admin/data";
 import { LONG_FP, useFixture } from "@/components/admin/fixtures";
 
 export const Route = createFileRoute("/_authenticated/admin/model-versions")({
-  head: () => ({ meta: [{ title: "模型版本 · 天喜監控端" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "模型版本 · 天喜監控端" }, { name: "description", content: "天喜模型版本、凍結指紋及採用原因。" }, { property: "og:title", content: "模型版本 · 天喜監控端" }, { property: "og:description", content: "查看模型登記及完整版本說明。" }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
   component: Versions,
 });
 
@@ -30,7 +30,22 @@ function Versions() {
     <>
       <AdminHead title="模型版本" en="Model Versions" desc="所有登記版本，包括已歸檔版本。每個版本由定版日起獨立計成績，唔回填。前台只顯示現行版本。" onRefresh={() => mv.refetch()} refreshing={mv.isFetching} />
       <Panel title="版本登記表" en="model_versions">
-        <DataTable data={rows} columns={cols} empty={mv.isLoading ? "讀取中…" : "未有版本"} />
+        <div className="hidden md:block"><DataTable data={rows} columns={cols} empty={mv.isLoading ? "讀取中…" : "未有版本"} /></div>
+        <div className="divide-y divide-hairline md:hidden">
+          {rows.map((r) => (
+            <article key={`${r.engine}-${r.version}`} className="min-w-0 py-3 first:pt-0 last:pb-0">
+              <div className="flex flex-wrap items-center gap-2 text-[12px]">
+                <b className="text-ink">{ENG[r.engine] ?? r.engine}</b>
+                <StatusBadge s={r.status === "active" ? "ok" : "unknown"} label={r.status === "active" ? "現行" : r.status === "candidate" ? "候選" : "歸檔"} />
+                <span className="ml-auto text-[10px] text-ink-3">{r.released_at}</span>
+              </div>
+              <p className="mt-2 break-words font-mono-tx text-[12px] text-ink [overflow-wrap:anywhere]">{r.version}</p>
+              <p className="mt-1 break-words font-mono-tx text-[10px] text-ink-3 [overflow-wrap:anywhere]">指紋：{r.fingerprint ?? "—"}</p>
+              <p className="mt-2 whitespace-pre-wrap break-words text-[12px] leading-relaxed text-ink-2 [overflow-wrap:anywhere]">{r.notes ?? "未有說明"}</p>
+            </article>
+          ))}
+          {!rows.length ? <p className="py-4 text-center text-[12px] text-ink-3">{mv.isLoading ? "讀取中…" : "未有版本"}</p> : null}
+        </div>
       </Panel>
     </>
   );

@@ -45,7 +45,8 @@ function calcPools(divs: DividendRow[], legsByRace: Record<number, Leg>): PoolCa
   }
   const out: PoolCalc[] = [];
   for (const [name, g] of groups) {
-    const ref = g.main ?? g.cons!;
+    const ref = g.main ?? g.cons;
+    if (!ref) continue;
     const n = ref.combo.split("/").length;
     const races = Array.from({ length: n }, (_, i) => ref.race_no - n + 1 + i);
     const legs: Leg[] = races.map((r) => legsByRace[r] ?? null);
@@ -164,6 +165,9 @@ export function ExoticTrioPools({ date }: { date: string }) {
                     </span>
                   ))}
                 </p>
+                 {p.races.some((race) => q.data?.legs[race]?.fifthFromLive) ? (
+                   <p className="mt-1 text-[10px] leading-relaxed text-gold">第 {p.races.filter((race) => q.data?.legs[race]?.fifthFromLive).join("、")} 場第 5 選為補選，非賽前凍結；只作試算對照。</p>
+                 ) : null}
                 <p className="tabnum mt-1 font-mono-tx text-[10px] text-ink-2">
                   {p.units} 注 · 成本 {money(p.cost)}
                   {p.payout ? ` · 正獎 ${money(p.payout)}` : ""}

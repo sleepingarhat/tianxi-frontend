@@ -193,7 +193,7 @@ export function DataTable<T>({
               table.getRowModel().rows.map((r) => (
                 <tr key={r.id} className="border-b border-hairline transition-colors last:border-b-0 hover:bg-gold-bg">
                   {r.getVisibleCells().map((c) => (
-                    <td key={c.id} className="max-w-[260px] truncate px-2.5 py-1.5 align-middle text-ink-2">
+                    <td key={c.id} className="max-w-[260px] whitespace-normal break-words px-2.5 py-1.5 align-top leading-relaxed text-ink-2 [overflow-wrap:anywhere]">
                       {flexRender(c.column.columnDef.cell, c.getContext())}
                     </td>
                   ))}
