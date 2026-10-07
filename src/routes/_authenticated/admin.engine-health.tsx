@@ -1,9 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { Download } from "lucide-react";
 
 import { AdminHead, DataTable, Kpi, NoteBox, Panel, StatusBadge, useMemoCols, type Status } from "@/components/admin/kit";
 import { useEngineHealth, useFootballLedger, useModelVersions, useRollup, type LedgerRow } from "@/components/admin/data";
 import { EChart } from "@/components/tx/EChart";
 import eloV2 from "@/data/football-elo-v2.json";
+import { getFootballSeasonReport } from "@/lib/ops-history.functions";
+import type { FootballSeasonReport } from "@/lib/football-season-report";
 
 export const Route = createFileRoute("/_authenticated/admin/engine-health")({
   head: () => ({ meta: [{ title: "引擎健康 · 天喜監控端" }, { name: "robots", content: "noindex" }] }),
@@ -39,6 +44,8 @@ function calib(rows: LedgerRow[]) {
 type Check = { key: string; label: string; status: Status; detail: string };
 
 function EngineHealth() {
+  const getSeasonReport = useServerFn(getFootballSeasonReport);
+  const seasonReport = useQuery({ queryKey: ["admin", "football-season-report"], queryFn: () => getSeasonReport({ data: { format: "json" } }) });
   const eh = useEngineHealth();
   const roll = useRollup();
   const mv = useModelVersions();
@@ -62,6 +69,28 @@ function EngineHealth() {
   const cal = versions.map((v) => ({ v, c: calib((led.data ?? []).filter((r) => r.version === v)) }));
   const cur = cal.find((x) => x.c) ?? null;
   const seasons: any[] = (eloV2 as any).seasons ?? (eloV2 as any).validation ?? [];
+  const seasonRows = seasonReport.data?.format === "json" ? seasonReport.data.rows : [];
+  const seasonCols = useMemoCols<FootballSeasonReport>(() => [
+    { accessorKey: "season", header: "賽季" }, { accessorKey: "version", header: "版本" },
+    { accessorKey: "stake", header: "注碼", cell: (cell) => `$${Number(cell.getValue()).toLocaleString()}` },
+    { accessorKey: "settled", header: "結算／鎖定", cell: (cell) => { const row = cell.row.original; return `${row.settled}/${row.locked}`; } },
+    { accessorKey: "hitRate", header: "命中", cell: (cell) => cell.getValue() == null ? "—" : `${(Number(cell.getValue()) * 100).toFixed(1)}%` },
+    { accessorKey: "homeHit", header: "主" }, { accessorKey: "drawHit", header: "和" }, { accessorKey: "awayHit", header: "客" },
+    { accessorKey: "rps", header: "RPS", cell: (cell) => cell.getValue() == null ? "—" : Number(cell.getValue()).toFixed(4) },
+    { accessorKey: "logloss", header: "Logloss", cell: (cell) => cell.getValue() == null ? "—" : Number(cell.getValue()).toFixed(4) },
+    { accessorKey: "brier", header: "Brier", cell: (cell) => cell.getValue() == null ? "—" : Number(cell.getValue()).toFixed(4) },
+    { accessorKey: "ece", header: "ECE", cell: (cell) => cell.getValue() == null ? "—" : `${(Number(cell.getValue()) * 100).toFixed(1)}%` },
+    { accessorKey: "pnl", header: "淨盈虧", cell: (cell) => `${Number(cell.getValue()) >= 0 ? "+" : "−"}$${Math.abs(Number(cell.getValue())).toLocaleString()}` },
+  ]);
+  const downloadReport = async (format: "json" | "csv") => {
+    const result = await getSeasonReport({ data: { format } });
+    const content = result.format === "csv" ? result.content : JSON.stringify({ generatedAt: result.generatedAt, rows: result.rows }, null, 2);
+    const blob = new Blob([content], { type: format === "csv" ? "text/csv;charset=utf-8" : "application/json" });
+    const href = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = href; anchor.download = `tianxi-football-season-report.${format}`; anchor.click();
+    URL.revokeObjectURL(href);
+  };
 
   return (
     <>
@@ -131,6 +160,15 @@ function EngineHealth() {
             <p className="mt-2 text-[10px] text-ink-3">用鎖定帳賽前凍結機率對 90 分鐘賽果即時計，每個版本獨立計、唔回填。樣本少時 ECE 波動大。賽馬引擎只鎖排名唔鎖機率，所以冇 logloss／ECE。</p>
           </>
         )}
+      </Panel>
+      <Panel
+        title="足球逐季正式帳評核"
+        en="Season report"
+        className="mt-4"
+        right={<div className="flex gap-1"><button type="button" onClick={() => downloadReport("csv")} className="inline-flex items-center gap-1 rounded-[6px] border border-hairline px-2 py-1 text-[10px] text-ink-2"><Download className="h-3 w-3" />CSV</button><button type="button" onClick={() => downloadReport("json")} className="inline-flex items-center gap-1 rounded-[6px] border border-hairline px-2 py-1 text-[10px] text-ink-2"><Download className="h-3 w-3" />JSON</button></div>}
+      >
+        <DataTable data={seasonRows} columns={seasonCols} pageSize={20} empty={seasonReport.isLoading ? "整理鎖定帳與賽果中…" : "未有逐季正式帳資料"} />
+        <p className="mt-2 text-[10px] leading-relaxed text-ink-3">按版本、實際注碼及開賽日期所屬賽季獨立計算；未結算只列入鎖定場數，唔會當輸。呢份係正式鎖定帳，與下方 Elo 離線重訓驗證分開。</p>
       </Panel>
       {seasons.length ? (
         <Panel title="足球 Elo 逐季 RPS" en="Football RPS by Season" className="mt-4">

@@ -22,6 +22,12 @@ type Tag = "數據" | "技術" | "前端" | "系統";
 
 const ENTRIES: { date: string; title: string; tags: Tag[]; body: string }[] = [
   {
+    date: "2026-10-08 · HKT（監控深度及授權圖片）",
+    title: "逐季正式帳、持久日誌、全站壓測及馬場授權相片完成",
+    tags: ["技術", "系統", "前端"],
+    body: "足球正式鎖定帳新增按賽季、版本、實際注碼分組評核，管理員可匯出 CSV／JSON；命中、主和客、P&L、ROI、RPS、logloss、Brier、ECE 與 Elo 離線回測分開。API 錯誤及 model gate 改為去敏持久歷史，只限管理員讀取。全站可重跑 break-ui 矩陣已落地 320／390／1280、RTL、慢 API 及 1,200 會員 worst fixture；公開頁及登入守門 208 項零失敗。因測試環境無對應管理員 session，九頁已登入 E2E 明確留待補跑。選馬頁加入沙田／跑馬地實景，採 Will629 Wikimedia Commons CC BY 4.0、頁內署名並設來源頁；未核實球員照片繼續不展示。模型、凍結帳及賠率權重不變。",
+  },
+  {
     date: "2026-10-08 · HKT（足球實測對比）",
     title: "雙引擎 57 場實測對比市場熱門；模型暫不調整",
     tags: ["數據", "系統"],

@@ -34,4 +34,7 @@
 
 - 監控端 /admin 為側欄佈局（src/routes/_authenticated/admin.tsx），各頁用 src/components/admin/kit.tsx 嘅 AdminHead／Panel／Kpi／StatusBadge／DataTable（TanStack Table），圖表用 EChart；深色主題只喺 .tx-admin 範圍覆寫 --tx-* 變數。理由：前台品牌唔受影響，監控頁唔再逐頁漂移。
 - Demo／Worst case 假資料只經 src/components/admin/fixtures.tsx 嘅 useFixture，並以 import.meta.env.DEV 把關。理由：break-ui 驗收要可重現，正式站唔可以出假數。
+- 全站 break-ui 用 scripts/break-ui-matrix.py 覆蓋 320／390／1280、RTL、慢 API 與千人會員；dev-log 會合法提及 NaN／undefined，掃描器不可將說明文字當資料錯誤。理由：驗收要可重跑亦要避免假陽性。
+- 足球逐季正式帳按賽季／版本／實際注碼分組，未結算只計 locked；管理員匯出不可公開。持久 ops 日誌只寫去敏摘要，service role 寫、admin 讀，失敗不得阻塞正式 API。
+- 外部圖片只可用逐張核實自由授權或書面商用權，頁內須署名並保留 /media-credits；API 圖址不等於授權。
 - 藍圖現行版本放 docs/blueprint/；改藍圖要同步更新該文件、roadmap、AGENTS、開發者日誌同 GitHub 鏡像。理由：設計說明同代碼唔可以分家。

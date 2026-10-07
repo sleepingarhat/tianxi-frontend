@@ -11,6 +11,19 @@ const errorMiddleware = createMiddleware().server(async ({ next }) => {
       throw error;
     }
     console.error(error);
+    try {
+      const { safeErrorMessage, writeOpsEvent } = await import("./lib/ops-history.server");
+      await writeOpsEvent({
+        eventKey: `server:${safeErrorMessage(error).slice(0, 120)}:${new Date().toISOString().slice(0, 13)}`,
+        kind: "api_error",
+        severity: "error",
+        source: "tanstack-server",
+        statusCode: 500,
+        message: safeErrorMessage(error),
+      });
+    } catch {
+      // 持久日誌不可取代原本錯誤回應。
+    }
     return new Response(renderErrorPage(), {
       status: 500,
       headers: { "content-type": "text/html; charset=utf-8" },

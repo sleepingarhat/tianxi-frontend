@@ -29,6 +29,13 @@
       "when": 1791365829780,
       "tag": "0003_football_dual_v2",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1791402765952,
+      "tag": "0004_create_ops_event_history",
+      "breakpoints": true
     }
   ]
 }

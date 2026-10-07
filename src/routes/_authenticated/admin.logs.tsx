@@ -6,6 +6,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { AdminHead, DataTable, Panel, StatusBadge, useMemoCols, type Status } from "@/components/admin/kit";
 import { ago, useEngineHealth, useFootballIngest, useRacingHealth } from "@/components/admin/data";
 import { adminGet } from "@/lib/admin.functions";
+import { getOpsEventHistory } from "@/lib/ops-history.functions";
 import { hkDateTime } from "@/lib/hkTime";
 
 export const Route = createFileRoute("/_authenticated/admin/logs")({
@@ -17,7 +18,9 @@ type Log = { kind: string; level: Status; source: string; message: string; at: s
 
 function Logs() {
   const get = useServerFn(adminGet);
+  const getHistory = useServerFn(getOpsEventHistory);
   const alerts = useQuery({ queryKey: ["admin", "alerts"], queryFn: () => get({ data: { path: "/admin/api/alerts" } }) });
+  const history = useQuery({ queryKey: ["admin", "ops-history"], queryFn: () => getHistory({ data: { days: 90, limit: 1000 } }) });
   const rh = useRacingHealth();
   const fi = useFootballIngest();
   const eh = useEngineHealth();
@@ -26,6 +29,11 @@ function Logs() {
   const [lv, setLv] = useState<"all" | Status>("all");
   const [kw, setKw] = useState("");
   const logs: Log[] = [];
+  for (const event of history.data ?? []) logs.push({
+    kind: event.kind === "model_gate" ? "模型閘歷史" : "API 錯誤歷史",
+    level: event.severity === "error" ? "fail" : event.severity === "warning" ? "warn" : "ok",
+    source: String(event.source), message: String(event.message), at: event.occurred_at,
+  });
   const a = alerts.data?.payload;
   const list: any[] = Array.isArray(a) ? a : a?.["alerts"] ?? a?.["items"] ?? [];
   for (const x of list) logs.push({ kind: "資料完整性", level: x.severity === "critical" || x.level === "error" ? "fail" : "warn", source: String(x.source ?? x.key ?? "後端"), message: String(x.message ?? x.title ?? JSON.stringify(x)).slice(0, 300), at: x.created_at ?? x.at ?? null });
@@ -53,7 +61,7 @@ function Logs() {
 
   return (
     <>
-      <AdminHead title="日誌" en="Logs" desc="API 錯誤、定時任務失敗、資料完整性警告同模型閘未過紀錄，集中一處。" onRefresh={() => { alerts.refetch(); rh.refetch(); fi.refetch(); eh.refetch(); }} refreshing={alerts.isFetching} />
+      <AdminHead title="日誌" en="Logs" desc="持久 API 錯誤、定時任務失敗、資料完整性警告同模型閘歷史，集中一處。" onRefresh={() => { history.refetch(); alerts.refetch(); rh.refetch(); fi.refetch(); eh.refetch(); }} refreshing={alerts.isFetching || history.isFetching} />
       <Panel title="事件" en="Events">
         <div className="mb-2 flex flex-wrap items-center gap-1.5">
           {(["all", "fail", "warn", "ok"] as const).map((k) => (
@@ -64,7 +72,7 @@ function Logs() {
           <label className="ml-1 flex items-center gap-1 text-[11px] text-ink-3"><input type="checkbox" checked={showOk} onChange={(e) => setShowOk(e.target.checked)} />包括成功任務</label>
           <input value={kw} onChange={(e) => setKw(e.target.value)} placeholder="搜尋來源／內容" className="ml-auto w-44 rounded-[6px] border border-hairline bg-paper-3 px-2 py-1 text-[11px] text-ink" />
         </div>
-        <DataTable data={shown} columns={cols} pageSize={25} empty={alerts.isLoading ? "讀取中…" : "冇異常紀錄"} />
+        <DataTable data={shown} columns={cols} pageSize={25} empty={alerts.isLoading || history.isLoading ? "讀取中…" : "冇異常紀錄"} />
       </Panel>
     </>
   );

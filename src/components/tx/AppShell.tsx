@@ -163,7 +163,7 @@ export function AppShell({
             <p className="tabnum grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 font-mono-tx text-[10px] font-bold leading-none text-gold">
               <span className="inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />
               <OverflowTicker>{page === "football" ? footballNews.data?.items?.length
-                ? <>最新足球消息 · {footballNews.data.items.map((item, index) => <span key={item.url}>{index > 0 ? "　｜　" : ""}<a href={item.url} target="_blank" rel="noopener noreferrer" title={`${footballNews.data.source} · ${item.published}`}>{item.title}</a></span>)} · 來源：{footballNews.data.source}</>
+                ? <>最新足球消息 · {footballNews.data.items.map((item, index) => <span key={`${item.url}-${index}`}>{index > 0 ? "　｜　" : ""}<a href={item.url} target="_blank" rel="noopener noreferrer" title={`${footballNews.data.source} · ${item.published}`}>{item.title}</a></span>)} · 來源：{footballNews.data.source}</>
                 : footballNews.isError ? "足球消息暫時未能更新 · 請稍後再試" : "正在更新足球消息…"
                 : ticker}</OverflowTicker>
             </p>

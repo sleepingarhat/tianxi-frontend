@@ -23,6 +23,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as ManualRouteImport } from './routes/manual'
 import { Route as MarksixRouteImport } from './routes/marksix'
 import { Route as MarksixResultsRouteImport } from './routes/marksix-results'
+import { Route as MediaCreditsRouteImport } from './routes/media-credits'
 import { Route as MembershipRouteImport } from './routes/membership'
 import { Route as PoolOddsRouteImport } from './routes/pool-odds'
 import { Route as PredictionVsResultRouteImport } from './routes/prediction-vs-result'
@@ -162,6 +163,11 @@ const MarksixRoute = MarksixRouteImport.update({
 const MarksixResultsRoute = MarksixResultsRouteImport.update({
   id: '/marksix-results',
   path: '/marksix-results',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaCreditsRoute = MediaCreditsRouteImport.update({
+  id: '/media-credits',
+  path: '/media-credits',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MembershipRoute = MembershipRouteImport.update({
@@ -555,6 +561,7 @@ export interface FileRoutesByFullPath {
   '/manual': typeof ManualRoute
   '/marksix': typeof MarksixRoute
   '/marksix-results': typeof MarksixResultsRoute
+  '/media-credits': typeof MediaCreditsRoute
   '/membership': typeof MembershipRoute
   '/pool-odds': typeof PoolOddsRoute
   '/prediction-vs-result': typeof PredictionVsResultRoute
@@ -641,6 +648,7 @@ export interface FileRoutesByTo {
   '/manual': typeof ManualRoute
   '/marksix': typeof MarksixRoute
   '/marksix-results': typeof MarksixResultsRoute
+  '/media-credits': typeof MediaCreditsRoute
   '/membership': typeof MembershipRoute
   '/pool-odds': typeof PoolOddsRoute
   '/prediction-vs-result': typeof PredictionVsResultRoute
@@ -728,6 +736,7 @@ export interface FileRoutesById {
   '/manual': typeof ManualRoute
   '/marksix': typeof MarksixRoute
   '/marksix-results': typeof MarksixResultsRoute
+  '/media-credits': typeof MediaCreditsRoute
   '/membership': typeof MembershipRoute
   '/pool-odds': typeof PoolOddsRoute
   '/prediction-vs-result': typeof PredictionVsResultRoute
@@ -816,6 +825,7 @@ export interface FileRouteTypes {
     | '/manual'
     | '/marksix'
     | '/marksix-results'
+    | '/media-credits'
     | '/membership'
     | '/pool-odds'
     | '/prediction-vs-result'
@@ -902,6 +912,7 @@ export interface FileRouteTypes {
     | '/manual'
     | '/marksix'
     | '/marksix-results'
+    | '/media-credits'
     | '/membership'
     | '/pool-odds'
     | '/prediction-vs-result'
@@ -988,6 +999,7 @@ export interface FileRouteTypes {
     | '/manual'
     | '/marksix'
     | '/marksix-results'
+    | '/media-credits'
     | '/membership'
     | '/pool-odds'
     | '/prediction-vs-result'
@@ -1076,6 +1088,7 @@ export interface RootRouteChildren {
   ManualRoute: typeof ManualRoute
   MarksixRoute: typeof MarksixRoute
   MarksixResultsRoute: typeof MarksixResultsRoute
+  MediaCreditsRoute: typeof MediaCreditsRoute
   MembershipRoute: typeof MembershipRoute
   PoolOddsRoute: typeof PoolOddsRoute
   PredictionVsResultRoute: typeof PredictionVsResultRoute
@@ -1234,6 +1247,13 @@ declare module '@tanstack/react-router' {
       path: '/marksix-results'
       fullPath: '/marksix-results'
       preLoaderRoute: typeof MarksixResultsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media-credits': {
+      id: '/media-credits'
+      path: '/media-credits'
+      fullPath: '/media-credits'
+      preLoaderRoute: typeof MediaCreditsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/membership': {
@@ -1806,6 +1826,7 @@ const rootRouteChildren: RootRouteChildren = {
   ManualRoute: ManualRoute,
   MarksixRoute: MarksixRoute,
   MarksixResultsRoute: MarksixResultsRoute,
+  MediaCreditsRoute: MediaCreditsRoute,
   MembershipRoute: MembershipRoute,
   PoolOddsRoute: PoolOddsRoute,
   PredictionVsResultRoute: PredictionVsResultRoute,

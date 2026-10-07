@@ -185,6 +185,54 @@ export type Database = {
         }
         Relationships: []
       }
+      ops_event_history: {
+        Row: {
+          event_key: string
+          gate_key: string | null
+          gate_status: string | null
+          id: number
+          kind: string
+          message: string
+          metadata: Json
+          model_version: string | null
+          occurred_at: string
+          route: string | null
+          severity: string
+          source: string
+          status_code: number | null
+        }
+        Insert: {
+          event_key: string
+          gate_key?: string | null
+          gate_status?: string | null
+          id?: never
+          kind: string
+          message: string
+          metadata?: Json
+          model_version?: string | null
+          occurred_at?: string
+          route?: string | null
+          severity: string
+          source: string
+          status_code?: number | null
+        }
+        Update: {
+          event_key?: string
+          gate_key?: string | null
+          gate_status?: string | null
+          id?: never
+          kind?: string
+          message?: string
+          metadata?: Json
+          model_version?: string | null
+          occurred_at?: string
+          route?: string | null
+          severity?: string
+          source?: string
+          status_code?: number | null
+        }
+        Relationships: []
+      }
       race_dividends: {
         Row: {
           combo: string

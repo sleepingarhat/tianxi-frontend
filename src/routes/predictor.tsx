@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { AppShell } from "@/components/tx/AppShell";
 import { MeetingCancellationNotice } from "@/components/tx/MeetingCancellationNotice";
 import { PredictionStatusLight } from "@/components/tx/PredictionStatusLight";
+import { RacecoursePhoto } from "@/components/tx/RacecoursePhoto";
 import { WeatherPanel } from "@/components/tx/WeatherPanel";
 import { WhyPicked } from "@/components/tx/WhyPicked";
 import { HorseExplainChip } from "@/components/tx/HorseExplainChip";
@@ -165,6 +166,7 @@ function PredictorPage() {
         title="選馬神器"
         desc="先睇四揀結論，再逐層核對同程、檔位、騎練、時間、末段與近況證據；市場賠率只作對照，不會改動引擎排名。"
       />
+      {venueName ? <RacecoursePhoto venue={tp.venue || venueName} /> : null}
 
       <div className="mx-4 mt-3">
         <div className="mb-2 flex flex-wrap items-center gap-2">
