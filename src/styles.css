@@ -419,3 +419,37 @@
   .tx-chart-beacon { animation: none; }
   .tx-chart-line { stroke-dashoffset: 0; }
 }
+
+/* 監控端：TianXi x Linear 深色精密風。只喺 .tx-admin 範圍覆寫品牌變數，前台唔受影響。 */
+.tx-admin {
+  --tx-paper: #0b1612;
+  --tx-paper-2: #0f1a16;
+  --tx-paper-3: #16231f;
+  --tx-ink: #fdfbf5;
+  --tx-ink-2: #d0d6d0;
+  --tx-ink-3: #8a8f88;
+  --tx-hairline: rgba(212, 161, 30, 0.18);
+  --tx-gold: #d4a11e;
+  --tx-gold-strong: #d4a11e;
+  --tx-gold-bg: rgba(212, 161, 30, 0.12);
+  --tx-tan: #b8912f;
+  --tx-win: #00843d;
+  --tx-lose: #c8102e;
+  --tx-deep: #16231f;
+  --tx-deep-fg: #fdfbf5;
+  --tx-brown: #b8912f;
+  --tx-accent: #b8912f;
+  background: var(--tx-paper);
+  color: var(--tx-ink);
+  color-scheme: dark;
+}
+@keyframes tx-soft-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+@utility soft-pulse {
+  animation: tx-soft-pulse 2.4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .soft-pulse { animation: none; }
+}

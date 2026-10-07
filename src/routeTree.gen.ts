@@ -53,6 +53,17 @@ import { Route as FootballPredictionVsResultRouteImport } from './routes/footbal
 import { Route as FootballResultsRouteImport } from './routes/football.results'
 import { Route as FootballStandingsRouteImport } from './routes/football.standings'
 import { Route as FootballStudyRouteImport } from './routes/football.study'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as AuthenticatedAdminConsoleRouteImport } from './routes/_authenticated/admin.console'
+import { Route as AuthenticatedAdminDataFreshnessRouteImport } from './routes/_authenticated/admin.data-freshness'
+import { Route as AuthenticatedAdminEngineHealthRouteImport } from './routes/_authenticated/admin.engine-health'
+import { Route as AuthenticatedAdminLogsRouteImport } from './routes/_authenticated/admin.logs'
+import { Route as AuthenticatedAdminModelVersionsRouteImport } from './routes/_authenticated/admin.model-versions'
+import { Route as AuthenticatedAdminOverviewRouteImport } from './routes/_authenticated/admin.overview'
+import { Route as AuthenticatedAdminPnlRouteImport } from './routes/_authenticated/admin.pnl'
+import { Route as AuthenticatedAdminPredictionLockRouteImport } from './routes/_authenticated/admin.prediction-lock'
+import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
+import { Route as AuthenticatedAdminUsersMembershipRouteImport } from './routes/_authenticated/admin.users-membership'
 import { Route as ApiPublicDataMirrorRouteImport } from './routes/api/public/data-mirror'
 import { Route as ApiPublicDrawTuneRouteImport } from './routes/api/public/draw-tune'
 import { Route as ApiPublicEngineHealthRouteImport } from './routes/api/public/engine-health'
@@ -304,6 +315,69 @@ const FootballStudyRoute = FootballStudyRouteImport.update({
   path: '/football/study',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminConsoleRoute =
+  AuthenticatedAdminConsoleRouteImport.update({
+    id: '/console',
+    path: '/console',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminDataFreshnessRoute =
+  AuthenticatedAdminDataFreshnessRouteImport.update({
+    id: '/data-freshness',
+    path: '/data-freshness',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminEngineHealthRoute =
+  AuthenticatedAdminEngineHealthRouteImport.update({
+    id: '/engine-health',
+    path: '/engine-health',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminLogsRoute = AuthenticatedAdminLogsRouteImport.update({
+  id: '/logs',
+  path: '/logs',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminModelVersionsRoute =
+  AuthenticatedAdminModelVersionsRouteImport.update({
+    id: '/model-versions',
+    path: '/model-versions',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminOverviewRoute =
+  AuthenticatedAdminOverviewRouteImport.update({
+    id: '/overview',
+    path: '/overview',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminPnlRoute = AuthenticatedAdminPnlRouteImport.update({
+  id: '/pnl',
+  path: '/pnl',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminPredictionLockRoute =
+  AuthenticatedAdminPredictionLockRouteImport.update({
+    id: '/prediction-lock',
+    path: '/prediction-lock',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminSettingsRoute =
+  AuthenticatedAdminSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminUsersMembershipRoute =
+  AuthenticatedAdminUsersMembershipRouteImport.update({
+    id: '/users-membership',
+    path: '/users-membership',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const ApiPublicDataMirrorRoute = ApiPublicDataMirrorRouteImport.update({
   id: '/api/public/data-mirror',
   path: '/api/public/data-mirror',
@@ -491,7 +565,7 @@ export interface FileRoutesByFullPath {
   '/schedule': typeof ScheduleRoute
   '/strategy-pnl': typeof StrategyPnlRoute
   '/track-record': typeof TrackRecordRoute
-  '/admin': typeof AuthenticatedAdminRoute
+  '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/engine/backtest': typeof EngineBacktestRoute
   '/engine/features': typeof EngineFeaturesRoute
   '/engine/monitor': typeof EngineMonitorRoute
@@ -511,6 +585,16 @@ export interface FileRoutesByFullPath {
   '/engine/': typeof EngineIndexRoute
   '/explain/': typeof ExplainIndexRoute
   '/football/': typeof FootballIndexRoute
+  '/admin/console': typeof AuthenticatedAdminConsoleRoute
+  '/admin/data-freshness': typeof AuthenticatedAdminDataFreshnessRoute
+  '/admin/engine-health': typeof AuthenticatedAdminEngineHealthRoute
+  '/admin/logs': typeof AuthenticatedAdminLogsRoute
+  '/admin/model-versions': typeof AuthenticatedAdminModelVersionsRoute
+  '/admin/overview': typeof AuthenticatedAdminOverviewRoute
+  '/admin/pnl': typeof AuthenticatedAdminPnlRoute
+  '/admin/prediction-lock': typeof AuthenticatedAdminPredictionLockRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/users-membership': typeof AuthenticatedAdminUsersMembershipRoute
   '/api/public/data-mirror': typeof ApiPublicDataMirrorRoute
   '/api/public/draw-tune': typeof ApiPublicDrawTuneRoute
   '/api/public/engine-health': typeof ApiPublicEngineHealthRoute
@@ -539,6 +623,7 @@ export interface FileRoutesByFullPath {
   '/api/public/weather-sync-github': typeof ApiPublicWeatherSyncGithubRoute
   '/football/match/$matchKey': typeof FootballMatchMatchKeyRoute
   '/football/study/$matchId': typeof FootballStudyMatchIdRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
   '/api/public/hooks/race-results-dispatch': typeof ApiPublicHooksRaceResultsDispatchRoute
   '/football/team/$div/$slug': typeof FootballTeamDivSlugRoute
 }
@@ -566,7 +651,6 @@ export interface FileRoutesByTo {
   '/schedule': typeof ScheduleRoute
   '/strategy-pnl': typeof StrategyPnlRoute
   '/track-record': typeof TrackRecordRoute
-  '/admin': typeof AuthenticatedAdminRoute
   '/engine/backtest': typeof EngineBacktestRoute
   '/engine/features': typeof EngineFeaturesRoute
   '/engine/monitor': typeof EngineMonitorRoute
@@ -586,6 +670,16 @@ export interface FileRoutesByTo {
   '/engine': typeof EngineIndexRoute
   '/explain': typeof ExplainIndexRoute
   '/football': typeof FootballIndexRoute
+  '/admin/console': typeof AuthenticatedAdminConsoleRoute
+  '/admin/data-freshness': typeof AuthenticatedAdminDataFreshnessRoute
+  '/admin/engine-health': typeof AuthenticatedAdminEngineHealthRoute
+  '/admin/logs': typeof AuthenticatedAdminLogsRoute
+  '/admin/model-versions': typeof AuthenticatedAdminModelVersionsRoute
+  '/admin/overview': typeof AuthenticatedAdminOverviewRoute
+  '/admin/pnl': typeof AuthenticatedAdminPnlRoute
+  '/admin/prediction-lock': typeof AuthenticatedAdminPredictionLockRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/users-membership': typeof AuthenticatedAdminUsersMembershipRoute
   '/api/public/data-mirror': typeof ApiPublicDataMirrorRoute
   '/api/public/draw-tune': typeof ApiPublicDrawTuneRoute
   '/api/public/engine-health': typeof ApiPublicEngineHealthRoute
@@ -614,6 +708,7 @@ export interface FileRoutesByTo {
   '/api/public/weather-sync-github': typeof ApiPublicWeatherSyncGithubRoute
   '/football/match/$matchKey': typeof FootballMatchMatchKeyRoute
   '/football/study/$matchId': typeof FootballStudyMatchIdRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
   '/api/public/hooks/race-results-dispatch': typeof ApiPublicHooksRaceResultsDispatchRoute
   '/football/team/$div/$slug': typeof FootballTeamDivSlugRoute
 }
@@ -643,7 +738,7 @@ export interface FileRoutesById {
   '/schedule': typeof ScheduleRoute
   '/strategy-pnl': typeof StrategyPnlRoute
   '/track-record': typeof TrackRecordRoute
-  '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/engine/backtest': typeof EngineBacktestRoute
   '/engine/features': typeof EngineFeaturesRoute
   '/engine/monitor': typeof EngineMonitorRoute
@@ -663,6 +758,16 @@ export interface FileRoutesById {
   '/engine/': typeof EngineIndexRoute
   '/explain/': typeof ExplainIndexRoute
   '/football/': typeof FootballIndexRoute
+  '/_authenticated/admin/console': typeof AuthenticatedAdminConsoleRoute
+  '/_authenticated/admin/data-freshness': typeof AuthenticatedAdminDataFreshnessRoute
+  '/_authenticated/admin/engine-health': typeof AuthenticatedAdminEngineHealthRoute
+  '/_authenticated/admin/logs': typeof AuthenticatedAdminLogsRoute
+  '/_authenticated/admin/model-versions': typeof AuthenticatedAdminModelVersionsRoute
+  '/_authenticated/admin/overview': typeof AuthenticatedAdminOverviewRoute
+  '/_authenticated/admin/pnl': typeof AuthenticatedAdminPnlRoute
+  '/_authenticated/admin/prediction-lock': typeof AuthenticatedAdminPredictionLockRoute
+  '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/_authenticated/admin/users-membership': typeof AuthenticatedAdminUsersMembershipRoute
   '/api/public/data-mirror': typeof ApiPublicDataMirrorRoute
   '/api/public/draw-tune': typeof ApiPublicDrawTuneRoute
   '/api/public/engine-health': typeof ApiPublicEngineHealthRoute
@@ -691,6 +796,7 @@ export interface FileRoutesById {
   '/api/public/weather-sync-github': typeof ApiPublicWeatherSyncGithubRoute
   '/football/match/$matchKey': typeof FootballMatchMatchKeyRoute
   '/football/study/$matchId': typeof FootballStudyMatchIdRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/api/public/hooks/race-results-dispatch': typeof ApiPublicHooksRaceResultsDispatchRoute
   '/football/team/$div/$slug': typeof FootballTeamDivSlugRoute
 }
@@ -740,6 +846,16 @@ export interface FileRouteTypes {
     | '/engine/'
     | '/explain/'
     | '/football/'
+    | '/admin/console'
+    | '/admin/data-freshness'
+    | '/admin/engine-health'
+    | '/admin/logs'
+    | '/admin/model-versions'
+    | '/admin/overview'
+    | '/admin/pnl'
+    | '/admin/prediction-lock'
+    | '/admin/settings'
+    | '/admin/users-membership'
     | '/api/public/data-mirror'
     | '/api/public/draw-tune'
     | '/api/public/engine-health'
@@ -768,6 +884,7 @@ export interface FileRouteTypes {
     | '/api/public/weather-sync-github'
     | '/football/match/$matchKey'
     | '/football/study/$matchId'
+    | '/admin/'
     | '/api/public/hooks/race-results-dispatch'
     | '/football/team/$div/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -795,7 +912,6 @@ export interface FileRouteTypes {
     | '/schedule'
     | '/strategy-pnl'
     | '/track-record'
-    | '/admin'
     | '/engine/backtest'
     | '/engine/features'
     | '/engine/monitor'
@@ -815,6 +931,16 @@ export interface FileRouteTypes {
     | '/engine'
     | '/explain'
     | '/football'
+    | '/admin/console'
+    | '/admin/data-freshness'
+    | '/admin/engine-health'
+    | '/admin/logs'
+    | '/admin/model-versions'
+    | '/admin/overview'
+    | '/admin/pnl'
+    | '/admin/prediction-lock'
+    | '/admin/settings'
+    | '/admin/users-membership'
     | '/api/public/data-mirror'
     | '/api/public/draw-tune'
     | '/api/public/engine-health'
@@ -843,6 +969,7 @@ export interface FileRouteTypes {
     | '/api/public/weather-sync-github'
     | '/football/match/$matchKey'
     | '/football/study/$matchId'
+    | '/admin'
     | '/api/public/hooks/race-results-dispatch'
     | '/football/team/$div/$slug'
   id:
@@ -891,6 +1018,16 @@ export interface FileRouteTypes {
     | '/engine/'
     | '/explain/'
     | '/football/'
+    | '/_authenticated/admin/console'
+    | '/_authenticated/admin/data-freshness'
+    | '/_authenticated/admin/engine-health'
+    | '/_authenticated/admin/logs'
+    | '/_authenticated/admin/model-versions'
+    | '/_authenticated/admin/overview'
+    | '/_authenticated/admin/pnl'
+    | '/_authenticated/admin/prediction-lock'
+    | '/_authenticated/admin/settings'
+    | '/_authenticated/admin/users-membership'
     | '/api/public/data-mirror'
     | '/api/public/draw-tune'
     | '/api/public/engine-health'
@@ -919,6 +1056,7 @@ export interface FileRouteTypes {
     | '/api/public/weather-sync-github'
     | '/football/match/$matchKey'
     | '/football/study/$matchId'
+    | '/_authenticated/admin/'
     | '/api/public/hooks/race-results-dispatch'
     | '/football/team/$div/$slug'
   fileRoutesById: FileRoutesById
@@ -1308,6 +1446,83 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FootballStudyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/console': {
+      id: '/_authenticated/admin/console'
+      path: '/console'
+      fullPath: '/admin/console'
+      preLoaderRoute: typeof AuthenticatedAdminConsoleRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/data-freshness': {
+      id: '/_authenticated/admin/data-freshness'
+      path: '/data-freshness'
+      fullPath: '/admin/data-freshness'
+      preLoaderRoute: typeof AuthenticatedAdminDataFreshnessRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/engine-health': {
+      id: '/_authenticated/admin/engine-health'
+      path: '/engine-health'
+      fullPath: '/admin/engine-health'
+      preLoaderRoute: typeof AuthenticatedAdminEngineHealthRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/logs': {
+      id: '/_authenticated/admin/logs'
+      path: '/logs'
+      fullPath: '/admin/logs'
+      preLoaderRoute: typeof AuthenticatedAdminLogsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/model-versions': {
+      id: '/_authenticated/admin/model-versions'
+      path: '/model-versions'
+      fullPath: '/admin/model-versions'
+      preLoaderRoute: typeof AuthenticatedAdminModelVersionsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/overview': {
+      id: '/_authenticated/admin/overview'
+      path: '/overview'
+      fullPath: '/admin/overview'
+      preLoaderRoute: typeof AuthenticatedAdminOverviewRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/pnl': {
+      id: '/_authenticated/admin/pnl'
+      path: '/pnl'
+      fullPath: '/admin/pnl'
+      preLoaderRoute: typeof AuthenticatedAdminPnlRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/prediction-lock': {
+      id: '/_authenticated/admin/prediction-lock'
+      path: '/prediction-lock'
+      fullPath: '/admin/prediction-lock'
+      preLoaderRoute: typeof AuthenticatedAdminPredictionLockRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/settings': {
+      id: '/_authenticated/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/users-membership': {
+      id: '/_authenticated/admin/users-membership'
+      path: '/users-membership'
+      fullPath: '/admin/users-membership'
+      preLoaderRoute: typeof AuthenticatedAdminUsersMembershipRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/api/public/data-mirror': {
       id: '/api/public/data-mirror'
       path: '/api/public/data-mirror'
@@ -1521,12 +1736,44 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminConsoleRoute: typeof AuthenticatedAdminConsoleRoute
+  AuthenticatedAdminDataFreshnessRoute: typeof AuthenticatedAdminDataFreshnessRoute
+  AuthenticatedAdminEngineHealthRoute: typeof AuthenticatedAdminEngineHealthRoute
+  AuthenticatedAdminLogsRoute: typeof AuthenticatedAdminLogsRoute
+  AuthenticatedAdminModelVersionsRoute: typeof AuthenticatedAdminModelVersionsRoute
+  AuthenticatedAdminOverviewRoute: typeof AuthenticatedAdminOverviewRoute
+  AuthenticatedAdminPnlRoute: typeof AuthenticatedAdminPnlRoute
+  AuthenticatedAdminPredictionLockRoute: typeof AuthenticatedAdminPredictionLockRoute
+  AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
+  AuthenticatedAdminUsersMembershipRoute: typeof AuthenticatedAdminUsersMembershipRoute
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+}
+
+const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminConsoleRoute: AuthenticatedAdminConsoleRoute,
+  AuthenticatedAdminDataFreshnessRoute: AuthenticatedAdminDataFreshnessRoute,
+  AuthenticatedAdminEngineHealthRoute: AuthenticatedAdminEngineHealthRoute,
+  AuthenticatedAdminLogsRoute: AuthenticatedAdminLogsRoute,
+  AuthenticatedAdminModelVersionsRoute: AuthenticatedAdminModelVersionsRoute,
+  AuthenticatedAdminOverviewRoute: AuthenticatedAdminOverviewRoute,
+  AuthenticatedAdminPnlRoute: AuthenticatedAdminPnlRoute,
+  AuthenticatedAdminPredictionLockRoute: AuthenticatedAdminPredictionLockRoute,
+  AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
+  AuthenticatedAdminUsersMembershipRoute:
+    AuthenticatedAdminUsersMembershipRoute,
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+}
+
+const AuthenticatedAdminRouteWithChildren =
+  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
+
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
 }
 
 const AuthenticatedRouteRouteWithChildren =

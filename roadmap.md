@@ -720,3 +720,14 @@
 
 - [x] 2026-10-07 足球升 dual-v2（Elo 換 elo-v2），戰績只計新版，舊版歸檔
 - [x] 2026-10-07 賽馬孖T／三T 二拖三計算卡、預測 vs 賽果最終賠率、足球近期賽程改 numbertwenty 式
+
+## 藍圖新增修改要求（2026-10-07 收）
+- [x] 賽馬鎖定第 5 選：凍結紀錄本身存全場排序，命中率接口公開 predictedFifth，孖T／三T 卡優先用凍結第 5 選
+- [x] 監控端按 shadcn-admin 架構重構：/admin/overview、engine-health、data-freshness、prediction-lock、model-versions、pnl、users-membership、logs、settings（側欄＋頂欄＋全局搜尋）
+- [x] 監控端視覺：TianXi x Linear 深色精密風（#0B1612 底、金 #D4A11E、hairline 邊、12px 卡角）
+- [x] 監控端表格用 TanStack Table、圖表用 ECharts
+- [x] 開發環境專用「Demo data／Worst case」切換器（底部置中，正式站移除）
+- [x] 所有 admin 頁跑 break-ui 最壞數據驗收，先報告再修
+- [x] 克制 micro-interactions：數字 count up、健康燈 soft pulse、表格行 hover、鎖定狀態轉場
+- [x] 改藍圖後同步更新腦圖、路線圖、前後端監控端說明、GitHub 源碼同產品說明（docs/blueprint/）
+- [ ] 會員頁接 Whop（等 API key）

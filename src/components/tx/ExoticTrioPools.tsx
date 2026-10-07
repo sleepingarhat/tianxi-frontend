@@ -9,7 +9,7 @@ import { Card, Pill } from "./ui";
  * 孖T／三T 二拖三：每場引擎凍結頭兩匹做膽，拖第 3、4、5 選。
  * 每場 3 組三重彩組合；孖T 3×3＝9 注、三T 3×3×3＝27 注，每注 $10。
  * 跨場分布直接由官方派彩檔推算：派彩行喺第 R 場、組合有 n 段 → 覆蓋第 R−n+1…R 場。
- * 第 1–4 選用凍結四揀；第 5 選凍結紀錄冇存，取賽後排序中首匹唔喺凍結四揀嘅馬（頁面註明）。
+ * 第 1–5 選優先用凍結排序（predictedFifth.frozen）；舊資料缺欄先退回賽後排序（頁面註明）。
  */
 const UNIT = 10;
 
@@ -88,6 +88,11 @@ async function loadLegs(date: string): Promise<Record<number, Leg>> {
       const top4 = (r.predictedTop4 ?? []).map((h: any) => Number(h.horseNumber)).filter(Number.isFinite);
       if (top4.length < 4) { out[rn] = null; return; }
       let fifth: number | null = null;
+      const frozen5 = Number(r.predictedFifth?.horseNumber);
+      if (r.predictedFifth?.frozen && Number.isFinite(frozen5) && !top4.includes(frozen5)) {
+        out[rn] = { race: rn, bankers: [top4[0], top4[1]], legs: [top4[2], top4[3], frozen5], fifthFromLive: false };
+        return;
+      }
       if (ids[rn]) {
         try {
           const tp = await txApi.topPicks(ids[rn]);
@@ -124,7 +129,7 @@ export function ExoticTrioPools({ date }: { date: string }) {
     <Card title="孖T／三T 二拖三" en="Double Trio · Triple Trio">
       <p className="mb-2 text-[10px] leading-relaxed text-ink-3">
         每場引擎頭兩匹做膽，拖第 3、4、5 選；每注 $10。孖T 每口 9 注（$90）、三T 27 注（$270）。
-        跨邊幾場以馬會派彩紀錄為準。第 5 選凍結紀錄冇存，取自賽後排序。
+        跨邊幾場以馬會派彩紀錄為準。第 5 選優先用賽前凍結排序；舊賽日未有呢欄就取自賽後排序（該場標示）。
       </p>
       {q.isLoading ? (
         <p className="py-3 text-center text-[11px] text-ink-3">計算緊…</p>
