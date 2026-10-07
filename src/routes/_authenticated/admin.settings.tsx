@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 import { AdminHead, NoteBox, Panel, StatusBadge } from "@/components/admin/kit";
 import { REFRESH_KEY, useRacingHealth } from "@/components/admin/data";
@@ -15,10 +16,28 @@ const ENDPOINTS = [
   ["引擎健康", "/api/public/engine-health"],
   ["賽馬鎖定狀態", "/api/public/lock-state"],
   ["足球收料狀態", "/api/public/football-ingest-status"],
-  ["足球鎖定（定時）", "/api/public/football-dual-lock"],
-  ["六合彩資料", "/api/public/marksix-data"],
+  ["六合彩資料", "/api/public/marksix-data?kind=history"],
+  ["馬會足球盤口", "/api/public/football-hkjc-list"],
 ];
 
+function usePing(u: string) {
+  return useQuery({
+    queryKey: ["admin", "ping", u],
+    queryFn: async () => { const t = performance.now(); const r = await fetch(u.startsWith("http") ? `${u}/api/season` : u); return { ok: r.ok, code: r.status, ms: Math.round(performance.now() - t) }; },
+    retry: 0, staleTime: 60_000,
+  });
+}
+function EndpointRow({ n, u }: { n: string; u: string }) {
+  const q = usePing(u);
+  return (
+    <li className="flex min-w-0 items-center gap-2 text-[12px]">
+      <span className="w-28 shrink-0 text-ink-3">{n}</span>
+      <span className="min-w-0 flex-1 truncate font-mono-tx text-[11px] text-ink-2" title={u}>{u}</span>
+      <span className="tabnum shrink-0 font-mono-tx text-[10px] text-ink-3">{q.data ? `${q.data.code} · ${q.data.ms}ms` : q.isError ? "連唔到" : "…"}</span>
+      <StatusBadge s={q.data ? (q.data.ok ? "ok" : "fail") : q.isError ? "fail" : "unknown"} />
+    </li>
+  );
+}
 function SettingsPage() {
   const rh = useRacingHealth();
   const [sec, setSec] = useState(60);
@@ -38,12 +57,7 @@ function SettingsPage() {
       <div className="grid gap-3 lg:grid-cols-2">
         <Panel title="接口" en="API Endpoints">
           <ul className="space-y-1.5">
-            {ENDPOINTS.map(([n, u]) => (
-              <li key={n} className="flex min-w-0 gap-2 text-[12px]">
-                <span className="w-28 shrink-0 text-ink-3">{n}</span>
-                <span className="truncate font-mono-tx text-[11px] text-ink-2" title={u}>{u}</span>
-              </li>
-            ))}
+            {ENDPOINTS.map(([n, u]) => <EndpointRow key={String(n)} n={String(n)} u={String(u)} />)}
           </ul>
         </Panel>
         <Panel title="自動更新" en="Refresh Interval">
@@ -53,6 +67,14 @@ function SettingsPage() {
             <button type="button" onClick={save} className="ml-auto rounded-[6px] bg-gold px-3 py-1.5 text-[12px] font-bold text-paper">{saved ? "已儲存" : "儲存"}</button>
           </div>
           <p className="mt-2 text-[10px] text-ink-3">重新載入頁面後生效。</p>
+        </Panel>
+        <Panel title="營運規則（唯讀）" en="Rules">
+          <ul className="space-y-1 text-[12px] text-ink-2">
+            <li>賽馬：首場前 90 分鐘凍結全日四揀＋第五選；每注 $10</li>
+            <li>足球：開賽前 6 小時鎖定，無賠率照鎖、照計命中；每注 $100</li>
+            <li>足球只列馬會有盤場次；時間一律香港時間（UTC+8）</li>
+            <li>模型版本以 model_versions 登記，成績按版本獨立計</li>
+          </ul>
         </Panel>
         <Panel title="主題" en="Theme">
           <p className="text-[12px] text-ink-2">TianXi x Linear 深色精密風（固定）。金色只用於重點、選中狀態同重要數字；綠／紅只表示成功／失敗。</p>

@@ -43,14 +43,23 @@ function Pnl() {
   const fRows = useFixture<LedgerRow[]>(led.data ?? [], { demo: ledgerFixture("demo") as LedgerRow[], worst: ledgerFixture("worst") as LedgerRow[] });
   const versions = useMemo(() => [...new Set(fRows.map((r) => r.version))], [fRows]);
   const [ver, setVer] = useState<string>("all");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [pick, setPick] = useState<"all" | "home" | "draw" | "away">("all");
+  const inRange = (d: string) => (!from || d >= from) && (!to || d <= to);
 
   const racing = useMemo(() => {
-    const pts = ((rp.data?.points ?? []) as any[]).map((p) => ({ x: p.date as string, v: Number(p.net) || 0 }));
-    return curve(pts);
-  }, [rp.data]);
+    const raw = ((rp.data?.points ?? []) as any[]).filter((p) => inRange(String(p.date)));
+    const pts = raw.map((p) => ({ x: p.date as string, v: Number(p.net) || 0 }));
+    const cost = raw.reduce((a, p) => a + (Number(p.cost) || 0), 0);
+    const races = raw.reduce((a, p) => a + (Number(p.racesBet) || 0), 0);
+    const c = curve(pts);
+    return { ...c, cost, races, days: raw.length, roi: cost ? (c.total / cost) * 100 : null, first: raw[0]?.date, last: raw[raw.length - 1]?.date };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rp.data, from, to]);
 
   const fb = useMemo(() => {
-    const rows = fRows.filter((r) => ver === "all" || r.version === ver).filter((r) => r.ftr).sort((a, b) => a.kickoff_utc.localeCompare(b.kickoff_utc));
+    const rows = fRows.filter((r) => ver === "all" || r.version === ver).filter((r) => r.ftr).filter((r) => inRange(r.kickoff_utc.slice(0, 10))).filter((r) => pick === "all" || r.prediction === pick).sort((a, b) => a.kickoff_utc.localeCompare(b.kickoff_utc));
     let hit = 0, bets = 0, staked = 0;
     const pts: { x: string; v: number }[] = [];
     for (const r of rows) {
@@ -61,20 +70,30 @@ function Pnl() {
     }
     const c = curve(pts);
     return { ...c, settled: rows.length, hit, bets, staked, roi: staked ? (c.total / staked) * 100 : null };
-  }, [fRows, ver]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fRows, ver, from, to, pick]);
 
   return (
     <>
       <AdminHead title="盈虧" en="P&L" desc="賽馬每注 $10；四揀複式累計與孖T／三T 逐日核對分開列。足球按帳面注碼（現行 $100）。負數照實展示。" onRefresh={() => { rp.refetch(); led.refetch(); meets.refetch(); }} refreshing={rp.isFetching || led.isFetching} />
+      <div className="mb-3 flex flex-wrap items-end gap-2 rounded-[8px] border border-hairline bg-paper-3 px-3 py-2">
+        <label className="text-[11px] text-ink-3">由<input type="date" value={from} onChange={(e) => setFrom(e.target.value)} className="ml-1 rounded-[6px] border border-hairline bg-paper px-2 py-1 text-[11px] text-ink" /></label>
+        <label className="text-[11px] text-ink-3">至<input type="date" value={to} onChange={(e) => setTo(e.target.value)} className="ml-1 rounded-[6px] border border-hairline bg-paper px-2 py-1 text-[11px] text-ink" /></label>
+        {[["", "全部"], [-30, "近30日"], [-90, "近90日"]].map(([d, l]) => (
+          <button key={String(l)} type="button" onClick={() => { setTo(""); setFrom(d === "" ? "" : new Date(Date.now() + Number(d) * 864e5).toISOString().slice(0, 10)); }} className="rounded-[6px] border border-hairline bg-paper px-2 py-1 text-[11px] text-ink-2">{l}</button>
+        ))}
+        <span className="text-[10px] text-ink-3">日期篩選適用於賽馬累計同足球。</span>
+      </div>
       <Panel title="賽馬策略" en="Racing · $10/注">
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-          <Kpi label="淨盈虧" value={fmtMoney(rp.data?.totalNet, 0)} tone={(rp.data?.totalNet ?? 0) >= 0 ? "win" : "lose"} sub={`${rp.data?.from ?? "—"} 至 ${rp.data?.to ?? "—"}`} />
-          <Kpi label="回報率 ROI" value={fmtPct(rp.data?.roiPct)} />
+          <Kpi label="淨盈虧" value={fmtMoney(racing.total, 0)} tone={racing.total >= 0 ? "win" : "lose"} sub={`${racing.first ?? "—"} 至 ${racing.last ?? "—"}`} />
+          <Kpi label="回報率 ROI" value={fmtPct(racing.roi)} sub={`成本 ${fmtMoney(racing.cost, 0)}`} />
           <Kpi label="最大回撤" value={fmtMoney(racing.maxDD, 0)} tone="lose" />
-          <Kpi label="投注場數" value={rp.data?.racesBet ?? "—"} sub={`${rp.data?.daysEvaluated ?? "—"} 個賽馬日`} />
+          <Kpi label="投注場數" value={racing.races || "—"} sub={`${racing.days} 個賽馬日`} />
         </div>
         {racing.cumArr.length ? <div className="mt-3"><EChart height={220} ariaLabel="賽馬累計盈虧" option={chart(racing.cumArr.map((d) => ({ x: d.x, cum: d.cum })), "累計")} /></div> : null}
-        {rp.data?.poolBreakdown ? (
+        {rp.data?.poolBreakdown ? (<>
+          <p className="mt-3 text-[10px] text-ink-3">以下分彩池數字為全期總數，後端未提供逐日分池，唔受日期篩選影響。</p>
           <div className="mt-3 grid grid-cols-2 gap-2 md:grid-cols-4">
             {Object.entries(rp.data.poolBreakdown as Record<string, any>).map(([k, v]) => (
               <div key={k} className="rounded-[8px] border border-hairline bg-paper-3 px-3 py-2">
@@ -84,7 +103,7 @@ function Pnl() {
               </div>
             ))}
           </div>
-        ) : null}
+        </>) : null}
       </Panel>
 
       <section className="mt-4 min-w-0" aria-label="孖T三T逐日核對">
@@ -104,10 +123,12 @@ function Pnl() {
         en="Football"
         className="mt-4"
         right={
-          <select value={ver} onChange={(e) => setVer(e.target.value)} className="rounded-[6px] border border-hairline bg-paper-3 px-2 py-1 text-[11px] text-ink">
+          <div className="flex gap-1.5"><select value={pick} onChange={(e) => setPick(e.target.value as typeof pick)} aria-label="預測方向" className="rounded-[6px] border border-hairline bg-paper-3 px-2 py-1 text-[11px] text-ink">
+            <option value="all">主和客全部</option><option value="home">只計主勝</option><option value="draw">只計和</option><option value="away">只計客勝</option>
+          </select><select value={ver} onChange={(e) => setVer(e.target.value)} className="rounded-[6px] border border-hairline bg-paper-3 px-2 py-1 text-[11px] text-ink">
             <option value="all">全部版本</option>
             {versions.map((v) => <option key={v} value={v}>{v}</option>)}
-          </select>
+          </select></div>
         }
       >
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">

@@ -447,7 +447,7 @@ function FootballFixturesPage() {
 
   const [league, setLeague] = useState<string>("全部");
   const [onlyValue, setOnlyValue] = useState(false);
-  const [onlyHkjc, setOnlyHkjc] = useState(false);
+  const onlyHkjc = true; // 嚴格：只出馬會有盤
   const [showPast, setShowPast] = useState(false);
   const [sort, setSort] = useState<"time" | "value" | "conf">("time");
 
@@ -473,9 +473,9 @@ function FootballFixturesPage() {
   const all = q.data?.matches ?? [];
   const now = Date.now();
   const matches = useMemo(
-    () => (showPast ? all : all.filter((m) => kickoffMs(m.kickoff_utc) > now - 2 * 3600 * 1000)),
+    () => (showPast ? all : all.filter((m) => kickoffMs(m.kickoff_utc) > now - 2 * 3600 * 1000)).filter((m) => hasHkjc(m)),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [all, showPast],
+    [all, showPast, hkjcQ.data],
   );
   const pastCount = all.length - all.filter((m) => kickoffMs(m.kickoff_utc) > now - 2 * 3600 * 1000).length;
   const leagues = useMemo(() => {
@@ -625,11 +625,9 @@ function FootballFixturesPage() {
               <button type="button" onClick={() => setOnlyValue((v) => !v)} className={chip(onlyValue, "win")}>
                 只睇價值差 ≥5 個百分點 {valueCount}
               </button>
-              {hkjcPairs.length ? (
-                <button type="button" onClick={() => setOnlyHkjc((v) => !v)} className={chip(onlyHkjc, "win")}>
-                  只顯示馬會有盤 {hkjcKeys.size}
-                </button>
-              ) : null}
+              <span className={chip(true, "win")}>
+                {hkjcQ.isPending ? "核對馬會有盤中…" : hkjcPairs.length ? `只顯示馬會有盤 ${hkjcKeys.size}` : "暫時讀唔到馬會盤口，暫不列出場次"}
+              </span>
               {pastCount > 0 ? (
                 <button
                   type="button"
@@ -681,10 +679,10 @@ function FootballFixturesPage() {
             {rows.length === 0 ? (
               <div className="mt-3 rounded-[12px] border border-hairline bg-paper-2 px-4 py-6 text-center">
                 <p className="font-serif-tc text-[14px] font-bold text-ink">呢個篩選之下冇場次</p>
-                <p className="mt-1 text-[12px] text-ink-3">試吓轉聯賽，或者清除「只顯示馬會有盤」。</p>
+                <p className="mt-1 text-[12px] text-ink-3">試吓轉聯賽；本頁只列馬會有盤場次。</p>
                 <button
                   type="button"
-                  onClick={() => { setOnlyHkjc(false); setOnlyValue(false); setLeague("全部"); }}
+                  onClick={() => { setOnlyValue(false); setLeague("全部"); }}
                   className="mt-3 rounded-full border border-gold-strong/60 bg-gold-bg px-4 py-1.5 text-[12px] font-bold text-gold"
                 >
                   清除全部篩選
