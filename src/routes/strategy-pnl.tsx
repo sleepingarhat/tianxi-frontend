@@ -133,12 +133,16 @@ function StrategyPnlPage() {
   });
 
   const base: any = pnl.data || {};
-  const rawPoints: any[] = Array.isArray(base.points) ? base.points : [];
+  // 後端唔理 days 參數（一律回全期），喺前端按香港日期截取
+  const cutoff = new Date(Date.now() + 8 * 3600e3 - days * 864e5).toISOString().slice(0, 10);
+  const allPoints: any[] = Array.isArray(base.points) ? base.points : [];
+  const rawPoints: any[] = allPoints.filter((p) => String(p.date) >= cutoff);
+  const filtered = rawPoints.length < allPoints.length;
   const exoticQueries = useQueries({ queries: rawPoints.map((p) => exoticPoolOptions(p.date)) });
   const crossLoading = exoticQueries.some((q) => q.isLoading);
   const crossError = exoticQueries.some((q) => q.isError);
   let supplemented = 0, missing = 0;
-  const cross: Record<string, any> = { DT: { cost: 0, payout: 0, net: 0, wins: 0, bets: 0 }, TT: { cost: 0, payout: 0, net: 0, wins: 0, bets: 0 } };
+  const cross: Record<string, any> = { DT: { cost: 0, payout: 0, net: 0, wins: 0, cons: 0, bets: 0 }, TT: { cost: 0, payout: 0, net: 0, wins: 0, cons: 0, bets: 0 } };
   let cumulative = 0;
   const points = rawPoints.map((p, i) => {
     let cost = Number(p.cost), payout = Number(p.payout);
@@ -147,7 +151,7 @@ function StrategyPnlPage() {
       if (pool.missing) { missing++; continue; }
       const b = cross[pool.name.includes("孖T") ? "DT" : "TT"];
       const ret = pool.payout + pool.consPayout;
-      b.cost += pool.cost; b.payout += ret; b.net += ret - pool.cost; b.bets++; if (ret > 0) b.wins++;
+      b.cost += pool.cost; b.payout += ret; b.net += ret - pool.cost; b.bets++; if (pool.mainHit) b.wins++; else if (pool.consPayout > 0) b.cons++;
       if (pool.races.some((r) => data?.legs[r]?.fifthFromLive)) supplemented++;
       cost += pool.cost; payout += ret;
     }
@@ -157,7 +161,8 @@ function StrategyPnlPage() {
   const totalCost = points.reduce((a, p) => a + p.cost, 0);
   const totalPayout = points.reduce((a, p) => a + p.payout, 0);
   const d = { ...base, totalCost, totalPayout, totalNet: totalPayout - totalCost, roiPct: totalCost ? (totalPayout / totalCost - 1) * 100 : null };
-  const breakdown: Record<string, any> = { ...base.poolBreakdown, ...cross };
+  const fourPool = filtered ? {} : base.poolBreakdown;
+  const breakdown: Record<string, any> = { ...fourPool, ...cross };
   const sortedDesc = [...points].sort((a, b) => String(b.date).localeCompare(String(a.date)));
 
   return (
@@ -248,6 +253,7 @@ function StrategyPnlPage() {
           {supplemented || missing ? <p className="mx-4 mt-3 text-[11px] leading-relaxed text-gold">跨場紀錄含 {supplemented} 口賽後補第五選試算；{missing} 口缺預測未計成本／派彩。並非全期賽前凍結實績。</p> : null}
 
           <Card title="逐個彩池" en="By Pool">
+            {filtered ? <p className="mb-2 text-[11px] leading-relaxed text-ink-3">後端只提供四個單場彩池嘅全期分池數字，所選時段唔夠全期時暫唔顯示，避免同上面累計對唔上；孖T／三T 按所選時段計。</p> : null}
             <div className="grid grid-cols-2 gap-2">
               {POOLS.map((p) => {
                 const b = breakdown[p.key];
@@ -265,7 +271,7 @@ function StrategyPnlPage() {
                     <p className="tabnum mt-1.5 font-mono-tx text-[9.5px] tracking-[0.02em] text-ink-3">
                       {p.en}
                       <br />
-                      中 {b?.wins ?? "—"}／{b?.bets ?? "—"} {p.key === "DT" || p.key === "TT" ? "口" : "場"}<br />總成本 {money(b?.cost)}<br />總派彩 {money(b?.payout)}
+                      中 {b?.wins ?? "—"}／{b?.bets ?? "—"} {p.key === "DT" || p.key === "TT" ? "口" : "場"}{b?.cons ? `（另 ${b.cons} 口只中安慰獎）` : ""}<br />總成本 {money(b?.cost)}<br />總派彩 {money(b?.payout)}
                     </p>
                   </div>
                 );
