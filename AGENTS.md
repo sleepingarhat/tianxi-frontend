@@ -38,3 +38,5 @@
 - 足球逐季正式帳按賽季／版本／實際注碼分組，未結算只計 locked；管理員匯出不可公開。持久 ops 日誌只寫去敏摘要，service role 寫、admin 讀，失敗不得阻塞正式 API。
 - 外部圖片只可用逐張核實自由授權或書面商用權，頁內須署名並保留 /media-credits；API 圖址不等於授權。
 - 藍圖現行版本放 docs/blueprint/；改藍圖要同步更新該文件、roadmap、AGENTS、開發者日誌同 GitHub 鏡像。理由：設計說明同代碼唔可以分家。
+
+- HKJC football GraphQL calls go through src/lib/hkjcFootball.server.ts with the website query copied verbatim; HKJC rejects any non-whitelisted query text.

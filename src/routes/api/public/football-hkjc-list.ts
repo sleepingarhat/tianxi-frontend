@@ -6,27 +6,9 @@ import { createFileRoute } from "@tanstack/react-router";
  * 馬會接口要白名單，失敗即回空陣列，前端篩選自動失效。
  */
 
-const norm = (s: string) => s.toLowerCase().normalize("NFD").replace(/[^a-z]/g, "");
-
 async function hkjcList(): Promise<{ home: string; away: string }[]> {
-  try {
-    const res = await fetch("https://info.cld.hkjc.com/graphql/base/", {
-      method: "POST",
-      headers: { "content-type": "application/json", origin: "https://bet.hkjc.com", referer: "https://bet.hkjc.com/ch/football/had" },
-      body: JSON.stringify({ query: "query{matches(fbOddsTypes:[HAD]){homeTeam{name_en} awayTeam{name_en} foPools(fbOddsTypes:[HAD]){lines{combinations{str currentOdds}}}}}" }),
-    });
-    const j = (await res.json()) as { data?: { matches?: { homeTeam: { name_en: string }; awayTeam: { name_en: string }; foPools: { lines: { combinations: { str: string; currentOdds: string }[] }[] }[] }[] | null } };
-    return (j.data?.matches ?? []).flatMap((m) => {
-      const c = m.foPools?.[0]?.lines?.[0]?.combinations ?? [];
-      const hasAll = ["H", "D", "A"].every((k) => {
-        const n = Number(c.find((x) => x.str === k)?.currentOdds);
-        return Number.isFinite(n) && n > 1;
-      });
-      return hasAll ? [{ home: norm(m.homeTeam.name_en), away: norm(m.awayTeam.name_en) }] : [];
-    });
-  } catch {
-    return [];
-  }
+  const { fetchHkjcHad } = await import("@/lib/hkjcFootball.server");
+  return (await fetchHkjcHad()).map(({ home, away }) => ({ home, away }));
 }
 
 export const Route = createFileRoute("/api/public/football-hkjc-list")({

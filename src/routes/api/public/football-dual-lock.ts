@@ -31,25 +31,6 @@ const CHAIN: [string, string][] = [
   ["PP", "pp"], ["SKB", "skb"], ["Avg", "avg"], ["Max", "max"],
 ];
 
-async function hkjcOdds(): Promise<{ home: string; away: string; odds: [number, number, number] }[]> {
-  try {
-    const res = await fetch("https://info.cld.hkjc.com/graphql/base/", {
-      method: "POST",
-      headers: { "content-type": "application/json", origin: "https://bet.hkjc.com", referer: "https://bet.hkjc.com/ch/football/had" },
-      body: JSON.stringify({ query: "query{matches(fbOddsTypes:[HAD]){homeTeam{name_en} awayTeam{name_en} foPools(fbOddsTypes:[HAD]){lines{combinations{str currentOdds}}}}}" }),
-    });
-    const j = (await res.json()) as { data?: { matches?: { homeTeam: { name_en: string }; awayTeam: { name_en: string }; foPools: { lines: { combinations: { str: string; currentOdds: string }[] }[] }[] }[] | null } };
-    return (j.data?.matches ?? []).flatMap((m) => {
-      const c = m.foPools?.[0]?.lines?.[0]?.combinations ?? [];
-      const g = (k: string) => num(c.find((x) => x.str === k)?.currentOdds);
-      const o = [g("H"), g("D"), g("A")];
-      return o.every(Boolean) ? [{ home: norm(m.homeTeam.name_en), away: norm(m.awayTeam.name_en), odds: o as [number, number, number] }] : [];
-    });
-  } catch {
-    return []; // 馬會接口要白名單，失敗即降級
-  }
-}
-
 async function publicOdds() {
   const map = new Map<string, Odds>();
   try {
@@ -114,10 +95,10 @@ async function lockCore(): Promise<Response> {
           );
         });
         if (!due.length) return Response.json({ ok: true, locked: 0 });
-        const [odds, hk] = await Promise.all([publicOdds(), hkjcOdds()]);
+        const { fetchHkjcHad, matchHkjc } = await import("@/lib/hkjcFootball.server");
+        const [odds, hk] = await Promise.all([publicOdds(), fetchHkjcHad()]);
         const find = (m: Fixture): Odds | undefined => {
-          const h = norm(m.home), a = norm(m.away);
-          const k = hk.find((x) => (x.home.includes(h) || h.includes(x.home)) && (x.away.includes(a) || a.includes(x.away)));
+          const k = matchHkjc(hk, m.home, m.away, m.kickoff_utc);
           return k ? { odds: k.odds, source: "hkjc" } : odds.get(`${m.div}|${m.home}|${m.away}`);
         };
         // 到 T−6h 即鎖：有冇賠率都鎖預測，搵唔到就標「無賠率」，唔再等下一輪
