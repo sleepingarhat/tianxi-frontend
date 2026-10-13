@@ -9,9 +9,9 @@ const GOAL_MEMBERS = FREE_STAGE_GOAL_MEMBERS;
 const STEPS: { id: string; name: string; state: "now" | "todo"; desc: string; tag: string }[] = [
   {
     id: "01",
-    name: "而家：全站免費",
+    name: "而家：限時免費 Pro 功能",
     state: "now",
-    desc: "香港賽馬全部功能免費使用，包括四揀預測、排位表、逐場對帳、六彩池策略盈虧同回測。冇隱藏收費、冇試用期倒數。",
+    desc: "香港賽馬全部功能免費使用，包括四揀預測、排位表、逐場對帳、六彩池策略盈虧同回測。功能權益等同 Pro，現階段唔收款。",
     tag: "進行中",
   },
   {
@@ -36,7 +36,7 @@ export function FreeStageRoadmap() {
       title="項目路線圖"
       en="Roadmap"
       action={
-        <div className="flex items-center gap-1.5">
+        <div className="flex flex-col items-end gap-2">
           <Pill tone="win">全站免費中</Pill>
           <Link to="/membership" className="font-mono-tx text-[10px] font-bold text-gold hover:underline">
             睇方案 →
@@ -62,22 +62,18 @@ export function FreeStageRoadmap() {
             >
               {s.state === "now" ? "●" : ""}
             </span>
-            <div
-              className={`rounded-[10px] border px-2.5 py-2 ${
-                s.state === "now" ? "border-gold-strong/40 bg-gold-bg" : "border-hairline bg-paper"
-              }`}
-            >
-              <p className="flex flex-wrap items-center gap-1.5">
-                <span className="font-mono-tx text-[10px] font-bold text-ink-3">{s.id}</span>
+            <div className="px-1 pb-3">
+              <p className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-2">
+                
                 <span className="font-serif-tc text-[13px] font-bold leading-tight text-ink">{s.name}</span>
                 <Pill tone={s.state === "now" ? "gold" : "ink"}>{s.tag}</Pill>
               </p>
-              <p className="mt-1 text-[10px] leading-relaxed text-ink-3">{s.desc}</p>
+              <p className="mt-2 text-[12px] leading-relaxed text-ink-3">{s.desc}</p>
             </div>
           </li>
         ))}
       </ol>
-      <p className="mt-2 rounded-[8px] border border-hairline bg-paper-2 px-2.5 py-2 text-[10px] leading-relaxed text-ink-2">
+      <p className="mt-2 border-t border-hairline pt-4 text-[10px] leading-relaxed text-ink-2">
         <b className="text-ink">觸發條件只有一個：免費會員累積 {GOAL_MEMBERS.toLocaleString()} 人。</b>
         呢個門檻唔會因為個別場次輸贏而改動；達到之後先開始收費同推出 iOS App。公開對帳永久免費。
       </p>

@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import type { ReactNode } from "react";
+import { FoundingMemberOffer } from "./FoundingMemberOffer";
 
 /** 首頁：分段講解天喜賽馬預測引擎（參考「一段一功能 + 手機示意 + 編號標註」版式）。示意畫面唔係真實預測。 */
 
@@ -83,8 +84,8 @@ const SECTIONS: Section[] = [
 export function EngineLanding() {
   return (
     <div className="overflow-hidden">
+      <FoundingMemberOffer />
       <section className="relative px-5 pb-10 pt-8 md:px-10 md:pt-14">
-        <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-gold-bg blur-3xl" aria-hidden />
         <div className="relative grid items-center gap-8 md:grid-cols-[1.1fr_1fr]">
           <div>
             <span className="inline-flex items-center gap-1.5 rounded-full border border-gold-strong/50 bg-gold-bg px-2.5 py-1 text-[11px] font-bold text-gold">● 全站免費中 · TX-Oracle 香港賽馬引擎</span>
@@ -97,7 +98,7 @@ export function EngineLanding() {
               <Link to="/strategy-pnl" className="rounded-full border border-hairline bg-paper-2 px-5 py-2.5 text-[13px] font-bold text-ink">策略盈虧紀錄</Link>
             </div>
             <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-ink-3">
-              {["免費使用", "凍結預測唔改", "負數照實列"].map((t) => <li key={t} className="flex items-center gap-1"><Check className="h-3.5 w-3.5 text-win" aria-hidden />{t}</li>)}
+              {["限時免費 · Pro 全站功能", "凍結預測唔改", "負數照實列"].map((t) => <li key={t} className="flex items-center gap-1"><Check className="h-3.5 w-3.5 text-win" aria-hidden />{t}</li>)}
             </ul>
           </div>
           <div className="flex justify-center gap-4">

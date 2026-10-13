@@ -69,16 +69,16 @@ export function Card({
   return (
     <section className={`mx-4 my-3 overflow-hidden rounded-[8px] border border-hairline bg-paper-2 shadow-sm transition-shadow hover:shadow-md ${className}`}>
       {title ? (
-        <header className="flex items-end justify-between gap-2 border-b border-hairline bg-paper/50 px-3 py-2.5">
-          <h2 className="font-serif-tc text-[15px] font-bold text-ink">
+        <header className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 border-b border-hairline bg-paper/50 px-3 py-3">
+          <h2 className="min-w-0 font-serif-tc text-[15px] font-bold leading-relaxed text-ink">
             {title}
             {en ? (
-              <small className="ml-2 font-mono-tx text-[9px] font-bold uppercase tracking-[0.2em] text-ink-3">
+              <small className="mt-1 block font-mono-tx text-[9px] font-bold uppercase text-ink-3">
                 {en}
               </small>
             ) : null}
           </h2>
-          {action}
+          {action ? <div className="shrink-0 whitespace-nowrap">{action}</div> : null}
         </header>
       ) : null}
       <div className="px-3 py-3">{children}</div>

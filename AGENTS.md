@@ -23,6 +23,7 @@
 - The active homepage and shared navigation expose racing only; archived product paths are gated centrally in product-scope.ts and start.ts to retain history without executing retired features.
 - 首頁流程只引用已定版或現行資料；理由：產品介紹必須可核對。
 - 全站沿用 PageHead、Card、Stat、Table、Seg 與 AppShell；理由：避免逐頁漂移。
+- Offers share FoundingMemberOffer/freeStage to prevent drift; Card headers use minmax text and fixed actions to avoid mobile badge wrapping.
 - 功能頁桌面寬度按資料量調整，手機單欄；理由：提升密度而不破壞手機流程。
 - 每次發布正式站後執行 python3 scripts/sync-frontend-repo.py，將源碼經 GitHub API 同步入 tianxi-frontend；理由：倉庫只作鏡像，正式站由 Lovable 發布。
 
