@@ -6,12 +6,14 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  redirect,
   type ErrorComponentProps,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { isArchivedProductPath } from "@/lib/product-scope";
 
 function NotFoundComponent() {
   return (
@@ -74,26 +76,30 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  beforeLoad: ({ location }) => {
+    if (!location.pathname.startsWith("/api/") && isArchivedProductPath(location.pathname)) {
+      throw redirect({ to: "/", replace: true });
+    }
+  },
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "天喜賽馬 · 香港賽馬數據平台" },
+      { name: "description", content: "專注香港賽馬，賽前凍結四揀、官方賽果派彩對帳及六彩池策略盈虧。" },
+      { name: "author", content: "天喜 TIANXI" },
+      { property: "og:title", content: "天喜賽馬 · 香港賽馬數據平台" },
+      { property: "og:description", content: "專注沙田與跑馬地賽事，預測、賽果及策略盈虧公開可核對。" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon-v8.png", type: "image/png" },
-      { rel: "apple-touch-icon", href: "/apple-touch-icon-v8.png" },
+      { rel: "icon", href: "/favicon-v9.png", type: "image/png" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon-v9.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {

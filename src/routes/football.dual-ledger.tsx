@@ -19,6 +19,7 @@ import {
 } from "@/lib/footballDualEngine";
 import { hkDateTime } from "@/lib/hkTime";
 import { teamZh } from "@/lib/teamZh";
+import { matchLive, type LiveResult } from "@/lib/footballLiveResults";
 
 export const Route = createFileRoute("/football/dual-ledger")({
   head: () => ({
@@ -39,7 +40,7 @@ type Row = {
   p_a: number[]; p_b_d: number; p_final: number[]; prediction: Outcome;
   odds_source: string; pick_odds: number | null; stake: number;
 };
-type LogRec = { result?: { ftr: Outcome; ft_h: number; ft_a: number } | null };
+type LogRec = { result?: { ftr: Outcome; ft_h: number; ft_a: number } | null; live?: string };
 
 const pc = (v: number) => `${(v * 100).toFixed(1)}%`;
 const months = (rows: Row[]) => [...new Set(rows.map((r) => r.kickoff_utc.slice(0, 7)))];
@@ -69,9 +70,25 @@ function DualLedger() {
         const r = await fetch(`/api/public/football-predictions?file=log&month=${m}`);
         if (r.ok) Object.assign(out, ((await r.json()) as { matches?: Record<string, LogRec> }).matches ?? {});
       }
+      // 週批賽果未出：用即時比分（football-data.org → ESPN）先行結算，完場即出
+      const now = Date.now();
+      const missing = rows.filter((r) => !out[r.match_key]?.result && Date.parse(r.kickoff_utc) + 105 * 60_000 < now && Date.parse(r.kickoff_utc) > now - 10 * 86_400_000);
+      if (missing.length) {
+        const from = new Date(Math.min(...missing.map((r) => Date.parse(r.kickoff_utc))) - 86_400_000).toISOString().slice(0, 10);
+        const to = new Date(now + 86_400_000).toISOString().slice(0, 10);
+        try {
+          const lr = await fetch(`/api/public/football-live-results?from=${from}&to=${to}`);
+          const pool = lr.ok ? (((await lr.json()) as { matches?: LiveResult[] }).matches ?? []) : [];
+          for (const r of missing) {
+            const hit = matchLive(r, pool);
+            if (hit) out[r.match_key] = { result: { ftr: hit.ftr, ft_h: hit.ft_h, ft_a: hit.ft_a }, live: hit.source };
+          }
+        } catch { /* 即時源失敗：照等週批 */ }
+      }
       return out;
     },
-    staleTime: 10 * 60_000,
+    staleTime: 2 * 60_000,
+    refetchInterval: 5 * 60_000,
   });
 
   const stats = useMemo(() => {
@@ -119,7 +136,7 @@ function DualLedger() {
               <Stat label="回報率" value={stats.cur.staked ? pc(stats.cur.pnl / stats.cur.staked) : "—"} sub="平注 $100" />
             </StatGrid>
             <details className="mt-2 rounded-[8px] border border-hairline bg-paper px-2.5 py-2">
-              <summary className="cursor-pointer text-[10px] font-bold text-ink-2">歷史版本 · $10／注（{DUAL_ENGINE.frozenAt} 至 2026-10-05）</summary>
+              <summary className="cursor-pointer text-[10px] font-bold text-ink-2">歷史版本 · $10／注（2026-09-29 至 2026-10-05）</summary>
               <div className="mt-2"><StatGrid>
                 <Stat label="已結算" value={`${stats.old.settled} 場`} sub="舊注碼時期" />
                 <Stat label="命中率" value={stats.old.settled ? pc(stats.old.hit / stats.old.settled) : "—"} sub={`${stats.old.hit} 中`} />
@@ -147,6 +164,7 @@ function DualLedger() {
               <ul className="divide-y divide-hairline">
                 {rows.map((r) => {
                    const res = results.data?.[r.match_key]?.result;
+                  const live = results.data?.[r.match_key]?.live;
                   const pnl = res ? settlePnl(r.prediction, res.ftr, r.pick_odds, r.stake ?? DUAL_ENGINE.stake) : null;
                   return (
                     <li key={r.match_key} className="grid grid-cols-[minmax(0,1fr)_auto] gap-x-2 py-2 text-[12px]">
@@ -157,7 +175,7 @@ function DualLedger() {
                       <span className="text-right">
                         <Pill tone="gold">{OUTCOME_LABEL[r.prediction]}</Pill>
                         <small className="tabnum block font-mono-tx text-ink-2">
-                          {res ? `${res.ft_h}-${res.ft_a} ${res.ftr === r.prediction ? "● 中" : "○ 未中"}${pnl !== null ? ` ${pnl >= 0 ? "+" : ""}${pnl.toFixed(1)}` : " 無賠率"}` : "未結算"}
+                          {res ? `${res.ft_h}-${res.ft_a} ${res.ftr === r.prediction ? "● 中" : "○ 未中"}${pnl !== null ? ` ${pnl >= 0 ? "+" : ""}${pnl.toFixed(1)}` : " 無賠率"}${live ? " · 即時源" : ""}` : "未結算"}
                         </small>
                       </span>
                     </li>

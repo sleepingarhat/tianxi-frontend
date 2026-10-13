@@ -4,13 +4,14 @@ import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 
 import { AdminHead, DataTable, Panel, StatusBadge, useMemoCols, type Status } from "@/components/admin/kit";
-import { ago, useEngineHealth, useFootballIngest, useRacingHealth } from "@/components/admin/data";
+import { ago, useEngineHealth, useRacingHealth } from "@/components/admin/data";
 import { adminGet } from "@/lib/admin.functions";
 import { getOpsEventHistory } from "@/lib/ops-history.functions";
+import { isArchivedProductEvent } from "@/lib/product-scope";
 import { hkDateTime } from "@/lib/hkTime";
 
 export const Route = createFileRoute("/_authenticated/admin/logs")({
-  head: () => ({ meta: [{ title: "日誌 · 天喜監控端" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "日誌 · 天喜監控端" }, { name: "description", content: "日誌 · 天喜監控端：香港賽馬專用監控與唯讀對帳。" }, { property: "og:title", content: "日誌 · 天喜監控端" }, { property: "og:description", content: "日誌 · 天喜監控端：香港賽馬專用監控與唯讀對帳。" }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
   component: Logs,
 });
 
@@ -22,7 +23,6 @@ function Logs() {
   const alerts = useQuery({ queryKey: ["admin", "alerts"], queryFn: () => get({ data: { path: "/admin/api/alerts" } }) });
   const history = useQuery({ queryKey: ["admin", "ops-history"], queryFn: () => getHistory({ data: { days: 90, limit: 1000 } }) });
   const rh = useRacingHealth();
-  const fi = useFootballIngest();
   const eh = useEngineHealth();
 
   const [showOk, setShowOk] = useState(false);
@@ -38,17 +38,15 @@ function Logs() {
   const list: any[] = Array.isArray(a) ? a : a?.["alerts"] ?? a?.["items"] ?? [];
   for (const x of list) logs.push({ kind: "資料完整性", level: x.severity === "critical" || x.level === "error" ? "fail" : "warn", source: String(x.source ?? x.key ?? "後端"), message: String(x.message ?? x.title ?? JSON.stringify(x)).slice(0, 300), at: x.created_at ?? x.at ?? null });
   for (const w of rh.data?.workflows ?? []) if (w.state === "fail") logs.push({ kind: "定時任務失敗", level: "fail", source: `賽馬 · ${w.label}`, message: `${w.file} 結果 ${w.conclusion}`, at: w.startedAt });
-  for (const j of (fi.data?.jobs ?? []) as any[]) for (const r of j.runs ?? []) if (r.conclusion && r.conclusion !== "success") logs.push({ kind: "定時任務失敗", level: "fail", source: `足球 · ${j.label}`, message: `${j.workflow} 結果 ${r.conclusion}`, at: r.at });
   for (const t of rh.data?.telegram?.failing ?? []) logs.push({ kind: "告警", level: "warn", source: `Telegram · ${t.key}`, message: t.fail, at: t.sentAt });
   for (const c of (eh.data?.checks ?? []) as any[]) if (String(c.status).toUpperCase() !== "PASS") logs.push({ kind: "模型閘", level: String(c.status).toUpperCase() === "FAIL" ? "fail" : "warn", source: String(c.label ?? c.key), message: String(c.note ?? c.detail ?? ""), at: null });
-  for (const [n, q] of [["賽馬健康", rh], ["足球收料", fi], ["引擎健康", eh]] as const) if (q.isError) logs.push({ kind: "API 錯誤", level: "fail", source: n, message: String((q.error as Error)?.message ?? q.error), at: new Date().toISOString() });
+  for (const [n, q] of [["賽馬健康", rh], ["引擎健康", eh]] as const) if (q.isError) logs.push({ kind: "API 錯誤", level: "fail", source: n, message: String((q.error as Error)?.message ?? q.error), at: new Date().toISOString() });
   if (showOk) {
     for (const w of rh.data?.workflows ?? []) if (w.state !== "fail") logs.push({ kind: "定時任務成功", level: "ok", source: `賽馬 · ${w.label}`, message: `${w.file} 結果 ${w.conclusion ?? "—"}`, at: w.startedAt });
-    for (const j of (fi.data?.jobs ?? []) as any[]) for (const r of j.runs ?? []) if (r.conclusion === "success") logs.push({ kind: "定時任務成功", level: "ok", source: `足球 · ${j.label}`, message: `${j.workflow} 成功`, at: r.at });
   }
   if (alerts.isError) logs.push({ kind: "API 錯誤", level: "fail", source: "/admin/api/alerts", message: String((alerts.error as Error)?.message ?? alerts.error), at: new Date().toISOString() });
   logs.sort((x, y) => (y.at ?? "").localeCompare(x.at ?? ""));
-  const shown = logs.filter((l) => (lv === "all" || l.level === lv) && (!kw || `${l.kind}${l.source}${l.message}`.toLowerCase().includes(kw.toLowerCase())));
+  const shown = logs.filter((l) => !isArchivedProductEvent(l.source, l.message) && (lv === "all" || l.level === lv) && (!kw || `${l.kind}${l.source}${l.message}`.toLowerCase().includes(kw.toLowerCase())));
   const cnt = (s: Status) => logs.filter((l) => l.level === s).length;
 
   const cols = useMemoCols<Log>(() => [
@@ -61,7 +59,7 @@ function Logs() {
 
   return (
     <>
-      <AdminHead title="日誌" en="Logs" desc="持久 API 錯誤、定時任務失敗、資料完整性警告同模型閘歷史，集中一處。" onRefresh={() => { history.refetch(); alerts.refetch(); rh.refetch(); fi.refetch(); eh.refetch(); }} refreshing={alerts.isFetching || history.isFetching} />
+      <AdminHead title="日誌" en="Logs" desc="持久 API 錯誤、定時任務失敗、資料完整性警告同模型閘歷史，集中一處。" onRefresh={() => { history.refetch(); alerts.refetch(); rh.refetch(); eh.refetch(); }} refreshing={alerts.isFetching || history.isFetching} />
       <Panel title="事件" en="Events">
         <div className="mb-2 flex flex-wrap items-center gap-1.5">
           {(["all", "fail", "warn", "ok"] as const).map((k) => (

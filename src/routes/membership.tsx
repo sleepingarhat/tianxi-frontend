@@ -1,21 +1,31 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/tx/AppShell";
+import { FreeStageRoadmap } from "@/components/tx/FreeStageRoadmap";
 import { Card, Disclaimer, PageHead, Pill } from "@/components/tx/ui";
 
 export const Route = createFileRoute("/membership")({
   head: () => ({
     meta: [
-      { title: "天喜 Pro 會員 · 天喜 TIANXI" },
-      { name: "description", content: "升級天喜 Pro：賽前全卡預測、模型搏冷 + 市場穩陣雙欄、pWin 信心分與賽日提早通知。" },
-      { property: "og:title", content: "天喜 Pro 會員 · 天喜 TIANXI" },
-      { property: "og:description", content: "免費對賬永久公開，睇實模型成績先決定。" },
+      { title: "天喜會員 · 而家全站免費 · 天喜 TIANXI" },
+      {
+        name: "description",
+        content:
+          "天喜而家全站免費：香港賽馬全部功能免費使用。免費會員累積 500 人先至開始收費同推出 iOS App。",
+      },
+      { property: "og:title", content: "天喜會員 · 而家全站免費" },
+      {
+        property: "og:description",
+        content: "全部功能免費使用；免費會員累積 500 人先開始收費同出 iOS App，公開對帳永久免費。",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
   }),
   component: MembershipPage,
 });
+
+const GOAL_MEMBERS = 500;
 
 const STRENGTHS = [
   ["01", "數據化預測", "以香港賽事長期資料建立可重現預測，唔靠賽後改口或主觀貼士。"],
@@ -45,11 +55,14 @@ const PLANS = [
 
 function MembershipPage() {
   return (
-    <AppShell page="dashboard" ticker="升級 Pro · 免費對賬永久公開">
+    <AppShell
+      page="dashboard"
+      ticker={`全站免費中 · 收費未開放 · 免費會員累積 ${GOAL_MEMBERS.toLocaleString()} 人先開始收費同出 iOS App`}
+    >
       <PageHead
-        en="Tianxi Pro Membership"
-        title="升級天喜 Pro"
-        desc="免費對賬永久公開，等你睇實模型成績先決定。Pro 解鎖賽前全卡預測、模型搏冷 + 市場穩陣雙欄、pWin 信心分，同賽日提早通知。"
+        en="Free Stage · Tianxi Pro"
+        title="而家全站免費"
+        desc={`香港賽馬全部功能免費使用，冇隱藏收費。免費會員累積至 ${GOAL_MEMBERS.toLocaleString()} 人先至開始收費同推出 iOS App；以下係將來嘅收费方案，現階段唔收款。`}
       />
 
       <div className="mx-4 flex gap-2">
@@ -63,11 +76,17 @@ function MembershipPage() {
           to="/login"
           className="flex-1 rounded-[8px] border border-gold-strong/60 bg-gold-bg px-3 py-2 text-center text-[12px] font-bold text-gold"
         >
-          已購買？登入 →
+          已登記？登入 →
         </Link>
       </div>
 
-      <Card title="收費方案" en="Plans">
+      <FreeStageRoadmap />
+
+      <Card
+        title="收費方案（未開放）"
+        en="Plans · Not Open"
+        action={<Pill tone="lose">現階段唔收款</Pill>}
+      >
         <div className="space-y-2">
           {PLANS.map((p) => (
             <div
@@ -76,9 +95,10 @@ function MembershipPage() {
                 p.hot ? "border-gold-strong/60 bg-gold-bg" : "border-hairline bg-paper-2"
               }`}
             >
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <span className="font-serif-tc text-[14px] font-bold text-ink">{p.name}</span>
-                {p.hot ? <Pill tone="gold">最受歡迎</Pill> : null}
+                <Pill tone="lose">未開放</Pill>
+                {p.hot ? <Pill tone="gold">達標後主力方案</Pill> : null}
               </div>
               <p className="tabnum mt-1 font-mono-tx text-[20px] font-bold text-ink">
                 HK$ {p.price}
@@ -89,17 +109,18 @@ function MembershipPage() {
           ))}
         </div>
         <p className="mt-2 text-[11px] leading-relaxed text-ink-3">
-          付款由第三方安全處理。付款後請用同一個帳戶登入，系統會即時核實有效會籍；付款完成頁、電郵或會員編號本身不會直接解鎖。
+          呢啲係達標之後先開放嘅收費方案，現階段唔會收款、亦唔會賣會籍。開始收費同 iOS App 上架會喺呢頁同開發日誌公告，
+          公開對帳同歷史成績永久免費。
         </p>
       </Card>
 
-      <Card title="免費 vs Pro" en="Compare">
+      <Card title="免費 vs Pro（未開放）" en="Compare">
         <table className="w-full">
           <thead>
             <tr className="border-b border-hairline text-left">
               <th className="py-1.5 text-[11px] font-bold text-ink-3">功能</th>
-              <th className="py-1.5 text-[11px] font-bold text-ink-3">免費</th>
-              <th className="py-1.5 text-[11px] font-bold text-gold">Pro</th>
+              <th className="py-1.5 text-[11px] font-bold text-ink-3">免費（現行）</th>
+              <th className="py-1.5 text-[11px] font-bold text-gold">Pro（未開放）</th>
             </tr>
           </thead>
           <tbody>
@@ -112,6 +133,9 @@ function MembershipPage() {
             ))}
           </tbody>
         </table>
+        <p className="mt-2 text-[10px] leading-relaxed text-ink-3">
+          而家免費階段已經用到嘅功能以上表「免費（現行）」為準；Pro 一欄要等收費開放先會推出。
+        </p>
       </Card>
 
       <Card title="引擎技術實力" en="Why Tianxi">

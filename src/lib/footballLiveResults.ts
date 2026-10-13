@@ -67,8 +67,10 @@ export function normName(raw: string): string {
 }
 
 function tokens(raw: string): string[] {
+  const ABBR: Record<string, string> = { rvs: "rovers", utd: "united", sth: "south", weds: "wednesday", st: "saint", gilloise: "union", buyuksehyr: "basaksehir" };
   return normName(raw)
     .split(" ")
+    .map((t) => ABBR[t] ?? t)
     .filter((t) => t.length > 1 && !STOP.has(t));
 }
 

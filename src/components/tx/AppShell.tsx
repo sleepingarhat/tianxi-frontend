@@ -2,9 +2,9 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
 
 import { supabase } from "@/integrations/supabase/client";
-import tianxiLogo from "@/assets/tianxi-logo-v7.jpg";
+import tianxiLogo from "@/assets/tianxi-racing-logo-v9.jpg";
 import { OverflowTicker } from "./OverflowTicker";
-import { useQuery } from "@tanstack/react-query";
+
 
 
 export type NavKey =
@@ -22,7 +22,7 @@ const BOTNAV: { to: string; key: NavKey; label: string; icon: ReactNode }[] = [
   {
     to: "/",
     key: "dashboard",
-    label: "儀表板",
+    label: "首頁",
     icon: (
       <>
         <rect x="3" y="3" width="7" height="9" rx="1" />
@@ -33,9 +33,9 @@ const BOTNAV: { to: string; key: NavKey; label: string; icon: ReactNode }[] = [
     ),
   },
   {
-    to: "/dashboard",
+    to: "/predictor",
     key: "horse",
-    label: "賽馬",
+    label: "選馬",
     icon: (
       <>
         <circle cx="12" cy="12" r="9" />
@@ -44,22 +44,12 @@ const BOTNAV: { to: string; key: NavKey; label: string; icon: ReactNode }[] = [
       </>
     ),
   },
-  {
-    to: "/football",
-    key: "football",
-    label: "足球",
-    icon: (
-      <>
-        <circle cx="12" cy="12" r="9" />
-        <path d="M12 7l3 2.2-1.2 3.6h-3.6L9 9.2 12 7z" fill="currentColor" stroke="none" />
-        <path d="M12 3v4M5.5 8.5L9 9.2M18.5 8.5L15 9.2M7.5 18l2.3-3.2M16.5 18l-2.3-3.2" />
-      </>
-    ),
-  },
-  { to: "/marksix", key: "marksix", label: "六合彩", icon: <><circle cx="12" cy="12" r="8.5" /><path d="M9.2 8.5c.7-.8 1.6-1.2 2.8-1.2 2.2 0 3.8 1.8 3.8 4.5S14.2 17 11.8 17 8 15.2 8 12.3 9.4 6.8 13.8 4.2" /><circle cx="11.9" cy="12.4" r="1.4" /></> },
+
+  { to: "/schedule", key: "schedule", label: "排位", icon: <><rect x="4" y="5" width="16" height="16" rx="2" /><path d="M8 3v4M16 3v4M4 11h16" /></> },
+  { to: "/engine", key: "engine", label: "引擎", icon: <><circle cx="12" cy="12" r="9" /><path d="M12 12l5-5M5 16h14" /></> },
 ];
 
-const HORSE_PAGES: NavKey[] = ["horse", "predictor", "schedule", "encyclopedia", "engine"];
+
 
 export function AppShell({
   page = "",
@@ -73,18 +63,6 @@ export function AppShell({
   children: ReactNode;
 }) {
   const [signedIn, setSignedIn] = useState(false);
-  const footballNews = useQuery({
-    queryKey: ["football-news-ticker"],
-    queryFn: async () => {
-      const response = await fetch("/api/public/football-news");
-      if (!response.ok) throw new Error("消息未能更新");
-      return response.json() as Promise<{ source: string; items: { title: string; url: string; published: string }[] }>;
-    },
-    enabled: page === "football",
-    staleTime: 15 * 60_000,
-    refetchInterval: 15 * 60_000,
-    retry: 1,
-  });
 
   useEffect(() => {
     let alive = true;
@@ -107,7 +85,7 @@ export function AppShell({
             <span className="flex flex-col leading-none max-[380px]:hidden">
               <span className="fx-spotlight fx-spotlight-brand font-serif-tc text-[16px] font-bold tracking-[0.01em]">天喜 TIANXI</span>
               <small className="fx-foil mt-[3px] block text-[9px] font-semibold uppercase tracking-[0.24em] text-tan">
-                Entertainment
+                Hong Kong Racing
               </small>
             </span>
           </Link>
@@ -158,14 +136,11 @@ export function AppShell({
           </div>
         </header>
 
-        {(page === "football" || ticker) ? (
+        {ticker ? (
           <div className="border-b border-gold-strong/30 bg-gold-bg px-4 py-1.5">
             <p className="tabnum grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 font-mono-tx text-[10px] font-bold leading-none text-gold">
               <span className="inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />
-              <OverflowTicker>{page === "football" ? footballNews.data?.items?.length
-                ? <>最新足球消息 · {footballNews.data.items.map((item, index) => <span key={`${item.url}-${index}`}>{index > 0 ? "　｜　" : ""}<a href={item.url} target="_blank" rel="noopener noreferrer" title={`${footballNews.data.source} · ${item.published}`}>{item.title}</a></span>)} · 來源：{footballNews.data.source}</>
-                : footballNews.isError ? "足球消息暫時未能更新 · 請稍後再試" : "正在更新足球消息…"
-                : ticker}</OverflowTicker>
+              <OverflowTicker>{ticker}</OverflowTicker>
             </p>
           </div>
         ) : null}
@@ -174,7 +149,7 @@ export function AppShell({
 
         <nav className={`fixed bottom-0 left-1/2 z-40 grid w-full -translate-x-1/2 auto-cols-fr grid-flow-col gap-0.5 border-t border-tan/10 bg-deep px-1 pb-[calc(8px+env(safe-area-inset-bottom))] pt-2 ${wide ? "max-w-[1040px]" : "max-w-[440px]"}`}>
           {BOTNAV.map((item) => {
-            const on = item.key === page || (item.key === "horse" && HORSE_PAGES.includes(page));
+            const on = item.key === page || (item.key === "horse" && ["horse", "predictor", "encyclopedia"].includes(page));
             return (
               <Link
                 key={item.key}

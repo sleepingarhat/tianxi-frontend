@@ -4,17 +4,15 @@ import { useQuery, useQueries } from "@tanstack/react-query";
 import { exoticPoolOptions } from "@/lib/racingPoolAccounting";
 
 import { AdminHead, Kpi, NoteBox, Panel, fmtMoney, fmtPct } from "@/components/admin/kit";
-import { useFootballLedger, useRacingPnl, type LedgerRow } from "@/components/admin/data";
-import { ledgerFixture, useFixture } from "@/components/admin/fixtures";
+import { useRacingPnl } from "@/components/admin/data";
 import { EChart } from "@/components/tx/EChart";
-import { settlePnl } from "@/lib/footballDualEngine";
 import { ExoticTrioPools } from "@/components/tx/ExoticTrioPools";
 import { txApi } from "@/lib/tx-api";
 import { hkToday } from "@/lib/hkTime";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export const Route = createFileRoute("/_authenticated/admin/pnl")({
-  head: () => ({ meta: [{ title: "盈虧 · 天喜監控端" }, { name: "description", content: "天喜賽馬策略、孖T三T逐日成本派彩及足球盈虧。" }, { property: "og:title", content: "盈虧 · 天喜監控端" }, { property: "og:description", content: "核對賽馬跨場彩池及足球帳面表現。" }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "盈虧 · 天喜監控端" }, { name: "description", content: "天喜賽馬策略、孖T三T逐日成本派彩。" }, { property: "og:title", content: "盈虧 · 天喜監控端" }, { property: "og:description", content: "核對賽馬跨場彩池。" }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
   component: Pnl,
 });
 
@@ -36,17 +34,12 @@ const chart = (data: { x: string; cum: number }[], name: string) => ({
 
 function Pnl() {
   const rp = useRacingPnl();
-  const led = useFootballLedger();
   const meets = useQuery({ queryKey: ["meetings", 12], queryFn: () => txApi.meetings("?limit=12") });
   const [trioDate, setTrioDate] = useState("");
   const dates: string[] = [...new Set<string>((meets.data?.meetings ?? []).map((m: { date?: string }) => String(m.date ?? "")).filter((d: string) => d && d <= hkToday()))].sort().reverse();
   const selectedDate = trioDate || dates[0] || "";
-  const fRows = useFixture<LedgerRow[]>(led.data ?? [], { demo: ledgerFixture("demo") as LedgerRow[], worst: ledgerFixture("worst") as LedgerRow[] });
-  const versions = useMemo(() => [...new Set(fRows.map((r) => r.version))], [fRows]);
-  const [ver, setVer] = useState<string>("all");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
-  const [pick, setPick] = useState<"all" | "home" | "draw" | "away">("all");
   const inRange = (d: string) => (!from || d >= from) && (!to || d <= to);
 
   const allPts = ((rp.data?.points ?? []) as any[]);
@@ -75,31 +68,17 @@ function Pnl() {
   }, [rp.data, from, to, exKey]);
   const crossLoading = exQ.some((q) => q.isLoading);
 
-  const fb = useMemo(() => {
-    const rows = fRows.filter((r) => ver === "all" || r.version === ver).filter((r) => r.ftr).filter((r) => inRange(r.kickoff_utc.slice(0, 10))).filter((r) => pick === "all" || r.prediction === pick).sort((a, b) => a.kickoff_utc.localeCompare(b.kickoff_utc));
-    let hit = 0, bets = 0, staked = 0;
-    const pts: { x: string; v: number }[] = [];
-    for (const r of rows) {
-      if (!r.ftr) continue;
-      if (r.ftr === r.prediction) hit++;
-      const p = settlePnl(r.prediction, r.ftr, r.pick_odds, r.stake);
-      if (p !== null) { bets++; staked += r.stake; pts.push({ x: r.kickoff_utc.slice(0, 10), v: p }); }
-    }
-    const c = curve(pts);
-    return { ...c, settled: rows.length, hit, bets, staked, roi: staked ? (c.total / staked) * 100 : null };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fRows, ver, from, to, pick]);
 
   return (
     <>
-      <AdminHead title="盈虧" en="P&L" desc="賽馬每注 $10；四揀複式累計與孖T／三T 逐日核對分開列。足球按帳面注碼（現行 $100）。負數照實展示。" onRefresh={() => { rp.refetch(); led.refetch(); meets.refetch(); }} refreshing={rp.isFetching || led.isFetching} />
+      <AdminHead title="盈虧" en="P&L" desc="賽馬每注 $10；四揀複式累計與孖T／三T 逐日核對分開列。負數照實展示。" onRefresh={() => { rp.refetch(); meets.refetch(); }} refreshing={rp.isFetching} />
       <div className="mb-3 flex flex-wrap items-end gap-2 rounded-[8px] border border-hairline bg-paper-3 px-3 py-2">
         <label className="text-[11px] text-ink-3">由<input type="date" value={from} onChange={(e) => setFrom(e.target.value)} className="ml-1 rounded-[6px] border border-hairline bg-paper px-2 py-1 text-[11px] text-ink" /></label>
         <label className="text-[11px] text-ink-3">至<input type="date" value={to} onChange={(e) => setTo(e.target.value)} className="ml-1 rounded-[6px] border border-hairline bg-paper px-2 py-1 text-[11px] text-ink" /></label>
         {[["", "全部"], [-30, "近30日"], [-90, "近90日"]].map(([d, l]) => (
           <button key={String(l)} type="button" onClick={() => { setTo(""); setFrom(d === "" ? "" : new Date(Date.now() + Number(d) * 864e5).toISOString().slice(0, 10)); }} className="rounded-[6px] border border-hairline bg-paper px-2 py-1 text-[11px] text-ink-2">{l}</button>
         ))}
-        <span className="text-[10px] text-ink-3">日期篩選適用於賽馬累計同足球。</span>
+        <span className="text-[10px] text-ink-3">日期篩選適用於賽馬累計。</span>
       </div>
       <Panel title="賽馬策略" en="Racing · $10/注">
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
@@ -144,27 +123,7 @@ function Pnl() {
         {selectedDate ? <ExoticTrioPools date={selectedDate} /> : <NoteBox>{meets.isError ? "賽馬日讀取失敗，請重新整理。" : meets.isLoading ? "讀取賽馬日中…" : "暫無賽馬日資料。"}</NoteBox>}
       </section>
 
-      <Panel
-        title="足球雙引擎"
-        en="Football"
-        className="mt-4"
-        right={
-          <div className="flex gap-1.5"><select value={pick} onChange={(e) => setPick(e.target.value as typeof pick)} aria-label="預測方向" className="rounded-[6px] border border-hairline bg-paper-3 px-2 py-1 text-[11px] text-ink">
-            <option value="all">主和客全部</option><option value="home">只計主勝</option><option value="draw">只計和</option><option value="away">只計客勝</option>
-          </select><select value={ver} onChange={(e) => setVer(e.target.value)} className="rounded-[6px] border border-hairline bg-paper-3 px-2 py-1 text-[11px] text-ink">
-            <option value="all">全部版本</option>
-            {versions.map((v) => <option key={v} value={v}>{v}</option>)}
-          </select></div>
-        }
-      >
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-          <Kpi label="淨盈虧" value={fmtMoney(fb.total)} tone={fb.total >= 0 ? "win" : "lose"} sub={`${fb.bets} 注有賠率`} />
-          <Kpi label="命中率" value={fb.settled ? fmtPct((fb.hit / fb.settled) * 100) : "—"} sub={`${fb.hit} / ${fb.settled} 場`} />
-          <Kpi label="ROI" value={fmtPct(fb.roi)} />
-          <Kpi label="最大回撤" value={fmtMoney(fb.maxDD)} tone="lose" />
-        </div>
-        {fb.cumArr.length ? <div className="mt-3"><EChart height={220} ariaLabel="足球累計盈虧" option={chart(fb.cumArr, "累計")} /></div> : <div className="mt-3"><NoteBox>呢個版本未有已結算而有賠率嘅場次。</NoteBox></div>}
-      </Panel>
+
     </>
   );
 }

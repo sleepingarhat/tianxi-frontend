@@ -1,11 +1,11 @@
-"""發布後將網站源碼同步入 GitHub tianxi-frontend（經 GitHub API，保留 legacy-site/ 同 README.md）。"""
+"""發布後將網站源碼同步入 GitHub tianxi-frontend（經 GitHub API，保留 legacy-site/；產品 README 同步）。"""
 import base64, hashlib, os, subprocess, time, requests
 
 REPO = "sleepingarhat/tianxi-frontend"
 API = f"https://api.github.com/repos/{REPO}"
 H = {"Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}", "Accept": "application/vnd.github+json"}
-KEEP = ("legacy-site/", "README.md")
-SKIP_DIRS = {".git", "node_modules", "dist", ".output", ".wrangler", ".lovable", ".tanstack"}
+KEEP = ("legacy-site/",)
+SKIP_DIRS = {".git", "node_modules", "dist", ".output", ".wrangler", ".lovable", ".tanstack", "__pycache__"}
 
 def req(m, url, **kw):
     for i in range(5):

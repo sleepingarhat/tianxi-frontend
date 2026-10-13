@@ -2,6 +2,18 @@ import { createStart, createCsrfMiddleware, createMiddleware } from "@tanstack/r
 
 import { renderErrorPage } from "./lib/error-page";
 import { attachSupabaseAuth } from "@/integrations/supabase/auth-attacher";
+import { isArchivedProductPath } from "@/lib/product-scope";
+
+const productScopeMiddleware = createMiddleware().server(async ({ request, next }) => {
+  const path = new URL(request.url).pathname;
+  if (path.startsWith("/api/") && isArchivedProductPath(path)) {
+    return Response.json({ ok: false, status: "archived", message: "此產品已暫時封存，天喜現時專注香港賽馬。" }, {
+      status: 410,
+      headers: { "cache-control": "no-store", "x-robots-tag": "noindex" },
+    });
+  }
+  return next();
+});
 
 const errorMiddleware = createMiddleware().server(async ({ next }) => {
   try {
@@ -40,5 +52,5 @@ const csrfMiddleware = createCsrfMiddleware({
 
 export const startInstance = createStart(() => ({
   functionMiddleware: [attachSupabaseAuth],
-  requestMiddleware: [errorMiddleware, csrfMiddleware],
+  requestMiddleware: [productScopeMiddleware, errorMiddleware, csrfMiddleware],
 }));

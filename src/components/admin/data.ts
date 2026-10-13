@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { supabase } from "@/integrations/supabase/client";
 import { getRacingHealth } from "@/lib/racingOps.functions";
+import { isRacingEngine } from "@/lib/product-scope";
 import { txApi } from "@/lib/tx-api";
 
 const getJson = async <T,>(url: string): Promise<T> => {
@@ -25,13 +26,13 @@ export const useEngineHealth = () =>
   useQuery({ queryKey: ["admin", "engine-health"], queryFn: () => getJson<any>("/api/public/engine-health"), refetchInterval: refreshMs() });
 
 export const useFootballIngest = () =>
-  useQuery({ queryKey: ["admin", "football-ingest"], queryFn: () => getJson<any>("/api/public/football-ingest-status"), refetchInterval: refreshMs() });
+  useQuery({ enabled: false, queryKey: ["admin", "football-ingest"], queryFn: () => getJson<any>("/api/public/football-ingest-status"), refetchInterval: refreshMs() });
 
 export const useLockState = () =>
   useQuery({ queryKey: ["admin", "lock-state"], queryFn: () => getJson<any>("/api/public/lock-state"), refetchInterval: refreshMs() });
 
 export const useMarksixLatest = () =>
-  useQuery({ queryKey: ["admin", "m6-latest"], queryFn: () => getJson<any>("/api/public/marksix-data?kind=history"), staleTime: 10 * 60_000 });
+  useQuery({ enabled: false, queryKey: ["admin", "m6-latest"], queryFn: () => getJson<any>("/api/public/marksix-data?kind=history"), staleTime: 10 * 60_000 });
 
 export const useRollup = () =>
   useQuery({ queryKey: ["admin", "rollup90"], queryFn: () => txApi.hitRateRollup(90), staleTime: 10 * 60_000 });
@@ -49,7 +50,7 @@ export const useModelVersions = () =>
         .select("version,engine,fingerprint,released_at,status,notes")
         .order("released_at", { ascending: false });
       if (error) throw error;
-      return (data ?? []) as VersionRow[];
+      return ((data ?? []) as VersionRow[]).filter((row) => isRacingEngine(row.engine));
     },
   });
 
@@ -62,7 +63,7 @@ export type LedgerRow = {
 /** 足球鎖定帳（全部版本）＋ 賽果 join */
 export const useFootballLedger = () =>
   useQuery({
-    queryKey: ["admin", "football-ledger"],
+    enabled: false, queryKey: ["admin", "football-ledger"],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("football_dual_ledger")

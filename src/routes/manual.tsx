@@ -98,7 +98,6 @@ const SECTIONS: Record<Tab, { en: string; title: string; blocks: { h: string; it
           "日程：按月瀏覽賽馬日，展開場次直入排位表。",
           "百科：馬匹搜尋、天喜Elo 評分榜、騎師練馬師統計。",
           "引擎：架構、健康守門、監控清單、公開戰績。",
-          "六合彩：八字 × 奇門遁甲取數與回測。",
         ],
       },
       {

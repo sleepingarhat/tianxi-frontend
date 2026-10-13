@@ -1,17 +1,21 @@
-# 天喜前端（tianxi-frontend）
+# 天喜 TIANXI · 香港賽馬
 
-天喜官方網站源碼 — 賽馬、足球、六合彩三產品總儀表板。正式站：https://tianxi.racing
+2026-10-13 起專注深耕香港賽馬：沙田、跑馬地。正式站：https://tianxi.racing
 
-技術棧：TanStack Start（React 19）+ Tailwind CSS v4 + Cloudflare Workers
+## 產品及免費路線
+- 每賽日首場前 90 分鐘凍結全日四揀及第五選；鎖後只接官方名次，不改預測。
+- 選馬、排位／賠率、預測與賽果、六彩池策略盈虧、公開戰績、百科、回測、引擎健康。
+- 主指標四揀平均中匹數，目標 3／4；市場熱門 2.31 作對照，不宣稱已達標，負數如實展示。
+- 現阶段所有賽馬功能免費；登記會員 500 人後才安排 iOS App 及收費，公開對帳永久免費。
 
-## 天喜五倉
+## 架構及倉庫
+- tianxi-racing：現行賽馬資料、服務及排程。
+- tianxi-frontend：現行源碼鏡像，正式站由 Lovable 發布。
+- tianxi-research：賽馬研究；研究先報告、用戶拍板先升版。
+- tianxi-football／tianxi-marksix：private＋archived，保留歷史資料及源碼，取消前台及監控服務。
+- TanStack Start／React 19、Tailwind v4、Lovable Cloud、ECharts、TanStack Table；/admin 只限管理員。
+- 現行藍圖及前後端設計：docs/blueprint/tianxi-racing-blueprint-2026-10-13.md；兩份互動腦圖在 public/mindmap。
+- App／favicon 統一翠綠金色喜字與馬。馬場圖片授權见 /media-credits。
 
-| 倉庫 | 用途 |
-|---|---|
-| [tianxi-racing](https://github.com/sleepingarhat/tianxi-racing) | 天喜賽馬・統一倉（數據庫＋後端引擎） |
-| [tianxi-football](https://github.com/sleepingarhat/tianxi-football) | 天喜足球・統一倉（資料＋回測＋服務層） |
-| [tianxi-marksix](https://github.com/sleepingarhat/tianxi-marksix) | 天喜六合彩・統一倉（2002 至今數據＋引擎） |
-| [tianxi-frontend](https://github.com/sleepingarhat/tianxi-frontend) | 天喜前端・官方網站源碼 |
-| [tianxi-research](https://github.com/sleepingarhat/tianxi-research) | 天喜研究倉（賽馬、足球、六合彩） |
-
-所有預測開賽前凍結、只增不改，戰績公開對帳；賠率權重永遠為 0。
+## 驗收
+封存路徑自動測試：`bunx vitest run src/lib/product-scope.test.ts`；全站矩陣：`npm run test:break-ui`。公開頁通過不等於已登入監控端驗收。舊文件及開發日誌只作歷史，不代表現行範圍。

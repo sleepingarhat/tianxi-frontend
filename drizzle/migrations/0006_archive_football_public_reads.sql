@@ -1,0 +1,13 @@
+DROP POLICY IF EXISTS "Dual ledger is public to read" ON public.football_dual_ledger;
+DROP POLICY IF EXISTS "Lineup snapshots public read" ON public.football_lineup_snapshots;
+DROP POLICY IF EXISTS "Lineup settle public read" ON public.football_lineup_settle;
+REVOKE ALL ON public.football_dual_ledger, public.football_lineup_snapshots, public.football_lineup_settle FROM anon, authenticated;
+GRANT ALL ON public.football_dual_ledger, public.football_lineup_snapshots, public.football_lineup_settle TO service_role;
+COMMENT ON TABLE public.football_dual_ledger IS 'ARCHIVED 2026-10-13: racing-only platform; frozen history retained, no public reads.';
+COMMENT ON TABLE public.football_lineup_snapshots IS 'ARCHIVED 2026-10-13: historical snapshots retained, no public reads.';
+COMMENT ON TABLE public.football_lineup_settle IS 'ARCHIVED 2026-10-13: historical settlements retained, no public reads.';
+DROP POLICY IF EXISTS "Model versions are public to read" ON public.model_versions;
+DROP POLICY IF EXISTS "model_versions_public_read" ON public.model_versions;
+CREATE POLICY model_versions_racing_read ON public.model_versions FOR SELECT TO anon, authenticated USING (engine = 'racing');
+GRANT SELECT ON public.model_versions TO anon, authenticated;
+GRANT ALL ON public.model_versions TO service_role;

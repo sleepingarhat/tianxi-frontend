@@ -5,7 +5,7 @@ from playwright.async_api import async_playwright
 BASE = "http://localhost:8080"
 OUT = Path("/tmp/browser/break-ui-matrix")
 OUT.mkdir(parents=True, exist_ok=True)
-PUBLIC = ["/", "/dashboard", "/cards", "/encyclopedia", "/features", "/manual", "/schedule", "/auth", "/login", "/membership", "/track-record", "/horse", "/race", "/racing-health", "/pool-odds", "/predictor", "/results", "/marksix", "/marksix-results", "/strategy-pnl", "/freeze-ledger", "/dev-log", "/media-credits", "/football", "/football/fixtures", "/football/results", "/football/standings", "/football/engine", "/football/features", "/football/explain", "/football/dual-ledger", "/football/ingest-status", "/football/match-vs-result", "/football/prediction-vs-result", "/football/study", "/engine", "/engine/backtest", "/engine/features", "/engine/monitor", "/engine/residuals", "/explain"]
+PUBLIC = ["/", "/dashboard", "/cards", "/encyclopedia", "/features", "/manual", "/schedule", "/auth", "/login", "/membership", "/track-record", "/horse", "/race", "/racing-health", "/pool-odds", "/predictor", "/results", "/strategy-pnl", "/freeze-ledger", "/dev-log", "/media-credits", "/engine", "/engine/backtest", "/engine/features", "/engine/monitor", "/engine/residuals", "/explain"]
 ADMIN = ["/admin/overview", "/admin/engine-health", "/admin/data-freshness", "/admin/prediction-lock", "/admin/model-versions", "/admin/pnl", "/admin/users-membership", "/admin/logs", "/admin/settings", "/admin/console"]
 
 async def restore_auth(context, page):
@@ -44,7 +44,7 @@ async def main():
       context = await browser.new_context(viewport={"width":390,"height":1800}); page = await context.new_page()
       await restore_auth(context,page)
       await page.route(re.compile(r".*/api/public/.*"), lambda route: asyncio.create_task(route.continue_()) if False else asyncio.create_task(slow(route)))
-      for route in ["/predictor","/football/fixtures","/marksix-results","/admin/engine-health"]:
+      for route in ["/predictor","/strategy-pnl","/admin/engine-health"]:
         try:
           await page.goto(BASE+route,wait_until="domcontentloaded",timeout=30000); await page.wait_for_timeout(1000)
           text=await page.locator("body").inner_text(); report.append({"route":route,"width":390,"dir":"ltr","scenario":"slow-api","blank":len(text.strip())<20})

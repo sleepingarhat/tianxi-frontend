@@ -85,7 +85,7 @@ export async function sendTelegramAlert(text: string): Promise<{ sent: boolean; 
 async function checkDatabase(): Promise<Check> {
   try {
     const sb = await stateClient();
-    const { error } = await sb.from("football_dual_ledger").select("match_key", { count: "exact", head: true });
+    const { error } = await sb.from("model_versions").select("version", { count: "exact", head: true });
     return { key: "db", area: "數據庫", fail: error ? `核心表讀取失敗：${error.message}` : null };
   } catch (e) {
     return { key: "db", area: "數據庫", fail: `連線失敗：${String(e).slice(0, 200)}` };
@@ -225,11 +225,7 @@ export async function runAlertChecks(trigger = "manual", matches?: Fixture[]): P
     checks.push(await checkEngineHealth());
     if (token) {
       checks.push(await checkWorkflow(token, "tianxi-racing", "capy_race_daily.yml", "賽馬賽果收料（capy_race_daily）", 30));
-      checks.push(await checkWorkflow(token, "tianxi-football", "football_daily.yml", "足球每日收料（football_daily）", 30));
-      checks.push(await checkUpcomingFreshness(token));
     }
-    if (matches?.length) checks.push(await checkImminentLock(matches));
-    checks.push(await checkSnapshots());
     out.checked = checks.length;
 
     const failing = checks.filter((c) => c.fail);

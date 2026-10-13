@@ -7,7 +7,7 @@ import { REFRESH_KEY, useRacingHealth } from "@/components/admin/data";
 import { txApi } from "@/lib/tx-api";
 
 export const Route = createFileRoute("/_authenticated/admin/settings")({
-  head: () => ({ meta: [{ title: "設定 · 天喜監控端" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "設定 · 天喜監控端" }, { name: "description", content: "設定 · 天喜監控端：香港賽馬專用監控與唯讀對帳。" }, { property: "og:title", content: "設定 · 天喜監控端" }, { property: "og:description", content: "設定 · 天喜監控端：香港賽馬專用監控與唯讀對帳。" }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
   component: SettingsPage,
 });
 
@@ -15,9 +15,6 @@ const ENDPOINTS = [
   ["賽馬後端", txApi.base],
   ["引擎健康", "/api/public/engine-health"],
   ["賽馬鎖定狀態", "/api/public/lock-state"],
-  ["足球收料狀態", "/api/public/football-ingest-status"],
-  ["六合彩資料", "/api/public/marksix-data?kind=history"],
-  ["馬會足球盤口", "/api/public/football-hkjc-list"],
 ];
 
 function usePing(u: string) {
@@ -71,8 +68,6 @@ function SettingsPage() {
         <Panel title="營運規則（唯讀）" en="Rules">
           <ul className="space-y-1 text-[12px] text-ink-2">
             <li>賽馬：首場前 90 分鐘凍結全日四揀＋第五選；每注 $10</li>
-            <li>足球：開賽前 6 小時鎖定，無賠率照鎖、照計命中；每注 $100</li>
-            <li>足球只列馬會有盤場次；時間一律香港時間（UTC+8）</li>
             <li>模型版本以 model_versions 登記，成績按版本獨立計</li>
           </ul>
         </Panel>

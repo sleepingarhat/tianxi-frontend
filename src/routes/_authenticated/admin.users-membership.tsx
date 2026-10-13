@@ -1,15 +1,31 @@
+import { useServerFn } from "@tanstack/react-start";
+import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { AdminHead, DataTable, Kpi, NoteBox, Panel, useMemoCols } from "@/components/admin/kit";
 import { membersFixture, useFixture, type MemberFixture } from "@/components/admin/fixtures";
+import { FREE_STAGE_GOAL_MEMBERS, freeStageProgress } from "@/lib/freeStage";
+import { getMemberAccountStats } from "@/lib/members.functions";
 
 export const Route = createFileRoute("/_authenticated/admin/users-membership")({
-  head: () => ({ meta: [{ title: "會員 · 天喜監控端" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "會員 · 天喜監控端" }, { name: "description", content: "會員 · 天喜監控端：香港賽馬專用監控與唯讀對帳。" }, { property: "og:title", content: "會員 · 天喜監控端" }, { property: "og:description", content: "會員 · 天喜監控端：香港賽馬專用監控與唯讀對帳。" }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
   component: Members,
 });
 
 function Members() {
   const members = useFixture<MemberFixture[]>([], { demo: membersFixture("demo"), worst: membersFixture("worst") });
+  const fetchStats = useServerFn(getMemberAccountStats);
+  const stats = useQuery({
+    queryKey: ["member-account-stats"],
+    queryFn: () => fetchStats(),
+    staleTime: 60_000,
+    refetchInterval: 5 * 60_000,
+  });
+
+  const total = stats.data?.total ?? null;
+  const pct = total == null ? null : freeStageProgress(total);
+  const remaining = total == null ? null : Math.max(0, FREE_STAGE_GOAL_MEMBERS - total);
+
   const cols = useMemoCols<MemberFixture>(() => [
     { accessorKey: "name", header: "會員" },
     { accessorKey: "email", header: "電郵" },
@@ -21,16 +37,55 @@ function Members() {
   const active = members.filter((member) => member.status === "有效");
   return (
     <>
-      <AdminHead title="會員" en="Users & Membership" desc="Whop 日票／月票、會員狀態同 Telegram VIP 權限。" />
-      <NoteBox tone="gold">未接駁 Whop：提供 Whop API key 之後，呢頁會自動顯示真實會員數字。而家所有數字都係空位，唔係真數。</NoteBox>
+      <AdminHead
+        title="會員"
+        en="Users & Membership"
+        desc="登記帳戶人數同免費階段門檻進度；Whop 日票／月票、會籍狀態同 Telegram VIP 權限仍未接駁。"
+      />
+      <NoteBox tone="gold">
+        免費階段：會籍同付款未開放（未接駁 Whop，提供 API key 之後呢頁會自動顯示真實會籍數字）。
+        下面「登記帳戶」係真實人數，免費會員累積 {FREE_STAGE_GOAL_MEMBERS.toLocaleString()} 人先開始收費同推出 iOS App。
+      </NoteBox>
+
       <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <Kpi label="有效會員" value={members.length ? active.length.toLocaleString() : "—"} />
-        <Kpi label="日票 Day Pass" value={members.length ? members.filter((member) => member.plan === "日票").length.toLocaleString() : "—"} />
-        <Kpi label="月票 Month Pass" value={members.length ? members.filter((member) => member.plan === "月票").length.toLocaleString() : "—"} />
-        <Kpi label="Telegram VIP" value={members.length ? members.filter((member) => member.vip).length.toLocaleString() : "—"} />
+        <Kpi
+          label="登記帳戶"
+          value={stats.isLoading ? "—" : total == null ? "讀取失敗" : total.toLocaleString()}
+          sub={`目標 ${FREE_STAGE_GOAL_MEMBERS.toLocaleString()} 人`}
+          tone="gold"
+        />
+        <Kpi label="已驗證電郵" value={stats.data ? stats.data.confirmed.toLocaleString() : "—"} />
+        <Kpi label="近 7 日新增" value={stats.data ? stats.data.last7.toLocaleString() : "—"} />
+        <Kpi label="近 30 日新增" value={stats.data ? stats.data.last30.toLocaleString() : "—"} />
       </div>
-      <Panel title="會員狀態分佈" en="active / expired / cancelled" className="mt-4">
-        {members.length ? <DataTable data={members} columns={cols} pageSize={25} /> : <p className="py-6 text-center text-[12px] text-ink-3">等待接駁 Whop</p>}
+      {stats.isError ? (
+        <p className="mt-2 text-[11px] text-lose">會員人數讀取失敗：{(stats.error as Error)?.message || "請稍後重試"}</p>
+      ) : null}
+
+      <Panel title="免費階段進度" en="Free stage → goal" className="mt-4">
+        <div className="flex items-end justify-between gap-2">
+          <p className="font-serif-tc text-[13px] font-bold text-ink">
+            {total == null ? "—" : total.toLocaleString()} / {FREE_STAGE_GOAL_MEMBERS.toLocaleString()} 人
+          </p>
+          <p className="font-mono-tx text-[11px] font-bold text-gold">{pct == null ? "—" : `${pct}%`}</p>
+        </div>
+        <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-hairline">
+          <div
+            className="h-full rounded-full bg-gold transition-[width] duration-500"
+            style={{ width: `${pct ?? 0}%` }}
+          />
+        </div>
+        <p className="mt-2 text-[11px] leading-relaxed text-ink-3">
+          {remaining == null
+            ? "讀取中…"
+            : remaining === 0
+              ? "已達標：可以開始收費同推出 iOS App（需用戶拍板先執行）。"
+              : `仲差 ${remaining.toLocaleString()} 人。未達標之前全站繼續免費，唔會收款。`}
+        </p>
+      </Panel>
+
+      <Panel title="會籍狀態（Whop）" en="active / expired / cancelled" className="mt-4">
+        {members.length ? <DataTable data={members} columns={cols} pageSize={25} /> : <p className="py-6 text-center text-[12px] text-ink-3">等待接駁 Whop：而家冇真實會籍數字</p>}
       </Panel>
     </>
   );

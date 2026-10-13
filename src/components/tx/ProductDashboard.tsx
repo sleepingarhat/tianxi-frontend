@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Activity, CalendarDays, ChevronDown, CircleDot, Database, ExternalLink, Gauge, GitBranch, Network, Trophy, type LucideIcon } from "lucide-react";
+import { Activity, CalendarDays, ChevronDown, Database, ExternalLink, Network, type LucideIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
@@ -32,40 +32,11 @@ const PRODUCTS: Product[] = [
     actions: [{ to: "/strategy-pnl", label: "天喜策略累計盈虧" }, { to: "/prediction-vs-result", label: "預測與賽果" }],
     branches: [{ to: "/predictor", label: "選馬", icon: Activity }, { to: "/schedule", label: "日程", icon: CalendarDays }, { to: "/encyclopedia", label: "百科", icon: Database }, { to: "/engine", label: "引擎", icon: Network }],
   },
-  {
-    key: "football", eyebrow: "DUAL-V1 · FOOTBALL", title: "天喜足球",
-    summary: "三格機率加專用和局引擎，混合後出主／和／客；賠率權重永遠為零。",
-    dashboard: { to: "/football", label: "進入天喜足球引擎" },
-    metrics: [{ label: "主要輸出", value: "主／和／客" }, { label: "鎖定", value: "逐場 T−6h" }, { label: "記錄", value: "只增不改" }],
-    flow: [
-      { title: "引擎 A", detail: "沿用凍結三格機率，保留主勝、和局、客勝完整分佈。", formula: "Pᴬ = [P(H), P(D), P(A)]" },
-      { title: "引擎 B", detail: "以凍結預期入球計對角膨脹 Poisson 和局機率。", formula: "Pᴮ(D) = (1−π)ΣₖP(X=k,Y=k) + π" },
-      { title: "雙引擎混合", detail: "和局兩引擎各佔一半，餘下機率按引擎 A 主客比例分配。", formula: "Pᶠ(D) = 0.5Pᴬ(D) + 0.5Pᴮ(D)" },
-      { title: "Lift 投票與鎖定", detail: "混合機率除以凍結歷史率投票，最高分就係今場雙引擎預測；開賽前 6 小時入只增不改帳。", formula: "score(c) = Pᶠ(c) / base(c)" },
-    ],
-    sources: [{ label: "足球數據庫", href: "https://github.com/sleepingarhat/tianxi-football" }, { label: "足球引擎", href: "https://github.com/sleepingarhat/tianxi-football" }, { label: "足球後端", href: "https://github.com/sleepingarhat/tianxi-football" }],
-    actions: [{ to: "/football/dual-ledger", label: "天喜策略累計盈虧" }, { to: "/football/prediction-vs-result", label: "預測與賽果" }],
-    branches: [{ to: "/football/fixtures", label: "日程", icon: CalendarDays }, { to: "/football/standings", label: "百科", icon: Trophy }, { to: "/football/engine", label: "引擎", icon: Network }, { to: "/football/dual-ledger", label: "戰績", icon: Gauge }],
-  },
-  {
-    key: "marksix", eyebrow: "BAZI × QIMEN · MARK SIX", title: "天喜六合彩",
-    summary: "官方攪珠結果、號碼統計、八字與奇門取數，配合近百期逐期回測。",
-    dashboard: { to: "/marksix", label: "進入天喜六合彩引擎" },
-    metrics: [{ label: "主要輸出", value: "15 碼" }, { label: "驗證", value: "近 100 期" }, { label: "資料", value: "官方結果" }],
-    flow: [
-      { title: "下一期資料", detail: "讀取下一期攪珠日期及期數，建立同一個計算基準。" },
-      { title: "干支排盤", detail: "換算四柱、藏干、十二長生，再核對三合三會。", formula: "四柱 = 年柱 ⊕ 月柱 ⊕ 日柱 ⊕ 時柱" },
-      { title: "八字／奇門取數", detail: "按已定版規則分別輸出 15 碼，亦可加入個人命盤作合盤。", formula: "S(n) = Sᵇᵃᶻᶦ(n) + Sᑫⁱᵐᵉⁿ(n)" },
-      { title: "逐期回測", detail: "同官方結果逐期核對命中數，展示原始結果，不改分數追答案。", formula: "hits = |預測 15 碼 ∩ 官方攪珠號碼|" },
-    ],
-    sources: [{ label: "六合彩數據庫", href: "https://github.com/sleepingarhat/tianxi-marksix/tree/main/data-history" }, { label: "六合彩引擎", href: "https://github.com/sleepingarhat/tianxi-marksix" }],
-    actions: [{ to: "/marksix", hash: "marksix-engine", label: "天喜引擎回測" }, { to: "/marksix", hash: "marksix-next", label: "下一期預測" }],
-    branches: [{ to: "/marksix", hash: "marksix-next", label: "下一期", icon: CircleDot }, { to: "/marksix", hash: "marksix-stats", label: "號碼統計", icon: Activity }, { to: "/marksix", hash: "marksix-engine", label: "排盤", icon: GitBranch }, { to: "/marksix", hash: "marksix-engine", label: "回測", icon: Gauge }],
-  },
+
 ];
 
 function ProductCard({ product, index }: { product: Product; index: number }) {
-  return <article className="overflow-hidden rounded-[8px] border border-hairline bg-paper-2 shadow-sm">
+  return <article className="min-w-0 bg-paper">
     <div className="border-b border-hairline bg-paper px-3.5 py-3">
       <div className="flex items-start gap-3"><span className="tabnum grid h-10 w-10 shrink-0 place-items-center rounded-[6px] border border-gold-strong bg-deep font-mono-tx text-[14px] font-bold text-gold-strong shadow-sm">0{index + 1}</span><div className="min-w-0 flex-1"><p className="font-mono-tx text-[8px] font-bold uppercase tracking-[0.18em] text-ink-3">{product.eyebrow}</p><h2 className="fx-spotlight mt-0.5 font-serif-tc text-[19px] font-bold text-ink">{product.title}</h2></div></div>
       <p className="mt-2 text-[11px] leading-relaxed text-ink-2">{product.summary}</p>
@@ -82,5 +53,5 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
 }
 
 export function ProductDashboard() {
-  return <div className="grid gap-3 px-4 py-4 md:grid-cols-3 md:gap-4 md:px-5">{PRODUCTS.map((product, index) => <ProductCard key={product.key} product={product} index={index} />)}</div>;
+  return <div className="px-4 py-4 md:px-5">{PRODUCTS.map((product, index) => <ProductCard key={product.key} product={product} index={index} />)}</div>;
 }
