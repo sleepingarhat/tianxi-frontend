@@ -31,10 +31,19 @@ function AuthPage() {
   const [msg, setMsg] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
 
+  async function goAfterSignIn() {
+    const { data } = await supabase.auth.getUser();
+    const userId = data.user?.id;
+    if (!userId) return;
+    const { data: isAdmin } = await supabase.rpc("has_role", { _user_id: userId, _role: "admin" });
+    await router.navigate({ to: isAdmin ? "/admin" : "/membership" });
+  }
+
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) router.navigate({ to: "/admin" });
+      if (data.session) void goAfterSignIn();
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   async function submit(e: React.FormEvent) {
@@ -54,7 +63,7 @@ function AuthPage() {
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
-        await router.navigate({ to: "/admin" });
+        await goAfterSignIn();
       }
     } catch (e2) {
       setErr(e2 instanceof Error ? e2.message : String(e2));
