@@ -4,6 +4,8 @@ import { useState } from "react";
 
 import { AppShell } from "@/components/tx/AppShell";
 import { EChart } from "@/components/tx/EChart";
+import { ExoticTrioPools } from "@/components/tx/ExoticTrioPools";
+import { SinglePoolDaily } from "@/components/tx/SinglePoolDaily";
 import { exoticPoolOptions } from "@/lib/racingPoolAccounting";
 import { Card, Disclaimer, Empty, ErrorNote, Loading, PageHead, Scroller, Seg, Table, Td } from "@/components/tx/ui";
 import { fmtMeetingDate, txApi } from "@/lib/tx-api";
@@ -127,6 +129,7 @@ function CumChart({ points }: { points: { date: string; cum: number }[] }) {
 
 function StrategyPnlPage() {
   const [days, setDays] = useState<30 | 90 | 180>(90);
+  const [dayPick, setDayPick] = useState("");
   const pnl = useQuery({
     queryKey: ["strategyPnl", days],
     queryFn: () => txApi.strategyPnl(`?days=${days}`),
@@ -172,7 +175,7 @@ function StrategyPnlPage() {
         title="天喜策略累計盈虧紀錄"
         desc={
           <>
-            由 2026 年 6 月賽事起記錄至今，假設每場以 $10／注，四連環、單T、三重彩及四重彩用模型四揀複式；孖T、三T用頭兩匹做膽拖第 3–5 選，逐日彙總成本、派彩與累計盈虧。
+            由 2026 年 6 月賽事起記錄至今，假設每場以 $10／注：四連環、單T、三重彩及四重彩用引擎預測排序頭 4 選做複式（第 5 選唔計入）；孖T、三T用頭 5 選——第 1、2 選做膽，拖第 3、4、5 選。逐日彙總成本、派彩與累計盈虧。
             <span className="mt-1 block font-mono-tx text-[11px] text-ink-3">純分析紀錄 · 非投注建議 · 賽果來源 HKJC</span>
           </>
         }
@@ -308,6 +311,19 @@ function StrategyPnlPage() {
 
         </>
       )}
+
+      {sortedDesc.length ? (
+        <section className="mx-4 mt-3.5 space-y-3" aria-label="逐場彩池核對">
+          <div className="flex flex-wrap items-center gap-2">
+            <label htmlFor="pool-day" className="text-[12px] font-bold text-ink">逐場中唔中 · 賽馬日</label>
+            <select id="pool-day" value={dayPick || sortedDesc[0].date} onChange={(e) => setDayPick(e.target.value)} className="rounded-[6px] border border-hairline bg-paper-2 px-2 py-1 text-[12px] text-ink">
+              {sortedDesc.map((p) => <option key={p.date} value={p.date}>{p.date}</option>)}
+            </select>
+          </div>
+          <SinglePoolDaily date={dayPick || sortedDesc[0].date} />
+          <ExoticTrioPools date={dayPick || sortedDesc[0].date} />
+        </section>
+      ) : null}
 
       <p className="mx-4 mt-3.5 text-[11px] leading-[1.6] text-ink-3">
         <strong className="text-ink">計算方法：</strong>

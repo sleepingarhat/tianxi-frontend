@@ -23,8 +23,8 @@ export function ExoticTrioPools({ date }: { date: string }) {
   return (
     <Card title="孖T／三T 二拖三" en="Double Trio · Triple Trio">
       <p className="mb-2 text-[10px] leading-relaxed text-ink-3">
-        每場引擎頭兩匹做膽，拖第 3、4、5 選；每注 $10。孖T 每口 9 注（$90）、三T 27 注（$270）。
-        跨邊幾場以馬會派彩紀錄為準。第 5 選優先用賽前凍結排序；舊賽日未有呢欄就取自賽後排序（該場標示）。
+        <b className="text-ink-2">買法：孖T／三T 用引擎凍結預測排序頭 5 隻</b>——每場第 1、2 選做膽，拖第 3、4、5 選，共 3 組；每注 $10。孖T 每口 9 注（$90），兩場都中先算正獎；三T 每口 27 注（$270），三場都中先算正獎，頭兩場中、第三場唔中算安慰獎。
+        跨邊幾場以馬會派彩紀錄為準。第 5 選優先用賽前凍結排序；舊賽日未有呢欄就取自賽後排序（該場標示）。同單場四彩池（只用頭 4 選）唔同，孖T／三T 會用到第 5 選。
       </p>
       {q.isLoading ? (
         <p className="py-3 text-center text-[11px] text-ink-3">計算緊…</p>

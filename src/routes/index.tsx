@@ -2,8 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/tx/AppShell";
 import { FreeStageRoadmap } from "@/components/tx/FreeStageRoadmap";
-import { ProductDashboard } from "@/components/tx/ProductDashboard";
-import { Disclaimer, PageHead } from "@/components/tx/ui";
+import { EngineLanding } from "@/components/tx/EngineLanding";
+import { Disclaimer } from "@/components/tx/ui";
 
 export const Route = createFileRoute("/")({
   head: () => ({ meta: [
@@ -19,8 +19,7 @@ export const Route = createFileRoute("/")({
 
 function HomePage() {
   return <AppShell page="dashboard" wide ticker="天喜香港賽馬 · 沙田／跑馬地 · 全站免費 · 賽前凍結、賽後公開對帳">
-    <PageHead en="TIANXI · HONG KONG RACING" title="天喜賽馬" desc="深耕香港賽馬。賽前四揀、官方賽果、六彩池盈虧，逐場公開核對。" />
-    <ProductDashboard />
+    <EngineLanding />
     <FreeStageRoadmap />
     <Disclaimer extra="首場前 90 分鐘凍結全日四揀及第五選；賽後只重算對帳，唔改凍結預測。" />
   </AppShell>;

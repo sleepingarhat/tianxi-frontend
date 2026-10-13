@@ -48,9 +48,7 @@ const COMPARE: [string, string, string][] = [
 ];
 
 const PLANS = [
-  { name: "試一日", price: "38", unit: "／日", note: "單日全卡體驗", hot: false },
-  { name: "月費會員", price: "198", unit: "／月", note: "主力之選，平均約每賽日 HK$25", hot: true },
-  { name: "季費會員", price: "528", unit: "／季", note: "約省一個月", hot: false },
+  { name: "Pro 會員", price: "78", unit: "／星期 · 自動續訂", note: "暫時唯一會員資格，可用全站所有功能；冇免費試用。收入用嚟支持天喜繼續維護、研究同升級預測系統。未來可能開通更多會員資格。", hot: true },
 ];
 
 function MembershipPage() {
@@ -98,7 +96,7 @@ function MembershipPage() {
               <div className="flex flex-wrap items-center gap-2">
                 <span className="font-serif-tc text-[14px] font-bold text-ink">{p.name}</span>
                 <Pill tone="lose">未開放</Pill>
-                {p.hot ? <Pill tone="gold">達標後主力方案</Pill> : null}
+                {p.hot ? <Pill tone="gold">唯一方案</Pill> : null}
               </div>
               <p className="tabnum mt-1 font-mono-tx text-[20px] font-bold text-ink">
                 HK$ {p.price}
@@ -109,9 +107,20 @@ function MembershipPage() {
           ))}
         </div>
         <p className="mt-2 text-[11px] leading-relaxed text-ink-3">
-          呢啲係達標之後先開放嘅收費方案，現階段唔會收款、亦唔會賣會籍。開始收費同 iOS App 上架會喺呢頁同開發日誌公告，
+          達標後暫時只設 Pro 會員一種資格（HK$78／星期，自動續訂），為保障付費會員，屆時唔設免費試用；現階段唔會收款、亦唔會賣會籍。開始收費同 iOS App 上架會喺呢頁同開發日誌公告，
           公開對帳同歷史成績永久免費。
         </p>
+      </Card>
+
+      <Card title="首 500 名註冊會員：一年 Pro" en="Founding members" action={<Pill tone="gold">已決定</Pill>}>
+        <p className="text-[12px] leading-relaxed text-ink-2">
+          收費閘開啟時，首 {GOAL_MEMBERS.toLocaleString()} 名註冊會員會自動轉為 Pro 會員，享一年 Pro 會員資格（總值 HK$4,056），唔使另外付款。
+        </p>
+        <div className="mt-2 grid grid-cols-2 gap-2 text-[11px]">
+          <div className="rounded-[8px] border border-hairline bg-paper-2 p-2"><p className="text-ink-3">而家</p><p className="font-bold text-ink">免費會員 · 全站免費</p></div>
+          <div className="rounded-[8px] border border-gold-strong/60 bg-gold-bg p-2"><p className="text-ink-3">開閘後</p><p className="font-bold text-gold">Pro 會員 · 一年</p></div>
+        </div>
+        <p className="mt-2 text-[10px] text-ink-3">一年期滿後可按 Pro 會員 HK$78／星期續訂；開閘同轉換會喺呢頁同開發日誌公告。</p>
       </Card>
 
       <Card title="免費 vs Pro（未開放）" en="Compare">

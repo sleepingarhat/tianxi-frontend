@@ -7,6 +7,7 @@ import { AdminHead, Kpi, NoteBox, Panel, fmtMoney, fmtPct } from "@/components/a
 import { useRacingPnl } from "@/components/admin/data";
 import { EChart } from "@/components/tx/EChart";
 import { ExoticTrioPools } from "@/components/tx/ExoticTrioPools";
+import { SinglePoolDaily } from "@/components/tx/SinglePoolDaily";
 import { txApi } from "@/lib/tx-api";
 import { hkToday } from "@/lib/hkTime";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -113,14 +114,14 @@ function Pnl() {
 
       <section className="mt-4 min-w-0" aria-label="孖T三T逐日核對">
         <div className="mb-3 flex flex-wrap items-center gap-2">
-          <label id="trio-date-label" className="text-[12px] font-bold text-ink">孖T／三T 賽馬日</label>
+          <label id="trio-date-label" className="text-[12px] font-bold text-ink">逐場彩池 賽馬日</label>
           <Select value={selectedDate} onValueChange={setTrioDate}>
             <SelectTrigger aria-labelledby="trio-date-label" className="w-[170px] border-hairline bg-paper-3 text-ink"><SelectValue placeholder="選擇賽馬日" /></SelectTrigger>
             <SelectContent>{dates.map((d) => <SelectItem key={d} value={d}>{d}</SelectItem>)}</SelectContent>
           </Select>
         </div>
         <p className="mb-3 text-[11px] leading-relaxed text-ink-3">二拖三複式：孖T 9 注 $90，三T 27 注 $270。正獎、安慰獎與成本逐日核對，未併入上方四揀累計。</p>
-        {selectedDate ? <ExoticTrioPools date={selectedDate} /> : <NoteBox>{meets.isError ? "賽馬日讀取失敗，請重新整理。" : meets.isLoading ? "讀取賽馬日中…" : "暫無賽馬日資料。"}</NoteBox>}
+        {selectedDate ? <div className="space-y-3"><SinglePoolDaily date={selectedDate} /><ExoticTrioPools date={selectedDate} /></div> : <NoteBox>{meets.isError ? "賽馬日讀取失敗，請重新整理。" : meets.isLoading ? "讀取賽馬日中…" : "暫無賽馬日資料。"}</NoteBox>}
       </section>
 
 
