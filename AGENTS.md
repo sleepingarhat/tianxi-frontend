@@ -28,12 +28,11 @@
 - 每次發布正式站後執行 python3 scripts/sync-frontend-repo.py，將源碼經 GitHub API 同步入 tianxi-frontend；理由：倉庫只作鏡像，正式站由 Lovable 發布。
 
 ## 監控端規則
+- Subdirectories may have their own AGENTS.md (e.g. src/components/admin/); read it before changing files there.
 - Public racing P&L supplements the existing four-pool rollup with shared `racingPoolAccounting` cross-race queries, merging daily cost and payout once; missing fifth picks are excluded and post-race substitutes are labelled, so incomplete data cannot masquerade as frozen results.
 - Admin version notes must wrap in desktop tables and use stacked mobile records; cross-race trio reconciliation reuses ExoticTrioPools separately from the single-race strategy aggregate, to prevent truncated explanations and mixed accounting scopes.
 - Blueprint completion audits must distinguish implemented code, verified user flows, missing evidence and superseded decisions in docs/blueprint; route existence and checked roadmap items alone do not prove functional completion.
 
-- 監控端 /admin 為側欄佈局（src/routes/_authenticated/admin.tsx），各頁用 src/components/admin/kit.tsx 嘅 AdminHead／Panel／Kpi／StatusBadge／DataTable（TanStack Table），圖表用 EChart；深色主題只喺 .tx-admin 範圍覆寫 --tx-* 變數。理由：前台品牌唔受影響，監控頁唔再逐頁漂移。
-- Demo／Worst case 假資料只經 src/components/admin/fixtures.tsx 嘅 useFixture，並以 import.meta.env.DEV 把關。理由：break-ui 驗收要可重現，正式站唔可以出假數。
 - 全站 break-ui 用 scripts/break-ui-matrix.py 覆蓋 320／390／1280、RTL、慢 API 與千人會員；dev-log 會合法提及 NaN／undefined，掃描器不可將說明文字當資料錯誤。理由：驗收要可重跑亦要避免假陽性。
 - 足球逐季正式帳按賽季／版本／實際注碼分組，未結算只計 locked；管理員匯出不可公開。持久 ops 日誌只寫去敏摘要，service role 寫、admin 讀，失敗不得阻塞正式 API。
 - 外部圖片只可用逐張核實自由授權或書面商用權，頁內須署名並保留 /media-credits；API 圖址不等於授權。
@@ -42,3 +41,4 @@
 - HKJC football GraphQL calls go through src/lib/hkjcFootball.server.ts with the website query copied verbatim; HKJC rejects any non-whitelisted query text.
 - Archived product source and historical documentation are retained, while their repositories and database reads are restricted; this makes suspension reversible without altering frozen records.
 - The current blueprint is docs/blueprint/tianxi-racing-blueprint-2026-10-13.md; older blueprints are historical so superseded requirements cannot re-enable retired products.
+- Pro entitlement is decided only by src/lib/entitlement.ts (resolveEntitlement), fed by the my_membership DB function and the webhook-maintained subscriptions table; the gate opens automatically at the 500th signup. Why: one rule source for free stage, founding Pro and paid subscriptions.

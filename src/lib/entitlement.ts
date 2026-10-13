@@ -1,0 +1,62 @@
+import { FOUNDING_PRO_WEEKS, FREE_STAGE_GOAL_MEMBERS } from "./freeStage";
+
+export type SubRow = {
+  status: string;
+  current_period_end: string | null;
+  cancel_at_period_end: boolean;
+};
+
+export type MembershipInput = {
+  rank: number | null;
+  total: number;
+  gateOpenAt: string | null;
+  subscription: SubRow | null;
+  now?: Date;
+};
+
+export type Entitlement =
+  | { kind: "free_stage"; hasPro: true; remaining: number }
+  | { kind: "founding"; hasPro: true; until: string }
+  | { kind: "founding_expired"; hasPro: false; until: string }
+  | { kind: "subscribed"; hasPro: true; until: string | null; cancelAtPeriodEnd: boolean }
+  | { kind: "payment_failed"; hasPro: false }
+  | { kind: "none"; hasPro: false };
+
+const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+
+export function foundingUntil(gateOpenAt: string): string {
+  return new Date(new Date(gateOpenAt).getTime() + FOUNDING_PRO_WEEKS * WEEK_MS).toISOString();
+}
+
+/**
+ * 會籍規則（用戶拍板）：
+ * - 註冊未滿 500 人＝限時免費，人人享 Pro 功能。
+ * - 第 500 名註冊即開閘；首 500 名自動 Pro 52 週，期滿提示自行訂閱。
+ * - 付費訂閱：取消後用到本期完結；扣款失敗即時停權。
+ */
+export function resolveEntitlement(input: MembershipInput): Entitlement {
+  const now = input.now ?? new Date();
+  const sub = input.subscription;
+  if (sub) {
+    const end = sub.current_period_end ? new Date(sub.current_period_end) : null;
+    const future = !end || end > now;
+    if ((sub.status === "active" || sub.status === "trialing") && future) {
+      return { kind: "subscribed", hasPro: true, until: sub.current_period_end, cancelAtPeriodEnd: sub.cancel_at_period_end };
+    }
+    if (sub.status === "canceled" && end && end > now) {
+      return { kind: "subscribed", hasPro: true, until: sub.current_period_end, cancelAtPeriodEnd: true };
+    }
+  }
+  if (input.total < FREE_STAGE_GOAL_MEMBERS || !input.gateOpenAt) {
+    return { kind: "free_stage", hasPro: true, remaining: Math.max(0, FREE_STAGE_GOAL_MEMBERS - input.total) };
+  }
+  if (input.rank !== null && input.rank <= FREE_STAGE_GOAL_MEMBERS) {
+    const until = foundingUntil(input.gateOpenAt);
+    if (new Date(until) > now) return { kind: "founding", hasPro: true, until };
+    if (!sub) return { kind: "founding_expired", hasPro: false, until };
+  }
+  if (sub && ["past_due", "unpaid", "incomplete", "incomplete_expired", "paused"].includes(sub.status)) {
+    return { kind: "payment_failed", hasPro: false };
+  }
+  return { kind: "none", hasPro: false };
+}

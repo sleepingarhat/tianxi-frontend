@@ -35,6 +35,7 @@ import { Route as ScheduleRouteImport } from './routes/schedule'
 import { Route as StrategyPnlRouteImport } from './routes/strategy-pnl'
 import { Route as TrackRecordRouteImport } from './routes/track-record'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as CheckoutReturnRouteImport } from './routes/checkout.return'
 import { Route as EngineIndexRouteImport } from './routes/engine.index'
 import { Route as EngineBacktestRouteImport } from './routes/engine.backtest'
 import { Route as EngineFeaturesRouteImport } from './routes/engine.features'
@@ -94,7 +95,10 @@ import { Route as ApiPublicWeatherSyncGithubRouteImport } from './routes/api/pub
 import { Route as FootballMatchMatchKeyRouteImport } from './routes/football.match.$matchKey'
 import { Route as FootballStudyMatchIdRouteImport } from './routes/football.study.$matchId'
 import { Route as ApiPublicHooksRaceResultsDispatchRouteImport } from './routes/api/public/hooks/race-results-dispatch'
+import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 import { Route as FootballTeamDivSlugRouteImport } from './routes/football.team.$div.$slug'
+import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
+import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -224,6 +228,11 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const CheckoutReturnRoute = CheckoutReturnRouteImport.update({
+  id: '/checkout/return',
+  path: '/checkout/return',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const EngineIndexRoute = EngineIndexRouteImport.update({
   id: '/engine/',
@@ -541,9 +550,25 @@ const ApiPublicHooksRaceResultsDispatchRoute =
     path: '/api/public/hooks/race-results-dispatch',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicPaymentsWebhookRoute =
+  ApiPublicPaymentsWebhookRouteImport.update({
+    id: '/api/public/payments/webhook',
+    path: '/api/public/payments/webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const FootballTeamDivSlugRoute = FootballTeamDivSlugRouteImport.update({
   id: '/football/team/$div/$slug',
   path: '/football/team/$div/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LovableEmailAuthPreviewRoute = LovableEmailAuthPreviewRouteImport.update({
+  id: '/lovable/email/auth/preview',
+  path: '/lovable/email/auth/preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LovableEmailAuthWebhookRoute = LovableEmailAuthWebhookRouteImport.update({
+  id: '/lovable/email/auth/webhook',
+  path: '/lovable/email/auth/webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -573,6 +598,7 @@ export interface FileRoutesByFullPath {
   '/strategy-pnl': typeof StrategyPnlRoute
   '/track-record': typeof TrackRecordRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/checkout/return': typeof CheckoutReturnRoute
   '/engine/backtest': typeof EngineBacktestRoute
   '/engine/features': typeof EngineFeaturesRoute
   '/engine/monitor': typeof EngineMonitorRoute
@@ -632,7 +658,10 @@ export interface FileRoutesByFullPath {
   '/football/study/$matchId': typeof FootballStudyMatchIdRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/api/public/hooks/race-results-dispatch': typeof ApiPublicHooksRaceResultsDispatchRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/football/team/$div/$slug': typeof FootballTeamDivSlugRoute
+  '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
+  '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -659,6 +688,7 @@ export interface FileRoutesByTo {
   '/schedule': typeof ScheduleRoute
   '/strategy-pnl': typeof StrategyPnlRoute
   '/track-record': typeof TrackRecordRoute
+  '/checkout/return': typeof CheckoutReturnRoute
   '/engine/backtest': typeof EngineBacktestRoute
   '/engine/features': typeof EngineFeaturesRoute
   '/engine/monitor': typeof EngineMonitorRoute
@@ -718,7 +748,10 @@ export interface FileRoutesByTo {
   '/football/study/$matchId': typeof FootballStudyMatchIdRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/api/public/hooks/race-results-dispatch': typeof ApiPublicHooksRaceResultsDispatchRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/football/team/$div/$slug': typeof FootballTeamDivSlugRoute
+  '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
+  '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -748,6 +781,7 @@ export interface FileRoutesById {
   '/strategy-pnl': typeof StrategyPnlRoute
   '/track-record': typeof TrackRecordRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/checkout/return': typeof CheckoutReturnRoute
   '/engine/backtest': typeof EngineBacktestRoute
   '/engine/features': typeof EngineFeaturesRoute
   '/engine/monitor': typeof EngineMonitorRoute
@@ -807,7 +841,10 @@ export interface FileRoutesById {
   '/football/study/$matchId': typeof FootballStudyMatchIdRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/api/public/hooks/race-results-dispatch': typeof ApiPublicHooksRaceResultsDispatchRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/football/team/$div/$slug': typeof FootballTeamDivSlugRoute
+  '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
+  '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -837,6 +874,7 @@ export interface FileRouteTypes {
     | '/strategy-pnl'
     | '/track-record'
     | '/admin'
+    | '/checkout/return'
     | '/engine/backtest'
     | '/engine/features'
     | '/engine/monitor'
@@ -896,7 +934,10 @@ export interface FileRouteTypes {
     | '/football/study/$matchId'
     | '/admin/'
     | '/api/public/hooks/race-results-dispatch'
+    | '/api/public/payments/webhook'
     | '/football/team/$div/$slug'
+    | '/lovable/email/auth/preview'
+    | '/lovable/email/auth/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -923,6 +964,7 @@ export interface FileRouteTypes {
     | '/schedule'
     | '/strategy-pnl'
     | '/track-record'
+    | '/checkout/return'
     | '/engine/backtest'
     | '/engine/features'
     | '/engine/monitor'
@@ -982,7 +1024,10 @@ export interface FileRouteTypes {
     | '/football/study/$matchId'
     | '/admin'
     | '/api/public/hooks/race-results-dispatch'
+    | '/api/public/payments/webhook'
     | '/football/team/$div/$slug'
+    | '/lovable/email/auth/preview'
+    | '/lovable/email/auth/webhook'
   id:
     | '__root__'
     | '/'
@@ -1011,6 +1056,7 @@ export interface FileRouteTypes {
     | '/strategy-pnl'
     | '/track-record'
     | '/_authenticated/admin'
+    | '/checkout/return'
     | '/engine/backtest'
     | '/engine/features'
     | '/engine/monitor'
@@ -1070,7 +1116,10 @@ export interface FileRouteTypes {
     | '/football/study/$matchId'
     | '/_authenticated/admin/'
     | '/api/public/hooks/race-results-dispatch'
+    | '/api/public/payments/webhook'
     | '/football/team/$div/$slug'
+    | '/lovable/email/auth/preview'
+    | '/lovable/email/auth/webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -1099,6 +1148,7 @@ export interface RootRouteChildren {
   ScheduleRoute: typeof ScheduleRoute
   StrategyPnlRoute: typeof StrategyPnlRoute
   TrackRecordRoute: typeof TrackRecordRoute
+  CheckoutReturnRoute: typeof CheckoutReturnRoute
   EngineBacktestRoute: typeof EngineBacktestRoute
   EngineFeaturesRoute: typeof EngineFeaturesRoute
   EngineMonitorRoute: typeof EngineMonitorRoute
@@ -1146,7 +1196,10 @@ export interface RootRouteChildren {
   ApiPublicWeatherSyncGithubRoute: typeof ApiPublicWeatherSyncGithubRoute
   FootballMatchMatchKeyRoute: typeof FootballMatchMatchKeyRoute
   ApiPublicHooksRaceResultsDispatchRoute: typeof ApiPublicHooksRaceResultsDispatchRoute
+  ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
   FootballTeamDivSlugRoute: typeof FootballTeamDivSlugRoute
+  LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
+  LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1332,6 +1385,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin'
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/checkout/return': {
+      id: '/checkout/return'
+      path: '/checkout/return'
+      fullPath: '/checkout/return'
+      preLoaderRoute: typeof CheckoutReturnRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/engine/': {
       id: '/engine/'
@@ -1746,11 +1806,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicHooksRaceResultsDispatchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/payments/webhook': {
+      id: '/api/public/payments/webhook'
+      path: '/api/public/payments/webhook'
+      fullPath: '/api/public/payments/webhook'
+      preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/football/team/$div/$slug': {
       id: '/football/team/$div/$slug'
       path: '/football/team/$div/$slug'
       fullPath: '/football/team/$div/$slug'
       preLoaderRoute: typeof FootballTeamDivSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lovable/email/auth/preview': {
+      id: '/lovable/email/auth/preview'
+      path: '/lovable/email/auth/preview'
+      fullPath: '/lovable/email/auth/preview'
+      preLoaderRoute: typeof LovableEmailAuthPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lovable/email/auth/webhook': {
+      id: '/lovable/email/auth/webhook'
+      path: '/lovable/email/auth/webhook'
+      fullPath: '/lovable/email/auth/webhook'
+      preLoaderRoute: typeof LovableEmailAuthWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -1837,6 +1918,7 @@ const rootRouteChildren: RootRouteChildren = {
   ScheduleRoute: ScheduleRoute,
   StrategyPnlRoute: StrategyPnlRoute,
   TrackRecordRoute: TrackRecordRoute,
+  CheckoutReturnRoute: CheckoutReturnRoute,
   EngineBacktestRoute: EngineBacktestRoute,
   EngineFeaturesRoute: EngineFeaturesRoute,
   EngineMonitorRoute: EngineMonitorRoute,
@@ -1886,7 +1968,10 @@ const rootRouteChildren: RootRouteChildren = {
   FootballMatchMatchKeyRoute: FootballMatchMatchKeyRoute,
   ApiPublicHooksRaceResultsDispatchRoute:
     ApiPublicHooksRaceResultsDispatchRoute,
+  ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
   FootballTeamDivSlugRoute: FootballTeamDivSlugRoute,
+  LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
+  LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -6,6 +6,7 @@ import { isArchivedProductPath } from "@/lib/product-scope";
 
 const productScopeMiddleware = createMiddleware().server(async ({ request, next }) => {
   const path = new URL(request.url).pathname;
+  if (path.startsWith("/lovable/")) return next();
   if (path.startsWith("/api/") && isArchivedProductPath(path)) {
     return Response.json({ ok: false, status: "archived", message: "此產品已暫時封存，天喜現時專注香港賽馬。" }, {
       status: 410,
@@ -15,7 +16,8 @@ const productScopeMiddleware = createMiddleware().server(async ({ request, next 
   return next();
 });
 
-const errorMiddleware = createMiddleware().server(async ({ next }) => {
+const errorMiddleware = createMiddleware().server(async ({ request, next }) => {
+  if (new URL(request.url).pathname.startsWith("/lovable/")) return next();
   try {
     return await next();
   } catch (error) {

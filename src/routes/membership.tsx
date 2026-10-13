@@ -4,6 +4,8 @@ import { AppShell } from "@/components/tx/AppShell";
 import { FreeStageRoadmap } from "@/components/tx/FreeStageRoadmap";
 import { Button } from "@/components/ui/button";
 import { FoundingMemberOffer } from "@/components/tx/FoundingMemberOffer";
+import { MembershipStatus } from "@/components/tx/MembershipStatus";
+import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 import { FREE_STAGE_GOAL_MEMBERS, PRO_WEEKLY_PRICE_HKD } from "@/lib/freeStage";
 import { Card, Disclaimer, PageHead, Pill } from "@/components/tx/ui";
 
@@ -66,15 +68,17 @@ function MembershipPage() {
         <Link to="/auth" className="col-span-2 text-center text-[12px] text-ink-3 underline underline-offset-4">已有帳戶？登入</Link>
       </div>
 
+      <PaymentTestModeBanner />
       <FoundingMemberOffer />
 
       <div className="space-y-6 py-5 [&>section]:my-0">
+      <MembershipStatus />
       <Card title="全站功能權益" en="Pro access" action={<Pill tone="win">限時免費</Pill>}>
         <p className="mb-4 text-[13px] leading-relaxed text-ink-2">而家免費使用以下全部功能，權益等同 Pro；唔限每日一場，亦冇「不包括」嘅功能限制。</p>
         <dl className="divide-y divide-hairline">
           {FEATURES.map(([name, detail]) => <div key={name} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 py-3"><div className="min-w-0"><dt className="text-[13px] font-bold text-ink">{name}</dt><dd className="mt-1 text-[12px] leading-relaxed text-ink-3">{detail}</dd></div><span className="shrink-0 whitespace-nowrap text-[12px] font-bold text-win">已包括 ✓</span></div>)}
         </dl>
-        <p className="mt-4 border-t border-hairline pt-3 text-[11px] leading-relaxed text-ink-3">現階段免費開放網站已有功能；付款、自動續訂及 Telegram 私頻仍未開通，唔代表已啟用付費訂閱。</p>
+        <p className="mt-4 border-t border-hairline pt-3 text-[11px] leading-relaxed text-ink-3">現階段免費開放網站已有功能；付款同自動續訂已接駁，但要註冊滿 500 人開閘後先會收款；Telegram 私頻仍未開通。</p>
       </Card>
 
       <FreeStageRoadmap />

@@ -77,6 +77,7 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   beforeLoad: ({ location }) => {
+    if (location.pathname.startsWith("/lovable/")) return;
     if (!location.pathname.startsWith("/api/") && isArchivedProductPath(location.pathname)) {
       throw redirect({ to: "/", replace: true });
     }
