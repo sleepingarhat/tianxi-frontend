@@ -17,11 +17,7 @@ export function FoundingMemberOffer() {
           <p className="mt-2 text-[12px] leading-relaxed text-deep-fg/80">而家限時全站免費，享有等同 Pro 嘅全站功能；現階段唔收款。</p>
           <MemberCountdown />
         </div>
-        {signedIn ? (
-          <Button asChild size="lg" className="h-12 w-full bg-gold-strong font-bold text-ink hover:bg-gold md:w-auto">
-            <Link to="/membership">睇我嘅會籍<ArrowRight aria-hidden /></Link>
-          </Button>
-        ) : (
+        {signedIn ? null : (
           <Button asChild size="lg" className="h-12 w-full bg-gold-strong font-bold text-ink hover:bg-gold md:w-auto">
             <Link to="/auth" search={{ mode: "signup" }}>現在註冊<ArrowRight aria-hidden /></Link>
           </Button>

@@ -56,7 +56,9 @@ function AuthPage() {
         const { error } = await supabase.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo: `${window.location.origin}/auth` },
+          // 確認電郵一律跳返正式站：用 window.location.origin 會令喺預覽註冊嘅
+          // 確認連結指去預覽網址（需登入 Lovable 先睇到，且版面會失效）。
+          options: { emailRedirectTo: "https://tianxi.racing/auth" },
         });
         if (error) throw error;
         setMsg("已建立帳戶。如需電郵確認，請先檢查收件箱，然後回來登入。");
