@@ -1,7 +1,9 @@
-import { Link } from "@tanstack/react-router";
-import { useEffect, useState, type ReactNode } from "react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
+import { useState, type ReactNode } from "react";
 
 import { supabase } from "@/integrations/supabase/client";
+import { useAuthState } from "@/lib/useAuthState";
 import tianxiLogo from "@/assets/tianxi-racing-logo-v9.jpg";
 import { OverflowTicker } from "./OverflowTicker";
 
@@ -62,19 +64,23 @@ export function AppShell({
   wide?: boolean;
   children: ReactNode;
 }) {
-  const [signedIn, setSignedIn] = useState(false);
+  const { signedIn, isAdmin } = useAuthState();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const [signingOut, setSigningOut] = useState(false);
 
-  useEffect(() => {
-    let alive = true;
-    supabase.auth.getSession().then(({ data }) => {
-      if (alive) setSignedIn(!!data.session);
-    });
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => setSignedIn(!!s));
-    return () => {
-      alive = false;
-      sub.subscription.unsubscribe();
-    };
-  }, []);
+  async function handleSignOut() {
+    if (signingOut) return;
+    setSigningOut(true);
+    try {
+      await queryClient.cancelQueries();
+      queryClient.clear();
+      await supabase.auth.signOut();
+      navigate({ to: "/", replace: true });
+    } finally {
+      setSigningOut(false);
+    }
+  }
 
   return (
     <div className="min-h-screen bg-paper-3 font-sans-tc text-ink">
@@ -91,7 +97,7 @@ export function AppShell({
           </Link>
           <div />
           <div className="flex items-center gap-3">
-            {signedIn ? (
+            {isAdmin ? (
               <Link
                 to="/admin"
                 aria-label="內部監控台"
@@ -117,22 +123,49 @@ export function AppShell({
             >
               戰績
             </Link>
-            <Link
-              to="/membership"
-              aria-label="升級 Pro"
-              className="whitespace-nowrap rounded-full border border-gold bg-gradient-to-b from-gold-strong to-gold px-3.5 py-[7px] font-serif-tc text-[12px] font-bold tracking-[0.03em] text-[#3a2a08] shadow-[0_1px_2px_rgba(0,0,0,0.2)] transition-transform active:scale-95 max-[380px]:px-2.5"
-            >
-              <span className="max-[380px]:hidden">升級 Pro</span>
-              <svg
-                viewBox="0 0 24 24"
-                className="hidden h-4 w-4 max-[380px]:block"
-                fill="currentColor"
-                stroke="none"
-                aria-hidden="true"
-              >
-                <path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.3l-5.8 3.1 1.1-6.5L2.6 9.3l6.5-.9L12 2.5z" />
-              </svg>
-            </Link>
+            {signedIn ? (
+              <>
+                <Link
+                  to="/membership"
+                  className="self-center whitespace-nowrap font-serif-tc text-[12px] font-bold text-tan hover:text-gold-strong"
+                >
+                  會員
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => void handleSignOut()}
+                  disabled={signingOut}
+                  className="whitespace-nowrap rounded-full border border-tan/30 px-3.5 py-[7px] font-serif-tc text-[12px] font-bold tracking-[0.03em] text-deep-fg transition-transform active:scale-95 disabled:opacity-60 max-[380px]:px-2.5"
+                >
+                  {signingOut ? "登出中…" : "登出"}
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/auth"
+                  className="self-center whitespace-nowrap font-serif-tc text-[12px] font-bold text-tan hover:text-gold-strong"
+                >
+                  登入
+                </Link>
+                <Link
+                  to="/membership"
+                  aria-label="升級 Pro"
+                  className="whitespace-nowrap rounded-full border border-gold bg-gradient-to-b from-gold-strong to-gold px-3.5 py-[7px] font-serif-tc text-[12px] font-bold tracking-[0.03em] text-[#3a2a08] shadow-[0_1px_2px_rgba(0,0,0,0.2)] transition-transform active:scale-95 max-[380px]:px-2.5"
+                >
+                  <span className="max-[380px]:hidden">升級 Pro</span>
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="hidden h-4 w-4 max-[380px]:block"
+                    fill="currentColor"
+                    stroke="none"
+                    aria-hidden="true"
+                  >
+                    <path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.3l-5.8 3.1 1.1-6.5L2.6 9.3l6.5-.9L12 2.5z" />
+                  </svg>
+                </Link>
+              </>
+            )}
           </div>
         </header>
 

@@ -2,9 +2,11 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight, Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MemberCountdown } from "./MemberCountdown";
+import { useAuthState } from "@/lib/useAuthState";
 import { FREE_STAGE_GOAL_MEMBERS, FOUNDING_PRO_WEEKS, FOUNDING_PRO_VALUE_HKD } from "@/lib/freeStage";
 
 export function FoundingMemberOffer() {
+  const { signedIn } = useAuthState();
   return (
     <section aria-labelledby="founding-offer-title" className="border-y border-gold-strong/40 bg-deep px-5 py-6 text-deep-fg md:px-10 md:py-8">
       <div className="grid items-center gap-5 md:grid-cols-[minmax(0,1fr)_auto]">
@@ -15,9 +17,15 @@ export function FoundingMemberOffer() {
           <p className="mt-2 text-[12px] leading-relaxed text-deep-fg/80">而家限時全站免費，享有等同 Pro 嘅全站功能；現階段唔收款。</p>
           <MemberCountdown />
         </div>
-        <Button asChild size="lg" className="h-12 w-full bg-gold-strong font-bold text-ink hover:bg-gold md:w-auto">
-          <Link to="/auth" search={{ mode: "signup" }}>現在註冊<ArrowRight aria-hidden /></Link>
-        </Button>
+        {signedIn ? (
+          <Button asChild size="lg" className="h-12 w-full bg-gold-strong font-bold text-ink hover:bg-gold md:w-auto">
+            <Link to="/membership">睇我嘅會籍<ArrowRight aria-hidden /></Link>
+          </Button>
+        ) : (
+          <Button asChild size="lg" className="h-12 w-full bg-gold-strong font-bold text-ink hover:bg-gold md:w-auto">
+            <Link to="/auth" search={{ mode: "signup" }}>現在註冊<ArrowRight aria-hidden /></Link>
+          </Button>
+        )}
       </div>
     </section>
   );

@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
+import { useAuthState } from "@/lib/useAuthState";
+
 import { AppShell } from "@/components/tx/AppShell";
 import { FreeStageRoadmap } from "@/components/tx/FreeStageRoadmap";
 import { Button } from "@/components/ui/button";
@@ -51,6 +53,7 @@ const FEATURES = [
 ];
 
 function MembershipPage() {
+  const { signedIn } = useAuthState();
   return (
     <AppShell
       page="dashboard"
@@ -64,8 +67,14 @@ function MembershipPage() {
 
       <div className="grid grid-cols-2 gap-3 px-4 py-5">
         <Button asChild variant="outline" className="h-11 border-hairline bg-paper text-ink hover:bg-paper-2"><Link to="/track-record">公開戰績 →</Link></Button>
-        <Button asChild className="h-11 bg-deep text-deep-fg hover:bg-deep/90"><Link to="/auth" search={{ mode: "signup" }}>現在註冊 →</Link></Button>
-        <Link to="/auth" className="col-span-2 text-center text-[12px] text-ink-3 underline underline-offset-4">已有帳戶？登入</Link>
+        {signedIn ? (
+          <Button asChild className="h-11 bg-deep text-deep-fg hover:bg-deep/90"><Link to="/predictor">睇今日四揀 →</Link></Button>
+        ) : (
+          <>
+            <Button asChild className="h-11 bg-deep text-deep-fg hover:bg-deep/90"><Link to="/auth" search={{ mode: "signup" }}>現在註冊 →</Link></Button>
+            <Link to="/auth" className="col-span-2 text-center text-[12px] text-ink-3 underline underline-offset-4">已有帳戶？登入</Link>
+          </>
+        )}
       </div>
 
       <PaymentTestModeBanner />
