@@ -22,6 +22,12 @@ type Tag = "數據" | "技術" | "前端" | "系統";
 
 const ENTRIES: { date: string; title: string; tags: Tag[]; body: string }[] = [
   {
+    date: "2026-10-15 · 18:40 HKT",
+    title: "監控端流量頁：GA4 事件漏斗、資料庫對照、轉換率圖；GitHub 前端倉改名 tianxi-web",
+    tags: ["系統", "前端"],
+    body: "流量頁升級：①會員漏斗改由 GA4 事件（提交註冊 sign_up_start、完成註冊 sign_up、首次登入 login、撳訂閱 begin_checkout、完成付款 purchase）自動更新，唔再靠人手對數；②新增「GA 事件 對照 會員資料庫」面板，兩邊數字並列，接近即代表追蹤正常；③新增「轉換率」面板，顯示會員註冊完成率同訂閱完成率，附每步轉換同總完成數。另修正每日瀏覽趨勢圖空白（柱狀高度失效），GA4 查詢一律按網域過濾只計 tianxi.racing，避免同一統計帳戶其他網站數據混入。GitHub 前端鏡像倉由 tianxi-frontend 改名 tianxi-web，簡介改為只描述現行賽馬項目；研究倉簡介同步更新。會員權限、凍結預測、計數規則一律冇改。",
+  },
+  {
     date: "2026-10-14 · 16:30 HKT",
     title: "修復管理員監控台入口唔顯示；登入後優惠卡唔再出按鈕",
     tags: ["系統", "前端"],

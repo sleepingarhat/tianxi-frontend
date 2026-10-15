@@ -22,7 +22,7 @@
 
 ## 倉庫與封存
 - tianxi-racing：現行賽馬資料、服務與排程。
-- tianxi-frontend：現行網站源碼鏡像，正式站由 Lovable 發布。
+- tianxi-web：現行網站源碼鏡像，正式站由 Lovable 發布。
 - tianxi-research：現行賽馬研究；歷史非賽馬研究只作封存，不繼續開閘。
 - tianxi-football、tianxi-marksix：private＋archived，保留歷史資料，不再公開或運行。
 - 既有文件與開發日誌保留作歷史，明確由本藍圖取代；不重寫歷史預測。

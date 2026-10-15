@@ -97,7 +97,7 @@ async function runRealtimeReport(propertyId: string, token: string): Promise<num
     const resp = await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${propertyId}:runRealtimeReport`, {
       method: "POST",
       headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ metrics: [{ name: "activeUsers" }] }),
+      body: JSON.stringify({ metrics: [{ name: "activeUsers" }], dimensionFilter: HOST_FILTER }),
     });
     if (!resp.ok) return null;
     const json = (await resp.json()) as { rows?: RunReportRow[] };
@@ -108,6 +108,11 @@ async function runRealtimeReport(propertyId: string, token: string): Promise<num
 }
 
 const num = (row: RunReportRow, i: number) => Number(row.metricValues?.[i]?.value ?? 0);
+
+/** 只計正式站網域，避免同一 GA4 資源入面其他網站嘅數據混入 */
+const HOST_FILTER = {
+  filter: { fieldName: "hostName", inListFilter: { values: ["tianxi.racing", "www.tianxi.racing"] } },
+};
 
 function summarize(rows: Ga4DailyPoint[]) {
   return {
@@ -129,6 +134,7 @@ export async function fetchGa4Traffic(): Promise<Ga4TrafficReport> {
     dimensions: [{ name: "date" }],
     metrics: [{ name: "activeUsers" }, { name: "sessions" }, { name: "screenPageViews" }],
     orderBys: [{ dimension: { dimensionName: "date" } }],
+    dimensionFilter: HOST_FILTER,
     limit: 40,
   });
   const daily: Ga4DailyPoint[] = dailyRows.map((r) => ({
@@ -145,6 +151,7 @@ export async function fetchGa4Traffic(): Promise<Ga4TrafficReport> {
     dateRanges: [{ startDate: "30daysAgo", endDate: "today" }],
     dimensions: [{ name: "date" }],
     metrics: [{ name: "averageSessionDuration" }, { name: "bounceRate" }],
+    dimensionFilter: HOST_FILTER,
     limit: 40,
   });
   const engByDate = new Map(engRows.map((r) => [r.dimensionValues?.[0]?.value ?? "", { dur: num(r, 0), bounce: num(r, 1) }]));
@@ -166,6 +173,7 @@ export async function fetchGa4Traffic(): Promise<Ga4TrafficReport> {
     dimensions: [{ name: "sessionSourceMedium" }],
     metrics: [{ name: "activeUsers" }, { name: "sessions" }, { name: "averageSessionDuration" }, { name: "bounceRate" }],
     orderBys: [{ metric: { metricName: "sessions" }, desc: true }],
+    dimensionFilter: HOST_FILTER,
     limit: 10,
   });
   const sources: Ga4Source[] = sourceRows.map((r) => ({
@@ -181,6 +189,7 @@ export async function fetchGa4Traffic(): Promise<Ga4TrafficReport> {
     dimensions: [{ name: "pagePath" }, { name: "pageTitle" }],
     metrics: [{ name: "screenPageViews" }, { name: "activeUsers" }, { name: "averageSessionDuration" }],
     orderBys: [{ metric: { metricName: "screenPageViews" }, desc: true }],
+    dimensionFilter: HOST_FILTER,
     limit: 15,
   });
   const pages: Ga4Page[] = pageRows.map((r) => ({
@@ -197,7 +206,14 @@ export async function fetchGa4Traffic(): Promise<Ga4TrafficReport> {
     dateRanges: [{ startDate: "30daysAgo", endDate: "today" }],
     dimensions: [{ name: "eventName" }],
     metrics: [{ name: "eventCount" }],
-    dimensionFilter: { filter: { fieldName: "eventName", inListFilter: { values: ["sign_up_start", "sign_up", "login", "begin_checkout", "purchase"] } } },
+    dimensionFilter: {
+      andGroup: {
+        expressions: [
+          HOST_FILTER,
+          { filter: { fieldName: "eventName", inListFilter: { values: ["sign_up_start", "sign_up", "login", "begin_checkout", "purchase"] } } },
+        ],
+      },
+    },
   });
   const events: Record<string, number> = {};
   for (const r of eventRows) events[r.dimensionValues?.[0]?.value ?? ""] = num(r, 0);
@@ -205,7 +221,14 @@ export async function fetchGa4Traffic(): Promise<Ga4TrafficReport> {
     dateRanges: [{ startDate: "30daysAgo", endDate: "today" }],
     dimensions: [{ name: "pagePath" }],
     metrics: [{ name: "activeUsers" }],
-    dimensionFilter: { filter: { fieldName: "pagePath", inListFilter: { values: ["/", "/auth"] } } },
+    dimensionFilter: {
+      andGroup: {
+        expressions: [
+          HOST_FILTER,
+          { filter: { fieldName: "pagePath", inListFilter: { values: ["/", "/auth"] } } },
+        ],
+      },
+    },
   });
   const usersAt = (path: string) => num(pathUsers.find((r) => r.dimensionValues?.[0]?.value === path) ?? {}, 0);
 

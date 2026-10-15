@@ -10,7 +10,7 @@
 
 ## 架構及倉庫
 - tianxi-racing：現行賽馬資料、服務及排程。
-- tianxi-frontend：現行源碼鏡像，正式站由 Lovable 發布。
+- tianxi-web：現行源碼鏡像，正式站由 Lovable 發布。
 - tianxi-research：賽馬研究；研究先報告、用戶拍板先升版。
 - tianxi-football／tianxi-marksix：private＋archived，保留歷史資料及源碼，取消前台及監控服務。
 - TanStack Start／React 19、Tailwind v4、Lovable Cloud、ECharts、TanStack Table；/admin 只限管理員。

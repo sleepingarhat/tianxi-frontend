@@ -35,49 +35,108 @@ function FunnelPanel({ data }: { data: Ga4TrafficReport | undefined }) {
   const fetchStats = useServerFn(getMemberAccountStats);
   const m = useQuery({ queryKey: ["member-stats"], queryFn: () => fetchStats(), staleTime: 5 * 60_000 });
   const ev = data?.funnel.events ?? {};
+  // 漏斗主體用 GA4 事件（自動更新）；會員資料庫數喺下面對照面板並列
   const steps: { label: string; n: number | null; src: string }[] = [
     { label: "首頁訪客", n: data ? data.funnel.homeUsers : null, src: "GA4" },
     { label: "入註冊頁", n: data ? data.funnel.authUsers : null, src: "GA4" },
-    { label: "提交註冊", n: m.data ? m.data.last30 : null, src: "會員資料" },
-    { label: "驗證電郵", n: m.data ? m.data.confirmed30 : null, src: "會員資料" },
-    { label: "完成註冊（首次登入）", n: m.data ? m.data.signedIn30 : null, src: "會員資料" },
+    { label: "提交註冊", n: data ? (ev["sign_up_start"] ?? 0) : null, src: "GA4 事件" },
+    { label: "完成註冊", n: data ? (ev["sign_up"] ?? 0) : null, src: "GA4 事件" },
+    { label: "首次登入", n: data ? (ev["login"] ?? 0) : null, src: "GA4 事件" },
   ];
   const top = Math.max(1, steps[0]?.n ?? 1);
   const pay = [
     { label: "撳訂閱 Pro", n: ev["begin_checkout"] ?? 0 },
     { label: "完成付款", n: ev["purchase"] ?? 0 },
   ];
+  // GA 事件 vs 會員資料庫對照
+  const compare: { label: string; ga: number | null; db: number | null }[] = [
+    { label: "提交註冊", ga: data ? (ev["sign_up_start"] ?? 0) : null, db: m.data ? m.data.last30 : null },
+    { label: "完成註冊", ga: data ? (ev["sign_up"] ?? 0) : null, db: m.data ? m.data.signedIn30 : null },
+    { label: "驗證電郵", ga: null, db: m.data ? m.data.confirmed30 : null },
+  ];
+  // 轉換率圖表
+  const rates = [
+    { label: "會員註冊完成率", done: ev["sign_up"] ?? 0, start: ev["sign_up_start"] ?? 0, doneLabel: "完成註冊", startLabel: "提交註冊" },
+    { label: "訂閱完成率", done: ev["purchase"] ?? 0, start: ev["begin_checkout"] ?? 0, doneLabel: "完成付款", startLabel: "撳訂閱" },
+  ];
   return (
-    <Panel title="會員漏斗" en="近 30 日 · 流失率" className="mt-4">
-      <ul className="space-y-2">
-        {steps.map((s, i) => {
-          const prev = i > 0 ? steps[i - 1]?.n : null;
-          const loss = prev && s.n != null ? 1 - s.n / prev : null;
-          return (
-            <li key={s.label}>
-              <div className="flex items-baseline justify-between gap-2 text-[12px]">
-                <span className="text-ink">{i + 1}. {s.label}<span className="ml-1 text-[10px] text-ink-3">{s.src}</span></span>
-                <span className="font-mono-tx text-ink-2">
-                  {s.n == null ? "—" : s.n.toLocaleString()}
-                  {loss != null ? <span className="ml-2 text-[10px] text-ink-3">流失 {fmtPct(Math.max(0, loss))}</span> : null}
-                </span>
-              </div>
-              <div className="mt-1 h-2 rounded-full bg-hairline">
-                <div className="h-2 rounded-full bg-gold/80" style={{ width: `${Math.min(100, ((s.n ?? 0) / top) * 100)}%` }} />
-              </div>
+    <>
+      <Panel title="會員漏斗" en="近 30 日 · GA4 事件自動更新" className="mt-4">
+        <ul className="space-y-2">
+          {steps.map((s, i) => {
+            const prev = i > 0 ? steps[i - 1]?.n : null;
+            const loss = prev && s.n != null ? 1 - s.n / prev : null;
+            return (
+              <li key={s.label}>
+                <div className="flex items-baseline justify-between gap-2 text-[12px]">
+                  <span className="text-ink">{i + 1}. {s.label}<span className="ml-1 text-[10px] text-ink-3">{s.src}</span></span>
+                  <span className="font-mono-tx text-ink-2">
+                    {s.n == null ? "—" : s.n.toLocaleString()}
+                    {loss != null ? <span className="ml-2 text-[10px] text-ink-3">流失 {fmtPct(Math.max(0, loss))}</span> : null}
+                  </span>
+                </div>
+                <div className="mt-1 h-2 rounded-full bg-hairline">
+                  <div className="h-2 rounded-full bg-gold/80" style={{ width: `${Math.min(100, ((s.n ?? 0) / top) * 100)}%` }} />
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+        <div className="mt-3 grid grid-cols-2 gap-3 border-t border-hairline pt-3 text-[12px]">
+          {pay.map((p) => (
+            <div key={p.label}><span className="text-ink-3">{p.label}</span><div className="font-mono-tx text-ink">{p.n.toLocaleString()} 次</div></div>
+          ))}
+        </div>
+        <p className="mt-2 text-[10px] text-ink-3">
+          訪客轉會員率：{steps[0]?.n && steps[3]?.n != null ? fmtPct(steps[3].n / steps[0].n) : "—"}；落單完成率：{pay[0]!.n ? fmtPct(pay[1]!.n / pay[0]!.n) : "—"}。GA4 事件由正式站統計碼即時記錄（廣告攔截會少計）。
+        </p>
+      </Panel>
+
+      <div className="mt-4 grid gap-4 lg:grid-cols-2">
+        <Panel title="GA 事件 對照 會員資料庫" en="近 30 日">
+          <ul className="divide-y divide-hairline">
+            <li className="flex items-center gap-3 py-2 text-[10px] text-ink-3">
+              <span className="min-w-0 flex-1">步驟</span>
+              <span className="w-16 text-right">GA4 事件</span>
+              <span className="w-16 text-right">會員資料</span>
             </li>
-          );
-        })}
-      </ul>
-      <div className="mt-3 grid grid-cols-2 gap-3 border-t border-hairline pt-3 text-[12px]">
-        {pay.map((p) => (
-          <div key={p.label}><span className="text-ink-3">{p.label}</span><div className="font-mono-tx text-ink">{p.n.toLocaleString()} 次</div></div>
-        ))}
+            {compare.map((c) => (
+              <li key={c.label} className="flex items-center gap-3 py-2">
+                <span className="min-w-0 flex-1 text-[12px] text-ink">{c.label}</span>
+                <span className="w-16 text-right font-mono-tx text-[11px] text-ink-2">{c.ga == null ? "—" : c.ga.toLocaleString()}</span>
+                <span className="w-16 text-right font-mono-tx text-[11px] text-ink-2">{c.db == null ? "—" : c.db.toLocaleString()}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-2 text-[10px] text-ink-3">
+            GA4 事件由統計碼記錄（廣告攔截會少計、有幾個鐘延遲）；會員資料係資料庫實數。兩者接近即代表追蹤正常；「驗證電郵」冇 GA 事件，只有資料庫數。
+          </p>
+        </Panel>
+
+        <Panel title="轉換率" en="近 30 日 · 每步轉換">
+          <ul className="space-y-4">
+            {rates.map((r) => {
+              const rate = r.start > 0 ? r.done / r.start : null;
+              return (
+                <li key={r.label}>
+                  <div className="flex items-baseline justify-between gap-2 text-[12px]">
+                    <span className="text-ink">{r.label}</span>
+                    <span className="font-mono-tx text-ink-2">{rate == null ? "—" : fmtPct(rate)}</span>
+                  </div>
+                  <div className="mt-1 h-2 rounded-full bg-hairline">
+                    <div className="h-2 rounded-full bg-gold/80" style={{ width: `${rate == null ? 0 : Math.min(100, rate * 100)}%` }} />
+                  </div>
+                  <p className="mt-1 text-[10px] text-ink-3">
+                    {r.startLabel} {r.start.toLocaleString()} 次 → {r.doneLabel} {r.done.toLocaleString()} 次
+                  </p>
+                </li>
+              );
+            })}
+          </ul>
+          <p className="mt-2 text-[10px] text-ink-3">對照上面漏斗：註冊完成率＝第 4 步 ÷ 第 3 步；訂閱完成率＝完成付款 ÷ 撳訂閱 Pro。</p>
+        </Panel>
       </div>
-      <p className="mt-2 text-[10px] text-ink-3">
-        訪客轉會員率：{steps[0]?.n && steps[2]?.n != null ? fmtPct(steps[2].n / steps[0].n) : "—"}；落單完成率：{pay[0]!.n ? fmtPct(pay[1]!.n / pay[0]!.n) : "—"}。訪客數來自 GA4（廣告攔截會少計），註冊同驗證數來自會員資料，所以比率只作參考。
-      </p>
-    </Panel>
+    </>
   );
 }
 
@@ -135,7 +194,7 @@ function Traffic() {
         ) : (
           <div className="flex h-32 items-end gap-[3px]">
             {d.daily.map((p) => (
-              <div key={p.date} className="group flex min-w-0 flex-1 flex-col items-center justify-end gap-1" title={`${fmtDate(p.date)}：${p.views} 次瀏覽／${p.users} 訪客`}>
+              <div key={p.date} className="group flex h-full min-w-0 flex-1 flex-col items-center justify-end" title={`${fmtDate(p.date)}：${p.views} 次瀏覽／${p.users} 訪客`}>
                 <div className="w-full rounded-t-[3px] bg-gold/80 transition-colors group-hover:bg-gold" style={{ height: `${Math.max(2, (p.views / maxViews) * 100)}%` }} />
               </div>
             ))}
@@ -180,7 +239,7 @@ function Traffic() {
           ) : (
             <ul className="divide-y divide-hairline">
               {d.pages.map((p) => (
-                <li key={p.path} className="flex items-center gap-3 py-2">
+                <li key={`${p.path}|${p.title}`} className="flex items-center gap-3 py-2">
                   <span className="min-w-0 flex-1">
                     <span className="block truncate text-[12px] text-ink">{p.title || p.path}</span>
                     <span className="block truncate font-mono-tx text-[10px] text-ink-3">{p.path}</span>
