@@ -1,4 +1,6 @@
 import { Link } from "@tanstack/react-router";
+import { MoatSection } from "./MoatSection";
+import { WeeklyRacecoursePosters } from "./RacecoursePhoto";
 import { Check } from "lucide-react";
 import type { ReactNode } from "react";
 import { FoundingMemberOffer } from "./FoundingMemberOffer";
@@ -106,6 +108,9 @@ export function EngineLanding() {
           </div>
         </div>
       </section>
+      <WeeklyRacecoursePosters />
+      <MoatSection />
+
 
       {SECTIONS.map((s, i) => (
         <section key={s.no} className={`border-t border-hairline px-5 py-10 md:px-10 md:py-14 ${i % 2 ? "bg-paper-2/60" : ""}`}>

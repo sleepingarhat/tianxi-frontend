@@ -269,6 +269,111 @@ export type Database = {
         }
         Relationships: []
       }
+      racecourse_photo_runs: {
+        Row: {
+          accepted: number
+          added: number
+          id: number
+          message: string | null
+          ok: boolean
+          ran_at: string
+          scanned: number
+        }
+        Insert: {
+          accepted?: number
+          added?: number
+          id?: never
+          message?: string | null
+          ok: boolean
+          ran_at?: string
+          scanned?: number
+        }
+        Update: {
+          accepted?: number
+          added?: number
+          id?: never
+          message?: string | null
+          ok?: boolean
+          ran_at?: string
+          scanned?: number
+        }
+        Relationships: []
+      }
+      racecourse_photos: {
+        Row: {
+          active: boolean
+          approved: boolean | null
+          author: string
+          checked_at: string
+          file_title: string
+          first_seen_at: string
+          height: number
+          image_url: string
+          license: string
+          license_url: string | null
+          review_note: string | null
+          source_page: string
+          venue: string
+          width: number
+        }
+        Insert: {
+          active?: boolean
+          approved?: boolean | null
+          author: string
+          checked_at?: string
+          file_title: string
+          first_seen_at?: string
+          height: number
+          image_url: string
+          license: string
+          license_url?: string | null
+          review_note?: string | null
+          source_page: string
+          venue: string
+          width: number
+        }
+        Update: {
+          active?: boolean
+          approved?: boolean | null
+          author?: string
+          checked_at?: string
+          file_title?: string
+          first_seen_at?: string
+          height?: number
+          image_url?: string
+          license?: string
+          license_url?: string | null
+          review_note?: string | null
+          source_page?: string
+          venue?: string
+          width?: number
+        }
+        Relationships: []
+      }
+      racing_results_index: {
+        Row: {
+          meeting_date: string
+          path: string
+          races: number
+          result_rows: number
+          synced_at: string
+        }
+        Insert: {
+          meeting_date: string
+          path: string
+          races: number
+          result_rows: number
+          synced_at?: string
+        }
+        Update: {
+          meeting_date?: string
+          path?: string
+          races?: number
+          result_rows?: number
+          synced_at?: string
+        }
+        Relationships: []
+      }
       subscriptions: {
         Row: {
           cancel_at_period_end: boolean
@@ -434,6 +539,7 @@ export type Database = {
       member_account_stats: { Args: never; Returns: Json }
       my_membership: { Args: never; Returns: Json }
       public_member_count: { Args: never; Returns: number }
+      racing_data_scale: { Args: never; Returns: Json }
     }
     Enums: {
       app_role: "admin" | "user"

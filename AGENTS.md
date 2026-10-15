@@ -9,14 +9,7 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-## 足球展示層規則
 
-- 足球各頁嘅卡片排版一律用 `src/components/tx/FootballMatchUI.tsx` 嘅共用組件（`CrestScoreboard` 計分板、`ProbBars` 凍結機率橫條、`FingerprintChip` 版本指紋格）：隊徽／隊名／右側數字欄各自對齊成一直行，手機版先決。理由：之前每頁各自寫一份，导致隊徽同排版逐頁漂移。
-- 展示層改動唔准碰凍結數值、版本指紋、模型、API 同開賽前鎖定／戰績計算規則。
-- 獨立足球研究腳本同輸出留喺 docs/research，唔入應用運行路徑；只有研究倉真實凍結矩陣通過逐季主副閘先可提案升指紋，避免代理模型冒充生產成績。
-- 足球逐場研究頁只載入經離線匯出嘅賽前代理資料，權重滑桿僅作情境試算、傷兵無快照時停用；同正式 S5 凍結預測完全隔離，避免以事後調權冒充已驗證模型。
-- 足球雙引擎 dual-v1 喺凍結三格之上出字（src/lib/footballDualEngine.ts）；鎖定帳 football_dual_ledger 只增不改，由每 15 分鐘定時任務 T−6h 寫入，到點即鎖、搵唔到賠率標「無賠率」唔再等（2026-10-06 前舊場次為 T−60，歷史帳不改）；同日注碼由 $10 升為 $100，帳面 stake 欄為準。理由：出字層獨立版本，唔郁凍結矩陣。
-- 模型版本統一登記喺 model_versions 表（version／engine／fingerprint／released_at／status）；每次定版或注碼級規則改動要新增一版，舊版標 archived，成績按版本獨立計、唔回填。理由：研究還研究、版本還版本，戰績可追溯。
 
 ## 首頁產品層規則
 
@@ -28,17 +21,18 @@
 - 每次發布正式站後執行 python3 scripts/sync-frontend-repo.py，將源碼經 GitHub API 同步入 tianxi-web；理由：倉庫只作鏡像，正式站由 Lovable 發布。
 
 ## 監控端規則
-- Subdirectories may have their own AGENTS.md (e.g. src/components/admin/); read it before changing files there.
+- Subdirectories (src/components/admin/, src/lib/ for archived football) have their own AGENTS.md; read before changing files there.
 - Public racing P&L supplements the existing four-pool rollup with shared `racingPoolAccounting` cross-race queries, merging daily cost and payout once; missing fifth picks are excluded and post-race substitutes are labelled, so incomplete data cannot masquerade as frozen results.
 - Admin version notes must wrap in desktop tables and use stacked mobile records; cross-race trio reconciliation reuses ExoticTrioPools separately from the single-race strategy aggregate, to prevent truncated explanations and mixed accounting scopes.
 - Blueprint completion audits must distinguish implemented code, verified user flows, missing evidence and superseded decisions in docs/blueprint; route existence and checked roadmap items alone do not prove functional completion.
 
 - 全站 break-ui 用 scripts/break-ui-matrix.py 覆蓋 320／390／1280、RTL、慢 API 與千人會員；dev-log 會合法提及 NaN／undefined，掃描器不可將說明文字當資料錯誤。理由：驗收要可重跑亦要避免假陽性。
-- 足球逐季正式帳按賽季／版本／實際注碼分組，未結算只計 locked；管理員匯出不可公開。持久 ops 日誌只寫去敏摘要，service role 寫、admin 讀，失敗不得阻塞正式 API。
 - 外部圖片只可用逐張核實自由授權或書面商用權，頁內須署名並保留 /media-credits；API 圖址不等於授權。
 - 藍圖現行版本放 docs/blueprint/；改藍圖要同步更新該文件、roadmap、AGENTS、開發者日誌同 GitHub 鏡像。理由：設計說明同代碼唔可以分家。
 
-- HKJC football GraphQL calls go through src/lib/hkjcFootball.server.ts with the website query copied verbatim; HKJC rejects any non-whitelisted query text.
 - Archived product source and historical documentation are retained, while their repositories and database reads are restricted; this makes suspension reversible without altering frozen records.
 - The current blueprint is docs/blueprint/tianxi-racing-blueprint-2026-10-13.md; older blueprints are historical so superseded requirements cannot re-enable retired products.
 - Pro entitlement is decided only by src/lib/entitlement.ts (resolveEntitlement), fed by the my_membership DB function and the webhook-maintained subscriptions table; the gate opens automatically at the 500th signup. Why: one rule source for free stage, founding Pro and paid subscriptions.
+- Racecourse posters rotate weekly from Wikimedia Commons via a managed HTTP schedule into racecourse_photos (commercial-free licences only, auto-deactivate on licence change); tianxi-web GitHub Actions only monitor the public status endpoint. Why: scheduling stays in the app backend, GitHub mirror stays read-only.
+
+- Homepage data-scale figures come only from racing_results_index, filled by a twice-daily job that counts each tianxi-racing results CSV incrementally (40 files/run). Why: shown numbers stay verifiable and update without manual edits.

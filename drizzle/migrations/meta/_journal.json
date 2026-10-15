@@ -99,6 +99,27 @@
       "when": 1792054654673,
       "tag": "0013_member_stats_confirmed30",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1792062446449,
+      "tag": "0014_racecourse_photos",
+      "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "7",
+      "when": 1792062657379,
+      "tag": "0015_racecourse_photos_review",
+      "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1792064116706,
+      "tag": "0016_racing_results_index",
+      "breakpoints": true
     }
   ]
 }

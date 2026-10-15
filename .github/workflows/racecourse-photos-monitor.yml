@@ -1,0 +1,14 @@
+name: 馬場海報監察 — Weekly Wikimedia Photos
+on:
+  schedule:
+    - cron: "30 3 * * 2"   # 每星期二 11:30 HKT
+  workflow_dispatch:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 檢查每週馬場相自動更新
+        run: |
+          r=$(curl -fsS https://tianxi.racing/api/public/racecourse-photos-status)
+          echo "$r"
+          echo "$r" | jq -e '.healthy == true' > /dev/null || { echo "::error::馬場相超過 8 日未更新或其中一個馬場冇相"; exit 1; }

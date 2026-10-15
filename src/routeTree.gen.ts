@@ -90,12 +90,15 @@ import { Route as ApiPublicLockStateRouteImport } from './routes/api/public/lock
 import { Route as ApiPublicMarksixDataRouteImport } from './routes/api/public/marksix-data'
 import { Route as ApiPublicMarksixNextRouteImport } from './routes/api/public/marksix-next'
 import { Route as ApiPublicMeetingCancellationRouteImport } from './routes/api/public/meeting-cancellation'
+import { Route as ApiPublicRacecoursePhotosStatusRouteImport } from './routes/api/public/racecourse-photos-status'
 import { Route as ApiPublicTelegramAlertRouteImport } from './routes/api/public/telegram-alert'
 import { Route as ApiPublicWeatherArchiveRouteImport } from './routes/api/public/weather-archive'
 import { Route as ApiPublicWeatherSyncGithubRouteImport } from './routes/api/public/weather-sync-github'
 import { Route as FootballMatchMatchKeyRouteImport } from './routes/football.match.$matchKey'
 import { Route as FootballStudyMatchIdRouteImport } from './routes/football.study.$matchId'
 import { Route as ApiPublicHooksRaceResultsDispatchRouteImport } from './routes/api/public/hooks/race-results-dispatch'
+import { Route as ApiPublicJobsRacecoursePhotosRouteImport } from './routes/api/public/jobs/racecourse-photos'
+import { Route as ApiPublicJobsRacingDataScaleRouteImport } from './routes/api/public/jobs/racing-data-scale'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 import { Route as FootballTeamDivSlugRouteImport } from './routes/football.team.$div.$slug'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
@@ -525,6 +528,12 @@ const ApiPublicMeetingCancellationRoute =
     path: '/api/public/meeting-cancellation',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicRacecoursePhotosStatusRoute =
+  ApiPublicRacecoursePhotosStatusRouteImport.update({
+    id: '/api/public/racecourse-photos-status',
+    path: '/api/public/racecourse-photos-status',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicTelegramAlertRoute = ApiPublicTelegramAlertRouteImport.update({
   id: '/api/public/telegram-alert',
   path: '/api/public/telegram-alert',
@@ -555,6 +564,18 @@ const ApiPublicHooksRaceResultsDispatchRoute =
   ApiPublicHooksRaceResultsDispatchRouteImport.update({
     id: '/api/public/hooks/race-results-dispatch',
     path: '/api/public/hooks/race-results-dispatch',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicJobsRacecoursePhotosRoute =
+  ApiPublicJobsRacecoursePhotosRouteImport.update({
+    id: '/api/public/jobs/racecourse-photos',
+    path: '/api/public/jobs/racecourse-photos',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicJobsRacingDataScaleRoute =
+  ApiPublicJobsRacingDataScaleRouteImport.update({
+    id: '/api/public/jobs/racing-data-scale',
+    path: '/api/public/jobs/racing-data-scale',
     getParentRoute: () => rootRouteImport,
   } as any)
 const ApiPublicPaymentsWebhookRoute =
@@ -659,6 +680,7 @@ export interface FileRoutesByFullPath {
   '/api/public/marksix-data': typeof ApiPublicMarksixDataRoute
   '/api/public/marksix-next': typeof ApiPublicMarksixNextRoute
   '/api/public/meeting-cancellation': typeof ApiPublicMeetingCancellationRoute
+  '/api/public/racecourse-photos-status': typeof ApiPublicRacecoursePhotosStatusRoute
   '/api/public/telegram-alert': typeof ApiPublicTelegramAlertRoute
   '/api/public/weather-archive': typeof ApiPublicWeatherArchiveRoute
   '/api/public/weather-sync-github': typeof ApiPublicWeatherSyncGithubRoute
@@ -666,6 +688,8 @@ export interface FileRoutesByFullPath {
   '/football/study/$matchId': typeof FootballStudyMatchIdRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/api/public/hooks/race-results-dispatch': typeof ApiPublicHooksRaceResultsDispatchRoute
+  '/api/public/jobs/racecourse-photos': typeof ApiPublicJobsRacecoursePhotosRoute
+  '/api/public/jobs/racing-data-scale': typeof ApiPublicJobsRacingDataScaleRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/football/team/$div/$slug': typeof FootballTeamDivSlugRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
@@ -750,6 +774,7 @@ export interface FileRoutesByTo {
   '/api/public/marksix-data': typeof ApiPublicMarksixDataRoute
   '/api/public/marksix-next': typeof ApiPublicMarksixNextRoute
   '/api/public/meeting-cancellation': typeof ApiPublicMeetingCancellationRoute
+  '/api/public/racecourse-photos-status': typeof ApiPublicRacecoursePhotosStatusRoute
   '/api/public/telegram-alert': typeof ApiPublicTelegramAlertRoute
   '/api/public/weather-archive': typeof ApiPublicWeatherArchiveRoute
   '/api/public/weather-sync-github': typeof ApiPublicWeatherSyncGithubRoute
@@ -757,6 +782,8 @@ export interface FileRoutesByTo {
   '/football/study/$matchId': typeof FootballStudyMatchIdRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/api/public/hooks/race-results-dispatch': typeof ApiPublicHooksRaceResultsDispatchRoute
+  '/api/public/jobs/racecourse-photos': typeof ApiPublicJobsRacecoursePhotosRoute
+  '/api/public/jobs/racing-data-scale': typeof ApiPublicJobsRacingDataScaleRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/football/team/$div/$slug': typeof FootballTeamDivSlugRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
@@ -844,6 +871,7 @@ export interface FileRoutesById {
   '/api/public/marksix-data': typeof ApiPublicMarksixDataRoute
   '/api/public/marksix-next': typeof ApiPublicMarksixNextRoute
   '/api/public/meeting-cancellation': typeof ApiPublicMeetingCancellationRoute
+  '/api/public/racecourse-photos-status': typeof ApiPublicRacecoursePhotosStatusRoute
   '/api/public/telegram-alert': typeof ApiPublicTelegramAlertRoute
   '/api/public/weather-archive': typeof ApiPublicWeatherArchiveRoute
   '/api/public/weather-sync-github': typeof ApiPublicWeatherSyncGithubRoute
@@ -851,6 +879,8 @@ export interface FileRoutesById {
   '/football/study/$matchId': typeof FootballStudyMatchIdRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/api/public/hooks/race-results-dispatch': typeof ApiPublicHooksRaceResultsDispatchRoute
+  '/api/public/jobs/racecourse-photos': typeof ApiPublicJobsRacecoursePhotosRoute
+  '/api/public/jobs/racing-data-scale': typeof ApiPublicJobsRacingDataScaleRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/football/team/$div/$slug': typeof FootballTeamDivSlugRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
@@ -938,6 +968,7 @@ export interface FileRouteTypes {
     | '/api/public/marksix-data'
     | '/api/public/marksix-next'
     | '/api/public/meeting-cancellation'
+    | '/api/public/racecourse-photos-status'
     | '/api/public/telegram-alert'
     | '/api/public/weather-archive'
     | '/api/public/weather-sync-github'
@@ -945,6 +976,8 @@ export interface FileRouteTypes {
     | '/football/study/$matchId'
     | '/admin/'
     | '/api/public/hooks/race-results-dispatch'
+    | '/api/public/jobs/racecourse-photos'
+    | '/api/public/jobs/racing-data-scale'
     | '/api/public/payments/webhook'
     | '/football/team/$div/$slug'
     | '/lovable/email/auth/preview'
@@ -1029,6 +1062,7 @@ export interface FileRouteTypes {
     | '/api/public/marksix-data'
     | '/api/public/marksix-next'
     | '/api/public/meeting-cancellation'
+    | '/api/public/racecourse-photos-status'
     | '/api/public/telegram-alert'
     | '/api/public/weather-archive'
     | '/api/public/weather-sync-github'
@@ -1036,6 +1070,8 @@ export interface FileRouteTypes {
     | '/football/study/$matchId'
     | '/admin'
     | '/api/public/hooks/race-results-dispatch'
+    | '/api/public/jobs/racecourse-photos'
+    | '/api/public/jobs/racing-data-scale'
     | '/api/public/payments/webhook'
     | '/football/team/$div/$slug'
     | '/lovable/email/auth/preview'
@@ -1122,6 +1158,7 @@ export interface FileRouteTypes {
     | '/api/public/marksix-data'
     | '/api/public/marksix-next'
     | '/api/public/meeting-cancellation'
+    | '/api/public/racecourse-photos-status'
     | '/api/public/telegram-alert'
     | '/api/public/weather-archive'
     | '/api/public/weather-sync-github'
@@ -1129,6 +1166,8 @@ export interface FileRouteTypes {
     | '/football/study/$matchId'
     | '/_authenticated/admin/'
     | '/api/public/hooks/race-results-dispatch'
+    | '/api/public/jobs/racecourse-photos'
+    | '/api/public/jobs/racing-data-scale'
     | '/api/public/payments/webhook'
     | '/football/team/$div/$slug'
     | '/lovable/email/auth/preview'
@@ -1204,11 +1243,14 @@ export interface RootRouteChildren {
   ApiPublicMarksixDataRoute: typeof ApiPublicMarksixDataRoute
   ApiPublicMarksixNextRoute: typeof ApiPublicMarksixNextRoute
   ApiPublicMeetingCancellationRoute: typeof ApiPublicMeetingCancellationRoute
+  ApiPublicRacecoursePhotosStatusRoute: typeof ApiPublicRacecoursePhotosStatusRoute
   ApiPublicTelegramAlertRoute: typeof ApiPublicTelegramAlertRoute
   ApiPublicWeatherArchiveRoute: typeof ApiPublicWeatherArchiveRoute
   ApiPublicWeatherSyncGithubRoute: typeof ApiPublicWeatherSyncGithubRoute
   FootballMatchMatchKeyRoute: typeof FootballMatchMatchKeyRoute
   ApiPublicHooksRaceResultsDispatchRoute: typeof ApiPublicHooksRaceResultsDispatchRoute
+  ApiPublicJobsRacecoursePhotosRoute: typeof ApiPublicJobsRacecoursePhotosRoute
+  ApiPublicJobsRacingDataScaleRoute: typeof ApiPublicJobsRacingDataScaleRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
   FootballTeamDivSlugRoute: typeof FootballTeamDivSlugRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
@@ -1784,6 +1826,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicMeetingCancellationRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/racecourse-photos-status': {
+      id: '/api/public/racecourse-photos-status'
+      path: '/api/public/racecourse-photos-status'
+      fullPath: '/api/public/racecourse-photos-status'
+      preLoaderRoute: typeof ApiPublicRacecoursePhotosStatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/telegram-alert': {
       id: '/api/public/telegram-alert'
       path: '/api/public/telegram-alert'
@@ -1824,6 +1873,20 @@ declare module '@tanstack/react-router' {
       path: '/api/public/hooks/race-results-dispatch'
       fullPath: '/api/public/hooks/race-results-dispatch'
       preLoaderRoute: typeof ApiPublicHooksRaceResultsDispatchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/jobs/racecourse-photos': {
+      id: '/api/public/jobs/racecourse-photos'
+      path: '/api/public/jobs/racecourse-photos'
+      fullPath: '/api/public/jobs/racecourse-photos'
+      preLoaderRoute: typeof ApiPublicJobsRacecoursePhotosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/jobs/racing-data-scale': {
+      id: '/api/public/jobs/racing-data-scale'
+      path: '/api/public/jobs/racing-data-scale'
+      fullPath: '/api/public/jobs/racing-data-scale'
+      preLoaderRoute: typeof ApiPublicJobsRacingDataScaleRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/payments/webhook': {
@@ -1984,12 +2047,15 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicMarksixDataRoute: ApiPublicMarksixDataRoute,
   ApiPublicMarksixNextRoute: ApiPublicMarksixNextRoute,
   ApiPublicMeetingCancellationRoute: ApiPublicMeetingCancellationRoute,
+  ApiPublicRacecoursePhotosStatusRoute: ApiPublicRacecoursePhotosStatusRoute,
   ApiPublicTelegramAlertRoute: ApiPublicTelegramAlertRoute,
   ApiPublicWeatherArchiveRoute: ApiPublicWeatherArchiveRoute,
   ApiPublicWeatherSyncGithubRoute: ApiPublicWeatherSyncGithubRoute,
   FootballMatchMatchKeyRoute: FootballMatchMatchKeyRoute,
   ApiPublicHooksRaceResultsDispatchRoute:
     ApiPublicHooksRaceResultsDispatchRoute,
+  ApiPublicJobsRacecoursePhotosRoute: ApiPublicJobsRacecoursePhotosRoute,
+  ApiPublicJobsRacingDataScaleRoute: ApiPublicJobsRacingDataScaleRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
   FootballTeamDivSlugRoute: FootballTeamDivSlugRoute,
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,

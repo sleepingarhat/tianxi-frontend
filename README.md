@@ -1,5 +1,8 @@
 # 天喜 TIANXI · 香港賽馬
 
+[![馬場海報監察](https://github.com/sleepingarhat/tianxi-web/actions/workflows/racecourse-photos-monitor.yml/badge.svg)](https://github.com/sleepingarhat/tianxi-web/actions/workflows/racecourse-photos-monitor.yml)
+[![正式站健康監察](https://github.com/sleepingarhat/tianxi-web/actions/workflows/site-health-monitor.yml/badge.svg)](https://github.com/sleepingarhat/tianxi-web/actions/workflows/site-health-monitor.yml)
+
 2026-10-13 起專注深耕香港賽馬：沙田、跑馬地。正式站：https://tianxi.racing
 
 ## 產品及免費路線
