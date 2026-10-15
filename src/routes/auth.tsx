@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { AppShell } from "@/components/tx/AppShell";
 import { Card, PageHead } from "@/components/tx/ui";
 import { supabase } from "@/integrations/supabase/client";
+import { track } from "@/lib/track";
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (search: Record<string, unknown>): { mode?: "signup" } => search["mode"] === "signup" ? { mode: "signup" } : {},
@@ -53,6 +54,7 @@ function AuthPage() {
     setMsg(null);
     try {
       if (mode === "signup") {
+        track("sign_up_start", { method: "email" });
         const { error } = await supabase.auth.signUp({
           email,
           password,
@@ -61,10 +63,12 @@ function AuthPage() {
           options: { emailRedirectTo: "https://tianxi.racing/auth" },
         });
         if (error) throw error;
+        track("sign_up", { method: "email" });
         setMsg("已建立帳戶。如需電郵確認，請先檢查收件箱，然後回來登入。");
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
+        track("login", { method: "email" });
         await goAfterSignIn();
       }
     } catch (e2) {

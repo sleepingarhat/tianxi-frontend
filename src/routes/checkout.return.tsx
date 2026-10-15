@@ -1,4 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { track } from "@/lib/track";
+import { PRO_WEEKLY_PRICE_HKD } from "@/lib/freeStage";
 import { AppShell } from "@/components/tx/AppShell";
 import { Card } from "@/components/tx/ui";
 import { Button } from "@/components/ui/button";
@@ -23,6 +26,13 @@ export const Route = createFileRoute("/checkout/return")({
 
 function ReturnPage() {
   const { session_id } = Route.useSearch();
+  useEffect(() => {
+    if (!session_id) return;
+    const key = `tx_purchase_${session_id}`;
+    if (sessionStorage.getItem(key)) return;
+    sessionStorage.setItem(key, "1");
+    track("purchase", { transaction_id: session_id, currency: "HKD", value: PRO_WEEKLY_PRICE_HKD });
+  }, [session_id]);
   return (
     <AppShell page="dashboard">
       <div className="px-4 py-6">

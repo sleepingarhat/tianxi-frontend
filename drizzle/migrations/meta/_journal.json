@@ -92,6 +92,13 @@
       "when": 1791967708849,
       "tag": "0012_restore_gate_500",
       "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1792054654673,
+      "tag": "0013_member_stats_confirmed30",
+      "breakpoints": true
     }
   ]
 }

@@ -33,6 +33,7 @@ const NAV = [
   { to: "/admin/model-versions", label: "模型版本", icon: Layers },
   { to: "/admin/pnl", label: "盈虧", icon: Wallet },
   { to: "/admin/users-membership", label: "會員", icon: Users },
+  { to: "/admin/traffic", label: "流量", icon: Activity },
   { to: "/admin/logs", label: "日誌", icon: FileClock },
   { to: "/admin/settings", label: "設定", icon: Settings },
   { to: "/admin/console", label: "運維工具", icon: Wrench },

@@ -7,6 +7,10 @@ export type MemberAccountStats = {
   confirmed: number;
   last7: number;
   last30: number;
+  /** 近 30 日新登記而已驗證電郵 */
+  confirmed30: number;
+  /** 近 30 日新登記而已成功登入（完成會員註冊） */
+  signedIn30: number;
 };
 
 
@@ -35,5 +39,7 @@ export const getMemberAccountStats = createServerFn({ method: "POST" })
       confirmed: Number(row.confirmed ?? 0),
       last7: Number(row.last7 ?? 0),
       last30: Number(row.last30 ?? 0),
+      confirmed30: Number(row.confirmed30 ?? 0),
+      signedIn30: Number(row.signedIn30 ?? 0),
     } satisfies MemberAccountStats;
   });

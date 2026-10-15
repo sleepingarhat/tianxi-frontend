@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, Pill } from "@/components/tx/ui";
 import { createCheckoutSession, createPortalSession, getMyMembership } from "@/lib/payments.functions";
+import { track } from "@/lib/track";
 import { getStripe, getStripeEnvironment } from "@/lib/stripe";
 import { PRO_WEEKLY_PRICE_HKD } from "@/lib/freeStage";
 
@@ -64,7 +65,7 @@ export function MembershipStatus() {
         {e.kind === "founding" && <p className="rounded-md border border-gold-strong/50 bg-gold-bg px-3 py-2 text-[12px] font-bold text-gold">收費閘已開：你係首 500 名會員，已自動轉 Pro，唔使付款。</p>}
         <p className="font-serif-tc text-[17px] font-bold text-ink">{headline}</p>
         <dl className="divide-y divide-hairline">{rows.map(([k, v]) => <div key={k} className="grid grid-cols-[minmax(0,1fr)_auto] gap-3 py-2 text-[13px]"><dt className="text-ink-3">{k}</dt><dd className="font-bold text-ink">{v}</dd></div>)}</dl>
-        {canSubscribe && !checkout && <Button className="h-11 bg-deep text-deep-fg hover:bg-deep/90" onClick={() => { setErr(null); setCheckout(true); }}>訂閱 Pro · HK${PRO_WEEKLY_PRICE_HKD}／星期</Button>}
+        {canSubscribe && !checkout && <Button className="h-11 bg-deep text-deep-fg hover:bg-deep/90" onClick={() => { setErr(null); track("begin_checkout", { currency: "HKD", value: PRO_WEEKLY_PRICE_HKD }); setCheckout(true); }}>訂閱 Pro · HK${PRO_WEEKLY_PRICE_HKD}／星期</Button>}
         {q.data.hasBilling && (
           <Button variant="outline" className="h-11" onClick={async () => {
             const r = await portalFn({ data: { environment, returnUrl: window.location.href } });

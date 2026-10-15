@@ -65,6 +65,7 @@ import { Route as AuthenticatedAdminOverviewRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminPnlRouteImport } from './routes/_authenticated/admin.pnl'
 import { Route as AuthenticatedAdminPredictionLockRouteImport } from './routes/_authenticated/admin.prediction-lock'
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
+import { Route as AuthenticatedAdminTrafficRouteImport } from './routes/_authenticated/admin.traffic'
 import { Route as AuthenticatedAdminUsersMembershipRouteImport } from './routes/_authenticated/admin.users-membership'
 import { Route as ApiPublicDataMirrorRouteImport } from './routes/api/public/data-mirror'
 import { Route as ApiPublicDrawTuneRouteImport } from './routes/api/public/draw-tune'
@@ -387,6 +388,12 @@ const AuthenticatedAdminSettingsRoute =
     path: '/settings',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminTrafficRoute =
+  AuthenticatedAdminTrafficRouteImport.update({
+    id: '/traffic',
+    path: '/traffic',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminUsersMembershipRoute =
   AuthenticatedAdminUsersMembershipRouteImport.update({
     id: '/users-membership',
@@ -627,6 +634,7 @@ export interface FileRoutesByFullPath {
   '/admin/pnl': typeof AuthenticatedAdminPnlRoute
   '/admin/prediction-lock': typeof AuthenticatedAdminPredictionLockRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/traffic': typeof AuthenticatedAdminTrafficRoute
   '/admin/users-membership': typeof AuthenticatedAdminUsersMembershipRoute
   '/api/public/data-mirror': typeof ApiPublicDataMirrorRoute
   '/api/public/draw-tune': typeof ApiPublicDrawTuneRoute
@@ -717,6 +725,7 @@ export interface FileRoutesByTo {
   '/admin/pnl': typeof AuthenticatedAdminPnlRoute
   '/admin/prediction-lock': typeof AuthenticatedAdminPredictionLockRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/traffic': typeof AuthenticatedAdminTrafficRoute
   '/admin/users-membership': typeof AuthenticatedAdminUsersMembershipRoute
   '/api/public/data-mirror': typeof ApiPublicDataMirrorRoute
   '/api/public/draw-tune': typeof ApiPublicDrawTuneRoute
@@ -810,6 +819,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/pnl': typeof AuthenticatedAdminPnlRoute
   '/_authenticated/admin/prediction-lock': typeof AuthenticatedAdminPredictionLockRoute
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/_authenticated/admin/traffic': typeof AuthenticatedAdminTrafficRoute
   '/_authenticated/admin/users-membership': typeof AuthenticatedAdminUsersMembershipRoute
   '/api/public/data-mirror': typeof ApiPublicDataMirrorRoute
   '/api/public/draw-tune': typeof ApiPublicDrawTuneRoute
@@ -903,6 +913,7 @@ export interface FileRouteTypes {
     | '/admin/pnl'
     | '/admin/prediction-lock'
     | '/admin/settings'
+    | '/admin/traffic'
     | '/admin/users-membership'
     | '/api/public/data-mirror'
     | '/api/public/draw-tune'
@@ -993,6 +1004,7 @@ export interface FileRouteTypes {
     | '/admin/pnl'
     | '/admin/prediction-lock'
     | '/admin/settings'
+    | '/admin/traffic'
     | '/admin/users-membership'
     | '/api/public/data-mirror'
     | '/api/public/draw-tune'
@@ -1085,6 +1097,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/pnl'
     | '/_authenticated/admin/prediction-lock'
     | '/_authenticated/admin/settings'
+    | '/_authenticated/admin/traffic'
     | '/_authenticated/admin/users-membership'
     | '/api/public/data-mirror'
     | '/api/public/draw-tune'
@@ -1596,6 +1609,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/traffic': {
+      id: '/_authenticated/admin/traffic'
+      path: '/traffic'
+      fullPath: '/admin/traffic'
+      preLoaderRoute: typeof AuthenticatedAdminTrafficRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/users-membership': {
       id: '/_authenticated/admin/users-membership'
       path: '/users-membership'
@@ -1847,6 +1867,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminPnlRoute: typeof AuthenticatedAdminPnlRoute
   AuthenticatedAdminPredictionLockRoute: typeof AuthenticatedAdminPredictionLockRoute
   AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
+  AuthenticatedAdminTrafficRoute: typeof AuthenticatedAdminTrafficRoute
   AuthenticatedAdminUsersMembershipRoute: typeof AuthenticatedAdminUsersMembershipRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
@@ -1861,6 +1882,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminPnlRoute: AuthenticatedAdminPnlRoute,
   AuthenticatedAdminPredictionLockRoute: AuthenticatedAdminPredictionLockRoute,
   AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
+  AuthenticatedAdminTrafficRoute: AuthenticatedAdminTrafficRoute,
   AuthenticatedAdminUsersMembershipRoute:
     AuthenticatedAdminUsersMembershipRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
