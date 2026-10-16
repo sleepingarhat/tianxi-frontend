@@ -120,6 +120,27 @@
       "when": 1792064116706,
       "tag": "0016_racing_results_index",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1792150585869,
+      "tag": "0017_migration",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1792150612346,
+      "tag": "0018_migration",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1792151060030,
+      "tag": "0019_migration",
+      "breakpoints": true
     }
   ]
 }

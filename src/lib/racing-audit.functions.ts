@@ -1,3 +1,4 @@
+import { cached, CACHE_TTL } from "./computed-cache.server";
 // 公開只讀：重訓紀錄、值博長期走勢、完整性審計。固定查詢，唔改任何凍結數值。
 import { createServerFn } from "@tanstack/react-start";
 
@@ -33,13 +34,14 @@ export type RetrainManifest = {
 };
 
 /** 每個版本取最後一次成功重訓嘅實際輸出（同版本多次重訓會列 runs 數）。 */
-export const getRetrainManifests = createServerFn({ method: "GET" }).handler(async (): Promise<RetrainManifest[]> => {
+export const getRetrainManifests = createServerFn({ method: "GET" }).handler(async (): Promise<RetrainManifest[]> => { return cached("retrain-manifests", CACHE_TTL, async () => {
   return d1<RetrainManifest>(`SELECT m.model_version, m.trained_on, m.training_start, m.training_end, m.training_rows,
       m.bundle_fingerprint, m.fitted_alpha, m.live_alpha, m.gate_status, m.source,
       (SELECT COUNT(*) FROM model_run_manifest x WHERE x.model_version = m.model_version) AS runs
     FROM model_run_manifest m
     WHERE m.recorded_at = (SELECT MAX(recorded_at) FROM model_run_manifest y WHERE y.model_version = m.model_version)
     ORDER BY m.model_version DESC LIMIT 100`).catch(() => []);
+});
 });
 
 export type ValueDay = {
@@ -48,7 +50,7 @@ export type ValueDay = {
 };
 
 /** 凍結獨贏機率 vs 收市隱含機率（兩者每場歸一、去抽水）。研究口徑，非投注建議。 */
-export const getValueTrend = createServerFn({ method: "GET" }).handler(async (): Promise<ValueDay[]> => {
+export const getValueTrend = createServerFn({ method: "GET" }).handler(async (): Promise<ValueDay[]> => { return cached("value-trend", CACHE_TTL, async () => {
   return d1<ValueDay>(`WITH b AS (SELECT date, race_number, p_win, actual_finish AS fin, actual_win_odds AS od, 1.0/actual_win_odds AS imp
       FROM prediction_log WHERE engine='v12' AND variant='baseline' AND predicted_rank IS NOT NULL
       AND actual_win_odds>1 AND actual_finish IS NOT NULL AND p_win IS NOT NULL),
@@ -60,6 +62,7 @@ export const getValueTrend = createServerFn({ method: "GET" }).handler(async ():
       ROUND(SUM(CASE WHEN pm>mk THEN (CASE WHEN fin=1 THEN od*10 ELSE 0 END)-10 ELSE 0 END),1) pos_pnl,
       ROUND(AVG(ABS(pm-mk)),4) mad
     FROM x GROUP BY date ORDER BY date ASC LIMIT 400`);
+});
 });
 
 type Cat = { name: string; expected: number; present: number; missing: string[]; stale: string[]; notes: string[]; severity: string };
@@ -76,7 +79,7 @@ export type AuditDashboard = {
 
 export const sev = (s: string) => (s === "ok" ? "PASS" : s === "warn" ? "WATCH" : s === "critical" ? "FAIL" : "WATCH");
 
-export const getAuditDashboard = createServerFn({ method: "GET" }).handler(async (): Promise<AuditDashboard> => {
+export const getAuditDashboard = createServerFn({ method: "GET" }).handler(async (): Promise<AuditDashboard> => { return cached("audit-dashboard", CACHE_TTL, async () => {
   const [latest, list, health, retrain] = await Promise.all([
     ghJson<Integrity>("audit_reports/integrity_latest.json").catch(() => null),
     fetch(`${GH}/audit_reports`, { headers: { Accept: "application/vnd.github+json", "User-Agent": "tianxi-web", ...(process.env["GITHUB_TOKEN"] ? { Authorization: `Bearer ${process.env["GITHUB_TOKEN"]}` } : {}) }, signal: AbortSignal.timeout(10_000) })
@@ -97,4 +100,5 @@ export const getAuditDashboard = createServerFn({ method: "GET" }).handler(async
     } : null,
     history, health: health ? { generatedHKT: health.generatedHKT, overall: health.overall, counts: health.counts, checks: health.checks } : null, retrain,
   };
+});
 });

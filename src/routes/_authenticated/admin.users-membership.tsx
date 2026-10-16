@@ -1,11 +1,11 @@
 import { useServerFn } from "@tanstack/react-start";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { AdminHead, DataTable, Kpi, NoteBox, Panel, useMemoCols } from "@/components/admin/kit";
 import { membersFixture, useFixture, type MemberFixture } from "@/components/admin/fixtures";
 import { FREE_STAGE_GOAL_MEMBERS, freeStageProgress } from "@/lib/freeStage";
-import { getMemberAccountStats } from "@/lib/members.functions";
+import { getMemberAccountStats, listAdminMembers, setTestAccount, type AdminMemberRow } from "@/lib/members.functions";
 
 export const Route = createFileRoute("/_authenticated/admin/users-membership")({
   head: () => ({ meta: [{ title: "會員 · 天喜監控端" }, { name: "description", content: "會員 · 天喜監控端：香港賽馬專用監控與唯讀對帳。" }, { property: "og:title", content: "會員 · 天喜監控端" }, { property: "og:description", content: "會員 · 天喜監控端：香港賽馬專用監控與唯讀對帳。" }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
@@ -51,7 +51,7 @@ function Members() {
         <Kpi
           label="登記帳戶"
           value={stats.isLoading ? "—" : total == null ? "讀取失敗" : total.toLocaleString()}
-          sub={`目標 ${FREE_STAGE_GOAL_MEMBERS.toLocaleString()} 人`}
+          sub={`目標 ${FREE_STAGE_GOAL_MEMBERS.toLocaleString()} 人${stats.data?.tests ? `・已剔除 ${stats.data.tests} 個測試帳號` : ""}`}
           tone="gold"
         />
         <Kpi label="已驗證電郵" value={stats.data ? stats.data.confirmed.toLocaleString() : "—"} />
@@ -84,9 +84,61 @@ function Members() {
         </p>
       </Panel>
 
+      <MemberList />
+
       <Panel title="會籍狀態（Whop）" en="active / expired / cancelled" className="mt-4">
         {members.length ? <DataTable data={members} columns={cols} pageSize={25} /> : <p className="py-6 text-center text-[12px] text-ink-3">等待接駁 Whop：而家冇真實會籍數字</p>}
       </Panel>
     </>
+  );
+}
+
+const fmt = (v: string | null) => (v ? new Date(v).toLocaleString("zh-HK", { dateStyle: "short", timeStyle: "short" }) : "—");
+
+function MemberList() {
+  const qc = useQueryClient();
+  const fetchList = useServerFn(listAdminMembers);
+  const mark = useServerFn(setTestAccount);
+  const list = useQuery({ queryKey: ["admin-member-list"], queryFn: () => fetchList(), staleTime: 60_000 });
+  const toggle = useMutation({
+    mutationFn: (row: AdminMemberRow) => mark({ data: { userId: row.id, isTest: !row.is_test } }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["admin-member-list"] });
+      qc.invalidateQueries({ queryKey: ["member-account-stats"] });
+    },
+  });
+  const rows = list.data ?? [];
+  return (
+    <Panel title="註冊帳戶清單" en="Accounts · admin only" className="mt-4">
+      <p className="mb-3 text-[11px] leading-relaxed text-ink-3">
+        只限管理員睇到。標記為「測試」嘅帳號唔計入登記人數同 {FREE_STAGE_GOAL_MEMBERS} 人門檻，亦唔佔創始會員名額；隨時可以取消標記。
+      </p>
+      {list.isLoading ? <p className="py-4 text-center text-[12px] text-ink-3">讀取中…</p> : null}
+      {list.isError ? <p className="py-4 text-center text-[12px] text-lose">{(list.error as Error).message}</p> : null}
+      <ul className="divide-y divide-hairline">
+        {rows.map((row) => (
+          <li key={row.id} className={`flex items-center gap-3 py-2.5 ${row.is_test ? "opacity-60" : ""}`}>
+            <div className="min-w-0 flex-1">
+              <p className="truncate font-mono-tx text-[12px] text-ink">{row.email ?? "（冇電郵）"}</p>
+              <p className="mt-0.5 flex flex-wrap gap-x-2 text-[10.5px] text-ink-3">
+                <span>註冊 {fmt(row.created_at)}</span>
+                <span>最後登入 {fmt(row.last_sign_in_at)}</span>
+                <span>{row.confirmed ? "已驗證" : "未驗證"}</span>
+                {row.provider && row.provider !== "email" ? <span>{row.provider}</span> : null}
+                {row.is_admin ? <span className="text-gold">管理員</span> : null}
+              </p>
+            </div>
+            <button
+              type="button"
+              disabled={toggle.isPending}
+              onClick={() => toggle.mutate(row)}
+              className={`shrink-0 rounded-md border px-2.5 py-1 text-[11px] ${row.is_test ? "border-gold text-gold" : "border-hairline text-ink-2"}`}
+            >
+              {row.is_test ? "測試 ✓" : "標記測試"}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </Panel>
   );
 }

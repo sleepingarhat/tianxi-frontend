@@ -11,6 +11,8 @@ export type MemberAccountStats = {
   confirmed30: number;
   /** 近 30 日新登記而已成功登入（完成會員註冊） */
   signedIn30: number;
+  /** 已標記為測試帳號（唔計入以上數字） */
+  tests: number;
 };
 
 
@@ -41,5 +43,48 @@ export const getMemberAccountStats = createServerFn({ method: "POST" })
       last30: Number(row.last30 ?? 0),
       confirmed30: Number(row.confirmed30 ?? 0),
       signedIn30: Number(row.signedIn30 ?? 0),
+      tests: Number(row.tests ?? 0),
     } satisfies MemberAccountStats;
+  });
+
+export type AdminMemberRow = {
+  id: string;
+  email: string | null;
+  created_at: string;
+  confirmed: boolean;
+  last_sign_in_at: string | null;
+  provider: string | null;
+  is_admin: boolean;
+  is_test: boolean;
+};
+
+async function assertAdmin(ctx: AuthContext) {
+  const { data, error } = await ctx.supabase.rpc("has_role", { _user_id: ctx.userId, _role: "admin" });
+  if (error || !data) throw new Error("Forbidden：此帳號未獲授權進入監控端");
+}
+
+/** 監控端專用：會員電郵清單（只限管理員）。 */
+export const listAdminMembers = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const ctx = context as unknown as AuthContext;
+    await assertAdmin(ctx);
+    const { data, error } = await ctx.supabase.rpc("admin_member_list");
+    if (error) throw new Error("無法讀取會員清單");
+    return (Array.isArray(data) ? data : []) as AdminMemberRow[];
+  });
+
+/** 標記／取消測試帳號；測試帳號唔計入 500 人門檻。 */
+export const setTestAccount = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: { userId: string; isTest: boolean }) => {
+    if (!/^[0-9a-f-]{36}$/i.test(input.userId)) throw new Error("無效帳戶");
+    return { userId: input.userId, isTest: !!input.isTest };
+  })
+  .handler(async ({ data, context }) => {
+    const ctx = context as unknown as AuthContext;
+    await assertAdmin(ctx);
+    const { error } = await ctx.supabase.rpc("admin_set_test_account", { _user_id: data.userId, _is_test: data.isTest });
+    if (error) throw new Error("更新失敗");
+    return { ok: true };
   });

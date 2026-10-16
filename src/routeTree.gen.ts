@@ -32,6 +32,7 @@ import { Route as RaceRouteImport } from './routes/race'
 import { Route as RacingHealthRouteImport } from './routes/racing-health'
 import { Route as ResultsRouteImport } from './routes/results'
 import { Route as ScheduleRouteImport } from './routes/schedule'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as StrategyPnlRouteImport } from './routes/strategy-pnl'
 import { Route as TrackRecordRouteImport } from './routes/track-record'
 import { Route as ValueTrendRouteImport } from './routes/value-trend'
@@ -218,6 +219,11 @@ const ResultsRoute = ResultsRouteImport.update({
 const ScheduleRoute = ScheduleRouteImport.update({
   id: '/schedule',
   path: '/schedule',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StrategyPnlRoute = StrategyPnlRouteImport.update({
@@ -635,6 +641,7 @@ export interface FileRoutesByFullPath {
   '/racing-health': typeof RacingHealthRoute
   '/results': typeof ResultsRoute
   '/schedule': typeof ScheduleRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/strategy-pnl': typeof StrategyPnlRoute
   '/track-record': typeof TrackRecordRoute
   '/value-trend': typeof ValueTrendRoute
@@ -732,6 +739,7 @@ export interface FileRoutesByTo {
   '/racing-health': typeof RacingHealthRoute
   '/results': typeof ResultsRoute
   '/schedule': typeof ScheduleRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/strategy-pnl': typeof StrategyPnlRoute
   '/track-record': typeof TrackRecordRoute
   '/value-trend': typeof ValueTrendRoute
@@ -830,6 +838,7 @@ export interface FileRoutesById {
   '/racing-health': typeof RacingHealthRoute
   '/results': typeof ResultsRoute
   '/schedule': typeof ScheduleRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/strategy-pnl': typeof StrategyPnlRoute
   '/track-record': typeof TrackRecordRoute
   '/value-trend': typeof ValueTrendRoute
@@ -929,6 +938,7 @@ export interface FileRouteTypes {
     | '/racing-health'
     | '/results'
     | '/schedule'
+    | '/sitemap.xml'
     | '/strategy-pnl'
     | '/track-record'
     | '/value-trend'
@@ -1026,6 +1036,7 @@ export interface FileRouteTypes {
     | '/racing-health'
     | '/results'
     | '/schedule'
+    | '/sitemap.xml'
     | '/strategy-pnl'
     | '/track-record'
     | '/value-trend'
@@ -1123,6 +1134,7 @@ export interface FileRouteTypes {
     | '/racing-health'
     | '/results'
     | '/schedule'
+    | '/sitemap.xml'
     | '/strategy-pnl'
     | '/track-record'
     | '/value-trend'
@@ -1222,6 +1234,7 @@ export interface RootRouteChildren {
   RacingHealthRoute: typeof RacingHealthRoute
   ResultsRoute: typeof ResultsRoute
   ScheduleRoute: typeof ScheduleRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StrategyPnlRoute: typeof StrategyPnlRoute
   TrackRecordRoute: typeof TrackRecordRoute
   ValueTrendRoute: typeof ValueTrendRoute
@@ -1444,6 +1457,13 @@ declare module '@tanstack/react-router' {
       path: '/schedule'
       fullPath: '/schedule'
       preLoaderRoute: typeof ScheduleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/strategy-pnl': {
@@ -2041,6 +2061,7 @@ const rootRouteChildren: RootRouteChildren = {
   RacingHealthRoute: RacingHealthRoute,
   ResultsRoute: ResultsRoute,
   ScheduleRoute: ScheduleRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   StrategyPnlRoute: StrategyPnlRoute,
   TrackRecordRoute: TrackRecordRoute,
   ValueTrendRoute: ValueTrendRoute,

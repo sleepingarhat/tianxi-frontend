@@ -14,6 +14,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      computed_cache: {
+        Row: {
+          computed_at: string
+          key: string
+          payload: Json
+        }
+        Insert: {
+          computed_at?: string
+          key: string
+          payload: Json
+        }
+        Update: {
+          computed_at?: string
+          key?: string
+          payload?: Json
+        }
+        Relationships: []
+      }
       football_dual_ledger: {
         Row: {
           away: string
@@ -155,6 +173,24 @@ export type Database = {
           lineups?: Json | null
           match_key?: string
           unavailable?: Json | null
+        }
+        Relationships: []
+      }
+      member_test_accounts: {
+        Row: {
+          marked_at: string
+          marked_by: string | null
+          user_id: string
+        }
+        Insert: {
+          marked_at?: string
+          marked_by?: string | null
+          user_id: string
+        }
+        Update: {
+          marked_at?: string
+          marked_by?: string | null
+          user_id?: string
         }
         Relationships: []
       }
@@ -529,6 +565,11 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_member_list: { Args: never; Returns: Json }
+      admin_set_test_account: {
+        Args: { _is_test: boolean; _user_id: string }
+        Returns: undefined
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
