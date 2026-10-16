@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { coverageRows, distanceBand, historicalPositions, marketCoverage, parseResultsCsv, summarizeCoverage, type AuditRace } from "./racing-visibility";
+import { actualStages, coverageRows, distanceBand, historicalPositions, marketCoverage, parseResultsCsv, summarizeCoverage, type AuditRace } from "./racing-visibility";
 const race: AuditRace = { raceNumber: 1, distance: 1650, scoreSource: "oracle (frozen)", predictedTop4: [1, 2, 3, 4].map(horseNumber => ({ horseNumber })), actualTop4: [1, 3, 5, 6].map((horseNumber, i) => ({ horseNumber, position: i + 1 })) };
 describe("read-only coverage rules", () => {
   it("uses the requested 1200, 1650 and 2000 metre boundaries", () => {
@@ -34,5 +34,10 @@ describe("historical running positions", () => {
   it("prioritizes the current distance band and excludes finishing position", () => {
     const summary = historicalPositions([{ date: "2026-10-13", distance: 1000, runningPosition: "1 1 1" }, { date: "2026-10-12", distance: 1800, runningPosition: "5 3 3 1" }], "2026-10-14", 1800);
     expect(summary).toMatchObject({ n: 1, sameBand: true }); expect(summary.stages[2]?.mid).toBe(3);
+  });
+  it("reads actual race checkpoints with the same stages and without the finish", () => {
+    expect(actualStages("6 6 5 4")).toEqual([6, 6, 5]);
+    expect(actualStages("8 7")).toEqual([8, 8, 8]);
+    expect(actualStages("WV")).toBeNull();
   });
 });

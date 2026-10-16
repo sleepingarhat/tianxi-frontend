@@ -65,6 +65,13 @@ export function parseResultsCsv(text: string): Map<number, ClosingRunner[]> {
   return result;
 }
 export type PositionForm = { date: string; distance?: number; runningPosition?: string | null };
+/** Same early/mid/late sampling as history; terminal finishing position is excluded. */
+export function actualStages(runningPosition?: string | null): (number | null)[] | null {
+  const text = runningPosition?.trim() ?? "";
+  if (!/^\d+(?:\s+\d+)+$/.test(text)) return null;
+  const ps = text.split(/\s+/).map(Number).slice(0, -1);
+  return [0, 0.5, 1].map(f => ps[Math.round((ps.length - 1) * f)] ?? null);
+}
 export function historicalPositions(form: PositionForm[], beforeDate: string, distance: number) {
   const eligible = form.filter(r => r.date < beforeDate && /^\d+(?:\s+\d+)+$/.test(r.runningPosition?.trim() ?? ""))
     .sort((a, b) => b.date.localeCompare(a.date));

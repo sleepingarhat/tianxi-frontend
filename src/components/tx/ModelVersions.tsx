@@ -1,8 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { getFrozenVersionHistory } from "@/lib/racing-evidence.functions";
+import { orderVersions, recordedAlpha } from "@/lib/model-version-evidence";
 
 import { supabase } from "@/integrations/supabase/client";
 
-import { Pill } from "./ui";
+import { Empty, ErrorNote, Loading, Pill } from "./ui";
 
 type VersionRow = {
   version: string;
@@ -15,6 +18,8 @@ type VersionRow = {
 
 /** 版本化成績：讀 model_versions，當前版本置頂，歷史版本可展開；只讀，唔改任何帳。 */
 export function ModelVersions({ engine }: { engine: "racing" | "football" | "marksix" }) {
+  const readHistory = useServerFn(getFrozenVersionHistory);
+  const history = useQuery({ queryKey: ["frozen-model-version-history"], queryFn: () => readHistory(), enabled: engine === "racing", staleTime: 300_000 });
   const q = useQuery({
     queryKey: ["model-versions", engine],
     queryFn: async () => {
@@ -28,9 +33,7 @@ export function ModelVersions({ engine }: { engine: "racing" | "football" | "mar
     },
     staleTime: 10 * 60_000,
   });
-  const rows = q.data ?? [];
-  if (q.isLoading || !rows.length) return null;
-  const active = rows.filter((r) => r.status === "active");
+  const rows = orderVersions(q.data ?? []);
   
   const renderRow = (r: VersionRow) => (
     <li key={r.version} className="border-b border-hairline py-2 last:border-b-0">
@@ -40,6 +43,7 @@ export function ModelVersions({ engine }: { engine: "racing" | "football" | "mar
         <span className="tabnum ml-auto font-mono-tx text-[9px] text-ink-3">{r.released_at}</span>
       </p>
       {r.notes ? <p className="mt-1 text-[10px] leading-relaxed text-ink-3">{r.notes}</p> : null}
+      <dl className="mt-2 grid grid-cols-2 gap-2 text-[10px]"><div><dt className="text-ink-3">登記α</dt><dd>{recordedAlpha(r.notes)?.toFixed(2) ?? "未記錄"}</dd></div><div><dt className="text-ink-3">訓練窗口</dt><dd>未附逐版本紀錄</dd></div><div><dt className="text-ink-3">版本閘結果</dt><dd>未附PASS／WATCH／FAIL</dd></div><div><dt className="text-ink-3">指紋</dt><dd className="break-all">{r.fingerprint ?? "未記錄"}</dd></div></dl>
       {r.fingerprint ? (
         <p className="tabnum mt-0.5 font-mono-tx text-[9px] text-ink-3">指紋 {r.fingerprint}</p>
       ) : null}
@@ -52,8 +56,14 @@ export function ModelVersions({ engine }: { engine: "racing" | "football" | "mar
         模型版本
         <small className="ml-2 font-mono-tx text-[9px] font-bold uppercase tracking-[0.2em] text-ink-3">Model Versions</small>
       </h2>
-      <ul>{active.map(renderRow)}</ul>
-      
+      {q.isLoading ? <Loading /> : q.error ? <ErrorNote error={q.error} /> : rows.length ? <ul>{rows.map(renderRow)}</ul> : <Empty label="未有模型版本登記" />}
+      {engine === "racing" ? <details className="mt-3 border-t border-hairline pt-2"><summary className="cursor-pointer text-[12px] font-bold text-ink">實際凍結模型歷史（{history.data?.length ?? "—"} 組）</summary>
+        <p className="my-2 text-[10px] leading-relaxed text-ink-3">按凍結紀錄版本與α分组；日期係首次／最近凍結使用日，唔當成訓練窗口或正式發布日。登記備註與實際α分開列；當日健康PASS唔倒填成歷史版本過閘。</p>
+        {history.isLoading ? <Loading /> : history.error ? <ErrorNote error={history.error} /> : history.data?.length ? <ul>{history.data.map(v => <li key={`${v.version}-${v.source}`} className="border-b border-hairline py-2">
+          <p className="break-words font-mono-tx text-[11px] font-bold">{v.version}</p>
+          <dl className="mt-1 grid grid-cols-2 gap-2 text-[10px]"><div><dt className="text-ink-3">凍結α</dt><dd className="font-mono-tx">{recordedAlpha(v.source)?.toFixed(2) ?? "未記錄"}</dd></div><div><dt className="text-ink-3">首次使用</dt><dd>{v.firstDate}</dd></div><div><dt className="text-ink-3">訓練窗口／閘結果</dt><dd>未附逐版本證據</dd></div><div><dt className="text-ink-3">最近使用／記錄數</dt><dd>{v.lastDate} · {v.rows}</dd></div><div className="col-span-2"><dt className="text-ink-3">指紋</dt><dd>未記錄（版本名不等同雜湊指紋）</dd></div></dl>
+        </li>)}</ul> : <Empty label="未有已結算凍結模型歷史" />}
+      </details> : null}
     </section>
   );
 }

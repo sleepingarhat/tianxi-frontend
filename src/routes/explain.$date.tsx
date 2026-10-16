@@ -7,6 +7,8 @@ import { EXPLAIN_DATES, VENUE_ZH, fixed, type ExplainRace } from "@/lib/explain-
 import { useExplainMeeting } from "@/lib/explain-live";
 import { useCoverageAudit } from "@/components/tx/CoverageAudit";
 import { Loading } from "@/components/tx/ui";
+import { LivePickEvidence } from "@/components/tx/LivePickEvidence";
+import { RacePositionMap } from "@/components/tx/RacePositionMap";
 
 export const Route = createFileRoute("/explain/$date")({
   head: ({ params }) => {
@@ -113,6 +115,9 @@ function RaceBlock({ r }: { r: ExplainRace }) {
         <Pill tone="ink">位置命中 {r.place3_hits ?? "—"}／3</Pill>
       </div>
       <p className="mt-1.5 font-mono-tx text-[9px] text-ink-3">來源 {r.src ?? "—"}</p>
+      <div className="mt-3 border-t border-hairline pt-2">
+        {r.picks.map(p => p.horseId ? <LivePickEvidence key={p.rank} raceId={`race_${r.date}_${r.venue}_${r.raceNumber}`} horseId={p.horseId} name={`#${p.horseNumber} ${p.nameCh}`} /> : null)}
+      </div>
     </Card>
   );
 }
@@ -204,7 +209,12 @@ function ExplainMeetingPage() {
       </Card>
 
       {m.races.map((r) => (
-        <RaceBlock key={r.raceNumber} r={r} />
+        <div key={r.raceNumber}>
+          <RaceBlock r={r} />
+          <details className="mx-4 mb-3 border-b border-hairline"><summary className="cursor-pointer py-2 text-[11px] font-bold text-gold">R{r.raceNumber} 賽前／賽後走位對照</summary>
+            <RacePositionMap date={m.date} raceId={`race_${m.date}_${m.venue}_${r.raceNumber}`} distance={r.distance ?? 0} frozen picks={r.picks.flatMap(p => p.horseId && p.horseNumber != null ? [{ horseId: p.horseId, horseNumber: p.horseNumber, nameCh: p.nameCh ?? "", rank: p.rank }] : [])} />
+          </details>
+        </div>
       ))}
 
       <Disclaimer extra="逐場覆蓋對帳只反映四揀同實際頭 4 嘅重疊，唔代表某匹馬勝出嘅原因；逐匹紅綠因子要等引擎倉以同一版凍結模型計好先會顯示。" />
