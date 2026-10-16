@@ -9,7 +9,7 @@ import { Card, Pill } from "@/components/tx/ui";
 import { createCheckoutSession, createPortalSession, getMyMembership } from "@/lib/payments.functions";
 import { track } from "@/lib/track";
 import { getStripe, getStripeEnvironment } from "@/lib/stripe";
-import { PRO_WEEKLY_PRICE_HKD } from "@/lib/freeStage";
+import { FREE_STAGE_GOAL_MEMBERS, FOUNDING_PRO_WEEKS, PRO_WEEKLY_PRICE_HKD } from "@/lib/freeStage";
 
 const fmt = (s: string | null) => (s ? new Date(s).toLocaleDateString("zh-HK", { timeZone: "Asia/Hong_Kong" }) : "—");
 
@@ -53,8 +53,8 @@ export function MembershipStatus() {
     let canSubscribe = false;
     switch (e.kind) {
       case "free_stage": headline = "限時免費 · 享 Pro 全站功能"; rows.push(["開閘", `尚欠 ${e.remaining} 名註冊`]);
-        if (rank && rank <= 500) rows.push(["開閘後", "自動轉 Pro 一年（52 週）"]); break;
-      case "founding": headline = "Pro 會員（首 500 名一年贈送）"; rows.push(["有效至", fmt(e.until)], ["期滿後", `可自行按 HK$${PRO_WEEKLY_PRICE_HKD}／星期續訂`]); break;
+        if (rank && rank <= FREE_STAGE_GOAL_MEMBERS) rows.push(["開閘後", `自動轉 Pro 一年（${FOUNDING_PRO_WEEKS} 週）`]); break;
+      case "founding": headline = `Pro 會員（首 ${FREE_STAGE_GOAL_MEMBERS} 名一年贈送）`; rows.push(["有效至", fmt(e.until)], ["期滿後", `可自行按 HK$${PRO_WEEKLY_PRICE_HKD}／星期續訂`]); break;
       case "founding_expired": headline = "一年贈送 Pro 已期滿"; rows.push(["期滿日", fmt(e.until)]); canSubscribe = true; break;
       case "subscribed": headline = e.cancelAtPeriodEnd ? "Pro 會員（已取消，用到本期完）" : "Pro 會員（每星期自動續訂）"; rows.push([e.cancelAtPeriodEnd ? "Pro 用到" : "下次續訂", fmt(e.until)]); break;
       case "payment_failed": headline = "扣款失敗 · Pro 已暫停"; rows.push(["處理", "更新付款方法後即恢復"]); break;
@@ -62,7 +62,7 @@ export function MembershipStatus() {
     }
     return (
       <div className="grid gap-4">
-        {e.kind === "founding" && <p className="rounded-md border border-gold-strong/50 bg-gold-bg px-3 py-2 text-[12px] font-bold text-gold">收費閘已開：你係首 500 名會員，已自動轉 Pro，唔使付款。</p>}
+        {e.kind === "founding" && <p className="rounded-md border border-gold-strong/50 bg-gold-bg px-3 py-2 text-[12px] font-bold text-gold">收費閘已開：你係首 {FREE_STAGE_GOAL_MEMBERS} 名會員，已自動轉 Pro，唔使付款。</p>}
         <p className="font-serif-tc text-[17px] font-bold text-ink">{headline}</p>
         <dl className="divide-y divide-hairline">{rows.map(([k, v]) => <div key={k} className="grid grid-cols-[minmax(0,1fr)_auto] gap-3 py-2 text-[13px]"><dt className="text-ink-3">{k}</dt><dd className="font-bold text-ink">{v}</dd></div>)}</dl>
         {canSubscribe && !checkout && <Button className="h-11 bg-deep text-deep-fg hover:bg-deep/90" onClick={() => { setErr(null); track("begin_checkout", { currency: "HKD", value: PRO_WEEKLY_PRICE_HKD }); setCheckout(true); }}>訂閱 Pro · HK${PRO_WEEKLY_PRICE_HKD}／星期</Button>}

@@ -28,6 +28,7 @@ import { Route as MembershipRouteImport } from './routes/membership'
 import { Route as PoolOddsRouteImport } from './routes/pool-odds'
 import { Route as PredictionVsResultRouteImport } from './routes/prediction-vs-result'
 import { Route as PredictorRouteImport } from './routes/predictor'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as RaceRouteImport } from './routes/race'
 import { Route as RacingHealthRouteImport } from './routes/racing-health'
 import { Route as ResultsRouteImport } from './routes/results'
@@ -199,6 +200,11 @@ const PredictionVsResultRoute = PredictionVsResultRouteImport.update({
 const PredictorRoute = PredictorRouteImport.update({
   id: '/predictor',
   path: '/predictor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RaceRoute = RaceRouteImport.update({
@@ -637,6 +643,7 @@ export interface FileRoutesByFullPath {
   '/pool-odds': typeof PoolOddsRoute
   '/prediction-vs-result': typeof PredictionVsResultRoute
   '/predictor': typeof PredictorRoute
+  '/pricing': typeof PricingRoute
   '/race': typeof RaceRoute
   '/racing-health': typeof RacingHealthRoute
   '/results': typeof ResultsRoute
@@ -735,6 +742,7 @@ export interface FileRoutesByTo {
   '/pool-odds': typeof PoolOddsRoute
   '/prediction-vs-result': typeof PredictionVsResultRoute
   '/predictor': typeof PredictorRoute
+  '/pricing': typeof PricingRoute
   '/race': typeof RaceRoute
   '/racing-health': typeof RacingHealthRoute
   '/results': typeof ResultsRoute
@@ -834,6 +842,7 @@ export interface FileRoutesById {
   '/pool-odds': typeof PoolOddsRoute
   '/prediction-vs-result': typeof PredictionVsResultRoute
   '/predictor': typeof PredictorRoute
+  '/pricing': typeof PricingRoute
   '/race': typeof RaceRoute
   '/racing-health': typeof RacingHealthRoute
   '/results': typeof ResultsRoute
@@ -934,6 +943,7 @@ export interface FileRouteTypes {
     | '/pool-odds'
     | '/prediction-vs-result'
     | '/predictor'
+    | '/pricing'
     | '/race'
     | '/racing-health'
     | '/results'
@@ -1032,6 +1042,7 @@ export interface FileRouteTypes {
     | '/pool-odds'
     | '/prediction-vs-result'
     | '/predictor'
+    | '/pricing'
     | '/race'
     | '/racing-health'
     | '/results'
@@ -1130,6 +1141,7 @@ export interface FileRouteTypes {
     | '/pool-odds'
     | '/prediction-vs-result'
     | '/predictor'
+    | '/pricing'
     | '/race'
     | '/racing-health'
     | '/results'
@@ -1230,6 +1242,7 @@ export interface RootRouteChildren {
   PoolOddsRoute: typeof PoolOddsRoute
   PredictionVsResultRoute: typeof PredictionVsResultRoute
   PredictorRoute: typeof PredictorRoute
+  PricingRoute: typeof PricingRoute
   RaceRoute: typeof RaceRoute
   RacingHealthRoute: typeof RacingHealthRoute
   ResultsRoute: typeof ResultsRoute
@@ -1429,6 +1442,13 @@ declare module '@tanstack/react-router' {
       path: '/predictor'
       fullPath: '/predictor'
       preLoaderRoute: typeof PredictorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/race': {
@@ -2057,6 +2077,7 @@ const rootRouteChildren: RootRouteChildren = {
   PoolOddsRoute: PoolOddsRoute,
   PredictionVsResultRoute: PredictionVsResultRoute,
   PredictorRoute: PredictorRoute,
+  PricingRoute: PricingRoute,
   RaceRoute: RaceRoute,
   RacingHealthRoute: RacingHealthRoute,
   ResultsRoute: ResultsRoute,

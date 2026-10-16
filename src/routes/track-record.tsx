@@ -154,18 +154,18 @@ function TrackRecordPage() {
         )}
       </Card>
 
-      <Card title="睇完成績，試一日先" en="Upgrade">
+      <Card title="睇完成績，免費用全站功能" en="Upgrade">
         <p className="mb-2 text-[12px] text-ink-2">
-          免費對賬永久公開。想要賽前全卡預測、模型搏冷 + 市場穩陣雙欄、pWin 信心分？
+          免費對賬永久公開。想要賽前全卡預測、模型搏冷 + 市場穩陣雙欄、pWin 信心分？而家限時免費，權益等同 Pro，冇隱藏收費。
         </p>
         <div className="flex items-center gap-2">
           <Link
             to="/membership"
             className="rounded-[6px] border border-gold-strong/60 bg-gold-bg px-3 py-2 text-[12px] font-bold text-gold"
           >
-            升級 Pro →
+            免費註冊 →
           </Link>
-          <Pill tone="gold">HK$38 試一日</Pill>
+          <Pill tone="gold">限時免費 · 收費未開放</Pill>
         </div>
       </Card>
 

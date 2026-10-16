@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Share2 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -100,27 +100,48 @@ async function draw(spec: ShareSpec): Promise<Blob> {
 
 export function ShareButton({ spec, label = "分享", className = "" }: { spec: ShareSpec | null; label?: string; className?: string }) {
   const [busy, setBusy] = useState(false);
+  const [blob, setBlob] = useState<Blob | null>(null);
+  const key = spec ? JSON.stringify(spec) : "";
+  // iPhone Safari 要求撳掣後即刻叫分享；所以預先畫好張圖，撳嗰下唔使再等。
+  useEffect(() => {
+    let alive = true;
+    setBlob(null);
+    if (spec) draw(spec).then((b) => { if (alive) setBlob(b); }).catch(() => {});
+    return () => { alive = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
+
+  function fallback(b: Blob | null, text: string, url: string) {
+    if (b) {
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(b); a.download = "tianxi-share.png"; a.click();
+    }
+    navigator.clipboard?.writeText(`${text} ${url}`).catch(() => {});
+    toast.success(b ? "已下載分享圖，連結已複製" : "連結已複製");
+  }
+
   async function go() {
     if (!spec || busy) return;
-    setBusy(true);
     const text = spec.kind === "result"
       ? `天喜賽前凍結四揀：${spec.date} ${spec.venue} R${spec.race} 中 ${spec.hits}/4`
       : `天喜首 ${spec.goal} 名註冊會員送一年 Pro（總值 HK$${spec.value.toLocaleString()}），而家全站免費`;
+    setBusy(true);
     try {
-      const blob = await draw(spec);
-      const file = new File([blob], "tianxi-share.png", { type: "image/png" });
-      if (navigator.canShare?.({ files: [file] })) {
-        await navigator.share({ files: [file], title: "天喜賽馬", text: `${text} ${spec.url}` });
-      } else if (navigator.share) {
-        await navigator.share({ title: "天喜賽馬", text, url: spec.url });
-      } else {
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(blob); a.download = "tianxi-share.png"; a.click();
-        await navigator.clipboard?.writeText(`${text} ${spec.url}`).catch(() => {});
-        toast.success("已下載分享圖，連結已複製");
+      const b = blob ?? (await draw(spec));
+      const file = new File([b], "tianxi-share.png", { type: "image/png" });
+      try {
+        if (navigator.canShare?.({ files: [file] })) {
+          await navigator.share({ files: [file], title: "天喜賽馬", text: `${text} ${spec.url}` });
+        } else if (navigator.share) {
+          await navigator.share({ title: "天喜賽馬", text, url: spec.url });
+        } else fallback(b, text, spec.url);
+      } catch (e) {
+        if ((e as Error)?.name === "AbortError") return;
+        // 系統唔俾分享（例如預覽框內或權限限制）：改為下載圖片＋複製連結
+        fallback(b, text, spec.url);
       }
-    } catch (e) {
-      if ((e as Error)?.name !== "AbortError") toast.error("分享失敗，請再試");
+    } catch {
+      toast.error("分享失敗，請再試");
     } finally { setBusy(false); }
   }
   return (
