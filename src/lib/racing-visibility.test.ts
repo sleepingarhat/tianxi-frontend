@@ -1,0 +1,38 @@
+import { describe, expect, it } from "vitest";
+import { coverageRows, distanceBand, historicalPositions, marketCoverage, parseResultsCsv, summarizeCoverage, type AuditRace } from "./racing-visibility";
+const race: AuditRace = { raceNumber: 1, distance: 1650, scoreSource: "oracle (frozen)", predictedTop4: [1, 2, 3, 4].map(horseNumber => ({ horseNumber })), actualTop4: [1, 3, 5, 6].map((horseNumber, i) => ({ horseNumber, position: i + 1 })) };
+describe("read-only coverage rules", () => {
+  it("uses the requested 1200, 1650 and 2000 metre boundaries", () => {
+    expect([1200, 1201, 1650, 1651, 2000, 2001].map(distanceBand)).toEqual(["短途", "一哩", "一哩", "中長", "中長", "長途"]);
+  });
+  it("compares all starters' closing odds, not only winning horses", () => {
+    expect(marketCoverage(race, [2, 4, 5, 6, 1, 3].map((no, i) => ({ no, place: i + 1, odds: i + 2 })))).toBe(2);
+  });
+  it("does not claim a market comparison with a missing closing price", () => {
+    expect(marketCoverage(race, [1, 2, 3, 4, 5].map((no, i) => ({ no, place: i + 1, odds: i === 4 ? null : i + 2 })))).toBeNull();
+  });
+  it("excludes an ambiguous fourth favourite tie", () => {
+    expect(marketCoverage(race, [1, 2, 3, 4, 5].map((no, i) => ({ no, place: i + 1, odds: i < 3 ? i + 2 : 8 })))).toBeNull();
+  });
+  it("excludes non-frozen and incomplete predictions", () => {
+    expect(coverageRows({ date: "2026-10-14", venue: "HV", races: [{ ...race, scoreSource: "lgb" }, { ...race, predictedTop4: [{ horseNumber: 1 }] }] }, new Map())).toEqual([]);
+  });
+  it("uses identical paired denominators and keeps missing data visible", () => {
+    const summary = summarizeCoverage([{ date: "2026-10-14", venue: "HV", raceNo: 1, band: "一哩", model: 2, market: 3 }, { date: "2026-10-14", venue: "HV", raceNo: 2, band: "一哩", model: 4, market: null }]);
+    expect(summary).toMatchObject({ n: 2, paired: 1, missing: 1, model: 3, pairedModel: 2, market: 3 });
+  });
+  it("reads quoted CSV and ignores scratched result positions", () => {
+    const rows = parseResultsCsv('race_no,horse_no,place,win_odds,name\n1,2,1,3.5,"a,b"\n1,4,WD,,horse\n');
+    expect(rows.get(1)).toEqual([{ no: 2, place: 1, odds: 3.5 }, { no: 4, place: null, odds: null }]);
+  });
+});
+describe("historical running positions", () => {
+  it("excludes same-day and future results before the race cutoff", () => {
+    const summary = historicalPositions([{ date: "2026-10-13", distance: 1650, runningPosition: "5 3 3 1" }, { date: "2026-10-14", distance: 1650, runningPosition: "1 1 1 1" }, { date: "2026-10-15", distance: 1650, runningPosition: "2 2 2 2" }], "2026-10-14", 1650);
+    expect(summary.n).toBe(1); expect(summary.stages.map(s => s.mid)).toEqual([5, 3, 3]);
+  });
+  it("prioritizes the current distance band and excludes finishing position", () => {
+    const summary = historicalPositions([{ date: "2026-10-13", distance: 1000, runningPosition: "1 1 1" }, { date: "2026-10-12", distance: 1800, runningPosition: "5 3 3 1" }], "2026-10-14", 1800);
+    expect(summary).toMatchObject({ n: 1, sameBand: true }); expect(summary.stages[2]?.mid).toBe(3);
+  });
+});

@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 import { AppShell } from "@/components/tx/AppShell";
+import { CoverageAudit } from "@/components/tx/CoverageAudit";
 import { ModelVersions } from "@/components/tx/ModelVersions";
 import {
   Card,
@@ -67,6 +68,7 @@ function TrackRecordPage() {
       </div>
 
       <ModelVersions engine="racing" />
+      <CoverageAudit days={days} />
       <Card title={`滾動統計 · 近 ${days} 日`} en="Rollup">
         {roll.isLoading ? (
           <Loading />

@@ -1,10 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/tx/AppShell";
-import { Card, Disclaimer, Empty, PageHead, Pill, Stat, StatGrid } from "@/components/tx/ui";
+import { Card, Disclaimer, Empty, ErrorNote, PageHead, Pill, Stat, StatGrid } from "@/components/tx/ui";
 import { TxBar } from "@/components/tx/viz";
 import { EXPLAIN_DATES, VENUE_ZH, fixed, type ExplainRace } from "@/lib/explain-data";
 import { useExplainMeeting } from "@/lib/explain-live";
+import { useCoverageAudit } from "@/components/tx/CoverageAudit";
 import { Loading } from "@/components/tx/ui";
 
 export const Route = createFileRoute("/explain/$date")({
@@ -118,7 +119,9 @@ function RaceBlock({ r }: { r: ExplainRace }) {
 
 function ExplainMeetingPage() {
   const { date } = Route.useParams();
-  const { meeting: m, loading } = useExplainMeeting(date);
+  const { meeting: m, loading, error } = useExplainMeeting(date);
+  const audit = useCoverageAudit();
+  const dates = audit.data?.meetings.map(m => m.date) ?? EXPLAIN_DATES;
 
   if (loading) {
     return (
@@ -139,7 +142,7 @@ function ExplainMeetingPage() {
         />
         <Card title="可選賽日" en="AVAILABLE">
           <div className="flex flex-wrap gap-1.5">
-            {EXPLAIN_DATES.map((d) => (
+            {dates.map((d) => (
               <Link
                 key={d}
                 to="/explain/$date"
@@ -150,7 +153,7 @@ function ExplainMeetingPage() {
               </Link>
             ))}
           </div>
-          <Empty label="未有此賽日資料" />
+          {error ? <ErrorNote error={error} /> : <Empty label="未有此賽日完整凍結四揀及賽果" />}
         </Card>
         <Disclaimer />
       </AppShell>
@@ -179,7 +182,7 @@ function ExplainMeetingPage() {
           <Stat label="只中 4 匹" value={full} sub="場" />
         </StatGrid>
         <div className="mt-2 flex flex-wrap gap-1.5">
-          {EXPLAIN_DATES.map((d) => (
+          {dates.map((d) => (
             <Link
               key={d}
               to="/explain/$date"

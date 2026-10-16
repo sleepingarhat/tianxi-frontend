@@ -8,7 +8,8 @@ import { MeetingCancellationNotice } from "@/components/tx/MeetingCancellationNo
 import { PredictionStatusLight } from "@/components/tx/PredictionStatusLight";
 import { RacecoursePhoto } from "@/components/tx/RacecoursePhoto";
 import { WeatherPanel } from "@/components/tx/WeatherPanel";
-import { WhyPicked } from "@/components/tx/WhyPicked";
+import { RacePositionMap } from "@/components/tx/RacePositionMap";
+import { LivePickEvidence } from "@/components/tx/LivePickEvidence";
 import { HorseExplainChip } from "@/components/tx/HorseExplainChip";
 import { Card, Disclaimer, Empty, ErrorNote, Loading, PageHead, Pill, Scroller, Silks, Table, Td } from "@/components/tx/ui";
 import { getFeatureRace, listFeatureRaces } from "@/lib/features.functions";
@@ -510,26 +511,11 @@ function PredictorPage() {
         </Card>
       ) : null}
 
+      {tp.date && race ? <RacePositionMap date={tp.date} raceId={race.raceId ?? featRaceId ?? undefined} distance={Number(race.distance) || 0} picks={picks} frozen={Boolean(tp.frozen)} /> : null}
+
       <Card title="點解揀佢" en="Why These Picks">
-        <p className="mb-2 text-[11px] leading-relaxed text-ink-2">
-          逐匹列出邊幾項特徵推高、邊幾項拉低佢喺本場嘅排名，權重取自天喜LGB 特徵重要度。
-        </p>
-        {featList.isLoading || featRace.isLoading ? (
-          <Loading />
-        ) : featHorses.length ? (
-          <div className="space-y-1.5">
-            {(race?.picks || []).slice(0, 4).map((p: any) => (
-              <WhyPicked
-                key={p.horseNumber}
-                horses={featHorses as any}
-                horseNo={Number(p.horseNumber)}
-                name={`#${p.horseNumber} ${p.nameCh}`}
-              />
-            ))}
-          </div>
-        ) : (
-          <Empty label="等排位表特徵資料" />
-        )}
+        <p className="mb-2 text-[11px] leading-relaxed text-ink-2">逐匹讀取現有解釋接口；只展示真實已提供的內容。特徵排序研究分數不當成模型內部貢獻或 SHAP。</p>
+        {(race?.picks || []).length ? (race.picks || []).slice(0, 4).map((p: any) => <LivePickEvidence key={p.horseNumber} raceId={race.raceId ?? featRaceId ?? undefined} horseId={p.horseId} name={`#${p.horseNumber} ${p.nameCh}`} />) : <Empty label="未有本場預測" />}
       </Card>
 
       <Card title="特徵排序實驗室" en="Feature Lab">
