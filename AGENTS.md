@@ -31,7 +31,7 @@
 - 外部圖片只可用逐張核實自由授權或書面商用權，頁內須署名並保留 /media-credits；API 圖址不等於授權。
 - 藍圖現行版本放 docs/blueprint/；改藍圖要同步更新該文件、roadmap、AGENTS、開發者日誌同 GitHub 鏡像。理由：設計說明同代碼唔可以分家。
 
-- Archived product source and historical documentation are retained, while their repositories and database reads are restricted; this makes suspension reversible without altering frozen records.
+- Retired-product technical snapshots and pre-cleanup journals are archived with source commits and checksums in the private research repository; detach shared runtime dependencies before removing source copies, so future research can resume without changing frozen records.
 - The current blueprint is docs/blueprint/tianxi-racing-blueprint-2026-10-13.md; older blueprints are historical so superseded requirements cannot re-enable retired products.
 - Pro entitlement is decided only by src/lib/entitlement.ts (resolveEntitlement), fed by the my_membership DB function and the webhook-maintained subscriptions table; the gate opens automatically at the 500th signup. Why: one rule source for free stage, founding Pro and paid subscriptions.
 - Racecourse posters rotate weekly from Wikimedia Commons via a managed HTTP schedule into racecourse_photos (commercial-free licences only, auto-deactivate on licence change); tianxi-web GitHub Actions only monitor the public status endpoint. Why: scheduling stays in the app backend, GitHub mirror stays read-only.
