@@ -2,8 +2,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
-import { AdminHead, DataTable, Kpi, NoteBox, Panel, useMemoCols } from "@/components/admin/kit";
-import { membersFixture, useFixture, type MemberFixture } from "@/components/admin/fixtures";
+import { AdminHead, Kpi, NoteBox, Panel } from "@/components/admin/kit";
 import { FREE_STAGE_GOAL_MEMBERS, freeStageProgress } from "@/lib/freeStage";
 import { getMemberAccountStats, listAdminMembers, setTestAccount, type AdminMemberRow } from "@/lib/members.functions";
 
@@ -13,7 +12,6 @@ export const Route = createFileRoute("/_authenticated/admin/users-membership")({
 });
 
 function Members() {
-  const members = useFixture<MemberFixture[]>([], { demo: membersFixture("demo"), worst: membersFixture("worst") });
   const fetchStats = useServerFn(getMemberAccountStats);
   const stats = useQuery({
     queryKey: ["member-account-stats"],
@@ -26,24 +24,15 @@ function Members() {
   const pct = total == null ? null : freeStageProgress(total);
   const remaining = total == null ? null : Math.max(0, FREE_STAGE_GOAL_MEMBERS - total);
 
-  const cols = useMemoCols<MemberFixture>(() => [
-    { accessorKey: "name", header: "會員" },
-    { accessorKey: "email", header: "電郵" },
-    { accessorKey: "plan", header: "計劃" },
-    { accessorKey: "status", header: "狀態" },
-    { accessorKey: "vip", header: "Telegram VIP", cell: (cell) => cell.getValue() ? "有" : "冇" },
-    { accessorKey: "expiresAt", header: "到期", cell: (cell) => cell.getValue() ? new Date(String(cell.getValue())).toLocaleDateString("zh-HK") : "—" },
-  ]);
-  const active = members.filter((member) => member.status === "有效");
   return (
     <>
       <AdminHead
         title="會員"
         en="Users & Membership"
-        desc="登記帳戶人數同免費階段門檻進度；Whop 日票／月票、會籍狀態同 Telegram VIP 權限仍未接駁。"
+        desc="登記帳戶人數同免費階段門檻進度；收費未開放，付款流程已接駁（Stripe）。"
       />
       <NoteBox tone="gold">
-        免費階段：會籍同付款未開放（未接駁 Whop，提供 API key 之後呢頁會自動顯示真實會籍數字）。
+        免費階段：會籍同付款未開放，現階段唔收款。
         下面「登記帳戶」係真實人數，免費會員累積 {FREE_STAGE_GOAL_MEMBERS.toLocaleString()} 人先開始收費同推出 iOS App。
       </NoteBox>
 
@@ -86,9 +75,6 @@ function Members() {
 
       <MemberList />
 
-      <Panel title="會籍狀態（Whop）" en="active / expired / cancelled" className="mt-4">
-        {members.length ? <DataTable data={members} columns={cols} pageSize={25} /> : <p className="py-6 text-center text-[12px] text-ink-3">等待接駁 Whop：而家冇真實會籍數字</p>}
-      </Panel>
     </>
   );
 }
