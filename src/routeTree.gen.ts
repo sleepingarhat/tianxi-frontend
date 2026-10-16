@@ -34,9 +34,11 @@ import { Route as ResultsRouteImport } from './routes/results'
 import { Route as ScheduleRouteImport } from './routes/schedule'
 import { Route as StrategyPnlRouteImport } from './routes/strategy-pnl'
 import { Route as TrackRecordRouteImport } from './routes/track-record'
+import { Route as ValueTrendRouteImport } from './routes/value-trend'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as CheckoutReturnRouteImport } from './routes/checkout.return'
 import { Route as EngineIndexRouteImport } from './routes/engine.index'
+import { Route as EngineAuditRouteImport } from './routes/engine.audit'
 import { Route as EngineBacktestRouteImport } from './routes/engine.backtest'
 import { Route as EngineFeaturesRouteImport } from './routes/engine.features'
 import { Route as EngineMonitorRouteImport } from './routes/engine.monitor'
@@ -228,6 +230,11 @@ const TrackRecordRoute = TrackRecordRouteImport.update({
   path: '/track-record',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ValueTrendRoute = ValueTrendRouteImport.update({
+  id: '/value-trend',
+  path: '/value-trend',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -241,6 +248,11 @@ const CheckoutReturnRoute = CheckoutReturnRouteImport.update({
 const EngineIndexRoute = EngineIndexRouteImport.update({
   id: '/engine/',
   path: '/engine/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EngineAuditRoute = EngineAuditRouteImport.update({
+  id: '/engine/audit',
+  path: '/engine/audit',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EngineBacktestRoute = EngineBacktestRouteImport.update({
@@ -625,8 +637,10 @@ export interface FileRoutesByFullPath {
   '/schedule': typeof ScheduleRoute
   '/strategy-pnl': typeof StrategyPnlRoute
   '/track-record': typeof TrackRecordRoute
+  '/value-trend': typeof ValueTrendRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/checkout/return': typeof CheckoutReturnRoute
+  '/engine/audit': typeof EngineAuditRoute
   '/engine/backtest': typeof EngineBacktestRoute
   '/engine/features': typeof EngineFeaturesRoute
   '/engine/monitor': typeof EngineMonitorRoute
@@ -720,7 +734,9 @@ export interface FileRoutesByTo {
   '/schedule': typeof ScheduleRoute
   '/strategy-pnl': typeof StrategyPnlRoute
   '/track-record': typeof TrackRecordRoute
+  '/value-trend': typeof ValueTrendRoute
   '/checkout/return': typeof CheckoutReturnRoute
+  '/engine/audit': typeof EngineAuditRoute
   '/engine/backtest': typeof EngineBacktestRoute
   '/engine/features': typeof EngineFeaturesRoute
   '/engine/monitor': typeof EngineMonitorRoute
@@ -816,8 +832,10 @@ export interface FileRoutesById {
   '/schedule': typeof ScheduleRoute
   '/strategy-pnl': typeof StrategyPnlRoute
   '/track-record': typeof TrackRecordRoute
+  '/value-trend': typeof ValueTrendRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/checkout/return': typeof CheckoutReturnRoute
+  '/engine/audit': typeof EngineAuditRoute
   '/engine/backtest': typeof EngineBacktestRoute
   '/engine/features': typeof EngineFeaturesRoute
   '/engine/monitor': typeof EngineMonitorRoute
@@ -913,8 +931,10 @@ export interface FileRouteTypes {
     | '/schedule'
     | '/strategy-pnl'
     | '/track-record'
+    | '/value-trend'
     | '/admin'
     | '/checkout/return'
+    | '/engine/audit'
     | '/engine/backtest'
     | '/engine/features'
     | '/engine/monitor'
@@ -1008,7 +1028,9 @@ export interface FileRouteTypes {
     | '/schedule'
     | '/strategy-pnl'
     | '/track-record'
+    | '/value-trend'
     | '/checkout/return'
+    | '/engine/audit'
     | '/engine/backtest'
     | '/engine/features'
     | '/engine/monitor'
@@ -1103,8 +1125,10 @@ export interface FileRouteTypes {
     | '/schedule'
     | '/strategy-pnl'
     | '/track-record'
+    | '/value-trend'
     | '/_authenticated/admin'
     | '/checkout/return'
+    | '/engine/audit'
     | '/engine/backtest'
     | '/engine/features'
     | '/engine/monitor'
@@ -1200,7 +1224,9 @@ export interface RootRouteChildren {
   ScheduleRoute: typeof ScheduleRoute
   StrategyPnlRoute: typeof StrategyPnlRoute
   TrackRecordRoute: typeof TrackRecordRoute
+  ValueTrendRoute: typeof ValueTrendRoute
   CheckoutReturnRoute: typeof CheckoutReturnRoute
+  EngineAuditRoute: typeof EngineAuditRoute
   EngineBacktestRoute: typeof EngineBacktestRoute
   EngineFeaturesRoute: typeof EngineFeaturesRoute
   EngineMonitorRoute: typeof EngineMonitorRoute
@@ -1434,6 +1460,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrackRecordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/value-trend': {
+      id: '/value-trend'
+      path: '/value-trend'
+      fullPath: '/value-trend'
+      preLoaderRoute: typeof ValueTrendRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
       path: '/admin'
@@ -1453,6 +1486,13 @@ declare module '@tanstack/react-router' {
       path: '/engine'
       fullPath: '/engine/'
       preLoaderRoute: typeof EngineIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/engine/audit': {
+      id: '/engine/audit'
+      path: '/engine/audit'
+      fullPath: '/engine/audit'
+      preLoaderRoute: typeof EngineAuditRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/engine/backtest': {
@@ -2003,7 +2043,9 @@ const rootRouteChildren: RootRouteChildren = {
   ScheduleRoute: ScheduleRoute,
   StrategyPnlRoute: StrategyPnlRoute,
   TrackRecordRoute: TrackRecordRoute,
+  ValueTrendRoute: ValueTrendRoute,
   CheckoutReturnRoute: CheckoutReturnRoute,
+  EngineAuditRoute: EngineAuditRoute,
   EngineBacktestRoute: EngineBacktestRoute,
   EngineFeaturesRoute: EngineFeaturesRoute,
   EngineMonitorRoute: EngineMonitorRoute,
