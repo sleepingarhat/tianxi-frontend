@@ -36,7 +36,7 @@ function EngineHealth() {
         <Kpi label="賽馬總閘" value={d.overall ?? "—"} tone={d.overall === "PASS" ? "win" : d.overall === "FAIL" ? "lose" : "gold"} sub={d.engine ?? ""} />
         <Kpi label="PASS / WATCH / FAIL" value={`${d.counts?.pass ?? 0} / ${d.counts?.watch ?? 0} / ${d.counts?.fail ?? 0}`} />
         <Kpi label="四揀平均（90 日）" value={roll.data?.top4AvgIntersect?.toFixed?.(2) ?? "—"} tone="gold" sub="目標 3.0 · 市場熱門 2.31" />
-        <Kpi label="賽季" value={d.season?.label ?? "—"} sub={`下次 ${d.season?.nextMeeting ?? "—"}`} />
+        <Kpi label="馬季" value={d.season?.label ?? "—"} sub={`下次 ${d.season?.nextMeeting ?? "—"}`} />
       </div>
       {d.summary ? <div className="mt-3"><NoteBox>{d.summary}</NoteBox></div> : null}
       <div className="mt-4 grid gap-3 lg:grid-cols-3">

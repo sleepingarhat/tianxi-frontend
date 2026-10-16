@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { getRacingHealth } from "@/lib/racingOps.functions";
 import { isRacingEngine } from "@/lib/product-scope";
 import { txApi } from "@/lib/tx-api";
+import { racingLanguage } from "./racing-language";
 
 const getJson = async <T,>(url: string): Promise<T> => {
   const r = await fetch(url);
@@ -23,7 +24,22 @@ export const useRacingHealth = () =>
   useQuery({ queryKey: ["admin", "racing-health"], queryFn: () => getRacingHealth(), refetchInterval: refreshMs() });
 
 export const useEngineHealth = () =>
-  useQuery({ queryKey: ["admin", "engine-health"], queryFn: () => getJson<any>("/api/public/engine-health"), refetchInterval: refreshMs() });
+  useQuery({
+    queryKey: ["admin", "engine-health"],
+    queryFn: () => getJson<any>("/api/public/engine-health"),
+    select: (data: any) => ({
+      ...data,
+      summary: racingLanguage(data.summary),
+      season: data.season ? { ...data.season, label: racingLanguage(data.season.label) } : data.season,
+      ...Object.fromEntries(["checks", "gates"].filter((key) => Array.isArray(data[key])).map((key) => [key,
+        data[key].map((row: any) => ({ ...row, ...Object.fromEntries(
+          ["label", "name", "note", "detail", "message"].filter((field) => typeof row[field] === "string")
+            .map((field) => [field, racingLanguage(row[field])]),
+        ) })),
+      ])),
+    }),
+    refetchInterval: refreshMs(),
+  });
 
 export const useFootballIngest = () =>
   useQuery({ enabled: false, queryKey: ["admin", "football-ingest"], queryFn: () => getJson<any>("/api/public/football-ingest-status"), refetchInterval: refreshMs() });

@@ -21,6 +21,7 @@
 - 每次發布正式站後執行 python3 scripts/sync-frontend-repo.py，將源碼經 GitHub API 同步入 tianxi-web；理由：倉庫只作鏡像，正式站由 Lovable 發布。
 
 ## 監控端規則
+- Admin engine-health consumers share a display-only language adapter in the admin data hook; preserve response keys and source records so terminology edits cannot change monitoring logic.
 - Subdirectories (src/components/admin/, src/lib/ for archived football) have their own AGENTS.md; read before changing files there.
 - Public racing P&L supplements the existing four-pool rollup with shared `racingPoolAccounting` cross-race queries, merging daily cost and payout once; missing fifth picks are excluded and post-race substitutes are labelled, so incomplete data cannot masquerade as frozen results.
 - Admin version notes must wrap in desktop tables and use stacked mobile records; cross-race trio reconciliation reuses ExoticTrioPools separately from the single-race strategy aggregate, to prevent truncated explanations and mixed accounting scopes.
