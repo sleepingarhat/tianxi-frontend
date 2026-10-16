@@ -90,4 +90,24 @@ export function historicalPositions(form: PositionForm[], beforeDate: string, di
     return { mid: quantile(0.5), low: quantile(0.25), high: quantile(0.75) };
   });
   return { n: selected.length, sameBand: sameBand.length > 0, last: selected[0]?.date ?? null, stages };
+}export type ValueRace = { engineHits: number; marketHits: number; engineOdds: number[]; marketOdds: number[] };
+/** Engine-vs-market hit odds for one race; null when closing prices are incomplete or the 4th favourite is tied. */
+export function valueRace(race: AuditRace, runners: ClosingRunner[]): ValueRace | null {
+  const starters = runners.filter(r => r.place != null);
+  if (starters.length < 4 || starters.some(r => r.odds == null || r.odds <= 0)) return null;
+  const sorted = starters.slice().sort((a, b) => (a.odds ?? 0) - (b.odds ?? 0) || a.no - b.no);
+  if (sorted[3]?.odds === sorted[4]?.odds) return null;
+  const byNo = new Map(starters.map(r => [r.no, r]));
+  const hit = (r?: ClosingRunner) => !!r && r.place != null && r.place >= 1 && r.place <= 4;
+  const eng = (race.predictedTop4 ?? []).slice(0, 4).map(p => byNo.get(p.horseNumber)).filter(hit) as ClosingRunner[];
+  const mkt = sorted.slice(0, 4).filter(hit);
+  return { engineHits: eng.length, marketHits: mkt.length, engineOdds: eng.map(r => r.odds!), marketOdds: mkt.map(r => r.odds!) };
+}
+export function summarizeValue(rows: ValueRace[]) {
+  const avg = (xs: number[]) => xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : null;
+  const eo = rows.flatMap(r => r.engineOdds), mo = rows.flatMap(r => r.marketOdds);
+  const engineOdds = avg(eo), marketOdds = avg(mo), engineHits = avg(rows.map(r => r.engineHits)), marketHits = avg(rows.map(r => r.marketHits));
+  return { races: rows.length, engineSamples: eo.length, marketSamples: mo.length, engineOdds, marketOdds, engineHits, marketHits,
+    oddsEdge: engineOdds != null && marketOdds != null ? engineOdds - marketOdds : null,
+    hitGap: engineHits != null && marketHits != null ? marketHits - engineHits : null };
 }

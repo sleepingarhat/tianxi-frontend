@@ -40,4 +40,17 @@ describe("historical running positions", () => {
     expect(actualStages("8 7")).toEqual([8, 8, 8]);
     expect(actualStages("WV")).toBeNull();
   });
+});import { valueRace as _vr, summarizeValue as _sv } from "./racing-visibility";
+describe("engine value comparison", () => {
+  const runners = [1,2,3,4,5,6].map(no => ({ no, odds: [2,3,4,5,8.5,12][no-1]!, place: [5,6,1,7,2,3][no-1]! }));
+  const race = { raceNumber: 1, predictedTop4: [5,6,3,1].map(horseNumber => ({ horseNumber })) };
+  it("averages odds of engine picks that finished top 4 only", () => {
+    const v = _vr(race, runners)!;
+    expect(v.engineHits).toBe(3); expect(v.engineOdds).toEqual([8.5, 12, 4]);
+    expect(v.marketHits).toBe(1); expect(v.marketOdds).toEqual([4]);
+  });
+  it("odds edge is engine minus market, hit gap is market minus engine", () => {
+    const s = _sv([_vr(race, runners)!]);
+    expect(s.oddsEdge).toBeCloseTo(8.1667 - 4, 3); expect(s.hitGap).toBe(-2);
+  });
 });

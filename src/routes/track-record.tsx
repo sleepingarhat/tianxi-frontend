@@ -5,6 +5,7 @@ import { useState } from "react";
 import { AppShell } from "@/components/tx/AppShell";
 import { CoverageAudit } from "@/components/tx/CoverageAudit";
 import { ModelVersions } from "@/components/tx/ModelVersions";
+import { EngineValueCompare } from "@/components/tx/EngineValueCompare";
 import {
   Card,
   Disclaimer,
@@ -54,6 +55,7 @@ function TrackRecordPage() {
         desc="每一個賽日，模型命中率全數公開 —— 唔撿靚數，賽果以 HKJC 官方為準。指標只計最終版。"
       />
 
+      <EngineValueCompare />
       <div className="mx-4">
         <Seg
           value={days}
