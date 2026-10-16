@@ -15,6 +15,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { isArchivedProductPath } from "@/lib/product-scope";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
+import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
   return (
@@ -87,7 +88,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { name: "google-site-verification", content: "gan1e0271Q3FosiVqTaF0InUG5YH2qkGG8foqjADoV0" },
+      { name: "google-site-verification", content: "U1rOkFQ86Z5zKTmpozp2pQe2lPNuUF4ffGB0hHnQMNQ" },
       { title: "天喜賽馬 · 香港賽馬數據平台" },
       { name: "description", content: "專注香港賽馬，賽前凍結四揀、官方賽果派彩對帳及六彩池策略盈虧。" },
       { name: "author", content: "天喜 TIANXI" },
@@ -139,6 +140,7 @@ function RootComponent() {
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
       <GoogleAnalytics />
+      <Toaster position="top-center" />
     </QueryClientProvider>
   );
 }

@@ -41,8 +41,22 @@ function AuthPage() {
   }
 
   useEffect(() => {
+    // 經驗證電郵連結或 Google 返嚟時，網址會帶 token／code；呢種入站要記做登入。
+    const h = window.location.hash + window.location.search;
+    const fromLink = /access_token=|code=|type=signup/.test(h);
+    const viaGoogle = sessionStorage.getItem("tx_oauth_pending") === "google";
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) void goAfterSignIn();
+      if (!data.session) return;
+      if (viaGoogle) {
+        sessionStorage.removeItem("tx_oauth_pending");
+        const u = data.session.user;
+        const isNew = Date.now() - new Date(u.created_at).getTime() < 5 * 60_000;
+        if (isNew) track("sign_up", { method: "google" });
+        track("login", { method: "google" });
+      } else if (fromLink) {
+        track("login", { method: /type=signup/.test(h) ? "email_verify" : "email_link" });
+      }
+      void goAfterSignIn();
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
@@ -80,6 +94,7 @@ function AuthPage() {
 
   async function google() {
     setErr(null);
+    sessionStorage.setItem("tx_oauth_pending", "google");
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: { redirectTo: `${window.location.origin}/auth` },

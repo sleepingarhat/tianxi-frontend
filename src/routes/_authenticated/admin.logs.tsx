@@ -29,7 +29,8 @@ function Logs() {
   const [lv, setLv] = useState<"all" | Status>("all");
   const [kw, setKw] = useState("");
   const logs: Log[] = [];
-  for (const event of history.data ?? []) logs.push({
+  // 訪客斷線（aborted）唔係錯誤，舊紀錄唔顯示。
+  for (const event of (history.data ?? []).filter((e: { message: unknown }) => !/^(Error: aborted|AbortError)/.test(String(e.message)))) logs.push({
     kind: event.kind === "model_gate" ? "模型閘歷史" : "API 錯誤歷史",
     level: event.severity === "error" ? "fail" : event.severity === "warning" ? "warn" : "ok",
     source: String(event.source), message: String(event.message), at: event.occurred_at,

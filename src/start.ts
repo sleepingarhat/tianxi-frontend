@@ -25,7 +25,9 @@ const errorMiddleware = createMiddleware().server(async ({ request, next }) => {
       throw error;
     }
     console.error(error);
-    try {
+    // 訪客中途關頁／斷線會觸發 abort，唔係伺服器錯誤，唔入持久日誌。
+    const aborted = request.signal?.aborted || /\baborted\b|AbortError/i.test(String((error as Error)?.message ?? error) + String((error as Error)?.name ?? ""));
+    if (!aborted) try {
       const { safeErrorMessage, writeOpsEvent } = await import("./lib/ops-history.server");
       await writeOpsEvent({
         eventKey: `server:${safeErrorMessage(error).slice(0, 120)}:${new Date().toISOString().slice(0, 13)}`,

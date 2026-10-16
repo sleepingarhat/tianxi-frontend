@@ -47,7 +47,7 @@ const BOTNAV: { to: string; key: NavKey; label: string; icon: ReactNode }[] = [
     ),
   },
 
-  { to: "/schedule", key: "schedule", label: "排位", icon: <><rect x="4" y="5" width="16" height="16" rx="2" /><path d="M8 3v4M16 3v4M4 11h16" /></> },
+  { to: "/schedule", key: "schedule", label: "賽程", icon: <><rect x="4" y="5" width="16" height="16" rx="2" /><path d="M8 3v4M16 3v4M4 11h16" /></> },
   { to: "/engine", key: "engine", label: "引擎", icon: <><circle cx="12" cy="12" r="9" /><path d="M12 12l5-5M5 16h14" /></> },
 ];
 

@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
+import { ShareButton } from "@/components/tx/ShareCard";
 import { exoticPoolOptions, winningSingleDividends } from "@/lib/racingPoolAccounting";
 import { useEffect, useState } from "react";
 
@@ -311,8 +312,25 @@ function ComparePage() {
         </div>
       </section>
 
-      <div className="tabnum min-h-[18px] border-b border-hairline px-5 py-2.5 font-mono-tx text-[11px] tracking-[0.06em] text-ink-3">
-        {metaLine}
+      <div className="tabnum flex min-h-[18px] items-center justify-between gap-2 border-b border-hairline px-5 py-2 font-mono-tx text-[11px] tracking-[0.06em] text-ink-3">
+        <span className="min-w-0 truncate">{metaLine}</span>
+        <ShareButton
+          className="border-gold/60 font-sans-tc text-gold hover:bg-gold-bg"
+          spec={frozenTop4.length && right.length && selectedRaceNumber ? {
+            kind: "result",
+            date,
+            venue: String(m?.venueName || m?.venue || ""),
+            race: Number(selectedRaceNumber),
+            meta: [m?.trackCondition ? `場地 ${m.trackCondition}` : null, races.find((r: any) => String(r.id) === raceId)?.distance ? `${races.find((r: any) => String(r.id) === raceId)?.distance}m` : null].filter(Boolean).join(" · "),
+            hits,
+            picks: frozenTop4.map((h) => {
+              const f = right.find((r) => keyOf(r) && keyOf(r) === keyOf(h));
+              return { no: String(h.horseNumber ?? h.no ?? ""), name: String(h.nameCh || h.name || ""), hit: !!f, finish: f?.finishingPosition ?? null };
+            }),
+            dayAvg: frozenSummary?.top4AvgIntersect != null ? num(frozenSummary.top4AvgIntersect, 2) : null,
+            url: "https://tianxi.racing/prediction-vs-result",
+          } : null}
+        />
       </div>
 
       {/* 賽日總覽：主指標、彩池命中，同逐場命中導覽條 */}
