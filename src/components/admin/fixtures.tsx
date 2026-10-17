@@ -54,37 +54,7 @@ export function useFixture<T>(real: T, fx: { demo: T; worst: T }): T {
   return m === "real" ? real : fx[m];
 }
 
-const LONG_DE = "Borussia Mönchengladbach Fußballclub Rasenballsport Leipzig Eintracht";
-export const LONG_FP = "dual-v2-sha256-9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08-elo-hfa80-k24-reg0.90";
-
-/** 足球帳本假資料：正常 3 行；最壞含超長隊名、無賠率、0-0／10-0、浮點尾數、1000+ 行 */
-export function ledgerFixture(kind: "demo" | "worst") {
-  const base = (i: number, o: Partial<Record<string, unknown>> = {}) => ({
-    match_key: `E0|2026-10-${String((i % 28) + 1).padStart(2, "0")}|Arsenal|Chelsea|${i}`,
-    version: "dual-v2",
-    div: "E0",
-    home: "Arsenal",
-    away: "Chelsea",
-    kickoff_utc: `2026-10-${String((i % 28) + 1).padStart(2, "0")}T14:00:00Z`,
-    locked_at: `2026-10-${String((i % 28) + 1).padStart(2, "0")}T08:00:00Z`,
-    prediction: "home",
-    p_final: [0.52, 0.26, 0.22],
-    odds_source: "hkjc",
-    pick_odds: 1.95,
-    stake: 100,
-    ftr: i % 3 === 0 ? "home" : i % 3 === 1 ? "draw" : null,
-    score: i % 3 === 2 ? null : "2-1",
-    ...o,
-  });
-  if (kind === "demo") return [base(0), base(1, { home: "Liverpool", away: "Everton" }), base(2, { home: "Man City", away: "Spurs" })];
-  return [
-    base(0, { home: LONG_DE, away: "Wolfsburg", div: "D1 Bundesliga Erste Liga Deutschland Hauptrunde", odds_source: "none", pick_odds: null }),
-    base(1, { p_final: [0.1 + 0.2, 0.30000000000000004, 0.39999999999999997], score: "0-0", ftr: "draw" }),
-    base(2, { score: "10-0", ftr: "home", pick_odds: 1.01 }),
-    base(3, { score: null, ftr: null, home: "Postponed FC (abandoned 67')" }),
-    ...Array.from({ length: 1200 }, (_, i) => base(i + 4)),
-  ];
-}
+export const LONG_FP = "racing-v1-sha256-9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08-lgb-alpha0.88";
 
 export function workflowFixture(kind: "demo" | "worst") {
   const w = (label: string, state: string, ageHours: number | null, conclusion: string | null = "success") => ({

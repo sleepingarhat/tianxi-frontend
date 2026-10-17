@@ -136,73 +136,7 @@ async function checkWorkflow(token: string, repo: string, file: string, label: s
   }
 }
 
-/** 4. 賽程收料：upcoming.json 超過 30 小時無更新 */
-async function checkUpcomingFreshness(token: string): Promise<Check> {
-  const key = "upcoming-fresh";
-  try {
-    const res = await fetch(`${GH}/repos/${OWNER}/tianxi-football/commits?path=data/predictions/upcoming.json&per_page=1`, { headers: ghHeaders(token), signal: AbortSignal.timeout(8000) });
-    if (!res.ok) return { key, area: "雙引擎", fail: null };
-    const j = (await res.json()) as { commit?: { committer?: { date?: string } } }[];
-    const date = j[0]?.commit?.committer?.date;
-    if (!date) return { key, area: "雙引擎", fail: null };
-    const ageH = (Date.now() - Date.parse(date)) / 3600_000;
-    if (ageH > 30) return { key, area: "雙引擎", fail: `賽程收料停滯：upcoming.json ${Math.round(ageH)} 小時無更新` };
-    return { key, area: "雙引擎", fail: null };
-  } catch (e) {
-    return { key, area: "雙引擎", fail: `賽程收料檢查失敗：${String(e).slice(0, 160)}` };
-  }
-}
-
 type Fixture = { match_key: string; home: string; away: string; kickoff_utc: string };
-
-/** 5. 雙引擎：臨近開賽（≤90 分鐘）未鎖定 */
-async function checkImminentLock(matches: Fixture[]): Promise<Check> {
-  const key = "imminent-lock";
-  try {
-    const now = Date.now();
-    const imminent = matches.filter((m) => {
-      const t = Date.parse(m.kickoff_utc);
-      return Number.isFinite(t) && t > now && t - now <= 90 * 60_000;
-    });
-    if (!imminent.length) return { key, area: "雙引擎", fail: null };
-    const sb = await stateClient();
-    const { data } = await sb.from("football_dual_ledger").select("match_key").in("match_key", imminent.map((m) => m.match_key));
-    const locked = new Set((data ?? []).map((r) => (r as { match_key: string }).match_key));
-    const missing = imminent.filter((m) => !locked.has(m.match_key));
-    if (missing.length) {
-      const names = missing.slice(0, 4).map((m) => `${m.home} vs ${m.away}`).join("、");
-      return { key, area: "雙引擎", fail: `${missing.length} 場 90 分鐘內開賽仍未鎖定：${names}${missing.length > 4 ? " 等" : ""}` };
-    }
-    return { key, area: "雙引擎", fail: null };
-  } catch (e) {
-    return { key, area: "雙引擎", fail: `臨近鎖定檢查失敗：${String(e).slice(0, 160)}` };
-  }
-}
-
-/** 6. BSD 陣容快照：2 小時內開賽嘅已鎖場次無快照 */
-async function checkSnapshots(): Promise<Check> {
-  const key = "snapshot-missing";
-  try {
-    const sb = await stateClient();
-    const now = new Date();
-    const in2h = new Date(now.getTime() + 2 * 3600_000);
-    const { data: lockedRows, error } = await sb.from("football_dual_ledger").select("match_key,home,away,kickoff_utc")
-      .gte("kickoff_utc", now.toISOString()).lte("kickoff_utc", in2h.toISOString()).limit(50);
-    if (error) return { key, area: "雙引擎", fail: null };
-    const rows = (lockedRows ?? []) as { match_key: string; home: string; away: string; kickoff_utc: string }[];
-    if (!rows.length) return { key, area: "雙引擎", fail: null };
-    const { data: snaps } = await sb.from("football_lineup_snapshots").select("match_key").in("match_key", rows.map((r) => r.match_key));
-    const have = new Set((snaps ?? []).map((r) => (r as { match_key: string }).match_key));
-    const missing = rows.filter((r) => !have.has(r.match_key));
-    if (missing.length) {
-      const names = missing.slice(0, 3).map((m) => `${m.home} vs ${m.away}`).join("、");
-      return { key, area: "雙引擎", fail: `${missing.length} 場 2 小時內開賽仍無 BSD 陣容快照：${names}${missing.length > 3 ? " 等" : ""}` };
-    }
-    return { key, area: "雙引擎", fail: null };
-  } catch (e) {
-    return { key, area: "雙引擎", fail: null };
-  }
-}
 
 /* ---------- 去重 + 發送 ---------- */
 

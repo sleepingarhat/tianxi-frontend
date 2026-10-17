@@ -21,8 +21,6 @@ import { Route as FreezeLedgerRouteImport } from './routes/freeze-ledger'
 import { Route as HorseRouteImport } from './routes/horse'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ManualRouteImport } from './routes/manual'
-import { Route as MarksixRouteImport } from './routes/marksix'
-import { Route as MarksixResultsRouteImport } from './routes/marksix-results'
 import { Route as MediaCreditsRouteImport } from './routes/media-credits'
 import { Route as MembershipRouteImport } from './routes/membership'
 import { Route as PoolOddsRouteImport } from './routes/pool-odds'
@@ -47,18 +45,6 @@ import { Route as EngineMonitorRouteImport } from './routes/engine.monitor'
 import { Route as EngineResidualsRouteImport } from './routes/engine.residuals'
 import { Route as ExplainIndexRouteImport } from './routes/explain.index'
 import { Route as ExplainDateRouteImport } from './routes/explain.$date'
-import { Route as FootballIndexRouteImport } from './routes/football.index'
-import { Route as FootballDualLedgerRouteImport } from './routes/football.dual-ledger'
-import { Route as FootballEngineRouteImport } from './routes/football.engine'
-import { Route as FootballExplainRouteImport } from './routes/football.explain'
-import { Route as FootballFeaturesRouteImport } from './routes/football.features'
-import { Route as FootballFixturesRouteImport } from './routes/football.fixtures'
-import { Route as FootballIngestStatusRouteImport } from './routes/football.ingest-status'
-import { Route as FootballMatchVsResultRouteImport } from './routes/football.match-vs-result'
-import { Route as FootballPredictionVsResultRouteImport } from './routes/football.prediction-vs-result'
-import { Route as FootballResultsRouteImport } from './routes/football.results'
-import { Route as FootballStandingsRouteImport } from './routes/football.standings'
-import { Route as FootballStudyRouteImport } from './routes/football.study'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminConsoleRouteImport } from './routes/_authenticated/admin.console'
 import { Route as AuthenticatedAdminDataFreshnessRouteImport } from './routes/_authenticated/admin.data-freshness'
@@ -71,40 +57,21 @@ import { Route as AuthenticatedAdminPredictionLockRouteImport } from './routes/_
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
 import { Route as AuthenticatedAdminTrafficRouteImport } from './routes/_authenticated/admin.traffic'
 import { Route as AuthenticatedAdminUsersMembershipRouteImport } from './routes/_authenticated/admin.users-membership'
-import { Route as ApiPublicDataMirrorRouteImport } from './routes/api/public/data-mirror'
 import { Route as ApiPublicDrawTuneRouteImport } from './routes/api/public/draw-tune'
 import { Route as ApiPublicEngineHealthRouteImport } from './routes/api/public/engine-health'
-import { Route as ApiPublicFootballCrestsRouteImport } from './routes/api/public/football-crests'
-import { Route as ApiPublicFootballDualLockRouteImport } from './routes/api/public/football-dual-lock'
-import { Route as ApiPublicFootballHkjcListRouteImport } from './routes/api/public/football-hkjc-list'
-import { Route as ApiPublicFootballIngestStatusRouteImport } from './routes/api/public/football-ingest-status'
-import { Route as ApiPublicFootballLeagueRouteImport } from './routes/api/public/football-league'
-import { Route as ApiPublicFootballLineupSettleRouteImport } from './routes/api/public/football-lineup-settle'
-import { Route as ApiPublicFootballLiveRouteImport } from './routes/api/public/football-live'
-import { Route as ApiPublicFootballLiveResultsRouteImport } from './routes/api/public/football-live-results'
-import { Route as ApiPublicFootballNewsRouteImport } from './routes/api/public/football-news'
-import { Route as ApiPublicFootballPitchapiProbeRouteImport } from './routes/api/public/football-pitchapi-probe'
-import { Route as ApiPublicFootballPlayerSourceCheckRouteImport } from './routes/api/public/football-player-source-check'
-import { Route as ApiPublicFootballPredictionsRouteImport } from './routes/api/public/football-predictions'
-import { Route as ApiPublicFootballSourceCheckRouteImport } from './routes/api/public/football-source-check'
 import { Route as ApiPublicFreezeLedgerRouteImport } from './routes/api/public/freeze-ledger'
 import { Route as ApiPublicHkjcWeatherRouteImport } from './routes/api/public/hkjc-weather'
 import { Route as ApiPublicHorseHr2RouteImport } from './routes/api/public/horse-hr2'
 import { Route as ApiPublicLockStateRouteImport } from './routes/api/public/lock-state'
-import { Route as ApiPublicMarksixDataRouteImport } from './routes/api/public/marksix-data'
-import { Route as ApiPublicMarksixNextRouteImport } from './routes/api/public/marksix-next'
 import { Route as ApiPublicMeetingCancellationRouteImport } from './routes/api/public/meeting-cancellation'
 import { Route as ApiPublicRacecoursePhotosStatusRouteImport } from './routes/api/public/racecourse-photos-status'
 import { Route as ApiPublicTelegramAlertRouteImport } from './routes/api/public/telegram-alert'
 import { Route as ApiPublicWeatherArchiveRouteImport } from './routes/api/public/weather-archive'
 import { Route as ApiPublicWeatherSyncGithubRouteImport } from './routes/api/public/weather-sync-github'
-import { Route as FootballMatchMatchKeyRouteImport } from './routes/football.match.$matchKey'
-import { Route as FootballStudyMatchIdRouteImport } from './routes/football.study.$matchId'
 import { Route as ApiPublicHooksRaceResultsDispatchRouteImport } from './routes/api/public/hooks/race-results-dispatch'
 import { Route as ApiPublicJobsRacecoursePhotosRouteImport } from './routes/api/public/jobs/racecourse-photos'
 import { Route as ApiPublicJobsRacingDataScaleRouteImport } from './routes/api/public/jobs/racing-data-scale'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
-import { Route as FootballTeamDivSlugRouteImport } from './routes/football.team.$div.$slug'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
 
@@ -165,16 +132,6 @@ const LoginRoute = LoginRouteImport.update({
 const ManualRoute = ManualRouteImport.update({
   id: '/manual',
   path: '/manual',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MarksixRoute = MarksixRouteImport.update({
-  id: '/marksix',
-  path: '/marksix',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MarksixResultsRoute = MarksixResultsRouteImport.update({
-  id: '/marksix-results',
-  path: '/marksix-results',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MediaCreditsRoute = MediaCreditsRouteImport.update({
@@ -297,67 +254,6 @@ const ExplainDateRoute = ExplainDateRouteImport.update({
   path: '/explain/$date',
   getParentRoute: () => rootRouteImport,
 } as any)
-const FootballIndexRoute = FootballIndexRouteImport.update({
-  id: '/football/',
-  path: '/football/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FootballDualLedgerRoute = FootballDualLedgerRouteImport.update({
-  id: '/football/dual-ledger',
-  path: '/football/dual-ledger',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FootballEngineRoute = FootballEngineRouteImport.update({
-  id: '/football/engine',
-  path: '/football/engine',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FootballExplainRoute = FootballExplainRouteImport.update({
-  id: '/football/explain',
-  path: '/football/explain',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FootballFeaturesRoute = FootballFeaturesRouteImport.update({
-  id: '/football/features',
-  path: '/football/features',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FootballFixturesRoute = FootballFixturesRouteImport.update({
-  id: '/football/fixtures',
-  path: '/football/fixtures',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FootballIngestStatusRoute = FootballIngestStatusRouteImport.update({
-  id: '/football/ingest-status',
-  path: '/football/ingest-status',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FootballMatchVsResultRoute = FootballMatchVsResultRouteImport.update({
-  id: '/football/match-vs-result',
-  path: '/football/match-vs-result',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FootballPredictionVsResultRoute =
-  FootballPredictionVsResultRouteImport.update({
-    id: '/football/prediction-vs-result',
-    path: '/football/prediction-vs-result',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const FootballResultsRoute = FootballResultsRouteImport.update({
-  id: '/football/results',
-  path: '/football/results',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FootballStandingsRoute = FootballStandingsRouteImport.update({
-  id: '/football/standings',
-  path: '/football/standings',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FootballStudyRoute = FootballStudyRouteImport.update({
-  id: '/football/study',
-  path: '/football/study',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -427,11 +323,6 @@ const AuthenticatedAdminUsersMembershipRoute =
     path: '/users-membership',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
-const ApiPublicDataMirrorRoute = ApiPublicDataMirrorRouteImport.update({
-  id: '/api/public/data-mirror',
-  path: '/api/public/data-mirror',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiPublicDrawTuneRoute = ApiPublicDrawTuneRouteImport.update({
   id: '/api/public/draw-tune',
   path: '/api/public/draw-tune',
@@ -442,80 +333,6 @@ const ApiPublicEngineHealthRoute = ApiPublicEngineHealthRouteImport.update({
   path: '/api/public/engine-health',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiPublicFootballCrestsRoute = ApiPublicFootballCrestsRouteImport.update({
-  id: '/api/public/football-crests',
-  path: '/api/public/football-crests',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiPublicFootballDualLockRoute =
-  ApiPublicFootballDualLockRouteImport.update({
-    id: '/api/public/football-dual-lock',
-    path: '/api/public/football-dual-lock',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ApiPublicFootballHkjcListRoute =
-  ApiPublicFootballHkjcListRouteImport.update({
-    id: '/api/public/football-hkjc-list',
-    path: '/api/public/football-hkjc-list',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ApiPublicFootballIngestStatusRoute =
-  ApiPublicFootballIngestStatusRouteImport.update({
-    id: '/api/public/football-ingest-status',
-    path: '/api/public/football-ingest-status',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ApiPublicFootballLeagueRoute = ApiPublicFootballLeagueRouteImport.update({
-  id: '/api/public/football-league',
-  path: '/api/public/football-league',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiPublicFootballLineupSettleRoute =
-  ApiPublicFootballLineupSettleRouteImport.update({
-    id: '/api/public/football-lineup-settle',
-    path: '/api/public/football-lineup-settle',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ApiPublicFootballLiveRoute = ApiPublicFootballLiveRouteImport.update({
-  id: '/api/public/football-live',
-  path: '/api/public/football-live',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiPublicFootballLiveResultsRoute =
-  ApiPublicFootballLiveResultsRouteImport.update({
-    id: '/api/public/football-live-results',
-    path: '/api/public/football-live-results',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ApiPublicFootballNewsRoute = ApiPublicFootballNewsRouteImport.update({
-  id: '/api/public/football-news',
-  path: '/api/public/football-news',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiPublicFootballPitchapiProbeRoute =
-  ApiPublicFootballPitchapiProbeRouteImport.update({
-    id: '/api/public/football-pitchapi-probe',
-    path: '/api/public/football-pitchapi-probe',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ApiPublicFootballPlayerSourceCheckRoute =
-  ApiPublicFootballPlayerSourceCheckRouteImport.update({
-    id: '/api/public/football-player-source-check',
-    path: '/api/public/football-player-source-check',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ApiPublicFootballPredictionsRoute =
-  ApiPublicFootballPredictionsRouteImport.update({
-    id: '/api/public/football-predictions',
-    path: '/api/public/football-predictions',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ApiPublicFootballSourceCheckRoute =
-  ApiPublicFootballSourceCheckRouteImport.update({
-    id: '/api/public/football-source-check',
-    path: '/api/public/football-source-check',
-    getParentRoute: () => rootRouteImport,
-  } as any)
 const ApiPublicFreezeLedgerRoute = ApiPublicFreezeLedgerRouteImport.update({
   id: '/api/public/freeze-ledger',
   path: '/api/public/freeze-ledger',
@@ -534,16 +351,6 @@ const ApiPublicHorseHr2Route = ApiPublicHorseHr2RouteImport.update({
 const ApiPublicLockStateRoute = ApiPublicLockStateRouteImport.update({
   id: '/api/public/lock-state',
   path: '/api/public/lock-state',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiPublicMarksixDataRoute = ApiPublicMarksixDataRouteImport.update({
-  id: '/api/public/marksix-data',
-  path: '/api/public/marksix-data',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiPublicMarksixNextRoute = ApiPublicMarksixNextRouteImport.update({
-  id: '/api/public/marksix-next',
-  path: '/api/public/marksix-next',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicMeetingCancellationRoute =
@@ -574,16 +381,6 @@ const ApiPublicWeatherSyncGithubRoute =
     path: '/api/public/weather-sync-github',
     getParentRoute: () => rootRouteImport,
   } as any)
-const FootballMatchMatchKeyRoute = FootballMatchMatchKeyRouteImport.update({
-  id: '/football/match/$matchKey',
-  path: '/football/match/$matchKey',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FootballStudyMatchIdRoute = FootballStudyMatchIdRouteImport.update({
-  id: '/$matchId',
-  path: '/$matchId',
-  getParentRoute: () => FootballStudyRoute,
-} as any)
 const ApiPublicHooksRaceResultsDispatchRoute =
   ApiPublicHooksRaceResultsDispatchRouteImport.update({
     id: '/api/public/hooks/race-results-dispatch',
@@ -608,11 +405,6 @@ const ApiPublicPaymentsWebhookRoute =
     path: '/api/public/payments/webhook',
     getParentRoute: () => rootRouteImport,
   } as any)
-const FootballTeamDivSlugRoute = FootballTeamDivSlugRouteImport.update({
-  id: '/football/team/$div/$slug',
-  path: '/football/team/$div/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const LovableEmailAuthPreviewRoute = LovableEmailAuthPreviewRouteImport.update({
   id: '/lovable/email/auth/preview',
   path: '/lovable/email/auth/preview',
@@ -636,8 +428,6 @@ export interface FileRoutesByFullPath {
   '/horse': typeof HorseRoute
   '/login': typeof LoginRoute
   '/manual': typeof ManualRoute
-  '/marksix': typeof MarksixRoute
-  '/marksix-results': typeof MarksixResultsRoute
   '/media-credits': typeof MediaCreditsRoute
   '/membership': typeof MembershipRoute
   '/pool-odds': typeof PoolOddsRoute
@@ -660,20 +450,8 @@ export interface FileRoutesByFullPath {
   '/engine/monitor': typeof EngineMonitorRoute
   '/engine/residuals': typeof EngineResidualsRoute
   '/explain/$date': typeof ExplainDateRoute
-  '/football/dual-ledger': typeof FootballDualLedgerRoute
-  '/football/engine': typeof FootballEngineRoute
-  '/football/explain': typeof FootballExplainRoute
-  '/football/features': typeof FootballFeaturesRoute
-  '/football/fixtures': typeof FootballFixturesRoute
-  '/football/ingest-status': typeof FootballIngestStatusRoute
-  '/football/match-vs-result': typeof FootballMatchVsResultRoute
-  '/football/prediction-vs-result': typeof FootballPredictionVsResultRoute
-  '/football/results': typeof FootballResultsRoute
-  '/football/standings': typeof FootballStandingsRoute
-  '/football/study': typeof FootballStudyRouteWithChildren
   '/engine/': typeof EngineIndexRoute
   '/explain/': typeof ExplainIndexRoute
-  '/football/': typeof FootballIndexRoute
   '/admin/console': typeof AuthenticatedAdminConsoleRoute
   '/admin/data-freshness': typeof AuthenticatedAdminDataFreshnessRoute
   '/admin/engine-health': typeof AuthenticatedAdminEngineHealthRoute
@@ -685,41 +463,22 @@ export interface FileRoutesByFullPath {
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/traffic': typeof AuthenticatedAdminTrafficRoute
   '/admin/users-membership': typeof AuthenticatedAdminUsersMembershipRoute
-  '/api/public/data-mirror': typeof ApiPublicDataMirrorRoute
   '/api/public/draw-tune': typeof ApiPublicDrawTuneRoute
   '/api/public/engine-health': typeof ApiPublicEngineHealthRoute
-  '/api/public/football-crests': typeof ApiPublicFootballCrestsRoute
-  '/api/public/football-dual-lock': typeof ApiPublicFootballDualLockRoute
-  '/api/public/football-hkjc-list': typeof ApiPublicFootballHkjcListRoute
-  '/api/public/football-ingest-status': typeof ApiPublicFootballIngestStatusRoute
-  '/api/public/football-league': typeof ApiPublicFootballLeagueRoute
-  '/api/public/football-lineup-settle': typeof ApiPublicFootballLineupSettleRoute
-  '/api/public/football-live': typeof ApiPublicFootballLiveRoute
-  '/api/public/football-live-results': typeof ApiPublicFootballLiveResultsRoute
-  '/api/public/football-news': typeof ApiPublicFootballNewsRoute
-  '/api/public/football-pitchapi-probe': typeof ApiPublicFootballPitchapiProbeRoute
-  '/api/public/football-player-source-check': typeof ApiPublicFootballPlayerSourceCheckRoute
-  '/api/public/football-predictions': typeof ApiPublicFootballPredictionsRoute
-  '/api/public/football-source-check': typeof ApiPublicFootballSourceCheckRoute
   '/api/public/freeze-ledger': typeof ApiPublicFreezeLedgerRoute
   '/api/public/hkjc-weather': typeof ApiPublicHkjcWeatherRoute
   '/api/public/horse-hr2': typeof ApiPublicHorseHr2Route
   '/api/public/lock-state': typeof ApiPublicLockStateRoute
-  '/api/public/marksix-data': typeof ApiPublicMarksixDataRoute
-  '/api/public/marksix-next': typeof ApiPublicMarksixNextRoute
   '/api/public/meeting-cancellation': typeof ApiPublicMeetingCancellationRoute
   '/api/public/racecourse-photos-status': typeof ApiPublicRacecoursePhotosStatusRoute
   '/api/public/telegram-alert': typeof ApiPublicTelegramAlertRoute
   '/api/public/weather-archive': typeof ApiPublicWeatherArchiveRoute
   '/api/public/weather-sync-github': typeof ApiPublicWeatherSyncGithubRoute
-  '/football/match/$matchKey': typeof FootballMatchMatchKeyRoute
-  '/football/study/$matchId': typeof FootballStudyMatchIdRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/api/public/hooks/race-results-dispatch': typeof ApiPublicHooksRaceResultsDispatchRoute
   '/api/public/jobs/racecourse-photos': typeof ApiPublicJobsRacecoursePhotosRoute
   '/api/public/jobs/racing-data-scale': typeof ApiPublicJobsRacingDataScaleRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
-  '/football/team/$div/$slug': typeof FootballTeamDivSlugRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
 }
@@ -735,8 +494,6 @@ export interface FileRoutesByTo {
   '/horse': typeof HorseRoute
   '/login': typeof LoginRoute
   '/manual': typeof ManualRoute
-  '/marksix': typeof MarksixRoute
-  '/marksix-results': typeof MarksixResultsRoute
   '/media-credits': typeof MediaCreditsRoute
   '/membership': typeof MembershipRoute
   '/pool-odds': typeof PoolOddsRoute
@@ -758,20 +515,8 @@ export interface FileRoutesByTo {
   '/engine/monitor': typeof EngineMonitorRoute
   '/engine/residuals': typeof EngineResidualsRoute
   '/explain/$date': typeof ExplainDateRoute
-  '/football/dual-ledger': typeof FootballDualLedgerRoute
-  '/football/engine': typeof FootballEngineRoute
-  '/football/explain': typeof FootballExplainRoute
-  '/football/features': typeof FootballFeaturesRoute
-  '/football/fixtures': typeof FootballFixturesRoute
-  '/football/ingest-status': typeof FootballIngestStatusRoute
-  '/football/match-vs-result': typeof FootballMatchVsResultRoute
-  '/football/prediction-vs-result': typeof FootballPredictionVsResultRoute
-  '/football/results': typeof FootballResultsRoute
-  '/football/standings': typeof FootballStandingsRoute
-  '/football/study': typeof FootballStudyRouteWithChildren
   '/engine': typeof EngineIndexRoute
   '/explain': typeof ExplainIndexRoute
-  '/football': typeof FootballIndexRoute
   '/admin/console': typeof AuthenticatedAdminConsoleRoute
   '/admin/data-freshness': typeof AuthenticatedAdminDataFreshnessRoute
   '/admin/engine-health': typeof AuthenticatedAdminEngineHealthRoute
@@ -783,41 +528,22 @@ export interface FileRoutesByTo {
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/traffic': typeof AuthenticatedAdminTrafficRoute
   '/admin/users-membership': typeof AuthenticatedAdminUsersMembershipRoute
-  '/api/public/data-mirror': typeof ApiPublicDataMirrorRoute
   '/api/public/draw-tune': typeof ApiPublicDrawTuneRoute
   '/api/public/engine-health': typeof ApiPublicEngineHealthRoute
-  '/api/public/football-crests': typeof ApiPublicFootballCrestsRoute
-  '/api/public/football-dual-lock': typeof ApiPublicFootballDualLockRoute
-  '/api/public/football-hkjc-list': typeof ApiPublicFootballHkjcListRoute
-  '/api/public/football-ingest-status': typeof ApiPublicFootballIngestStatusRoute
-  '/api/public/football-league': typeof ApiPublicFootballLeagueRoute
-  '/api/public/football-lineup-settle': typeof ApiPublicFootballLineupSettleRoute
-  '/api/public/football-live': typeof ApiPublicFootballLiveRoute
-  '/api/public/football-live-results': typeof ApiPublicFootballLiveResultsRoute
-  '/api/public/football-news': typeof ApiPublicFootballNewsRoute
-  '/api/public/football-pitchapi-probe': typeof ApiPublicFootballPitchapiProbeRoute
-  '/api/public/football-player-source-check': typeof ApiPublicFootballPlayerSourceCheckRoute
-  '/api/public/football-predictions': typeof ApiPublicFootballPredictionsRoute
-  '/api/public/football-source-check': typeof ApiPublicFootballSourceCheckRoute
   '/api/public/freeze-ledger': typeof ApiPublicFreezeLedgerRoute
   '/api/public/hkjc-weather': typeof ApiPublicHkjcWeatherRoute
   '/api/public/horse-hr2': typeof ApiPublicHorseHr2Route
   '/api/public/lock-state': typeof ApiPublicLockStateRoute
-  '/api/public/marksix-data': typeof ApiPublicMarksixDataRoute
-  '/api/public/marksix-next': typeof ApiPublicMarksixNextRoute
   '/api/public/meeting-cancellation': typeof ApiPublicMeetingCancellationRoute
   '/api/public/racecourse-photos-status': typeof ApiPublicRacecoursePhotosStatusRoute
   '/api/public/telegram-alert': typeof ApiPublicTelegramAlertRoute
   '/api/public/weather-archive': typeof ApiPublicWeatherArchiveRoute
   '/api/public/weather-sync-github': typeof ApiPublicWeatherSyncGithubRoute
-  '/football/match/$matchKey': typeof FootballMatchMatchKeyRoute
-  '/football/study/$matchId': typeof FootballStudyMatchIdRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/api/public/hooks/race-results-dispatch': typeof ApiPublicHooksRaceResultsDispatchRoute
   '/api/public/jobs/racecourse-photos': typeof ApiPublicJobsRacecoursePhotosRoute
   '/api/public/jobs/racing-data-scale': typeof ApiPublicJobsRacingDataScaleRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
-  '/football/team/$div/$slug': typeof FootballTeamDivSlugRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
 }
@@ -835,8 +561,6 @@ export interface FileRoutesById {
   '/horse': typeof HorseRoute
   '/login': typeof LoginRoute
   '/manual': typeof ManualRoute
-  '/marksix': typeof MarksixRoute
-  '/marksix-results': typeof MarksixResultsRoute
   '/media-credits': typeof MediaCreditsRoute
   '/membership': typeof MembershipRoute
   '/pool-odds': typeof PoolOddsRoute
@@ -859,20 +583,8 @@ export interface FileRoutesById {
   '/engine/monitor': typeof EngineMonitorRoute
   '/engine/residuals': typeof EngineResidualsRoute
   '/explain/$date': typeof ExplainDateRoute
-  '/football/dual-ledger': typeof FootballDualLedgerRoute
-  '/football/engine': typeof FootballEngineRoute
-  '/football/explain': typeof FootballExplainRoute
-  '/football/features': typeof FootballFeaturesRoute
-  '/football/fixtures': typeof FootballFixturesRoute
-  '/football/ingest-status': typeof FootballIngestStatusRoute
-  '/football/match-vs-result': typeof FootballMatchVsResultRoute
-  '/football/prediction-vs-result': typeof FootballPredictionVsResultRoute
-  '/football/results': typeof FootballResultsRoute
-  '/football/standings': typeof FootballStandingsRoute
-  '/football/study': typeof FootballStudyRouteWithChildren
   '/engine/': typeof EngineIndexRoute
   '/explain/': typeof ExplainIndexRoute
-  '/football/': typeof FootballIndexRoute
   '/_authenticated/admin/console': typeof AuthenticatedAdminConsoleRoute
   '/_authenticated/admin/data-freshness': typeof AuthenticatedAdminDataFreshnessRoute
   '/_authenticated/admin/engine-health': typeof AuthenticatedAdminEngineHealthRoute
@@ -884,41 +596,22 @@ export interface FileRoutesById {
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/_authenticated/admin/traffic': typeof AuthenticatedAdminTrafficRoute
   '/_authenticated/admin/users-membership': typeof AuthenticatedAdminUsersMembershipRoute
-  '/api/public/data-mirror': typeof ApiPublicDataMirrorRoute
   '/api/public/draw-tune': typeof ApiPublicDrawTuneRoute
   '/api/public/engine-health': typeof ApiPublicEngineHealthRoute
-  '/api/public/football-crests': typeof ApiPublicFootballCrestsRoute
-  '/api/public/football-dual-lock': typeof ApiPublicFootballDualLockRoute
-  '/api/public/football-hkjc-list': typeof ApiPublicFootballHkjcListRoute
-  '/api/public/football-ingest-status': typeof ApiPublicFootballIngestStatusRoute
-  '/api/public/football-league': typeof ApiPublicFootballLeagueRoute
-  '/api/public/football-lineup-settle': typeof ApiPublicFootballLineupSettleRoute
-  '/api/public/football-live': typeof ApiPublicFootballLiveRoute
-  '/api/public/football-live-results': typeof ApiPublicFootballLiveResultsRoute
-  '/api/public/football-news': typeof ApiPublicFootballNewsRoute
-  '/api/public/football-pitchapi-probe': typeof ApiPublicFootballPitchapiProbeRoute
-  '/api/public/football-player-source-check': typeof ApiPublicFootballPlayerSourceCheckRoute
-  '/api/public/football-predictions': typeof ApiPublicFootballPredictionsRoute
-  '/api/public/football-source-check': typeof ApiPublicFootballSourceCheckRoute
   '/api/public/freeze-ledger': typeof ApiPublicFreezeLedgerRoute
   '/api/public/hkjc-weather': typeof ApiPublicHkjcWeatherRoute
   '/api/public/horse-hr2': typeof ApiPublicHorseHr2Route
   '/api/public/lock-state': typeof ApiPublicLockStateRoute
-  '/api/public/marksix-data': typeof ApiPublicMarksixDataRoute
-  '/api/public/marksix-next': typeof ApiPublicMarksixNextRoute
   '/api/public/meeting-cancellation': typeof ApiPublicMeetingCancellationRoute
   '/api/public/racecourse-photos-status': typeof ApiPublicRacecoursePhotosStatusRoute
   '/api/public/telegram-alert': typeof ApiPublicTelegramAlertRoute
   '/api/public/weather-archive': typeof ApiPublicWeatherArchiveRoute
   '/api/public/weather-sync-github': typeof ApiPublicWeatherSyncGithubRoute
-  '/football/match/$matchKey': typeof FootballMatchMatchKeyRoute
-  '/football/study/$matchId': typeof FootballStudyMatchIdRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/api/public/hooks/race-results-dispatch': typeof ApiPublicHooksRaceResultsDispatchRoute
   '/api/public/jobs/racecourse-photos': typeof ApiPublicJobsRacecoursePhotosRoute
   '/api/public/jobs/racing-data-scale': typeof ApiPublicJobsRacingDataScaleRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
-  '/football/team/$div/$slug': typeof FootballTeamDivSlugRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
 }
@@ -936,8 +629,6 @@ export interface FileRouteTypes {
     | '/horse'
     | '/login'
     | '/manual'
-    | '/marksix'
-    | '/marksix-results'
     | '/media-credits'
     | '/membership'
     | '/pool-odds'
@@ -960,20 +651,8 @@ export interface FileRouteTypes {
     | '/engine/monitor'
     | '/engine/residuals'
     | '/explain/$date'
-    | '/football/dual-ledger'
-    | '/football/engine'
-    | '/football/explain'
-    | '/football/features'
-    | '/football/fixtures'
-    | '/football/ingest-status'
-    | '/football/match-vs-result'
-    | '/football/prediction-vs-result'
-    | '/football/results'
-    | '/football/standings'
-    | '/football/study'
     | '/engine/'
     | '/explain/'
-    | '/football/'
     | '/admin/console'
     | '/admin/data-freshness'
     | '/admin/engine-health'
@@ -985,41 +664,22 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/traffic'
     | '/admin/users-membership'
-    | '/api/public/data-mirror'
     | '/api/public/draw-tune'
     | '/api/public/engine-health'
-    | '/api/public/football-crests'
-    | '/api/public/football-dual-lock'
-    | '/api/public/football-hkjc-list'
-    | '/api/public/football-ingest-status'
-    | '/api/public/football-league'
-    | '/api/public/football-lineup-settle'
-    | '/api/public/football-live'
-    | '/api/public/football-live-results'
-    | '/api/public/football-news'
-    | '/api/public/football-pitchapi-probe'
-    | '/api/public/football-player-source-check'
-    | '/api/public/football-predictions'
-    | '/api/public/football-source-check'
     | '/api/public/freeze-ledger'
     | '/api/public/hkjc-weather'
     | '/api/public/horse-hr2'
     | '/api/public/lock-state'
-    | '/api/public/marksix-data'
-    | '/api/public/marksix-next'
     | '/api/public/meeting-cancellation'
     | '/api/public/racecourse-photos-status'
     | '/api/public/telegram-alert'
     | '/api/public/weather-archive'
     | '/api/public/weather-sync-github'
-    | '/football/match/$matchKey'
-    | '/football/study/$matchId'
     | '/admin/'
     | '/api/public/hooks/race-results-dispatch'
     | '/api/public/jobs/racecourse-photos'
     | '/api/public/jobs/racing-data-scale'
     | '/api/public/payments/webhook'
-    | '/football/team/$div/$slug'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
   fileRoutesByTo: FileRoutesByTo
@@ -1035,8 +695,6 @@ export interface FileRouteTypes {
     | '/horse'
     | '/login'
     | '/manual'
-    | '/marksix'
-    | '/marksix-results'
     | '/media-credits'
     | '/membership'
     | '/pool-odds'
@@ -1058,20 +716,8 @@ export interface FileRouteTypes {
     | '/engine/monitor'
     | '/engine/residuals'
     | '/explain/$date'
-    | '/football/dual-ledger'
-    | '/football/engine'
-    | '/football/explain'
-    | '/football/features'
-    | '/football/fixtures'
-    | '/football/ingest-status'
-    | '/football/match-vs-result'
-    | '/football/prediction-vs-result'
-    | '/football/results'
-    | '/football/standings'
-    | '/football/study'
     | '/engine'
     | '/explain'
-    | '/football'
     | '/admin/console'
     | '/admin/data-freshness'
     | '/admin/engine-health'
@@ -1083,41 +729,22 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/traffic'
     | '/admin/users-membership'
-    | '/api/public/data-mirror'
     | '/api/public/draw-tune'
     | '/api/public/engine-health'
-    | '/api/public/football-crests'
-    | '/api/public/football-dual-lock'
-    | '/api/public/football-hkjc-list'
-    | '/api/public/football-ingest-status'
-    | '/api/public/football-league'
-    | '/api/public/football-lineup-settle'
-    | '/api/public/football-live'
-    | '/api/public/football-live-results'
-    | '/api/public/football-news'
-    | '/api/public/football-pitchapi-probe'
-    | '/api/public/football-player-source-check'
-    | '/api/public/football-predictions'
-    | '/api/public/football-source-check'
     | '/api/public/freeze-ledger'
     | '/api/public/hkjc-weather'
     | '/api/public/horse-hr2'
     | '/api/public/lock-state'
-    | '/api/public/marksix-data'
-    | '/api/public/marksix-next'
     | '/api/public/meeting-cancellation'
     | '/api/public/racecourse-photos-status'
     | '/api/public/telegram-alert'
     | '/api/public/weather-archive'
     | '/api/public/weather-sync-github'
-    | '/football/match/$matchKey'
-    | '/football/study/$matchId'
     | '/admin'
     | '/api/public/hooks/race-results-dispatch'
     | '/api/public/jobs/racecourse-photos'
     | '/api/public/jobs/racing-data-scale'
     | '/api/public/payments/webhook'
-    | '/football/team/$div/$slug'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
   id:
@@ -1134,8 +761,6 @@ export interface FileRouteTypes {
     | '/horse'
     | '/login'
     | '/manual'
-    | '/marksix'
-    | '/marksix-results'
     | '/media-credits'
     | '/membership'
     | '/pool-odds'
@@ -1158,20 +783,8 @@ export interface FileRouteTypes {
     | '/engine/monitor'
     | '/engine/residuals'
     | '/explain/$date'
-    | '/football/dual-ledger'
-    | '/football/engine'
-    | '/football/explain'
-    | '/football/features'
-    | '/football/fixtures'
-    | '/football/ingest-status'
-    | '/football/match-vs-result'
-    | '/football/prediction-vs-result'
-    | '/football/results'
-    | '/football/standings'
-    | '/football/study'
     | '/engine/'
     | '/explain/'
-    | '/football/'
     | '/_authenticated/admin/console'
     | '/_authenticated/admin/data-freshness'
     | '/_authenticated/admin/engine-health'
@@ -1183,41 +796,22 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/settings'
     | '/_authenticated/admin/traffic'
     | '/_authenticated/admin/users-membership'
-    | '/api/public/data-mirror'
     | '/api/public/draw-tune'
     | '/api/public/engine-health'
-    | '/api/public/football-crests'
-    | '/api/public/football-dual-lock'
-    | '/api/public/football-hkjc-list'
-    | '/api/public/football-ingest-status'
-    | '/api/public/football-league'
-    | '/api/public/football-lineup-settle'
-    | '/api/public/football-live'
-    | '/api/public/football-live-results'
-    | '/api/public/football-news'
-    | '/api/public/football-pitchapi-probe'
-    | '/api/public/football-player-source-check'
-    | '/api/public/football-predictions'
-    | '/api/public/football-source-check'
     | '/api/public/freeze-ledger'
     | '/api/public/hkjc-weather'
     | '/api/public/horse-hr2'
     | '/api/public/lock-state'
-    | '/api/public/marksix-data'
-    | '/api/public/marksix-next'
     | '/api/public/meeting-cancellation'
     | '/api/public/racecourse-photos-status'
     | '/api/public/telegram-alert'
     | '/api/public/weather-archive'
     | '/api/public/weather-sync-github'
-    | '/football/match/$matchKey'
-    | '/football/study/$matchId'
     | '/_authenticated/admin/'
     | '/api/public/hooks/race-results-dispatch'
     | '/api/public/jobs/racecourse-photos'
     | '/api/public/jobs/racing-data-scale'
     | '/api/public/payments/webhook'
-    | '/football/team/$div/$slug'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
   fileRoutesById: FileRoutesById
@@ -1235,8 +829,6 @@ export interface RootRouteChildren {
   HorseRoute: typeof HorseRoute
   LoginRoute: typeof LoginRoute
   ManualRoute: typeof ManualRoute
-  MarksixRoute: typeof MarksixRoute
-  MarksixResultsRoute: typeof MarksixResultsRoute
   MediaCreditsRoute: typeof MediaCreditsRoute
   MembershipRoute: typeof MembershipRoute
   PoolOddsRoute: typeof PoolOddsRoute
@@ -1258,53 +850,23 @@ export interface RootRouteChildren {
   EngineMonitorRoute: typeof EngineMonitorRoute
   EngineResidualsRoute: typeof EngineResidualsRoute
   ExplainDateRoute: typeof ExplainDateRoute
-  FootballDualLedgerRoute: typeof FootballDualLedgerRoute
-  FootballEngineRoute: typeof FootballEngineRoute
-  FootballExplainRoute: typeof FootballExplainRoute
-  FootballFeaturesRoute: typeof FootballFeaturesRoute
-  FootballFixturesRoute: typeof FootballFixturesRoute
-  FootballIngestStatusRoute: typeof FootballIngestStatusRoute
-  FootballMatchVsResultRoute: typeof FootballMatchVsResultRoute
-  FootballPredictionVsResultRoute: typeof FootballPredictionVsResultRoute
-  FootballResultsRoute: typeof FootballResultsRoute
-  FootballStandingsRoute: typeof FootballStandingsRoute
-  FootballStudyRoute: typeof FootballStudyRouteWithChildren
   EngineIndexRoute: typeof EngineIndexRoute
   ExplainIndexRoute: typeof ExplainIndexRoute
-  FootballIndexRoute: typeof FootballIndexRoute
-  ApiPublicDataMirrorRoute: typeof ApiPublicDataMirrorRoute
   ApiPublicDrawTuneRoute: typeof ApiPublicDrawTuneRoute
   ApiPublicEngineHealthRoute: typeof ApiPublicEngineHealthRoute
-  ApiPublicFootballCrestsRoute: typeof ApiPublicFootballCrestsRoute
-  ApiPublicFootballDualLockRoute: typeof ApiPublicFootballDualLockRoute
-  ApiPublicFootballHkjcListRoute: typeof ApiPublicFootballHkjcListRoute
-  ApiPublicFootballIngestStatusRoute: typeof ApiPublicFootballIngestStatusRoute
-  ApiPublicFootballLeagueRoute: typeof ApiPublicFootballLeagueRoute
-  ApiPublicFootballLineupSettleRoute: typeof ApiPublicFootballLineupSettleRoute
-  ApiPublicFootballLiveRoute: typeof ApiPublicFootballLiveRoute
-  ApiPublicFootballLiveResultsRoute: typeof ApiPublicFootballLiveResultsRoute
-  ApiPublicFootballNewsRoute: typeof ApiPublicFootballNewsRoute
-  ApiPublicFootballPitchapiProbeRoute: typeof ApiPublicFootballPitchapiProbeRoute
-  ApiPublicFootballPlayerSourceCheckRoute: typeof ApiPublicFootballPlayerSourceCheckRoute
-  ApiPublicFootballPredictionsRoute: typeof ApiPublicFootballPredictionsRoute
-  ApiPublicFootballSourceCheckRoute: typeof ApiPublicFootballSourceCheckRoute
   ApiPublicFreezeLedgerRoute: typeof ApiPublicFreezeLedgerRoute
   ApiPublicHkjcWeatherRoute: typeof ApiPublicHkjcWeatherRoute
   ApiPublicHorseHr2Route: typeof ApiPublicHorseHr2Route
   ApiPublicLockStateRoute: typeof ApiPublicLockStateRoute
-  ApiPublicMarksixDataRoute: typeof ApiPublicMarksixDataRoute
-  ApiPublicMarksixNextRoute: typeof ApiPublicMarksixNextRoute
   ApiPublicMeetingCancellationRoute: typeof ApiPublicMeetingCancellationRoute
   ApiPublicRacecoursePhotosStatusRoute: typeof ApiPublicRacecoursePhotosStatusRoute
   ApiPublicTelegramAlertRoute: typeof ApiPublicTelegramAlertRoute
   ApiPublicWeatherArchiveRoute: typeof ApiPublicWeatherArchiveRoute
   ApiPublicWeatherSyncGithubRoute: typeof ApiPublicWeatherSyncGithubRoute
-  FootballMatchMatchKeyRoute: typeof FootballMatchMatchKeyRoute
   ApiPublicHooksRaceResultsDispatchRoute: typeof ApiPublicHooksRaceResultsDispatchRoute
   ApiPublicJobsRacecoursePhotosRoute: typeof ApiPublicJobsRacecoursePhotosRoute
   ApiPublicJobsRacingDataScaleRoute: typeof ApiPublicJobsRacingDataScaleRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
-  FootballTeamDivSlugRoute: typeof FootballTeamDivSlugRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
   LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
 }
@@ -1393,20 +955,6 @@ declare module '@tanstack/react-router' {
       path: '/manual'
       fullPath: '/manual'
       preLoaderRoute: typeof ManualRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/marksix': {
-      id: '/marksix'
-      path: '/marksix'
-      fullPath: '/marksix'
-      preLoaderRoute: typeof MarksixRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/marksix-results': {
-      id: '/marksix-results'
-      path: '/marksix-results'
-      fullPath: '/marksix-results'
-      preLoaderRoute: typeof MarksixResultsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/media-credits': {
@@ -1577,90 +1125,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExplainDateRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/football/': {
-      id: '/football/'
-      path: '/football'
-      fullPath: '/football/'
-      preLoaderRoute: typeof FootballIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/football/dual-ledger': {
-      id: '/football/dual-ledger'
-      path: '/football/dual-ledger'
-      fullPath: '/football/dual-ledger'
-      preLoaderRoute: typeof FootballDualLedgerRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/football/engine': {
-      id: '/football/engine'
-      path: '/football/engine'
-      fullPath: '/football/engine'
-      preLoaderRoute: typeof FootballEngineRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/football/explain': {
-      id: '/football/explain'
-      path: '/football/explain'
-      fullPath: '/football/explain'
-      preLoaderRoute: typeof FootballExplainRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/football/features': {
-      id: '/football/features'
-      path: '/football/features'
-      fullPath: '/football/features'
-      preLoaderRoute: typeof FootballFeaturesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/football/fixtures': {
-      id: '/football/fixtures'
-      path: '/football/fixtures'
-      fullPath: '/football/fixtures'
-      preLoaderRoute: typeof FootballFixturesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/football/ingest-status': {
-      id: '/football/ingest-status'
-      path: '/football/ingest-status'
-      fullPath: '/football/ingest-status'
-      preLoaderRoute: typeof FootballIngestStatusRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/football/match-vs-result': {
-      id: '/football/match-vs-result'
-      path: '/football/match-vs-result'
-      fullPath: '/football/match-vs-result'
-      preLoaderRoute: typeof FootballMatchVsResultRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/football/prediction-vs-result': {
-      id: '/football/prediction-vs-result'
-      path: '/football/prediction-vs-result'
-      fullPath: '/football/prediction-vs-result'
-      preLoaderRoute: typeof FootballPredictionVsResultRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/football/results': {
-      id: '/football/results'
-      path: '/football/results'
-      fullPath: '/football/results'
-      preLoaderRoute: typeof FootballResultsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/football/standings': {
-      id: '/football/standings'
-      path: '/football/standings'
-      fullPath: '/football/standings'
-      preLoaderRoute: typeof FootballStandingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/football/study': {
-      id: '/football/study'
-      path: '/football/study'
-      fullPath: '/football/study'
-      preLoaderRoute: typeof FootballStudyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_authenticated/admin/': {
       id: '/_authenticated/admin/'
       path: '/'
@@ -1745,13 +1209,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminUsersMembershipRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
-    '/api/public/data-mirror': {
-      id: '/api/public/data-mirror'
-      path: '/api/public/data-mirror'
-      fullPath: '/api/public/data-mirror'
-      preLoaderRoute: typeof ApiPublicDataMirrorRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/public/draw-tune': {
       id: '/api/public/draw-tune'
       path: '/api/public/draw-tune'
@@ -1764,97 +1221,6 @@ declare module '@tanstack/react-router' {
       path: '/api/public/engine-health'
       fullPath: '/api/public/engine-health'
       preLoaderRoute: typeof ApiPublicEngineHealthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/football-crests': {
-      id: '/api/public/football-crests'
-      path: '/api/public/football-crests'
-      fullPath: '/api/public/football-crests'
-      preLoaderRoute: typeof ApiPublicFootballCrestsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/football-dual-lock': {
-      id: '/api/public/football-dual-lock'
-      path: '/api/public/football-dual-lock'
-      fullPath: '/api/public/football-dual-lock'
-      preLoaderRoute: typeof ApiPublicFootballDualLockRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/football-hkjc-list': {
-      id: '/api/public/football-hkjc-list'
-      path: '/api/public/football-hkjc-list'
-      fullPath: '/api/public/football-hkjc-list'
-      preLoaderRoute: typeof ApiPublicFootballHkjcListRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/football-ingest-status': {
-      id: '/api/public/football-ingest-status'
-      path: '/api/public/football-ingest-status'
-      fullPath: '/api/public/football-ingest-status'
-      preLoaderRoute: typeof ApiPublicFootballIngestStatusRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/football-league': {
-      id: '/api/public/football-league'
-      path: '/api/public/football-league'
-      fullPath: '/api/public/football-league'
-      preLoaderRoute: typeof ApiPublicFootballLeagueRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/football-lineup-settle': {
-      id: '/api/public/football-lineup-settle'
-      path: '/api/public/football-lineup-settle'
-      fullPath: '/api/public/football-lineup-settle'
-      preLoaderRoute: typeof ApiPublicFootballLineupSettleRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/football-live': {
-      id: '/api/public/football-live'
-      path: '/api/public/football-live'
-      fullPath: '/api/public/football-live'
-      preLoaderRoute: typeof ApiPublicFootballLiveRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/football-live-results': {
-      id: '/api/public/football-live-results'
-      path: '/api/public/football-live-results'
-      fullPath: '/api/public/football-live-results'
-      preLoaderRoute: typeof ApiPublicFootballLiveResultsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/football-news': {
-      id: '/api/public/football-news'
-      path: '/api/public/football-news'
-      fullPath: '/api/public/football-news'
-      preLoaderRoute: typeof ApiPublicFootballNewsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/football-pitchapi-probe': {
-      id: '/api/public/football-pitchapi-probe'
-      path: '/api/public/football-pitchapi-probe'
-      fullPath: '/api/public/football-pitchapi-probe'
-      preLoaderRoute: typeof ApiPublicFootballPitchapiProbeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/football-player-source-check': {
-      id: '/api/public/football-player-source-check'
-      path: '/api/public/football-player-source-check'
-      fullPath: '/api/public/football-player-source-check'
-      preLoaderRoute: typeof ApiPublicFootballPlayerSourceCheckRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/football-predictions': {
-      id: '/api/public/football-predictions'
-      path: '/api/public/football-predictions'
-      fullPath: '/api/public/football-predictions'
-      preLoaderRoute: typeof ApiPublicFootballPredictionsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/football-source-check': {
-      id: '/api/public/football-source-check'
-      path: '/api/public/football-source-check'
-      fullPath: '/api/public/football-source-check'
-      preLoaderRoute: typeof ApiPublicFootballSourceCheckRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/freeze-ledger': {
@@ -1883,20 +1249,6 @@ declare module '@tanstack/react-router' {
       path: '/api/public/lock-state'
       fullPath: '/api/public/lock-state'
       preLoaderRoute: typeof ApiPublicLockStateRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/marksix-data': {
-      id: '/api/public/marksix-data'
-      path: '/api/public/marksix-data'
-      fullPath: '/api/public/marksix-data'
-      preLoaderRoute: typeof ApiPublicMarksixDataRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/marksix-next': {
-      id: '/api/public/marksix-next'
-      path: '/api/public/marksix-next'
-      fullPath: '/api/public/marksix-next'
-      preLoaderRoute: typeof ApiPublicMarksixNextRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/meeting-cancellation': {
@@ -1934,20 +1286,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicWeatherSyncGithubRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/football/match/$matchKey': {
-      id: '/football/match/$matchKey'
-      path: '/football/match/$matchKey'
-      fullPath: '/football/match/$matchKey'
-      preLoaderRoute: typeof FootballMatchMatchKeyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/football/study/$matchId': {
-      id: '/football/study/$matchId'
-      path: '/$matchId'
-      fullPath: '/football/study/$matchId'
-      preLoaderRoute: typeof FootballStudyMatchIdRouteImport
-      parentRoute: typeof FootballStudyRoute
-    }
     '/api/public/hooks/race-results-dispatch': {
       id: '/api/public/hooks/race-results-dispatch'
       path: '/api/public/hooks/race-results-dispatch'
@@ -1974,13 +1312,6 @@ declare module '@tanstack/react-router' {
       path: '/api/public/payments/webhook'
       fullPath: '/api/public/payments/webhook'
       preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/football/team/$div/$slug': {
-      id: '/football/team/$div/$slug'
-      path: '/football/team/$div/$slug'
-      fullPath: '/football/team/$div/$slug'
-      preLoaderRoute: typeof FootballTeamDivSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lovable/email/auth/preview': {
@@ -2045,18 +1376,6 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
-interface FootballStudyRouteChildren {
-  FootballStudyMatchIdRoute: typeof FootballStudyMatchIdRoute
-}
-
-const FootballStudyRouteChildren: FootballStudyRouteChildren = {
-  FootballStudyMatchIdRoute: FootballStudyMatchIdRoute,
-}
-
-const FootballStudyRouteWithChildren = FootballStudyRoute._addFileChildren(
-  FootballStudyRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
@@ -2070,8 +1389,6 @@ const rootRouteChildren: RootRouteChildren = {
   HorseRoute: HorseRoute,
   LoginRoute: LoginRoute,
   ManualRoute: ManualRoute,
-  MarksixRoute: MarksixRoute,
-  MarksixResultsRoute: MarksixResultsRoute,
   MediaCreditsRoute: MediaCreditsRoute,
   MembershipRoute: MembershipRoute,
   PoolOddsRoute: PoolOddsRoute,
@@ -2093,55 +1410,24 @@ const rootRouteChildren: RootRouteChildren = {
   EngineMonitorRoute: EngineMonitorRoute,
   EngineResidualsRoute: EngineResidualsRoute,
   ExplainDateRoute: ExplainDateRoute,
-  FootballDualLedgerRoute: FootballDualLedgerRoute,
-  FootballEngineRoute: FootballEngineRoute,
-  FootballExplainRoute: FootballExplainRoute,
-  FootballFeaturesRoute: FootballFeaturesRoute,
-  FootballFixturesRoute: FootballFixturesRoute,
-  FootballIngestStatusRoute: FootballIngestStatusRoute,
-  FootballMatchVsResultRoute: FootballMatchVsResultRoute,
-  FootballPredictionVsResultRoute: FootballPredictionVsResultRoute,
-  FootballResultsRoute: FootballResultsRoute,
-  FootballStandingsRoute: FootballStandingsRoute,
-  FootballStudyRoute: FootballStudyRouteWithChildren,
   EngineIndexRoute: EngineIndexRoute,
   ExplainIndexRoute: ExplainIndexRoute,
-  FootballIndexRoute: FootballIndexRoute,
-  ApiPublicDataMirrorRoute: ApiPublicDataMirrorRoute,
   ApiPublicDrawTuneRoute: ApiPublicDrawTuneRoute,
   ApiPublicEngineHealthRoute: ApiPublicEngineHealthRoute,
-  ApiPublicFootballCrestsRoute: ApiPublicFootballCrestsRoute,
-  ApiPublicFootballDualLockRoute: ApiPublicFootballDualLockRoute,
-  ApiPublicFootballHkjcListRoute: ApiPublicFootballHkjcListRoute,
-  ApiPublicFootballIngestStatusRoute: ApiPublicFootballIngestStatusRoute,
-  ApiPublicFootballLeagueRoute: ApiPublicFootballLeagueRoute,
-  ApiPublicFootballLineupSettleRoute: ApiPublicFootballLineupSettleRoute,
-  ApiPublicFootballLiveRoute: ApiPublicFootballLiveRoute,
-  ApiPublicFootballLiveResultsRoute: ApiPublicFootballLiveResultsRoute,
-  ApiPublicFootballNewsRoute: ApiPublicFootballNewsRoute,
-  ApiPublicFootballPitchapiProbeRoute: ApiPublicFootballPitchapiProbeRoute,
-  ApiPublicFootballPlayerSourceCheckRoute:
-    ApiPublicFootballPlayerSourceCheckRoute,
-  ApiPublicFootballPredictionsRoute: ApiPublicFootballPredictionsRoute,
-  ApiPublicFootballSourceCheckRoute: ApiPublicFootballSourceCheckRoute,
   ApiPublicFreezeLedgerRoute: ApiPublicFreezeLedgerRoute,
   ApiPublicHkjcWeatherRoute: ApiPublicHkjcWeatherRoute,
   ApiPublicHorseHr2Route: ApiPublicHorseHr2Route,
   ApiPublicLockStateRoute: ApiPublicLockStateRoute,
-  ApiPublicMarksixDataRoute: ApiPublicMarksixDataRoute,
-  ApiPublicMarksixNextRoute: ApiPublicMarksixNextRoute,
   ApiPublicMeetingCancellationRoute: ApiPublicMeetingCancellationRoute,
   ApiPublicRacecoursePhotosStatusRoute: ApiPublicRacecoursePhotosStatusRoute,
   ApiPublicTelegramAlertRoute: ApiPublicTelegramAlertRoute,
   ApiPublicWeatherArchiveRoute: ApiPublicWeatherArchiveRoute,
   ApiPublicWeatherSyncGithubRoute: ApiPublicWeatherSyncGithubRoute,
-  FootballMatchMatchKeyRoute: FootballMatchMatchKeyRoute,
   ApiPublicHooksRaceResultsDispatchRoute:
     ApiPublicHooksRaceResultsDispatchRoute,
   ApiPublicJobsRacecoursePhotosRoute: ApiPublicJobsRacecoursePhotosRoute,
   ApiPublicJobsRacingDataScaleRoute: ApiPublicJobsRacingDataScaleRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
-  FootballTeamDivSlugRoute: FootballTeamDivSlugRoute,
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
   LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
 }

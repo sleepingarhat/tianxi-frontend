@@ -18,7 +18,7 @@ type VersionRow = {
 };
 
 /** 版本化成績：讀 model_versions，當前版本置頂，歷史版本可展開；只讀，唔改任何帳。 */
-export function ModelVersions({ engine }: { engine: "racing" | "football" | "marksix" }) {
+export function ModelVersions({ engine }: { engine: "racing" }) {
   const readHistory = useServerFn(getFrozenVersionHistory);
   const history = useQuery({ queryKey: ["frozen-model-version-history"], queryFn: () => readHistory(), enabled: engine === "racing", staleTime: 300_000 });
   const readManifests = useServerFn(getRetrainManifests);

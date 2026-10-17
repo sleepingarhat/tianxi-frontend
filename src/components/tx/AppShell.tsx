@@ -16,8 +16,6 @@ export type NavKey =
   | "schedule"
   | "encyclopedia"
   | "engine"
-  | "marksix"
-  | "football"
   | "";
 
 const BOTNAV: { to: string; key: NavKey; label: string; icon: ReactNode }[] = [

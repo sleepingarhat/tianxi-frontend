@@ -22,7 +22,7 @@
 
 ## 監控端規則
 - Admin engine-health consumers share a display-only language adapter in the admin data hook; preserve response keys and source records so terminology edits cannot change monitoring logic.
-- Subdirectories (src/components/admin/, src/lib/ for archived football) have their own AGENTS.md; read before changing files there.
+- Subdirectories (src/components/admin/) have their own AGENTS.md; read before changing files there.
 - Public racing P&L supplements the existing four-pool rollup with shared `racingPoolAccounting` cross-race queries, merging daily cost and payout once; missing fifth picks are excluded and post-race substitutes are labelled, so incomplete data cannot masquerade as frozen results.
 - Admin version notes must wrap in desktop tables and use stacked mobile records; cross-race trio reconciliation reuses ExoticTrioPools separately from the single-race strategy aggregate, to prevent truncated explanations and mixed accounting scopes.
 - Blueprint completion audits must distinguish implemented code, verified user flows, missing evidence and superseded decisions in docs/blueprint; route existence and checked roadmap items alone do not prove functional completion.
@@ -40,3 +40,5 @@
 - Racing coverage pages share racing-visibility aggregation over frozen hit-rate rows and full closing-result CSVs; position guides exclude same-day/future form and terminal finish positions. Why: paired denominators and pre-race evidence must remain auditable without prediction writes.
 - RacePositionMap presents each horse's historical stage medians and actual checkpoints together, with finish rank separate and source details expandable; historical references are never labelled frozen estimates. Why: readers must distinguish prior tendencies from observed race results.
 - Racing evidence uses fixed read-only prediction_log projections via server functions, with settled-public or existing frozen-public-picks eligibility; version alpha comes from each frozen source, and absent per-version artifacts or component snapshots remain unverified. Why: current settings, mutable as-of tables and today's gates cannot stand in for historical locked evidence.
+
+- Football and Mark Six source lives only in the private research repository; the site keeps just the product-scope gate so old URLs redirect or return 410. Why: retired products must not run or ship in the live bundle.
