@@ -4,7 +4,7 @@ import { useState, type ReactNode } from "react";
 
 import { supabase } from "@/integrations/supabase/client";
 import { useAuthState } from "@/lib/useAuthState";
-import tianxiLogo from "@/assets/tianxi-racing-logo-v9.jpg";
+import tianxiLogo from "@/assets/tianxi-racing-logo-v10.jpg";
 import { OverflowTicker } from "./OverflowTicker";
 
 
