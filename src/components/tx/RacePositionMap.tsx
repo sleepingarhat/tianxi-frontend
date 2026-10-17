@@ -9,7 +9,15 @@ export function RacePositionMap({ date, raceId, distance, picks, frozen }: { dat
   const [scope, setScope] = useState<"picks" | "all">("picks");
   const canonicalId = raceId ? (raceId.startsWith("race_") ? raceId : `race_${raceId}`) : undefined;
   const result = useQuery({ queryKey: ["race-position-result", canonicalId], enabled: Boolean(canonicalId), staleTime: 60_000, refetchInterval: 300_000,
-    queryFn: () => txApi.race(canonicalId ?? ""),
+    // 賽事紀錄尚未開放（404）唔係資料錯誤，視為「賽果未入帳」；其他錯誤照常顯示
+    queryFn: async () => {
+      try {
+        return await txApi.race(canonicalId ?? "");
+      } catch (e) {
+        if (/API 404/.test(String((e as Error)?.message ?? ""))) return null;
+        throw e;
+      }
+    },
   });
   const actual: { horseNumber: number; runningPosition?: string; finishingPosition?: number }[] = result.data?.horses ?? [];
   const settled = actual.some(p => Number(p.finishingPosition) > 0);
