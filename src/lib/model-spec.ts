@@ -71,7 +71,10 @@ export const FACTOR_RULES = [
 ];
 
 export const ELO = {
-  k: 40,
+  k: { horse: 28, jockey: 18, trainer: 11 },
+  tau: { horse: 548, jockey: 730, trainer: 1095 },
+  provisionalGames: 6,
+  provisionalMultiplier: 1.5,
   initial: 1500,
   weights: { horse: 0.7, jockey: 0.2, trainer: 0.1 },
   axes: ["overall", "turf_sprint", "turf_mile", "turf_middle", "turf_staying"],

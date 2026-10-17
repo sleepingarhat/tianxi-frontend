@@ -31,15 +31,17 @@
 - 外部圖片只可用逐張核實自由授權或書面商用權，頁內須署名並保留 /media-credits；API 圖址不等於授權。
 - 藍圖現行版本放 docs/blueprint/；改藍圖要同步更新該文件、roadmap、AGENTS、開發者日誌同 GitHub 鏡像。理由：設計說明同代碼唔可以分家。
 
-- Retired-product technical snapshots and pre-cleanup journals are archived with source commits and checksums in the private research repository; detach shared runtime dependencies before removing source copies, so future research can resume without changing frozen records.
+- Archive retired sources and journals privately with commits/checksums; detach runtime dependencies before removal to preserve research.
 - The current blueprint is docs/blueprint/tianxi-racing-blueprint-2026-10-13.md; older blueprints are historical so superseded requirements cannot re-enable retired products.
 - Pro entitlement is decided only by src/lib/entitlement.ts (resolveEntitlement), fed by the my_membership DB function and the webhook-maintained subscriptions table; the gate opens automatically at the 500th signup. Why: one rule source for free stage, founding Pro and paid subscriptions.
 - Racecourse posters rotate weekly from Wikimedia Commons via a managed HTTP schedule into racecourse_photos (commercial-free licences only, auto-deactivate on licence change); tianxi-web GitHub Actions only monitor the public status endpoint. Why: scheduling stays in the app backend, GitHub mirror stays read-only.
 
 - Homepage data-scale figures come only from racing_results_index, filled by a twice-daily job that counts each tianxi-racing results CSV incrementally (40 files/run). Why: shown numbers stay verifiable and update without manual edits.
 - Racing coverage pages share racing-visibility aggregation over frozen hit-rate rows and full closing-result CSVs; position guides exclude same-day/future form and terminal finish positions. Why: paired denominators and pre-race evidence must remain auditable without prediction writes.
-- RacePositionMap presents each horse's historical stage medians and actual checkpoints together, with finish rank separate and source details expandable; historical references are never labelled frozen estimates. Why: readers must distinguish prior tendencies from observed race results.
+- RacePositionMap pairs historical medians with actual checkpoints, separates finish rank and expands sources; never label historical references frozen estimates.
 - Racing evidence uses fixed read-only prediction_log projections via server functions, with settled-public or existing frozen-public-picks eligibility; version alpha comes from each frozen source, and absent per-version artifacts or component snapshots remain unverified. Why: current settings, mutable as-of tables and today's gates cannot stand in for historical locked evidence.
 
 - Football and Mark Six source lives only in the private research repository; the site keeps just the product-scope gate so old URLs redirect or return 410. Why: retired products must not run or ship in the live bundle.
 - Race SSR and self-canonicals use public entries; sitemap walks offset pages, fails on incomplete reads, omits generated lastmod. Why: auditable discovery.
+
+- Public Elo parameters follow restored v12; repair backfills are not frozen evidence, and importance describes serialized LightGBM only. Why: preserve provenance.

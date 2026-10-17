@@ -46,15 +46,22 @@ finalScore = 1500 + blendZ × 100      （顯示用，唔包 factor）`}</Formul
     </Card>
 
     <Card title="Elo 更新公式" en="Elo">
-      <Formula>{`對每對馬 i、j（i 名次較好）：
+      <Formula>{`對每對參賽者 i、j：
 expected_i = 1 / (1 + 10^((R_j − R_i) / 400))
-delta_i   += K / (N − 1) × (1 − expected_i)
-delta_j   += K / (N − 1) × (0 − expected_j)
-K = ${ELO.k}，初始評分 = ${ELO.initial}`}</Formula>
-      <P>N 為完成賽事匹數；所有配對變動加總後同時套用；同名次當 0.5／0.5；未完成（DNF／PU）唔計。馬匹、騎師、練馬師各自用同一方法更新。</P>
+K_eff_i   = K_base × exp(−距上仗日數 / τ) × 暫定倍率
+delta_i   = Σ K_eff_i / (N − 1) × (實際得分 − expected_i)
+K_base：馬 ${ELO.k.horse}／騎師 ${ELO.k.jockey}／練馬師 ${ELO.k.trainer}
+τ（日）：馬 ${ELO.tau.horse}／騎師 ${ELO.tau.jockey}／練馬師 ${ELO.tau.trainer}
+暫定倍率：更新前少於 ${ELO.provisionalGames} 仗 → ×${ELO.provisionalMultiplier}，其餘 ×1`}</Formula>
+      <P>N 為有效比較人數；實際得分：名次較好為1、較差為0、同名次為0.5。未完成（名次999）不參與配對。初出無上仗日數時不衰減；一般起步評分{ELO.initial}，進口馬1580、自購馬1560。外地騎師1550係可用設定，但原批次程式未傳入該標記，不宣稱已採用。</P>
+      <Formula>{`可信度 = min(1, 出賽數 / 20) × (1 − exp(−近期加權出賽數 / 6))
+普通更新：近期加權出賽數 = 舊值 × exp(−距上仗日數 / τ) + 1`}</Formula>
+      <P>可信度係出賽量與新鮮度指標，唔係命中機率。馬匹休息超365日至720日暫停更新自身變動，超720日列退役；騎師／練馬師相應門檻為730／1095日。馬季回歸系數：馬5%、騎師及練馬師2%，拉近1500；原程式跨曆年亦會觸發，唔只係7月31日。2017年年底或之前的快照另有暖機標記。</P>
       <Formula>{`elo_composite = (0.7 × 馬匹 + 0.2 × 騎師 + 0.1 × 練馬師) ÷ 有資料權重之和`}</Formula>
-      <P>評分軸：馬匹快照分 {ELO.axes.join("、")} 五軸儲存，但正式預測<b>只讀 overall 軸</b>；其餘四軸冇加權入預測，所以冇「五軸權重」。騎師同練馬師只有單一評分。騎練權重可經回測調整，以上係預設值。</P>
-      <Src path="scripts/elo/engine.ts" />
+      <P>馬匹有overall軸，另按草地／泥地×途程分軸儲存（短途≤1400、一哩≤1800、中距≤2000、其餘長途）。草地常見軸為 {ELO.axes.join("、")}；唔係固定只得五軸。正式預測<b>只讀overall軸</b>，所以冇五軸融合權重；騎師與練馬師各自只有overall評分。以上綜合權重係預測層設定，唔係Elo更新公式。</P>
+      <Src path="scripts/elo/engine_v12.ts" />
+      <Src path="scripts/elo/compute_v12.ts" />
+      <P>2026-10-17核查更新流程錯配：真正v12快照曾停在4月15日，現已補計至10月14日；舊凍結預測與鎖定紀錄不改。補計評分唔代表原賽前已使用，亦不保證命中率提高。</P>
     </Card>
 
     <Card title="LightGBM 訓練" en="LambdaRank">
@@ -68,6 +75,7 @@ K = ${ELO.k}，初始評分 = ${ELO.initial}`}</Formula>
         <div>防洩漏：所有往績只用賽日之前資料；唔用任何賠率</div>
       </div>
       <Src path="scripts/backtest/predict_upcoming.py" />
+      <P>正式訓練新增保存序列化模型嘅gain（樹分裂改善量）及split（使用次數），各自列百分比、保留零值與訓練欄序，附模型及設定檔指紋。不是單馬SHAP、因果或Elo貢獻，亦不自動升版；首份正式完整重訓報告仍待驗收。</P>
     </Card>
 
     <Card title={`特徵清單（${FEATURES.length} 項＋going_code）`} en="Features">
