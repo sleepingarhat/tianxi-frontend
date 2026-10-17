@@ -3,6 +3,7 @@ import type Stripe from "stripe";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { type StripeEnv, createStripeClient, getStripeErrorMessage } from "@/lib/stripe.server";
 import { resolveEntitlement, type SubRow } from "@/lib/entitlement";
+import { customerBelongsToUser } from "./audit-safety";
 
 const PRO_PRICE_ID = "pro_weekly";
 
@@ -11,7 +12,7 @@ type Ctx = { supabase: any; userId: string; claims: { email?: string } };
 async function loadMembership(ctx: Ctx, environment: StripeEnv) {
   const { data: m, error } = await ctx.supabase.rpc("my_membership");
   if (error) throw new Error("無法讀取會籍");
-  const { data: sub } = await ctx.supabase
+  const { data: sub, error: subError } = await ctx.supabase
     .from("subscriptions")
     .select("status, current_period_end, cancel_at_period_end, stripe_customer_id")
     .eq("user_id", ctx.userId)
@@ -19,6 +20,7 @@ async function loadMembership(ctx: Ctx, environment: StripeEnv) {
     .order("created_at", { ascending: false })
     .limit(1)
     .maybeSingle();
+  if (subError) throw new Error("無法讀取訂閱紀錄");
   const row = (m ?? {}) as { rank?: number; total?: number; gate_open_at?: string | null };
   const entitlement = resolveEntitlement({
     rank: row.rank ?? null,
@@ -44,8 +46,7 @@ async function resolveOrCreateCustomer(stripe: Stripe, options: { email?: string
   if (options.email) {
     const existing = await stripe.customers.list({ email: options.email, limit: 1 });
     const c = existing.data[0];
-    if (c) {
-      if (c.metadata?.['userId'] !== options.userId) await stripe.customers.update(c.id, { metadata: { ...c.metadata, userId: options.userId } });
+    if (c && customerBelongsToUser(c.metadata, options.userId)) {
       return c.id;
     }
   }

@@ -29,5 +29,7 @@ describe("會籍規則", () => {
   it("扣款失敗：即時停權", () => {
     const sub = { status: "past_due", current_period_end: "2027-01-12T00:00:00Z", cancel_at_period_end: false };
     expect(resolveEntitlement({ rank: 600, total: 600, gateOpenAt: gate, subscription: sub, now })).toMatchObject({ kind: "payment_failed", hasPro: false });
+    expect(resolveEntitlement({ rank: 1, total: 600, gateOpenAt: gate, subscription: sub, now })).toMatchObject({ kind: "payment_failed", hasPro: false });
+    expect(resolveEntitlement({ rank: 1, total: 499, gateOpenAt: null, subscription: sub, now })).toMatchObject({ kind: "payment_failed", hasPro: false });
   });
 });

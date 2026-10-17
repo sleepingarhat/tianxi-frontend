@@ -1,5 +1,6 @@
 import { TX_BASE, canonicalRaceId, type Meeting } from "./tx-api";
 import { raceUrl } from "./race-seo";
+import { completeRaceIds } from "./audit-safety";
 
 // Walk the public API's confirmed offset pagination; never return partial XML on failure.
 export async function getPublicRaceUrls() {
@@ -20,7 +21,7 @@ export async function getPublicRaceUrls() {
       const meeting = listed.totalRaces ? listed : await read(`/api/meetings/${listed.date}`) as Meeting;
       const count = Number(meeting.totalRaces);
       if (!Number.isInteger(count) || count < 0 || count > 20) throw new Error("賽事場數未能核實。");
-      const ids = meeting.races ? meeting.races.map(r => r.id) : Array.from({ length: count }, (_, i) => `race_${meeting.date}_${meeting.venue}_${i + 1}`);
+      const ids = completeRaceIds(count, meeting.races ? meeting.races.map(r => r.id) : Array.from({ length: count }, (_, i) => `race_${meeting.date}_${meeting.venue}_${i + 1}`));
       for (const id of ids) {
         if (!canonicalRaceId(id)) throw new Error("賽事網址不正確。");
         urls.push(raceUrl(id));

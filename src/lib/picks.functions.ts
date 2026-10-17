@@ -2,6 +2,7 @@
 // 後端 /api/analyze/today-picks 對未認證訪客只回第一場，全日預測需帶管理員 token。
 // Token 只存在伺服器端（TIANXI_ADMIN_TOKEN），永不落到瀏覽器。
 import { createServerFn } from "@tanstack/react-start";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 const WORKER_BASE = "https://tianxi-backend.tianxi-entertainment.workers.dev";
 
@@ -59,8 +60,11 @@ export const getTodayPicksAll = createServerFn({ method: "GET" }).handler(async 
 
 /** 監控台用：可選強制重新運算（fresh=1，忽略快取） */
 export const getOraclePicks = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((data: { fresh?: boolean } | undefined) => ({ fresh: Boolean(data?.fresh) }))
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context }) => {
+    const { data: role, error } = await context.supabase.from("user_roles").select("role").eq("user_id", context.userId).eq("role", "admin").maybeSingle();
+    if (error || !role) throw new Error("只限管理員使用監控工具");
     const token = process.env["TIANXI_ADMIN_TOKEN"];
     const url = `${WORKER_BASE}/api/analyze/today-picks${data.fresh ? "?fresh=1" : ""}`;
     const res = await fetch(url, {
@@ -82,13 +86,16 @@ export const getOraclePicks = createServerFn({ method: "POST" })
 
 /** 回測工具：檔位因子倍數掃描（唯讀，唔會寫入生產設定） */
 export const runDrawTune = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((data: { from: string; to: string; scales: string }) => {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(data?.from ?? "")) throw new Error("from 格式錯");
     if (!/^\d{4}-\d{2}-\d{2}$/.test(data?.to ?? "")) throw new Error("to 格式錯");
     if (!/^[0-9,]{1,60}$/.test(data?.scales ?? "")) throw new Error("scales 格式錯");
     return data;
   })
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context }) => {
+    const { data: role, error } = await context.supabase.from("user_roles").select("role").eq("user_id", context.userId).eq("role", "admin").maybeSingle();
+    if (error || !role) throw new Error("只限管理員使用回測工具");
     const token = process.env["TIANXI_ADMIN_TOKEN"];
     const url = `${WORKER_BASE}/api/analyze/draw-tune?from=${data.from}&to=${data.to}&scales=${data.scales}`;
     const res = await fetch(url, {

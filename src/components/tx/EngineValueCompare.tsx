@@ -14,7 +14,10 @@ export function EngineValueCompare() {
   const rows = hist.data ?? [];
   const current = rows.slice().sort((a, b) => b.lastDate.localeCompare(a.lastDate))[0];
   const from = current ? rows.filter(r => r.version === current.version).map(r => r.firstDate).sort()[0] : undefined;
-  const q = useQuery({ queryKey: ["engine-value", from], queryFn: () => readValue({ data: { from: from! } }), enabled: !!from, staleTime: 600_000 });
+  const q = useQuery({ queryKey: ["engine-value-v2", from, current?.version], queryFn: () => {
+    if (!from || !current?.version) throw new Error("未有版本起計紀錄");
+    return readValue({ data: { from, version: current.version } });
+  }, enabled: Boolean(from && current?.version), staleTime: 600_000 });
   const s = q.data?.summary;
   const t = q.data?.trend ?? [];
   const pct = (v: number | null | undefined) => `${Math.max(0, Math.min(100, ((v ?? 0) / 4) * 100))}%`;

@@ -44,4 +44,4 @@
 - Football and Mark Six source lives only in the private research repository; the site keeps just the product-scope gate so old URLs redirect or return 410. Why: retired products must not run or ship in the live bundle.
 - Race SSR and self-canonicals use public entries; sitemap walks offset pages, fails on incomplete reads, omits generated lastmod. Why: auditable discovery.
 
-- Public Elo parameters follow restored v12; repair backfills are not frozen evidence, and importance describes serialized LightGBM only. Why: preserve provenance.
+- Public Elo follows v12; backfills are not frozen evidence. audit-safety.ts enforces meeting, race-list and billing identity; cohorts match four recorded picks. Why: prevent provenance drift.

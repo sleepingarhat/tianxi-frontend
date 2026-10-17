@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { createClient } from "@supabase/supabase-js";
 import { type StripeEnv, verifyWebhook } from "@/lib/stripe.server";
+import { assertDatabaseWrite } from "@/lib/audit-safety";
 
 let _supabase: ReturnType<typeof createClient> | null = null;
 function db() {
@@ -22,8 +23,8 @@ function fields(subscription: any) {
 
 async function upsertSub(subscription: any, env: StripeEnv) {
   const userId = subscription.metadata?.userId;
-  if (!userId) { console.error("No userId in subscription metadata"); return; }
-  await db().from("subscriptions").upsert({
+  if (!userId) throw new Error("No userId in subscription metadata");
+  const result = await db().from("subscriptions").upsert({
     user_id: userId,
     stripe_subscription_id: subscription.id,
     stripe_customer_id: typeof subscription.customer === "string" ? subscription.customer : subscription.customer?.id,
@@ -33,6 +34,7 @@ async function upsertSub(subscription: any, env: StripeEnv) {
     environment: env,
     updated_at: new Date().toISOString(),
   }, { onConflict: "stripe_subscription_id" });
+  assertDatabaseWrite(result);
 }
 
 async function handle(req: Request, env: StripeEnv) {
@@ -43,15 +45,22 @@ async function handle(req: Request, env: StripeEnv) {
     case "customer.subscription.updated":
       await upsertSub(obj, env);
       break;
-    case "customer.subscription.deleted":
-      await db().from("subscriptions").update({ status: "canceled", updated_at: new Date().toISOString() })
-        .eq("stripe_subscription_id", obj.id).eq("environment", env);
+    case "customer.subscription.deleted": {
+      const result = await db().from("subscriptions").update({ status: "canceled", updated_at: new Date().toISOString() })
+        .eq("stripe_subscription_id", obj.id).eq("environment", env).select("stripe_subscription_id");
+      assertDatabaseWrite(result);
+      if (!result.data?.length) throw new Error("Subscription deletion not persisted");
       break;
+    }
     case "invoice.payment_failed": {
       // 用戶規則：扣款失敗即時停權
       const subId = obj.parent?.subscription_details?.subscription ?? obj.subscription;
-      if (subId) await db().from("subscriptions").update({ status: "past_due", updated_at: new Date().toISOString() })
-        .eq("stripe_subscription_id", subId).eq("environment", env);
+      if (subId) {
+        const result = await db().from("subscriptions").update({ status: "past_due", updated_at: new Date().toISOString() })
+          .eq("stripe_subscription_id", subId).eq("environment", env).select("stripe_subscription_id");
+        assertDatabaseWrite(result);
+        if (!result.data?.length) throw new Error("Payment failure not persisted");
+      }
       break;
     }
     default:

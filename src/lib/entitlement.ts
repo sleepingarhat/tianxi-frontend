@@ -37,6 +37,9 @@ export function foundingUntil(gateOpenAt: string): string {
 export function resolveEntitlement(input: MembershipInput): Entitlement {
   const now = input.now ?? new Date();
   const sub = input.subscription;
+  if (sub && ["past_due", "unpaid", "incomplete", "incomplete_expired", "paused"].includes(sub.status)) {
+    return { kind: "payment_failed", hasPro: false };
+  }
   if (sub) {
     const end = sub.current_period_end ? new Date(sub.current_period_end) : null;
     const future = !end || end > now;
@@ -54,9 +57,6 @@ export function resolveEntitlement(input: MembershipInput): Entitlement {
     const until = foundingUntil(input.gateOpenAt);
     if (new Date(until) > now) return { kind: "founding", hasPro: true, until };
     if (!sub) return { kind: "founding_expired", hasPro: false, until };
-  }
-  if (sub && ["past_due", "unpaid", "incomplete", "incomplete_expired", "paused"].includes(sub.status)) {
-    return { kind: "payment_failed", hasPro: false };
   }
   return { kind: "none", hasPro: false };
 }

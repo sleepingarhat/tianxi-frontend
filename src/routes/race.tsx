@@ -5,6 +5,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { getTodayPicksAll } from "@/lib/picks.functions";
 import { getPublicRacePage } from "@/lib/race-public.functions";
 import { raceMetadata } from "@/lib/race-seo";
+import { sameMeeting } from "@/lib/audit-safety";
 
 
 import { AppShell } from "@/components/tx/AppShell";
@@ -120,7 +121,7 @@ function RacePage() {
   const dayRacePicks =
     (picks.data?.picks || []).length
       ? picks.data.picks
-      : ((dayPicks.data?.races || []).find((r: any) => Number(r.raceNumber) === raceNumber)?.picks || []);
+      : (sameMeeting(raceDate, venueCode, dayPicks.data) ? ((dayPicks.data?.races || []).find((r: any) => Number(r.raceNumber) === raceNumber)?.picks || []) : []);
   const pickRank = new Map<number, number>();
   dayRacePicks.forEach((p: any) => pickRank.set(Number(p.horseNumber), Number(p.rank)));
   const hasResult = horses.some((h) => h.finishingPosition);

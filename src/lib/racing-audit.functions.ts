@@ -40,7 +40,7 @@ export const getRetrainManifests = createServerFn({ method: "GET" }).handler(asy
       (SELECT COUNT(*) FROM model_run_manifest x WHERE x.model_version = m.model_version) AS runs
     FROM model_run_manifest m
     WHERE m.recorded_at = (SELECT MAX(recorded_at) FROM model_run_manifest y WHERE y.model_version = m.model_version)
-    ORDER BY m.model_version DESC LIMIT 100`).catch(() => []);
+    ORDER BY m.model_version DESC LIMIT 100`);
 });
 });
 
