@@ -23,6 +23,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as ManualRouteImport } from './routes/manual'
 import { Route as MediaCreditsRouteImport } from './routes/media-credits'
 import { Route as MembershipRouteImport } from './routes/membership'
+import { Route as ModelRouteImport } from './routes/model'
 import { Route as PoolOddsRouteImport } from './routes/pool-odds'
 import { Route as PredictionVsResultRouteImport } from './routes/prediction-vs-result'
 import { Route as PredictorRouteImport } from './routes/predictor'
@@ -142,6 +143,11 @@ const MediaCreditsRoute = MediaCreditsRouteImport.update({
 const MembershipRoute = MembershipRouteImport.update({
   id: '/membership',
   path: '/membership',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ModelRoute = ModelRouteImport.update({
+  id: '/model',
+  path: '/model',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PoolOddsRoute = PoolOddsRouteImport.update({
@@ -430,6 +436,7 @@ export interface FileRoutesByFullPath {
   '/manual': typeof ManualRoute
   '/media-credits': typeof MediaCreditsRoute
   '/membership': typeof MembershipRoute
+  '/model': typeof ModelRoute
   '/pool-odds': typeof PoolOddsRoute
   '/prediction-vs-result': typeof PredictionVsResultRoute
   '/predictor': typeof PredictorRoute
@@ -496,6 +503,7 @@ export interface FileRoutesByTo {
   '/manual': typeof ManualRoute
   '/media-credits': typeof MediaCreditsRoute
   '/membership': typeof MembershipRoute
+  '/model': typeof ModelRoute
   '/pool-odds': typeof PoolOddsRoute
   '/prediction-vs-result': typeof PredictionVsResultRoute
   '/predictor': typeof PredictorRoute
@@ -563,6 +571,7 @@ export interface FileRoutesById {
   '/manual': typeof ManualRoute
   '/media-credits': typeof MediaCreditsRoute
   '/membership': typeof MembershipRoute
+  '/model': typeof ModelRoute
   '/pool-odds': typeof PoolOddsRoute
   '/prediction-vs-result': typeof PredictionVsResultRoute
   '/predictor': typeof PredictorRoute
@@ -631,6 +640,7 @@ export interface FileRouteTypes {
     | '/manual'
     | '/media-credits'
     | '/membership'
+    | '/model'
     | '/pool-odds'
     | '/prediction-vs-result'
     | '/predictor'
@@ -697,6 +707,7 @@ export interface FileRouteTypes {
     | '/manual'
     | '/media-credits'
     | '/membership'
+    | '/model'
     | '/pool-odds'
     | '/prediction-vs-result'
     | '/predictor'
@@ -763,6 +774,7 @@ export interface FileRouteTypes {
     | '/manual'
     | '/media-credits'
     | '/membership'
+    | '/model'
     | '/pool-odds'
     | '/prediction-vs-result'
     | '/predictor'
@@ -831,6 +843,7 @@ export interface RootRouteChildren {
   ManualRoute: typeof ManualRoute
   MediaCreditsRoute: typeof MediaCreditsRoute
   MembershipRoute: typeof MembershipRoute
+  ModelRoute: typeof ModelRoute
   PoolOddsRoute: typeof PoolOddsRoute
   PredictionVsResultRoute: typeof PredictionVsResultRoute
   PredictorRoute: typeof PredictorRoute
@@ -969,6 +982,13 @@ declare module '@tanstack/react-router' {
       path: '/membership'
       fullPath: '/membership'
       preLoaderRoute: typeof MembershipRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/model': {
+      id: '/model'
+      path: '/model'
+      fullPath: '/model'
+      preLoaderRoute: typeof ModelRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pool-odds': {
@@ -1391,6 +1411,7 @@ const rootRouteChildren: RootRouteChildren = {
   ManualRoute: ManualRoute,
   MediaCreditsRoute: MediaCreditsRoute,
   MembershipRoute: MembershipRoute,
+  ModelRoute: ModelRoute,
   PoolOddsRoute: PoolOddsRoute,
   PredictionVsResultRoute: PredictionVsResultRoute,
   PredictorRoute: PredictorRoute,

@@ -96,14 +96,27 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:description", content: "專注沙田與跑馬地賽事，預測、賽果及策略盈虧公開可核對。" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "theme-color", content: "#0F5E49" },
+      {
+        "script:ld+json": {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "天喜賽馬 TIANXI",
+          url: "https://tianxi.racing",
+          logo: "https://tianxi.racing/favicon-v10-512.png",
+        },
+      },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon-v10.png", type: "image/png" },
-      { rel: "apple-touch-icon", href: "/apple-touch-icon-v10.png" },
+      { rel: "icon", href: "/favicon-v10-48.png", type: "image/png", sizes: "48x48" },
+      { rel: "icon", href: "/favicon-v10-96.png", type: "image/png", sizes: "96x96" },
+      { rel: "icon", href: "/favicon-v10-192.png", type: "image/png", sizes: "192x192" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon-v10.png", sizes: "180x180" },
+      { rel: "manifest", href: "/site.webmanifest" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
