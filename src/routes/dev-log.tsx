@@ -21,6 +21,7 @@ export const Route = createFileRoute("/dev-log")({
 type Tag = "數據" | "技術" | "前端" | "系統";
 
 const ENTRIES: { date: string; title: string; tags: Tag[]; body: string }[] = [
+  { date: "2026-10-18 · 01:15 HKT", title: "完整資料重訓對照（預覽）", tags: ["技術", "數據"], body: "完整102,252行／8,408場CSV重訓，79場驗證選定870輪，再用全資料重擬合；正式模型分表11場145匹四揀、名次、log(p)分差0，模型SHA相同。模型說明頁提供逐馬CSV及JSON。未改正式預測、權重或歷史凍結；現存CSV不是修復後v12全歷史重建，零差異不證明停更無影響；未有賽果、未自動升版、未發布。" },
   {
     date: "2026-10-17 · 23:45 HKT",
     title: "全鏈覆核：修正對照與權限，仍有待收口項目",

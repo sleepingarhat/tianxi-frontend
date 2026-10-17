@@ -1,8 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/tx/AppShell";
 import { Card, PageHead } from "@/components/tx/ui";
 import { ELO, FACTOR_RULES, FEATURES, LGB } from "@/lib/model-spec";
+import report from "@/lib/retraining-report.json";
 
 const TITLE = "模型說明 · Elo 公式與 LightGBM 特徵 · 天喜賽馬";
 const DESC = "天喜 TX-Oracle v3 公開模型說明：Elo 更新公式、K 值、騎練權重、52 項 LightGBM 特徵衍生及編碼方式。";
@@ -35,9 +36,19 @@ function Src({ path }: { path: string }) {
 
 function ModelPage() {
   return <AppShell page="dashboard" ticker="模型說明 · 公式與特徵公開">
-    <PageHead en="Model" title="模型說明" desc="TX-Oracle v3：Elo 評分加 LightGBM 排名模型。以下內容逐項對照公開源碼，可自行核對。" />
+    <PageHead en="公開模型" title="模型說明" desc="TX-Oracle v3：Elo 評分加 LightGBM 排名模型。以下內容逐項對照公開源碼，可自行核對。" />
 
-    <Card title="融合公式" en="Ensemble">
+    <div className="mx-4 my-3 flex flex-wrap gap-4 text-[12px] text-gold"><Link to="/prediction-reconciliation">預測分與賽果對帳</Link><Link to="/elo-log">Elo 每日更新</Link><a href="https://github.com/sleepingarhat/tianxi-racing/blob/main/MODEL.md" target="_blank" rel="noopener noreferrer">繁體中文文件</a><a href="https://github.com/sleepingarhat/tianxi-racing/blob/main/MODEL.en.md" target="_blank" rel="noopener noreferrer">English 原始資料</a></div>
+    <div className="mx-4 my-3"><P>中文為主要說明；公式及特徵英文識別保留，方便與原始程式逐項對照。overall 指總體軸，gain 指樹分裂改善量，split 指分裂使用次數，LambdaRank 指名次排序訓練。</P></div>
+
+    <Card title="完整重訓對照 · 2026-10-18" en="只讀研究">
+      <P>全部102,252行／8,408場／52項特徵；79場驗證選定870輪，再用全部資料重擬合。正式10月19日模型分表11場145匹：四揀改變0／11場、排序改變0／145匹、原始log(p)分數最大差0。序列化模型SHA-256與現行完全相同，未切換模型、權重或正式預測。</P>
+      <P><b>限制：</b>用現存完整CSV重訓，並非以修復後v12重新生成全歷史特徵；零差異只證明相同輸入可重現，唔代表停更無影響。公開草稿接口只返回第1場13匹；全分表排序不等於全日公開凍結四揀。網站finalScore不在這次分數比較範圍，亦未有賽果證明改善。</P>
+      <div className="mt-3 overflow-x-auto"><table className="w-full text-left text-[12px]"><thead className="text-ink-3"><tr><th>場次</th><th>匹數</th><th>四揀保留</th><th>排序改變</th></tr></thead><tbody className="divide-y divide-hairline">{report.races.map(r => <tr key={r.race}><td className="py-2">第 {r.race} 場</td><td>{r.runners}</td><td>{r.retained}／4</td><td>{r.rankChanges}</td></tr>)}</tbody></table></div>
+      <details className="mt-3 text-[11px] text-ink-2"><summary className="cursor-pointer text-gold">來源及指紋</summary><div className="mt-2 break-all font-mono-tx"><p>現行：{report.baselineVersion} · run {report.baselineRun}</p><p>CSV SHA-256：{report.trainingSha256}</p><p>模型 SHA-256：{report.modelSha256}</p><p>LightGBM {report.libraryVersion} · {report.createdAt}</p></div></details>
+      <div className="mt-3 flex flex-wrap gap-4 text-[12px] text-gold"><a href="/reports/retraining-2026-10-18.csv" download>逐馬排名／分數 CSV</a><a href="/reports/retraining-2026-10-18.json" download>完整 JSON 證據</a></div>
+    </Card>
+    <Card title="融合公式" en="融合計算">
       <Formula>{`blendZ     = α · lgb_z + (1 − α) · elo_z      α = ${LGB.alpha}
 排名分      = blendZ + 0.5 · (factor_bonus ÷ 100)
 finalScore = 1500 + blendZ × 100      （顯示用，唔包 factor）`}</Formula>
@@ -64,7 +75,7 @@ K_base：馬 ${ELO.k.horse}／騎師 ${ELO.k.jockey}／練馬師 ${ELO.k.trainer
       <P>2026-10-17核查更新流程錯配：真正v12快照曾停在4月15日，現已補計至10月14日；舊凍結預測與鎖定紀錄不改。補計評分唔代表原賽前已使用，亦不保證命中率提高。</P>
     </Card>
 
-    <Card title="LightGBM 訓練" en="LambdaRank">
+    <Card title="LightGBM 訓練" en="排名訓練">
       <div className="grid gap-1 text-[12px] text-ink-2">
         <div>目標：{LGB.objective}；評估：{LGB.metric}；截斷：前 {LGB.truncation} 名</div>
         <div>標籤：{LGB.labels}</div>
@@ -78,7 +89,7 @@ K_base：馬 ${ELO.k.horse}／騎師 ${ELO.k.jockey}／練馬師 ${ELO.k.trainer
       <P>正式訓練新增保存序列化模型嘅gain（樹分裂改善量）及split（使用次數），各自列百分比、保留零值與訓練欄序，附模型及設定檔指紋。不是單馬SHAP、因果或Elo貢獻，亦不自動升版；首份正式完整重訓報告仍待驗收。</P>
     </Card>
 
-    <Card title={`特徵清單（${FEATURES.length} 項＋going_code）`} en="Features">
+    <Card title={`特徵清單（${FEATURES.length} 項＋going_code）`} en="特徵衍生與編碼">
       <ol className="divide-y divide-hairline">
         {FEATURES.map((f, i) => <li key={f.name} className="grid gap-0.5 py-2 sm:grid-cols-[2rem_12rem_6rem_1fr_9rem] sm:gap-3">
           <span className="font-mono-tx text-[10px] text-ink-3">{i + 1}</span>
@@ -91,7 +102,7 @@ K_base：馬 ${ELO.k.horse}／騎師 ${ELO.k.jockey}／練馬師 ${ELO.k.trainer
       <Src path="scripts/backtest/dump-features.ts" />
     </Card>
 
-    <Card title="factor_bonus 規則分" en="Factors">
+    <Card title="factor_bonus 規則分" en="規則因子">
       <Formula>{`rate(出賽, 頭三, scale) = ((頭三 + 0.30 × 5) ÷ (出賽 + 5) − 0.30) × scale　；冇往績 = 0`}</Formula>
       <div className="mt-2 divide-y divide-hairline text-[12px]">
         {FACTOR_RULES.map((r) => <div key={r.name} className="flex gap-3 py-1.5"><b className="w-10 shrink-0 text-ink">{r.name}</b><span className="text-ink-2">{r.rule}</span></div>)}
@@ -99,7 +110,7 @@ K_base：馬 ${ELO.k.horse}／騎師 ${ELO.k.jockey}／練馬師 ${ELO.k.trainer
       <P>訓練特徵入面嘅 factor_bonus 係六項之和；正式預測加分只計檔位同負磅。</P>
     </Card>
 
-    <Card title="測試過但未採用" en="Not promoted">
+    <Card title="測試過但未採用" en="未採用研究">
       <P>試閘、場內相對值、配備變化、分段速度 z 值、賽後評述（受阻／走大疊／出閘失準）：經 1,299 場 walk-forward A/B 測試，命中率冇穩定改善，未用於正式預測。長休復出、班次適應、騎練180日勝率等只喺回測檔，未升正式版。</P>
     </Card>
   </AppShell>;
