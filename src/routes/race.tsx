@@ -1,8 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { queryOptions, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 
 import { getTodayPicksAll } from "@/lib/picks.functions";
+import { getPublicRacePage } from "@/lib/race-public.functions";
+import { raceMetadata } from "@/lib/race-seo";
 
 
 import { AppShell } from "@/components/tx/AppShell";
@@ -10,32 +12,45 @@ import { Card, Disclaimer, Empty, ErrorNote, Loading, PageHead, Pill, Silks } fr
 import { canonicalRaceId, finishTime, fmtMeetingDate, txApi } from "@/lib/tx-api";
 
 type Search = { id?: string | undefined };
+const racePageQuery = (id: string) => queryOptions({
+  queryKey: ["public-race-page", id],
+  queryFn: () => getPublicRacePage({ data: { id } }),
+  staleTime: 60_000,
+});
 
 export const Route = createFileRoute("/race")({
   validateSearch: (search: Record<string, unknown>): Search => ({
     id: typeof search["id"] === "string" ? (search["id"] as string) : undefined,
   }),
-  head: () => ({
+  loaderDeps: ({ search }) => ({ id: canonicalRaceId(search.id) }),
+  loader: ({ context, deps }) => context.queryClient.ensureQueryData(racePageQuery(deps.id)),
+  head: ({ loaderData }) => {
+    const meta = raceMetadata(loaderData?.race);
+    return {
     meta: [
-      { title: "排位表 · 天喜 TIANXI" },
-      { name: "description", content: "香港賽馬單場排位表：馬匹、檔位、騎練、負重、賠率與賽果時間。" },
-      { property: "og:title", content: "排位表 · 天喜 TIANXI" },
-      { property: "og:description", content: "單場排位表與賽果詳情。" },
+      { title: meta.title },
+      { name: "description", content: meta.description },
+      { property: "og:title", content: meta.title },
+      { property: "og:description", content: meta.description },
+      { property: "og:url", content: meta.url },
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary" },
     ],
-  }),
+    links: [{ rel: "canonical", href: meta.url }],
+    };
+  },
   component: RacePage,
 });
 
 function RacePage() {
   const { id } = Route.useSearch();
   const raceId = canonicalRaceId(id);
+  const { data: initial } = useSuspenseQuery(racePageQuery(raceId));
   const idMatch = raceId.match(/^race_(\d{4}-\d{2}-\d{2})_(ST|HV)_(\d+)$/);
   const raceDate = idMatch?.[1] ?? "";
   const raceNumber = idMatch ? Number(idMatch[3]) : 0;
 
-  const next = useQuery({ queryKey: ["nextMeeting"], queryFn: () => txApi.nextMeeting(), enabled: !raceId });
+  const next = useQuery({ queryKey: ["nextMeeting"], queryFn: () => txApi.nextMeeting(), enabled: !raceId, initialData: initial.next ?? undefined });
   const race = useQuery({
     queryKey: ["race", raceId],
     queryFn: () => txApi.race(raceId).catch(() => null),
@@ -95,7 +110,7 @@ function RacePage() {
   }
 
   const fallbackRace = (meeting.data?.races || []).find((r: any) => Number(r.raceNumber) === raceNumber) as any;
-  const d = race.data?.horses?.length || race.data?.entries?.length ? race.data : (fallbackRace ?? race.data);
+  const d = race.data?.horses?.length || race.data?.entries?.length ? race.data : (fallbackRace ?? initial.race ?? race.data);
   const winOddsMap: Record<string, number> = odds.data?.winOdds || {};
   const plaOddsMap: Record<string, number> = odds.data?.plaOdds || {};
   const liveWin = (n: unknown) => winOddsMap[String(n).padStart(2, "0")] ?? null;
@@ -109,7 +124,7 @@ function RacePage() {
   const pickRank = new Map<number, number>();
   dayRacePicks.forEach((p: any) => pickRank.set(Number(p.horseNumber), Number(p.rank)));
   const hasResult = horses.some((h) => h.finishingPosition);
-  const loading = race.isLoading || (!horses.length && meeting.isLoading);
+  const loading = !horses.length && (race.isLoading || meeting.isLoading);
 
 
   return (

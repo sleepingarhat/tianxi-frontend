@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { sitemapXml } from "@/lib/race-seo";
 
 const ORIGIN = "https://tianxi.racing";
 const PATHS = [
@@ -11,9 +12,15 @@ const PATHS = [
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
-      GET: () => {
-        const body = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${PATHS.map((p) => `  <url><loc>${ORIGIN}${p}</loc></url>`).join("\n")}\n</urlset>\n`;
-        return new Response(body, { headers: { "Content-Type": "application/xml; charset=utf-8", "Cache-Control": "public, max-age=3600" } });
+      GET: async () => {
+        try {
+          const { getPublicRaceUrls } = await import("@/lib/racing-sitemap.server");
+          const body = sitemapXml([...PATHS.map(p => `${ORIGIN}${p}`), ...await getPublicRaceUrls()]);
+          return new Response(body, { headers: { "Content-Type": "application/xml; charset=utf-8", "Cache-Control": "public, max-age=3600" } });
+        } catch (error) {
+          console.error("Racing sitemap unavailable", error);
+          return new Response("網站地圖資料暫時未能完整讀取", { status: 503, headers: { "Cache-Control": "no-store", "Retry-After": "300" } });
+        }
       },
     },
   },
